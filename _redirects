@@ -90,10 +90,6 @@
 /blog/create-professional-digital-receipts-for-freelancers     /blog/create-professional-digital-receipts-for-freelancers/index.html   200
 /blog/calculate-percentage-increase-and-decrease-fast          /blog/calculate-percentage-increase-and-decrease-fast/index.html        200
 
-# ---- /profile (slug'sız) → signup ----
-/profile          /signup/index.html         200
-/profile/         /signup/index.html         200
-
 # ---- /profile/ahmet → profile.html (uzun versiyon) ----
 /profile/*        /profile.html              200
 
