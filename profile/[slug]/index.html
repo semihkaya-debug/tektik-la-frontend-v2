@@ -1,262 +1,547 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yükleniyor... — tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
+  :root[data-theme="dark"] {
+    --bg: #0a0a0a;
+    --bg2: #141414;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --text2: #888;
+    --text3: #555;
+    --accent: #c8f530;
+    --card: #141414;
+  }
+
+  :root[data-theme="light"] {
+    --bg: #f5f5f0;
+    --bg2: #ebeae3;
+    --border: #d0cfc8;
+    --text: #111;
+    --text2: #666;
+    --text3: #999;
+    --accent: #1a6b00;
+    --card: #fff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    padding: 20px;
-    color: #333;
+    display: flex;
+    flex-direction: column;
   }
-  
-  .container {
-    max-width: 500px;
-    margin: 40px auto;
-    background: white;
-    border-radius: 20px;
-    padding: 40px 30px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: linear-gradient(var(--text) 1px, transparent 1px), linear-gradient(90deg, var(--text) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
   }
-  
-  .avatar {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    display: block;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+
+  .content {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    font-weight: bold;
-    object-fit: cover;
+    justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
   }
-  
-  .avatar.has-image {
-    background: none;
-  }
-  
-  .avatar-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 8px;
-    font-size: 24px;
-  }
-  
-  .slug {
-    text-align: center;
-    color: #888;
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  
-  .bio {
-    text-align: center;
-    color: #555;
-    margin-bottom: 30px;
-    line-height: 1.6;
-    white-space: pre-wrap;
-  }
-  
-  .socials {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 25px;
-  }
-  
-  .social-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
     text-decoration: none;
-    font-size: 20px;
+    color: var(--text);
+  }
+
+  .logo span { color: var(--accent); }
+
+  .path-indicator {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    letter-spacing: 1px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .ctrl-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
     transition: all 0.2s;
   }
-  
-  .social-btn:hover {
-    transform: translateY(-2px);
-    background: #667eea;
-    color: white;
+
+  .ctrl-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
   }
-  
+
+  .profile-main {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 20px;
+  }
+
+  .profile-card {
+    width: 100%;
+    max-width: 540px;
+  }
+
+  .profile-header {
+    text-align: left;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .profile-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .profile-name {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 12px;
+    word-break: break-word;
+  }
+
+  .profile-slug {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .profile-slug span { color: var(--accent); }
+
+  .profile-bio {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-top: 16px;
+    white-space: pre-wrap;
+    opacity: 0.85;
+  }
+
+  .avatar-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Socials */
+  .socials {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.2s;
+  }
+
+  .social-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* Links */
   .links {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
-  
-  .link {
-    display: block;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-decoration: none;
-    padding: 16px;
-    border-radius: 12px;
-    text-align: center;
+
+  .link-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-family: 'Bricolage Grotesque', sans-serif;
     font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     transition: all 0.2s;
-    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);
   }
-  
-  .link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+
+  .link-btn:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
   }
-  
-  .footer {
-    text-align: center;
-    margin-top: 40px;
-    color: rgba(255,255,255,0.8);
+
+  .link-btn .arrow {
+    font-family: 'Space Mono', monospace;
+    color: var(--text2);
     font-size: 14px;
+    transition: color 0.2s;
   }
-  
-  .footer a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
+
+  .link-btn:hover .arrow {
+    color: var(--accent);
   }
-  
-  .loading, .error {
+
+  /* First link is highlighted */
+  .link-btn.featured {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+
+  .link-btn.featured .arrow {
+    color: #0a0a0a;
+  }
+
+  .link-btn.featured:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+  }
+
+  .empty {
     text-align: center;
-    padding: 40px;
-    color: #666;
+    padding: 40px 20px;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
   }
-  
-  .error h2 {
-    font-size: 60px;
-    margin-bottom: 10px;
+
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* Footer CTA */
+  .profile-footer {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 1px;
+  }
+
+  .profile-footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .profile-footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* Site footer */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .site-footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+  }
+
+  /* Error page */
+  .error-block {
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .error-code {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(60px, 12vw, 100px);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 16px;
+  }
+
+  .error-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .error-msg {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .error-msg span { color: var(--accent); }
+
+  .error-cta {
+    display: inline-block;
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+
+  .error-cta:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    .profile-main { padding: 40px 16px; }
+    .site-footer { padding: 16px 20px; flex-direction: column; gap: 8px; }
+    .avatar-block { gap: 12px; }
+    .avatar { width: 52px; height: 52px; font-size: 20px; }
   }
 </style>
 </head>
 <body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="header-actions">
+      <span class="path-indicator" id="pathIndicator">/ ...</span>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </header>
 
-<div class="container" id="content">
-  <div class="loading">⏳ Yükleniyor...</div>
-</div>
+  <main class="profile-main">
+    <div class="profile-card" id="content">
+      <div class="loading">⏳ YÜKLENİYOR...</div>
+    </div>
+  </main>
 
-<div class="footer">
-  Senin de profilin olsun! <a href="/signup">tektik.la'da kayıt ol</a>
+  <footer class="site-footer">
+    <p>© 2026 tektik.la</p>
+    <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);">v1.0</p>
+  </footer>
 </div>
 
 <script src="/config.js"></script>
 <script>
-  // URL'den slug'ı al
-  // Örnekler:
-  // tektik.la/ahmet → "ahmet"
-  // tektik.la/profile.html?slug=ahmet → "ahmet"
-  
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('tektik_theme', next);
+  }
+  const savedTheme = localStorage.getItem('tektik_theme');
+  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
   function getSlug() {
-    // Önce query string'e bak
-    // Önce query string'e bak (?slug=ahmet)
     const urlParams = new URLSearchParams(window.location.search);
     const querySlug = urlParams.get('slug');
     if (querySlug) return querySlug;
-    
-    // /profile/ahmet → "ahmet"
+
     const path = window.location.pathname;
     const profileMatch = path.match(/^\/profile\/([^\/]+)\/?$/);
-    if (profileMatch) {
-      return profileMatch[1];
-    }
-    
-    // /ahmet → "ahmet" (kısa URL)
+    if (profileMatch) return profileMatch[1];
+
     const shortMatch = path.match(/^\/([^\/]+)\/?$/);
     if (shortMatch && shortMatch[1] !== 'profile.html' && shortMatch[1] !== 'profile') {
       return shortMatch[1];
     }
-    
+
     return null;
   }
-  
+
   const slug = getSlug();
   const content = document.getElementById('content');
+  const pathIndicator = document.getElementById('pathIndicator');
   
+  if (slug) pathIndicator.textContent = `/ ${slug.toUpperCase()}`;
+
   const socialIcons = {
-    twitter: '𝕏', instagram: '📷', threads: '🧵', linkedin: '💼',
-    youtube: '▶️', tiktok: '🎵', twitch: '🎮', kick: '⚡', github: '💻'
+    twitter: '𝕏',
+    instagram: 'IG',
+    threads: '@',
+    linkedin: 'in',
+    youtube: '▶',
+    tiktok: '♪',
+    twitch: 'tw',
+    kick: '⚡',
+    github: '</>'
   };
-  
+
   function escapeHtml(text) {
     const div = document.createElement('div');
-    div.textContent = text;
+    div.textContent = text || '';
     return div.innerHTML;
   }
-  
+
   async function loadProfile() {
     if (!slug) {
-      content.innerHTML = `
-        <div class="error">
-          <h2>🤔</h2>
-          <p>Hangi profili görmek istediğini anlayamadım.</p>
-        </div>
-      `;
+      showError('Hangi profili görmek istediğini anlayamadım.', '?');
       return;
     }
-    
+
     try {
       const data = await apiCall(`/api/profile/${slug}`);
       const { profile, links, socials } = data;
-      
+
       document.title = `${profile.title || profile.slug} — tektik.la`;
-      
+
       const avatarHtml = profile.avatar_url
-        ? `<div class="avatar has-image"><img class="avatar-img" src="${escapeHtml(profile.avatar_url)}" alt=""></div>`
+        ? `<div class="avatar"><img src="${escapeHtml(profile.avatar_url)}" alt=""></div>`
         : `<div class="avatar">${profile.slug.charAt(0).toUpperCase()}</div>`;
-      
+
       const socialsHtml = socials && socials.length > 0
-        ? `<div class="socials">${socials.map(s => 
-            `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-btn" title="${s.platform}">${socialIcons[s.platform] || '🔗'}</a>`
+        ? `<div class="socials">${socials.map(s =>
+            `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-btn" title="${s.platform}">${socialIcons[s.platform] || '↗'}</a>`
           ).join('')}</div>`
         : '';
-      
+
       const linksHtml = links && links.length > 0
-        ? `<div class="links">${links.map(l => 
-            `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener" class="link">${escapeHtml(l.title)}</a>`
+        ? `<div class="links">${links.map((l, i) =>
+            `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener" class="link-btn${i === 0 ? ' featured' : ''}">
+              <span>${escapeHtml(l.title)}</span>
+              <span class="arrow">→</span>
+            </a>`
           ).join('')}</div>`
-        : '<div class="loading">Henüz link eklenmemiş.</div>';
-      
+        : '<div class="empty">Henüz link eklenmemiş.</div>';
+
       content.innerHTML = `
-        ${avatarHtml}
-        <h1>${escapeHtml(profile.title || profile.slug)}</h1>
-        <div class="slug">tektik.la/${escapeHtml(profile.slug)}</div>
-        ${profile.bio ? `<div class="bio">${escapeHtml(profile.bio)}</div>` : ''}
+        <div class="profile-header">
+          <div class="avatar-block">
+            ${avatarHtml}
+            <div style="flex:1;min-width:0;">
+              <span class="profile-label">— PROFİL</span>
+              <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+                <h1 class="profile-name" style="font-size:clamp(24px,5vw,40px);">${escapeHtml(profile.title || profile.slug)}</h1>
+              </div>
+            </div>
+          </div>
+          <div class="profile-slug">tektik.la<span>/${escapeHtml(profile.slug)}</span></div>
+          ${profile.bio ? `<p class="profile-bio">${escapeHtml(profile.bio)}</p>` : ''}
+        </div>
         ${socialsHtml}
         ${linksHtml}
-      `;
-      
-    } catch (error) {
-      content.innerHTML = `
-        <div class="error">
-          <h2>😕</h2>
-          <p><strong>Profil bulunamadı</strong></p>
-          <p style="margin-top: 10px; font-size: 14px;">tektik.la/${escapeHtml(slug)} adresinde kimse yok.</p>
-          <p style="margin-top: 20px;"><a href="/signup" style="color: #667eea; font-weight: 600;">Bu adı sen kap!</a></p>
+        <div class="profile-footer">
+          SEN DE PROFİL OLUŞTUR · <a href="/signup">tektik.la'da kayıt ol</a>
         </div>
       `;
+
+    } catch (error) {
+      showError(`<span>tektik.la/${escapeHtml(slug)}</span> diye bir profil yok.`, '?');
       document.title = 'Bulunamadı — tektik.la';
     }
   }
-  
+
+  function showError(msg, code) {
+    content.innerHTML = `
+      <div class="error-block">
+        <div class="error-code">${code}</div>
+        <div class="error-title">Profil bulunamadı.</div>
+        <p class="error-msg">${msg}<br>Belki yazım hatası, belki henüz alınmamış.</p>
+        <a href="/signup" class="error-cta">BU ADI SEN KAP →</a>
+      </div>
+    `;
+  }
+
   loadProfile();
 </script>
 

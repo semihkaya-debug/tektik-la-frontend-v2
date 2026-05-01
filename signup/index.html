@@ -1,279 +1,157 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kayıt Ol — tektik.la</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .auth-box {
-    background: white;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    width: 100%;
-    max-width: 440px;
-  }
-  
-  .logo {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    color: #667eea;
-    margin-bottom: 8px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 8px;
-    font-size: 24px;
-  }
-  
-  .subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 30px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-  
-  .input-wrapper {
-    position: relative;
-  }
-  
-  .input-prefix {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    pointer-events: none;
-  }
-  
-  input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 2px solid #e5e5e5;
-    border-radius: 8px;
-    font-size: 15px;
-    transition: border 0.2s;
-  }
-  
-  input:focus {
-    outline: none;
-    border-color: #667eea;
-  }
-  
-  input.with-prefix {
-    padding-left: 80px;
-  }
-  
-  .hint {
-    font-size: 12px;
-    color: #888;
-    margin-top: 5px;
-  }
-  
-  button {
-    width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin-top: 10px;
-  }
-  
-  button:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-  }
-  
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  .alert {
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: none;
-    font-size: 14px;
-  }
-  
-  .alert-error {
-    background: #fee;
-    color: #c33;
-    border: 1px solid #fcc;
-  }
-  
-  .alert-success {
-    background: #efe;
-    color: #2a8;
-    border: 1px solid #cfc;
-  }
-  
-  .footer-text {
-    text-align: center;
-    margin-top: 20px;
-    color: #666;
-    font-size: 14px;
-  }
-  
-  .footer-text a {
-    color: #667eea;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
-  .footer-text a:hover {
-    text-decoration: underline;
-  }
-  
-  .badge {
-    background: #fef3c7;
-    color: #92400e;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-    margin-bottom: 15px;
-  }
-</style>
+<meta name="description" content="tektik.la'da hesabını oluştur. 30 gün ücretsiz, kredi kartı gerekmez.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/auth.css">
 </head>
 <body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="header-actions">
+      <span class="path-indicator">/ SIGNUP</span>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </header>
 
-<div class="auth-box">
-  <a href="/" class="logo">⚡ tektik.la</a>
-  
-  <div style="text-align: center;">
-    <span class="badge">🎁 30 GÜN ÜCRETSİZ</span>
-  </div>
-  
-  <h1>Hesabını Oluştur</h1>
-  <p class="subtitle">Birkaç saniyede başla, kredi kartı gerekmez</p>
-  
-  <div id="alert" class="alert"></div>
-  
-  <form id="signupForm">
-    <div class="form-group">
-      <label for="slug">Kullanıcı Adın</label>
-      <div class="input-wrapper">
-        <span class="input-prefix">tektik.la/</span>
-        <input 
-          type="text" 
-          id="slug" 
-          class="with-prefix"
-          placeholder="ahmet" 
-          required
-          pattern="[a-z0-9-]+"
-          minlength="3"
-          maxlength="30"
-        >
+  <main class="auth-main">
+    <div class="auth-box">
+      <span class="trial-badge">🎁 30 GÜN ÜCRETSİZ</span>
+      
+      <span class="auth-label">— HESAP OLUŞTUR</span>
+      <h1 class="auth-title">hesabını <span>oluştur</span></h1>
+      <p class="auth-subtitle">Birkaç saniyede başla. Kredi kartı gerekmez. İstediğin zaman iptal et.</p>
+
+      <div id="alert" class="alert"></div>
+
+      <form id="signupForm">
+        <div class="form-group">
+          <label class="form-label" for="slug">Kullanıcı Adın</label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">tektik.la/</span>
+            <input 
+              type="text" 
+              id="slug" 
+              placeholder="ahmet"
+              required
+              minlength="2"
+              maxlength="30"
+              autocomplete="username"
+            >
+          </div>
+          <div class="form-hint">Sadece küçük harf, rakam ve tire kullan</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            class="form-input"
+            placeholder="ornek@email.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Şifre</label>
+          <input 
+            type="password" 
+            id="password" 
+            class="form-input"
+            placeholder="En az 6 karakter"
+            required
+            minlength="6"
+            autocomplete="new-password"
+          >
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-primary">BAŞLA →</button>
+      </form>
+
+      <div class="auth-footer">
+        Hesabın var mı? <a href="/login">Giriş yap</a>
       </div>
-      <div class="hint">Sadece küçük harf, rakam ve tire kullan</div>
     </div>
-    
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="ornek@email.com" required>
-    </div>
-    
-    <div class="form-group">
-      <label for="password">Şifre</label>
-      <input type="password" id="password" placeholder="En az 6 karakter" required minlength="6">
-    </div>
-    
-    <button type="submit" id="submitBtn">Hesabımı Oluştur 🚀</button>
-  </form>
-  
-  <p class="footer-text">
-    Zaten hesabın var mı? <a href="/login">Giriş yap</a>
-  </p>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 tektik.la</p>
+    <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);">v1.0</p>
+  </footer>
 </div>
 
 <script src="/config.js"></script>
 <script>
-  // Eğer zaten giriş yapmışsa dashboard'a gönder
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('tektik_theme', next);
+  }
+  const savedTheme = localStorage.getItem('tektik_theme');
+  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+  // Auto-redirect if logged in
   if (Auth.isLoggedIn()) {
     window.location.href = '/dashboard';
   }
-  
+
   const form = document.getElementById('signupForm');
-  const alert = document.getElementById('alert');
+  const alertEl = document.getElementById('alert');
   const submitBtn = document.getElementById('submitBtn');
-  
+
   function showAlert(message, type = 'error') {
-    alert.textContent = message;
-    alert.className = `alert alert-${type}`;
-    alert.style.display = 'block';
+    alertEl.textContent = message;
+    alertEl.className = `alert alert-${type}`;
+    alertEl.style.display = 'block';
   }
-  
-  // Slug otomatik küçük harfe çevir
+
+  // Slug auto-lowercase
   document.getElementById('slug').addEventListener('input', (e) => {
     e.target.value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
   });
-  
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const slug = document.getElementById('slug').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
-    
+
     submitBtn.disabled = true;
-    submitBtn.textContent = '⏳ Hesap oluşturuluyor...';
-    alert.style.display = 'none';
-    
+    submitBtn.textContent = '⏳ OLUŞTURULUYOR...';
+    alertEl.style.display = 'none';
+
     try {
       const data = await apiCall('/api/auth/signup', {
         method: 'POST',
         body: JSON.stringify({ slug, email, password })
       });
-      
+
       Auth.setToken(data.token);
       Auth.setUser(data.user);
-      
+
       showAlert('✅ Hesap oluşturuldu! Yönlendiriliyorsun...', 'success');
-      
+
       setTimeout(() => {
         window.location.href = '/dashboard';
-      }, 1000);
-      
+      }, 800);
+
     } catch (error) {
       showAlert(error.message);
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Hesabımı Oluştur 🚀';
+      submitBtn.textContent = 'BAŞLA →';
     }
   });
 </script>

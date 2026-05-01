@@ -1,386 +1,579 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
+  :root[data-theme="dark"] {
+    --bg: #0a0a0a;
+    --bg2: #141414;
+    --bg3: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --text2: #888;
+    --text3: #555;
+    --accent: #c8f530;
+    --danger: #ff4444;
+  }
+
+  :root[data-theme="light"] {
+    --bg: #f5f5f0;
+    --bg2: #ebeae3;
+    --bg3: #e5e4de;
+    --border: #d0cfc8;
+    --text: #111;
+    --text2: #666;
+    --text3: #999;
+    --accent: #1a6b00;
+    --danger: #c00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f5f7fa;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
-    color: #333;
   }
-  
-  .navbar {
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    padding: 15px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: linear-gradient(var(--text) 1px, transparent 1px), linear-gradient(90deg, var(--text) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
   }
-  
-  .navbar-content {
-    max-width: 1100px;
-    margin: 0 auto;
+
+  header {
+    position: relative;
+    z-index: 10;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
   }
-  
+
   .logo {
-    font-size: 20px;
-    font-weight: bold;
-    color: #667eea;
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
     text-decoration: none;
+    color: var(--text);
   }
-  
-  .nav-actions {
+
+  .logo span { color: var(--accent); }
+
+  .header-right {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
     flex-wrap: wrap;
   }
-  
-  .btn {
-    padding: 8px 16px;
+
+  .trial-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+
+  .ctrl-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 8px 14px;
     border-radius: 6px;
-    border: none;
     cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s;
-  }
-  
-  .btn-primary {
-    background: #667eea;
-    color: white;
-  }
-  
-  .btn-primary:hover {
-    background: #5568d3;
-  }
-  
-  .btn-secondary {
-    background: #f0f0f0;
-    color: #333;
-  }
-  
-  .btn-secondary:hover {
-    background: #e0e0e0;
-  }
-  
-  .btn-danger {
-    background: #ef4444;
-    color: white;
-  }
-  
-  .btn-danger:hover {
-    background: #dc2626;
-  }
-  
-  .btn-small {
-    padding: 6px 10px;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
+    transition: all 0.2s;
+    text-decoration: none;
   }
-  
+
+  .ctrl-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .ctrl-btn.danger:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  /* Main */
   .container {
+    position: relative;
+    z-index: 1;
     max-width: 900px;
-    margin: 30px auto;
-    padding: 0 20px;
+    margin: 0 auto;
+    padding: 32px 24px;
   }
-  
+
+  /* URL Banner */
   .url-banner {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 25px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
     flex-wrap: wrap;
+  }
+
+  .url-banner .url-info {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .url-banner .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .url-banner .url {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(14px, 3vw, 20px);
+    color: var(--text);
+    word-break: break-all;
+  }
+
+  .url-banner .url span { color: var(--accent); }
+
+  .url-banner-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-accent {
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
     gap: 10px;
   }
-  
-  .url-banner .url {
-    font-size: 18px;
-    font-family: 'Courier New', monospace;
+
+  .card-title::before {
+    content: "—";
+    color: var(--accent);
   }
-  
-  .card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-  }
-  
-  .card h2 {
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #333;
-  }
-  
+
+  /* Form */
   .form-row {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
   }
-  
-  label {
+
+  .form-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 1.5px;
     display: block;
-    font-weight: 600;
-    color: #333;
     margin-bottom: 6px;
-    font-size: 13px;
+    text-transform: uppercase;
   }
-  
-  input, textarea, select {
+
+  .form-input,
+  .form-textarea,
+  .form-select {
     width: 100%;
-    padding: 10px 12px;
-    border: 2px solid #e5e5e5;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
     transition: border 0.2s;
   }
-  
-  input:focus, textarea:focus, select:focus {
+
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--accent);
   }
-  
-  textarea {
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--text3);
+  }
+
+  .form-textarea {
     resize: vertical;
     min-height: 80px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
   }
-  
-  .item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
-    background: #f9fafb;
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-  
-  .item-content {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .item-content .title {
-    font-weight: 600;
-    margin-bottom: 2px;
-  }
-  
-  .item-content .url {
-    color: #666;
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
+
+  /* Add forms */
   .add-form {
     display: grid;
     grid-template-columns: 1fr 1fr auto;
     gap: 10px;
     align-items: end;
   }
-  
+
   .add-form-social {
     display: grid;
-    grid-template-columns: 180px 1fr auto;
+    grid-template-columns: 160px 1fr auto;
     gap: 10px;
     align-items: end;
   }
-  
+
   @media (max-width: 600px) {
-    .add-form, .add-form-social { 
-      grid-template-columns: 1fr; 
+    .add-form, .add-form-social {
+      grid-template-columns: 1fr;
     }
   }
-  
+
+  /* Items */
+  .items-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border 0.2s;
+  }
+
+  .item:hover {
+    border-color: var(--accent);
+  }
+
+  .item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .item-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .item-url {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .btn-delete {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    transition: all 0.2s;
+  }
+
+  .btn-delete:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
   .empty {
     text-align: center;
-    color: #999;
-    padding: 30px;
-    font-style: italic;
-  }
-  
-  .alert {
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    display: none;
-  }
-  
-  .alert-success { background: #d1fae5; color: #065f46; }
-  .alert-error { background: #fee2e2; color: #991b1b; }
-  
-  .trial-badge {
-    background: #fef3c7;
-    color: #92400e;
-    padding: 6px 12px;
-    border-radius: 20px;
+    color: var(--text3);
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
-    font-weight: 600;
+    padding: 24px;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+  }
+
+  /* Alert */
+  .alert {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    display: none;
+    border: 1px solid;
+  }
+
+  .alert-success {
+    background: rgba(200, 245, 48, 0.1);
+    color: var(--accent);
+    border-color: rgba(200, 245, 48, 0.3);
+  }
+
+  .alert-error {
+    background: rgba(255, 68, 68, 0.1);
+    color: var(--danger);
+    border-color: rgba(255, 68, 68, 0.3);
+  }
+
+  /* Save button */
+  .btn-save {
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .btn-save:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+
+  .btn-add {
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-add:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 12px 16px; }
+    .container { padding: 20px 16px; }
+    .card { padding: 18px; }
   }
 </style>
 </head>
 <body>
+<div class="grid-bg"></div>
 
-<nav class="navbar">
-  <div class="navbar-content">
-    <a href="/" class="logo">⚡ tektik.la</a>
-    <div class="nav-actions">
-      <span id="trialBadge" class="trial-badge"></span>
-      <a id="profileLink" href="#" target="_blank" class="btn btn-secondary">Profilimi Gör 👁️</a>
-      <button onclick="Auth.logout()" class="btn btn-secondary">Çıkış</button>
-    </div>
+<header>
+  <a href="/" class="logo">tektik<span>.la</span></a>
+  <div class="header-right">
+    <span id="trialBadge" class="trial-pill"></span>
+    <a id="profileLink" href="#" target="_blank" class="ctrl-btn">PROFİLİMİ GÖR ↗</a>
+    <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    <button class="ctrl-btn danger" onclick="Auth.logout()">ÇIKIŞ</button>
   </div>
-</nav>
+</header>
 
 <div class="container">
-  
+
   <div class="url-banner">
-    <div>
-      <div style="opacity:0.9;font-size:14px;margin-bottom:5px;">Profil URL'in:</div>
-      <div class="url" id="profileUrl">tektik.la/...</div>
+    <div class="url-info">
+      <span class="label">— PROFİL URL'İN</span>
+      <div class="url">tektik.la<span id="profileSlug">/...</span></div>
     </div>
-    <button onclick="copyUrl()" class="btn btn-secondary">📋 Kopyala</button>
+    <div class="url-banner-actions">
+      <button onclick="copyUrl()" class="btn-accent">KOPYALA</button>
+    </div>
   </div>
-  
+
   <div id="alert" class="alert"></div>
-  
+
   <div class="card">
-    <h2>👤 Profil Bilgilerin</h2>
+    <div class="card-title">PROFİL BİLGİLERİN</div>
     
     <div class="form-row">
-      <label>Görünen İsim / Başlık</label>
-      <input type="text" id="title" placeholder="Ahmet Yılmaz">
+      <label class="form-label">Görünen İsim</label>
+      <input type="text" id="title" class="form-input" placeholder="Ahmet Yılmaz">
     </div>
-    
+
     <div class="form-row">
-      <label>Biyografi</label>
-      <textarea id="bio" placeholder="Kendinden bahset..."></textarea>
+      <label class="form-label">Biyografi</label>
+      <textarea id="bio" class="form-textarea" placeholder="Kendinden bahset..."></textarea>
     </div>
-    
+
     <div class="form-row">
-      <label>Avatar URL (opsiyonel)</label>
-      <input type="url" id="avatar_url" placeholder="https://...">
+      <label class="form-label">Avatar URL (opsiyonel)</label>
+      <input type="url" id="avatar_url" class="form-input" placeholder="https://...">
     </div>
-    
-    <button onclick="saveProfile()" class="btn btn-primary">💾 Kaydet</button>
+
+    <button onclick="saveProfile()" class="btn-save">KAYDET →</button>
   </div>
-  
+
   <div class="card">
-    <h2>🔗 Linklerin</h2>
+    <div class="card-title">LİNKLERİN</div>
     
     <div class="add-form">
       <div>
-        <label>Başlık</label>
-        <input type="text" id="newLinkTitle" placeholder="YouTube Kanalım">
+        <label class="form-label">Başlık</label>
+        <input type="text" id="newLinkTitle" class="form-input" placeholder="YouTube Kanalım">
       </div>
       <div>
-        <label>URL</label>
-        <input type="url" id="newLinkUrl" placeholder="https://...">
+        <label class="form-label">URL</label>
+        <input type="url" id="newLinkUrl" class="form-input" placeholder="https://...">
       </div>
-      <button onclick="addLink()" class="btn btn-primary">+ Ekle</button>
+      <button onclick="addLink()" class="btn-add">+ EKLE</button>
     </div>
-    
-    <div id="linksList" style="margin-top: 20px;">
+
+    <div id="linksList" class="items-list">
       <div class="empty">Henüz link yok. Yukarıdan ekleyebilirsin.</div>
     </div>
   </div>
-  
+
   <div class="card">
-    <h2>📱 Sosyal Medya</h2>
-    
+    <div class="card-title">SOSYAL MEDYA</div>
+
     <div class="add-form-social">
       <div>
-        <label>Platform</label>
-        <select id="newSocialPlatform">
-          <option value="twitter">𝕏 (Twitter)</option>
-          <option value="instagram">📷 Instagram</option>
-          <option value="threads">🧵 Threads</option>
-          <option value="linkedin">💼 LinkedIn</option>
-          <option value="youtube">▶️ YouTube</option>
-          <option value="tiktok">🎵 TikTok</option>
-          <option value="twitch">🎮 Twitch</option>
-          <option value="kick">⚡ Kick</option>
-          <option value="github">💻 GitHub</option>
+        <label class="form-label">Platform</label>
+        <select id="newSocialPlatform" class="form-select">
+          <option value="twitter">Twitter / X</option>
+          <option value="instagram">Instagram</option>
+          <option value="threads">Threads</option>
+          <option value="linkedin">LinkedIn</option>
+          <option value="youtube">YouTube</option>
+          <option value="tiktok">TikTok</option>
+          <option value="twitch">Twitch</option>
+          <option value="kick">Kick</option>
+          <option value="github">GitHub</option>
         </select>
       </div>
       <div>
-        <label>URL</label>
-        <input type="url" id="newSocialUrl" placeholder="https://...">
+        <label class="form-label">URL</label>
+        <input type="url" id="newSocialUrl" class="form-input" placeholder="https://...">
       </div>
-      <button onclick="addSocial()" class="btn btn-primary">+ Ekle</button>
+      <button onclick="addSocial()" class="btn-add">+ EKLE</button>
     </div>
-    
-    <div id="socialsList" style="margin-top: 20px;">
-      <div class="empty">Henüz sosyal medya hesabı yok.</div>
+
+    <div id="socialsList" class="items-list">
+      <div class="empty">Henüz sosyal medya yok.</div>
     </div>
   </div>
-  
+
 </div>
 
 <script src="/config.js"></script>
 <script>
-  // Giriş kontrolü
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('tektik_theme', next);
+  }
+  const savedTheme = localStorage.getItem('tektik_theme');
+  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
   if (!Auth.isLoggedIn()) {
     window.location.href = '/login';
   }
-  
+
   const user = Auth.getUser();
   const alertEl = document.getElementById('alert');
-  
-  // URL banner doldur
-  document.getElementById('profileUrl').textContent = `tektik.la/${user.slug}`;
+
+  document.getElementById('profileSlug').textContent = `/${user.slug}`;
   document.getElementById('profileLink').href = `/${user.slug}`;
-  
-  // Trial bilgisi
+
   const trialEnd = new Date(user.trial_ends_at);
   const daysLeft = Math.ceil((trialEnd - new Date()) / (1000 * 60 * 60 * 24));
-  document.getElementById('trialBadge').textContent = 
-    user.is_paid ? '✅ Premium' : `🎁 ${daysLeft} gün ücretsiz kaldı`;
-  
+  document.getElementById('trialBadge').textContent =
+    user.is_paid ? '✅ PREMIUM' : `🎁 ${daysLeft} GÜN ÜCRETSİZ`;
+
   function showAlert(message, type = 'success') {
     alertEl.textContent = message;
     alertEl.className = `alert alert-${type}`;
     alertEl.style.display = 'block';
     setTimeout(() => alertEl.style.display = 'none', 3000);
   }
-  
+
   function copyUrl() {
     navigator.clipboard.writeText(`https://tektik.la/${user.slug}`);
-    showAlert('📋 URL kopyalandı!');
+    showAlert('✓ URL kopyalandı!');
   }
-  
-  // Profil bilgilerini yükle
+
   async function loadProfile() {
     try {
       const data = await apiCall(`/api/profile/${user.slug}`);
       document.getElementById('title').value = data.profile.title || '';
       document.getElementById('bio').value = data.profile.bio || '';
       document.getElementById('avatar_url').value = data.profile.avatar_url || '';
-      
+
       renderLinks(data.links);
       renderSocials(data.socials);
     } catch (error) {
       console.error(error);
     }
   }
-  
+
   async function saveProfile() {
     try {
       await apiCall('/api/profile', {
@@ -391,80 +584,75 @@
           avatar_url: document.getElementById('avatar_url').value
         })
       });
-      showAlert('✅ Profil güncellendi!');
+      showAlert('✓ Profil güncellendi!');
     } catch (error) {
       showAlert(error.message, 'error');
     }
   }
-  
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
   function renderLinks(links) {
     const container = document.getElementById('linksList');
     if (!links || links.length === 0) {
       container.innerHTML = '<div class="empty">Henüz link yok. Yukarıdan ekleyebilirsin.</div>';
       return;
     }
-    
     container.innerHTML = links.map(link => `
       <div class="item">
         <div class="item-content">
-          <div class="title">🔗 ${escapeHtml(link.title)}</div>
-          <div class="url">${escapeHtml(link.url)}</div>
+          <div class="item-title">${escapeHtml(link.title)}</div>
+          <div class="item-url">${escapeHtml(link.url)}</div>
         </div>
-        <button onclick="deleteLink('${link.id}')" class="btn btn-danger btn-small">Sil</button>
+        <button onclick="deleteLink('${link.id}')" class="btn-delete">SİL</button>
       </div>
     `).join('');
   }
-  
+
   function renderSocials(socials) {
     const container = document.getElementById('socialsList');
     if (!socials || socials.length === 0) {
-      container.innerHTML = '<div class="empty">Henüz sosyal medya hesabı yok.</div>';
+      container.innerHTML = '<div class="empty">Henüz sosyal medya yok.</div>';
       return;
     }
-    
-    const icons = {
-      twitter: '𝕏', instagram: '📷', threads: '🧵', linkedin: '💼',
-      youtube: '▶️', tiktok: '🎵', twitch: '🎮', kick: '⚡', github: '💻'
-    };
-    
     container.innerHTML = socials.map(s => `
       <div class="item">
         <div class="item-content">
-          <div class="title">${icons[s.platform] || ''} ${s.platform}</div>
-          <div class="url">${escapeHtml(s.url)}</div>
+          <div class="item-title">${escapeHtml(s.platform)}</div>
+          <div class="item-url">${escapeHtml(s.url)}</div>
         </div>
-        <button onclick="deleteSocial('${s.id}')" class="btn btn-danger btn-small">Sil</button>
+        <button onclick="deleteSocial('${s.id}')" class="btn-delete">SİL</button>
       </div>
     `).join('');
   }
-  
+
   async function addLink() {
     const title = document.getElementById('newLinkTitle').value.trim();
     const url = document.getElementById('newLinkUrl').value.trim();
-    
     if (!title || !url) {
       showAlert('Başlık ve URL gerekli', 'error');
       return;
     }
-    
     try {
       await apiCall('/api/links', {
         method: 'POST',
         body: JSON.stringify({ title, url })
       });
-      
       document.getElementById('newLinkTitle').value = '';
       document.getElementById('newLinkUrl').value = '';
-      showAlert('✅ Link eklendi!');
+      showAlert('✓ Link eklendi!');
       loadProfile();
     } catch (error) {
       showAlert(error.message, 'error');
     }
   }
-  
+
   async function deleteLink(id) {
     if (!confirm('Bu linki silmek istediğine emin misin?')) return;
-    
     try {
       await apiCall(`/api/links/${id}`, { method: 'DELETE' });
       showAlert('Link silindi');
@@ -473,33 +661,29 @@
       showAlert(error.message, 'error');
     }
   }
-  
+
   async function addSocial() {
     const platform = document.getElementById('newSocialPlatform').value;
     const url = document.getElementById('newSocialUrl').value.trim();
-    
     if (!url) {
       showAlert('URL gerekli', 'error');
       return;
     }
-    
     try {
       await apiCall('/api/social', {
         method: 'POST',
         body: JSON.stringify({ platform, url })
       });
-      
       document.getElementById('newSocialUrl').value = '';
-      showAlert('✅ Sosyal medya eklendi!');
+      showAlert('✓ Sosyal medya eklendi!');
       loadProfile();
     } catch (error) {
       showAlert(error.message, 'error');
     }
   }
-  
+
   async function deleteSocial(id) {
     if (!confirm('Silmek istediğine emin misin?')) return;
-    
     try {
       await apiCall(`/api/social/${id}`, { method: 'DELETE' });
       showAlert('Silindi');
@@ -508,14 +692,7 @@
       showAlert(error.message, 'error');
     }
   }
-  
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-  
-  // Sayfa yüklendiğinde verileri çek
+
   loadProfile();
 </script>
 

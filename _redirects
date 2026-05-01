@@ -53,6 +53,7 @@
 /signup           /signup/index.html          200
 /login            /login/index.html           200
 /dashboard        /dashboard/index.html       200
+/forgot-password  /forgot-password/index.html 200
 
 # ---- Admin ----
 /admin            /admin/index.html           200
@@ -90,11 +91,9 @@
 /blog/create-professional-digital-receipts-for-freelancers     /blog/create-professional-digital-receipts-for-freelancers/index.html   200
 /blog/calculate-percentage-increase-and-decrease-fast          /blog/calculate-percentage-increase-and-decrease-fast/index.html        200
 
-# ---- /profile (slug'sız) → signup ----
-/profile          /signup/index.html         200
-/profile/         /signup/index.html         200
-
-# ---- /profile/ahmet → profile.html (uzun versiyon) ----
+# ---- /profile/* (uzun versiyon, dashboard'dan açılır) ----
+# Not: /profile yalnız başına kullanılmıyor, sadece /profile/slug formatı var.
+# Bu kural sadece /profile/ahmet gibi URL'ler için.
 /profile/*        /profile.html              200
 
 # NOT: /:slug catch-all kuralı YOK!
