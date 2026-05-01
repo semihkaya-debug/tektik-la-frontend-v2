@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark" data-lang="tr">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('tektik-theme') || 'dark');</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ücretsiz Online Araçlar — Link Kısalt, QR Kod, Fatura ve Daha Fazlası | tektik.la</title>
+<meta name="description" content="Link kısalt, QR kod oluştur, fatura yap, çekiliş düzenle ve 20+ ücretsiz online araç. Kayıt yok, reklam yok, tek tıkla hallet.">
+<meta name="keywords" content="ücretsiz link kısaltma, reklamsız link kısaltıcı, üye olmadan kısa link, twitter kısa url, güvenilir link kısaltma sitesi">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tektik.la/">
+<meta property="og:title" content="Ücretsiz Online Araçlar — Link Kısalt, QR Kod ve Daha Fazlası | tektik.la">
+<meta property="og:description" content="Link kısalt, QR kod oluştur, fatura yap, çekiliş düzenle ve 20+ ücretsiz online araç. Kayıt yok, reklam yok.">
+<meta property="og:url" content="https://tektik.la/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="20+ Ücretsiz Online Araç | tektik.la">
+<meta name="twitter:description" content="Link kısalt, QR kod, fatura, çekiliş ve daha fazlası. Kayıt yok, reklam yok.">
+<meta name="twitter:image" content="https://tektik.la/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebSite",
+  "name": "tektik.la",
+  "url": "https://tektik.la/",
+  "description": "Ücretsiz online araçlar. Link kısalt, QR kod oluştur, fatura yap ve daha fazlası.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://tektik.la/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "SoftwareApplication",
+  "name": "tektik.la",
+  "url": "https://tektik.la/",
+  "applicationCategory": "WebApplication",
+  "operatingSystem": "All",
+  "description": "20+ ücretsiz online araç. Link kısaltma, QR kod, fatura oluşturucu, çekiliş ve daha fazlası.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TRY"
+  }
+}
+</script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+  :root[data-theme="dark"] {
+    --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a; --border: #2a2a2a;
+    --text: #f0f0f0; --text2: #888; --accent: #c8f530; --accent2: #a0d020;
+    --card: #141414; --input-bg: #0f0f0f;
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f5f0; --bg2: #eeede8; --bg3: #e5e4de; --border: #d0cfc8;
+    --text: #111111; --text2: #666; --accent: #5a9e00; --accent2: #4a8500;
+    --card: #ffffff; --input-bg: #fafaf8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Bricolage Grotesque', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; transition: background 0.3s, color 0.3s; }
+  .grid-bg { position: fixed; inset: 0; pointer-events: none; opacity: 0.03; background-image: linear-gradient(var(--text) 1px, transparent 1px), linear-gradient(90deg, var(--text) 1px, transparent 1px); background-size: 40px 40px; z-index: 0; }
+  .content { position: relative; z-index: 1; }
+  header { border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 100; padding: 0; }
+  .logo { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; }
+  .logo span { color: var(--accent); }
+  .header-controls { display: flex; gap: 10px; align-items: center; }
+  .ctrl-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px; transition: all 0.2s; }
+  .ctrl-btn:hover, .ctrl-btn.active { border-color: var(--accent); color: var(--accent); }
+  .hero { padding: 56px 40px 40px; max-width: 860px; margin: 0 auto; animation: fadeUp 0.6s ease; }
+  .hero-stats { display:flex; align-items:center; gap:24px; margin-top:24px; }
+  .hero-stat { display:flex; flex-direction:column; gap:2px; }
+  .stat-num { font-family:'Space Mono',monospace; font-size:22px; font-weight:700; color:var(--accent); line-height:1; }
+  .stat-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; }
+  .hero-stat-divider { width:1px; height:32px; background:var(--border); }
+  .hero-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(52px, 8vw, 96px); font-weight: 800; line-height: 0.95; letter-spacing: -4px; margin-bottom: 20px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub { font-size: 15px; color: var(--text2); max-width: 420px; line-height: 1.7; margin-bottom: 20px; }
+  .hero-badges { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-badge-item { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); }
+  .main-card { max-width: 860px; margin: 0 auto; padding: 0 40px 80px; animation: fadeUp 0.6s ease 0.1s both; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; }
+  .card-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
+  .input-row { display: flex; gap: 10px; }
+  input[type="url"] { flex: 1; background: var(--input-bg); border: 1px solid var(--border); color: var(--text); padding: 15px 18px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 13px; outline: none; transition: border-color 0.2s; }
+  input:focus { border-color: var(--accent); }
+  input::placeholder { color: var(--text2); }
+  .btn-primary { background: var(--accent); color: #0a0a0a; border: none; padding: 15px 28px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.2s; min-width: 110px; }
+  .btn-primary:hover:not(:disabled) { background: var(--accent2); transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); padding: 10px 18px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .status { display: none; margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 12px; }
+  .status.error { display: block; background: rgba(255,80,80,0.1); color: #ff6060; border: 1px solid rgba(255,80,80,0.2); }
+  .status.loading { display: block; background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
+  .result-box { display: none; margin-top: 20px; padding: 20px; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; align-items: center; gap: 16px; animation: fadeUp 0.3s ease; }
+  .result-box.show { display: flex; }
+  .result-url { font-family: 'Space Mono', monospace; font-size: 16px; color: var(--accent); font-weight: 700; flex: 1; word-break: break-all; }
+  .result-meta { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); margin-top: 6px; }
+  .qr-box { display: none; margin-top: 12px; padding: 20px; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; align-items: center; gap: 24px; animation: fadeUp 0.3s ease; }
+  .qr-box.show { display: flex; }
+  .qr-toggle { width: 36px; height: 20px; border-radius: 10px; position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .qr-toggle-thumb { width: 14px; height: 14px; background: #0a0a0a; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: transform 0.2s; }
+  .qr-toggle.off { background: var(--border) !important; }
+  .qr-toggle.off .qr-toggle-thumb { transform: translateX(0) !important; }
+  #qrcode-result canvas, #qrcode-result img { display: block; }
+  .qr-brand { background: #c8f530; color: #0a0a0a; font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; text-align: center; padding: 4px 0; letter-spacing: 1px; border-radius: 0 0 4px 4px; margin-top: -2px; }
+  .qr-info { flex: 1; }
+  .qr-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .qr-sublabel { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); line-height: 1.6; margin-bottom: 14px; }
+  .info-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; padding: 8px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); }
+  .micro-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .micro-badge { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); background: rgba(200,245,48,0.08); border: 1px solid rgba(200,245,48,0.2); padding: 5px 10px; border-radius: 6px; }
+  .history-section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border); display: none; }
+  .history-section.show { display: block; }
+  .history-header{ margin-bottom: 16px; }
+  .history-title { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; }
+  .history-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 12px; }
+  .history-item:last-child { border-bottom: none; }
+  .history-left { flex: 1; overflow: hidden; }
+  .history-original { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+  .history-short { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; }
+  /* TOOLS GRID */
+  .tools-section { border-top: 1px solid var(--border); padding: 60px 40px; }
+  .tools-inner { max-width: 860px; margin: 0 auto; }
+
+  /* FILTER BAR */
+  .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
+  .filter-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:10px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:12px; cursor:pointer; transition:all 0.2s; }
+  .filter-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .filter-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(200,245,48,0.08); }
+  .filter-btn[data-filter="pick"] { border-color: #EF9F27; color: #854F0B; }
+  .filter-btn[data-filter="pick"]:hover, .filter-btn[data-filter="pick"].active { background: #FAEEDA; border-color: #EF9F27; color: #633806; }
+  .filter-btn[data-filter="pick"].active { border-color:#EF9F27; color:#633806; background:#FAEEDA; }
+  .filter-count { background:var(--bg); border-radius:4px; padding:1px 6px; font-size:10px; }
+  .filter-btn.active .filter-count { background:rgba(200,245,48,0.15); }
+  .tool-card.hidden { display:none; }
+  .cat-block { margin-bottom: 48px; }
+  .cat-block:last-child { margin-bottom: 0; }
+  .cat-header{ gap: 12px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--border); }
+  .cat-icon { font-size: 22px; }
+  .cat-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+  .cat-count { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text2); background: var(--bg3); border: 1px solid var(--border); padding: 3px 10px; border-radius: 4px; margin-left: auto; }
+  .tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-decoration: none; color: var(--text); transition: all 0.2s; position: relative; display: block; }
+  .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .tool-icon { font-size: 24px; margin-bottom: 10px; color: var(--text); }
+  .tool-name { font-size: 14px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.3px; }
+  .tool-desc { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 12px; }
+  .tool-badge { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 8px; background: rgba(200,245,48,0.1); color: var(--accent); border: 1px solid rgba(200,245,48,0.3); }
+  .tool-badge.dev { background: rgba(100,180,255,0.1); color: #79c0ff; border: 1px solid rgba(100,180,255,0.3); }
+  .tool-badge.design { background: rgba(253,121,168,0.1); color: #fd79a8; border: 1px solid rgba(253,121,168,0.3); }
+  .tool-badge.pick { background: #FAEEDA; color: #633806; border: 1px solid #EF9F27; }
+  .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 48px; }
+  .featured-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; text-decoration: none; color: var(--text); transition: all 0.2s; display: flex; align-items: center; gap: 20px; }
+  .featured-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .featured-card.accent-card { border-color: var(--accent); background: rgba(200,245,48,0.03); }
+  .featured-icon { font-size: 36px; flex-shrink: 0; }
+  .featured-body { flex: 1; }
+  .featured-tag { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .featured-name { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+  .featured-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .featured-pills { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .pill { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text2); background: var(--bg3); border: 1px solid var(--border); padding: 2px 8px; border-radius: 20px; }
+  .section-head { margin-bottom: 28px; }
+  .section-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+  .section-title { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+
+  /* SHARE BAR */
+
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  footer { border-top: 1px solid var(--border); padding: 24px 40px; max-width: 100%; display: flex; justify-content:center; justify-content: center; align-items: center; flex-wrap: wrap; gap: 24px; }
+  footer p { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); }
+  footer a { text-decoration:none!important; color:var(--text2)!important; font-family: 'Space Mono', monospace; font-size: 11px; transition: color 0.2s; }
+  footer a:hover { color: var(--accent)!important; }
+  footer a.footer-mail { text-decoration:none!important; color:var(--text2)!important; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  footer a.footer-mail:hover { color: var(--accent); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    .hero, .main-card { padding-left: 20px; padding-right: 20px; }
+    .input-row { flex-direction: column; }
+    h1 { letter-spacing: -1px; }
+    .card { padding: 24px; }
+    .result-box, .qr-box { flex-direction: column; align-items: flex-start; }
+    .tools-section { padding: 40px 20px; }
+    .tools-grid { grid-template-columns: 1fr 1fr; }
+    .featured-grid { grid-template-columns: 1fr; }
+  }
+
+  /* FAQ */
+  .faq-section { max-width: 760px; margin: 0 auto; padding: 80px 24px 60px; }
+  .faq-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); margin-bottom: 12px; }
+  .faq-title { font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -1px; margin-bottom: 40px; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q { width: 100%; background: none; border: none; color: var(--text); text-align: left; font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 600; padding: 20px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; transition: color 0.2s; }
+  .faq-q:hover { color: var(--accent); }
+  .faq-icon { font-size: 18px; color: var(--accent); flex-shrink: 0; transition: transform 0.25s; font-style: normal; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
+  .faq-a p { font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.85; color: var(--text2); }
+  .faq-a a { color: var(--accent); text-decoration: none; }
+  .faq-a a:hover { text-decoration: underline; }
+
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+  .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+  <meta name="description" content="Link kısalt, QR oluştur, çekiliş yap ve daha fazlası. Ücretsiz online araçlar, kayıt yok, reklam yok.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="tektik.la">
+  <meta property="og:title" content="tektik.la — Tek tıkla hallet.">
+  <meta property="og:description" content="Link kısalt, QR oluştur, çekiliş yap ve daha fazlası. Ücretsiz online araçlar, kayıt yok, reklam yok.">
+  <meta property="og:url" content="https://tektik.la">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="tektik.la">
+  <meta property="og:image" content="https://tektik.la/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="tektik.la — Tek tıkla hallet.">
+  <meta name="twitter:description" content="Link kısalt, QR oluştur, çekiliş yap ve daha fazlası. Ücretsiz online araçlar, kayıt yok, reklam yok.">
+  <meta name="twitter:image" content="https://tektik.la/og-image.png">
+  <link rel="canonical" href="https://tektik.la">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <div class="logo">tektik<span>.la</span></div>
+    <div class="header-controls">
+      <a href="/login" class="ctrl-btn" style="text-decoration:none">Giriş</a>
+      <a href="/signup" class="ctrl-btn" style="text-decoration:none; background:var(--accent); color:#000; padding:6px 12px; font-weight:600;">Üye Ol</a>
+    </div>
+  </div>
+</header>
+
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">25+ Ücretsiz Araç</div>
+    <h1 id="hero-h1">link kısalt,<br><em>tek tıkla</em><br><span style="color:var(--text);opacity:0.4">tektik.la</span></h1>
+    <p class="hero-sub" id="hero-sub">Uzun linkleri saniyeler içinde kısalt. Reklam yok, kayıt yok, tamamen ücretsiz.</p>
+    <div class="hero-badges" id="hero-badges">
+      <span class="hero-badge-item">✓ Kayıt yok</span>
+      <span class="hero-badge-item">✓ Reklam yok</span>
+      <span class="hero-badge-item">✓ 25+ araç</span>
+      <span class="hero-badge-item">✓ 30 gün link</span>
+    </div>
+  </div>
+
+  <div class="main-card">
+    <div class="card">
+
+      <div class="input-row">
+        <input type="url" id="url-input" placeholder="Linki buraya yapıştır" />
+        <button class="btn-primary" id="shorten-btn" onclick="shortenLink()">
+          <span id="btn-text">Kısalt</span>
+        </button>
+      </div>
+      <div class="status" id="status-msg"></div>
+      <div class="result-box" id="result-box">
+        <div style="flex:1">
+          <div class="result-url" id="result-url"></div>
+          <div class="result-meta" id="result-meta"></div>
+        </div>
+        <button class="btn-primary" id="copy-btn" onclick="copyResult()">Kopyala</button>
+      </div>
+      <div class="qr-box" id="qr-box">
+        <div id="qrcode-result"></div>
+        <div class="qr-info">
+          <div class="qr-label" id="qr-label">QR Kod</div>
+          <div class="qr-sublabel" id="qr-sublabel">Kısa linkinizin QR kodu otomatik oluşturuldu.</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+            <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">
+              tektik.la bandı
+              <div class="qr-toggle" id="toggle-brand" onclick="toggleBrand()" style="background:var(--accent)">
+                <div class="qr-toggle-thumb" style="transform:translateX(16px)"></div>
+              </div>
+            </label>
+            <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">
+              kısa link banta eklensin
+              <div class="qr-toggle" id="toggle-band-url" onclick="toggleBandUrl()" style="background:var(--accent)">
+                <div class="qr-toggle-thumb" id="toggle-band-url-thumb" style="transform:translateX(16px)"></div>
+              </div>
+            </label>
+            <div style="border-top:1px solid var(--border);margin:4px 0"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">QR rengi</span>
+              <input type="color" id="qr-color-dark" value="#000000" onchange="regenQR()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">arka plan</span>
+              <input type="color" id="qr-color-light" value="#ffffff" onchange="regenQR()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px" id="band-color-row">
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">bant rengi</span>
+              <input type="color" id="qr-color-band" value="#c8f530" onchange="updateQRBand()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
+            </div>
+          </div>
+          <button class="btn-primary" onclick="downloadQR()" id="btn-dl">⬇ İndir</button>
+        </div>
+      </div>
+
+      <div class="history-section" id="history-section">
+        <div class="history-header">
+          <div class="history-title" id="history-title">Bu oturumdaki linkler</div>
+          <button class="btn-ghost" onclick="clearHistory()" id="clear-btn">Temizle</button>
+        </div>
+        <div id="history-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS SECTION -->
+  <div class="tools-section">
+    <div class="tools-inner">
+
+      <div class="section-head">
+        <div class="section-tag">araçlar</div>
+        <div class="section-title">tüm araçlar</div>
+      </div>
+
+      <!-- FİLTRE BUTONLARI -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="pick" onclick="filterTools('pick')">✦ Öne Çıkan <span class="filter-count">9</span></button>
+        <button class="filter-btn" data-filter="dev" onclick="filterTools('dev')">👨‍💻 Geliştirici <span class="filter-count">7</span></button>
+        <button class="filter-btn" data-filter="design" onclick="filterTools('design')">🎨 Tasarım <span class="filter-count">3</span></button>
+        <button class="filter-btn" data-filter="all" onclick="filterTools('all')">Tümü <span class="filter-count">28</span></button>
+      </div>
+
+      <div class="tools-grid" id="main-tools-grid">
+          <!-- ✦ ÖNE ÇIKAN: 1.Çekiliş 2.QR 3.CV 4.Binary 5.Pomodoro 6.Foto -->
+          <a href="/cekilis" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <rect x="4" y="10" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M4 14 H24" stroke="currentColor" stroke-width="1.6"/>
+  <path d="M14 10 C14 10 10 4 6 6 C4 7 4 10 8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M14 10 C14 10 18 4 22 6 C24 7 24 10 20 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="14" y1="10" x2="14" y2="24" stroke="currentColor" stroke-width="1.5"/>
+</svg></div>
+            <div class="tool-name">Çekiliş Yap</div>
+            <div class="tool-desc">Adil ve şeffaf çekiliş. Kazananı görsel olarak paylaş.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+                    <a href="/qr" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <rect x="0" y="0" width="3" height="3" rx="0.4" fill="currentColor"/>
+  <rect x="4" y="0" width="3" height="3" rx="0.4" fill="currentColor"/>
+  <rect x="0" y="4" width="3" height="3" rx="0.4" fill="currentColor"/>
+  <rect x="1" y="1" width="1" height="1" fill="var(--bg)"/>
+  <rect x="5" y="1" width="1" height="1" fill="var(--bg)"/>
+  <rect x="1" y="5" width="1" height="1" fill="var(--bg)"/>
+  <rect x="4" y="4" width="1" height="1" fill="currentColor"/>
+  <rect x="6" y="4" width="1" height="1" fill="currentColor"/>
+  <rect x="5" y="5" width="1" height="1" fill="currentColor"/>
+  <rect x="4" y="6" width="1" height="1" fill="currentColor"/>
+  <rect x="6" y="6" width="1" height="1" fill="currentColor"/>
+</svg></div>
+            <div class="tool-name">QR Kod & Barkod Oluşturucu</div>
+            <div class="tool-desc">URL, WiFi, vCard için QR kod. EAN-13, Code128, UPC-A barkod.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+          <a href="/cv" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <rect x="2" y="1" width="20" height="26" rx="2" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.4"/>
+  <line x1="6" y1="16" x2="18" y2="16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="6" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="6" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+</svg></div>
+            <div class="tool-name">CV Oluşturucu</div>
+            <div class="tool-desc">Profesyonel CV oluştur, PDF olarak indir. 3 şablon.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+          <a href="/binary" class="tool-card hidden" data-tag="dev">
+            <div class="tool-icon" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:-1px;line-height:1.3;color:var(--accent)">10100101<br>01101100</div>
+            <div class="tool-name">Binary Çevirici</div>
+            <div class="tool-desc">Sayıları binary, hex, octal formatlarına çevir.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+          <a href="/pomodoro" class="tool-card" data-tag="pick other">
+            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <circle cx="14" cy="14" r="1.5" fill="currentColor"/>
+  <line x1="14" y1="14" x2="14" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="14" y1="14" x2="19.5" y2="17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="14" y1="3" x2="14" y2="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <line x1="11" y1="1.5" x2="17" y2="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+            <div class="tool-name">Pomodoro Timer</div>
+            <div class="tool-desc">25 dakika odaklan, 5 dakika mola ver. Üretkenliği artır.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+                    <a href="/foto" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <rect x="1" y="4" width="26" height="20" rx="2" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="10" cy="13" r="3" stroke="currentColor" stroke-width="1.4"/>
+  <path d="M1 19 L7 13 L13 18 L18 12 L27 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9 4 L9 1 M14 4 L14 1 M19 4 L19 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+</svg></div>
+            <div class="tool-name">Fotoğraf Sıkıştırıcı</div>
+            <div class="tool-desc">JPEG, PNG, WebP sıkıştır. Sınırsız ücretsiz, kayıt yok.</div>
+            <div class="tool-badge dev">Geliştirici</div>
+          </a>
+          <a href="/hesap" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><polyline points="3,20 8,13 13,16 18,8 23,10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="23" cy="10" r="2" fill="currentColor"/></svg></div>
+            <div class="tool-name">Bileşik Faiz & Emeklilik</div>
+            <div class="tool-desc">Enflasyonlu birikim hesapla. Emeklilik planı yap.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+          <a href="/gerisayim" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="28" height="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <rect x="1" y="1" width="26" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="14" y="16" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="currentColor">3:00</text>
+  <line x1="5" y1="19" x2="8" y2="19" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="10" y1="19" x2="18" y2="19" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="20" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+</svg></div>
+            <div class="tool-name">Geri Sayım</div>
+            <div class="tool-desc">Etkinlik, doğum günü için geri sayım. Link ile paylaş.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+          <a href="/password" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="26" height="28" viewBox="0 0 26 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <rect x="3" y="12" width="20" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+  <path d="M8 12V8a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="13" cy="19" r="2" fill="currentColor"/>
+  <line x1="13" y1="21" x2="13" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+</svg></div>
+            <div class="tool-name">Şifre Oluşturucu</div>
+            <div class="tool-desc">Güçlü ve güvenli şifre oluştur. Özelleştirilebilir.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+          <a href="/yuzde" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <circle cx="8" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="20" cy="20" r="4" stroke="currentColor" stroke-width="1.6"/>
+  <line x1="5" y1="23" x2="23" y2="5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+</svg></div>
+            <div class="tool-name">Yüzde Hesaplama</div>
+            <div class="tool-desc">Yüzde al, fark hesapla, oran bul. Hızlı ve kolay.</div>
+          </a>
+          <a href="/fis" class="tool-card" data-tag="pick">
+            <div class="tool-icon"><svg width="22" height="28" viewBox="0 0 22 28" fill="none" style="display:block"><rect x="1" y="1" width="20" height="24" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M1 25 L4 22 L7 25 L10 22 L13 25 L16 22 L19 25 L22 22" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><line x1="5" y1="8" x2="17" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="5" y1="12" x2="17" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="5" y1="16" x2="12" y2="16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+            <div class="tool-name">Fiş Oluşturucu</div>
+            <div class="tool-desc">Gerçekçi fiş ve makbuz oluştur. PNG olarak indir.</div>
+            <div class="tool-badge pick">✦ Öne Çıkan</div>
+          </a>
+
+          <a href="/kelime" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="28" height="24" viewBox="0 0 28 24" fill="none" style="display:block"><line x1="2" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="2" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="2" y1="17" x2="14" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="24" cy="17" r="3" stroke="currentColor" stroke-width="1.4"/></svg></div>
+            <div class="tool-name">Kelime Sayacı</div>
+            <div class="tool-desc">Kelime, karakter, cümle ve okuma süresi analizi.</div>
+          </a>
+          <a href="/lorem" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="24" height="28" viewBox="0 0 24 28" fill="none" style="display:block"><rect x="2" y="1" width="20" height="26" rx="2" stroke="currentColor" stroke-width="1.6"/><line x1="6" y1="8" x2="18" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="6" y1="12" x2="18" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="6" y1="16" x2="18" y2="16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="6" y1="20" x2="13" y2="20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+            <div class="tool-name">Lorem Ipsum</div>
+            <div class="tool-desc">Tasarım için özelleştirilebilir placeholder metin üret.</div>
+          </a>
+          <a href="/metin" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><path d="M18 3 L23 8 L9 22 L3 23 L4 17 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><line x1="15" y1="6" x2="20" y2="11" stroke="currentColor" stroke-width="1.4"/></svg></div>
+            <div class="tool-name">Metin Dönüştür</div>
+            <div class="tool-desc">Büyük/küçük harf, slug, title case ve daha fazlası.</div>
+          </a>
+          <a href="/hashtag" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="24" height="26" viewBox="0 0 24 26" fill="none" style="display:block"><line x1="8" y1="2" x2="6" y2="24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="2" x2="14" y2="24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="2" y1="9" x2="22" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="1" y1="17" x2="21" y2="17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+            <div class="tool-name">Hashtag Oluşturucu</div>
+            <div class="tool-desc">Konuya göre hashtag listesi oluştur, kopyala.</div>
+          </a>
+          <a href="/tarih" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><rect x="1" y="4" width="24" height="21" rx="2" stroke="currentColor" stroke-width="1.6"/><line x1="1" y1="10" x2="25" y2="10" stroke="currentColor" stroke-width="1.6"/><line x1="8" y1="1" x2="8" y2="7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="18" y1="1" x2="18" y2="7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="6" y="14" width="4" height="4" rx="1" fill="currentColor"/><rect x="11" y="14" width="4" height="4" rx="1" fill="currentColor"/><rect x="16" y="14" width="4" height="4" rx="1" fill="currentColor"/></svg></div>
+            <div class="tool-name">Tarih Hesaplama</div>
+            <div class="tool-desc">İki tarih arası gün, ay, yıl farkı hesapla.</div>
+          </a>
+          <a href="/saat" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><circle cx="13" cy="13" r="11" stroke="currentColor" stroke-width="1.6"/><path d="M2 13 H24" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M13 2 C10 6 10 20 13 24" stroke="currentColor" stroke-width="1.2"/><path d="M13 2 C16 6 16 20 13 24" stroke="currentColor" stroke-width="1.2"/><line x1="13" y1="13" x2="13" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="13" y1="13" x2="18" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="tool-name">Dünya Saati</div>
+            <div class="tool-desc">Farklı saat dilimlerini aynı anda görüntüle.</div>
+          </a>
+          <a href="/renk" class="tool-card hidden" data-tag="design">
+            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><circle cx="13" cy="13" r="10" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="9" r="2.5" fill="currentColor" opacity="0.9"/><circle cx="17" cy="9" r="2.5" fill="currentColor" opacity="0.6"/><circle cx="9" cy="17" r="2.5" fill="currentColor" opacity="0.4"/><circle cx="17" cy="17" r="2.5" fill="currentColor" opacity="0.7"/><circle cx="13" cy="13" r="2" fill="currentColor"/></svg></div>
+            <div class="tool-name">Renk Dönüştürücü</div>
+            <div class="tool-desc">HEX, RGB, HSL arası dönüştür. Palet oluştur.</div>
+            <div class="tool-badge design">Tasarım</div>
+          </a>
+          <a href="/gradient" class="tool-card hidden" data-tag="design">
+            <div class="tool-icon"><svg width="26" height="20" viewBox="0 0 26 20" fill="none" style="display:block"><rect x="1" y="1" width="24" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="4" width="5" height="12" rx="1" fill="currentColor" opacity="0.25"/><rect x="10" y="4" width="5" height="12" rx="1" fill="currentColor" opacity="0.55"/><rect x="17" y="4" width="5" height="12" rx="1" fill="currentColor" opacity="1"/></svg></div>
+            <div class="tool-name">Gradient Oluşturucu</div>
+            <div class="tool-desc">CSS gradient kodu oluştur, önizle, kopyala.</div>
+            <div class="tool-badge design">Tasarım</div>
+          </a>
+          <a href="/markdown" class="tool-card hidden" data-tag="dev">
+            <div class="tool-icon"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" style="display:block"><rect x="1" y="1" width="26" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><text x="5" y="14" font-family="monospace" font-size="11" font-weight="700" fill="currentColor">M↓</text></svg></div>
+            <div class="tool-name">Markdown Editör</div>
+            <div class="tool-desc">Yazdıkça önizle. HTML kopyala veya .md olarak indir.</div>
+            <div class="tool-badge dev">Geliştirici</div>
+          </a>
+          <a href="/json" class="tool-card hidden" data-tag="dev">
+            <div class="tool-icon">{ }</div>
+            <div class="tool-name">JSON Formatter</div>
+            <div class="tool-desc">JSON'u güzelleştir, doğrula, düzenle.</div>
+            <div class="tool-badge dev">Geliştirici</div>
+          </a>
+          <a href="/regex" class="tool-card hidden" data-tag="dev">
+            <div class="tool-icon">.*</div>
+            <div class="tool-name">Regex Test</div>
+            <div class="tool-desc">Düzenli ifadeleri test et. Eşleşmeleri vurgula.</div>
+            <div class="tool-badge dev">Geliştirici</div>
+          </a>
+          <a href="/uuid" class="tool-card hidden" data-tag="dev">
+            <div class="tool-icon"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" style="display:block"><rect x="1" y="1" width="26" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><text x="4" y="13" font-family="monospace" font-size="7.5" fill="currentColor" opacity="0.9">a3f-8c2</text><text x="4" y="17" font-family="monospace" font-size="5" fill="currentColor" opacity="0.45">uuid v4</text></svg></div>
+            <div class="tool-name">UUID Oluşturucu</div>
+            <div class="tool-desc">Benzersiz UUID v4 oluştur. Toplu üretim desteği.</div>
+            <div class="tool-badge dev">Geliştirici</div>
+          </a>
+          <a href="/base64" class="tool-card hidden" data-tag="dev">
+            <div class="tool-icon"><svg width="28" height="22" viewBox="0 0 28 22" fill="none" style="display:block"><rect x="1" y="1" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="15" y="1" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><text x="3" y="14" font-family="monospace" font-size="8" font-weight="700" fill="currentColor">ab</text><text x="17" y="14" font-family="monospace" font-size="7" fill="currentColor">64</text></svg></div>
+            <div class="tool-name">Base64 Encode/Decode</div>
+            <div class="tool-desc">Metin ve dosyaları Base64 formatına çevir.</div>
+            <div class="tool-badge dev">Geliştirici</div>
+          </a>
+          <a href="/html-encode" class="tool-card hidden" data-tag="dev">
+            <div class="tool-icon"><svg width="28" height="22" viewBox="0 0 28 22" fill="none" style="display:block"><text x="2" y="16" font-family="monospace" font-size="10" font-weight="700" fill="currentColor">&lt;&gt;</text></svg></div>
+            <div class="tool-name">HTML Encode/Decode</div>
+            <div class="tool-desc">HTML entity, URL encode, Unicode dönüşümü.</div>
+            <div class="tool-badge dev">Geliştirici</div>
+          </a>
+          <a href="/whitespace" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="28" height="22" viewBox="0 0 28 22" fill="none" style="display:block"><line x1="4" y1="6" x2="24" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="4" y1="11" x2="18" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="4" y1="16" x2="21" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 13 L24 16 L20 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="tool-name">Whitespace Temizleyici</div>
+            <div class="tool-desc">Gereksiz boşluk, tab ve boş satırları temizle.</div>
+          </a>
+          <a href="/renk-tonu" class="tool-card hidden" data-tag="design">
+            <div class="tool-icon"><svg width="28" height="22" viewBox="0 0 28 22" fill="none" style="display:block"><rect x="1" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.2"/><rect x="6" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.35"/><rect x="11" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.55"/><rect x="16" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.75"/><rect x="21" y="3" width="6" height="16" rx="1" fill="currentColor" opacity="1"/></svg></div>
+            <div class="tool-name">Renk Tonu Paleti</div>
+            <div class="tool-desc">Bir renkten 10 ton üret. CSS değişkenleri kopyala.</div>
+            <div class="tool-badge design">Tasarım</div>
+          </a>
+          <a href="/gorsel-kirp" class="tool-card hidden" data-tag="other">
+            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><rect x="3" y="3" width="20" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9 H23" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M3 17 H23" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M9 3 V23" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M17 3 V23" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/></svg></div>
+            <div class="tool-name">Görsel Kırpıcı</div>
+            <div class="tool-desc">Görseli kırp ve boyutlandır. PNG, JPEG, WebP.</div>
+          </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FAQ SECTION -->
+  <div class="faq-section">
+    <div class="faq-tag">sss</div>
+    <div class="faq-title">Sıkça Sorulan Sorular</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        tektik.la nedir ve ne işe yarar?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p>tektik.la, günlük işlerinizi hızlandırmak için tasarlanmış ücretsiz online araçlar platformudur. Link kısaltma, QR kod oluşturma, çekiliş yapma, fiş ve fatura oluşturma, şifre üretme ve daha fazlasını kayıt olmadan, reklam görmeden kullanabilirsiniz.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Araçları kullanmak tamamen ücretsiz mi?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p>Evet, tüm araçlar %100 ücretsizdir. Hesap açmanıza, e-posta girmenize veya kredi kartı bilgisi vermenize gerek yoktur. Siteye girin, aracı kullanın, işinize devam edin.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Link kısaltma nasıl çalışır? Kısaltılan linkler ne kadar süre geçerli?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p>Ana sayfadaki kutuya uzun linkinizi yapıştırıp "Kısalt" butonuna tıklayın. tektik.la/r/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler <strong>30 gün</strong> boyunca aktif kalır, ardından otomatik olarak silinir.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        QR kod oluşturucu hangi içerik türlerini destekliyor?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p><a href="/qr">QR Kod Oluşturucu</a> ile URL, düz metin, WiFi ağ bilgisi, vCard (kişi kartı), telefon numarası ve e-posta için QR kod üretebilirsiniz. Renk özelleştirme, logo ekleme ve PNG/SVG formatlarında indirme desteği mevcuttur.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Verilerim güvende mi? Bilgilerimi saklıyor musunuz?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p>Güvenliğinizi önemsiyoruz. Kısaltılan linkler Supabase altyapısında şifreli olarak saklanır ve 30 gün sonra silinir. Araçların büyük çoğunluğu (şifre üreteci, metin araçları vb.) tamamen tarayıcınızda çalışır; veriler sunucumuza hiç gönderilmez. Gizlilik politikamız için <a href="/kosullar">Kullanım Koşulları</a> sayfasını inceleyebilirsiniz.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Çekiliş aracı gerçekten adil mi?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p><a href="/cekilis">Çekiliş aracı</a>, tarayıcının kriptografik rastgele sayı üretecini (crypto.getRandomValues) kullanır. Bu yöntem, standart Math.random()'a göre çok daha güvenilir ve öngörülemezdir. Katılımcı listesini siz girersiniz, sistem tamamen tarafsız çalışır.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Fatura ve fiş oluşturucu yasal belge üretiyor mu?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p><a href="/fatura">Fatura</a> ve <a href="/fis">fiş oluşturucularımız</a> demo, sunum veya kişisel kullanım amaçlıdır. Resmi muhasebe veya vergi belgesi olarak kullanılamaz. Yasal fatura için bir muhasebe yazılımı ya da mali müşavir kullanmanızı öneririz.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Mobil cihazlardan da kullanabilir miyim?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p>Evet, tektik.la tüm araçları mobil uyumlu (responsive) tasarıma sahiptir. iPhone, Android veya tablet üzerinden sorunsuz kullanabilirsiniz.</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Yeni araç önerisi veya hata bildirimi için ne yapmalıyım?
+        <i class="faq-icon">+</i>
+      </button>
+      <div class="faq-a"><p>Görüş ve önerileriniz için <a href="mailto:info@tektik.la">info@tektik.la</a> adresine e-posta gönderebilir veya <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">𝕏 @tektik_la</a> hesabından bize ulaşabilirsiniz. Her öneriyi değerlendiriyoruz!</p></div>
+    </div>
+
+  </div>
+
+  <!-- FAQ Schema JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"tektik.la nedir ve ne işe yarar?","acceptedAnswer":{"@type":"Answer","text":"tektik.la, günlük işlerinizi hızlandırmak için tasarlanmış ücretsiz online araçlar platformudur. Link kısaltma, QR kod oluşturma, çekiliş yapma, fiş ve fatura oluşturma, şifre üretme ve daha fazlasını kayıt olmadan, reklam görmeden kullanabilirsiniz."}},
+      {"@type":"Question","name":"tektik.la ücretsiz mi?","acceptedAnswer":{"@type":"Answer","text":"Evet. tektik.la üzerindeki tüm araçlar ücretsiz ve kayıt gerektirmez."}},
+      {"@type":"Question","name":"Link kısaltma nedir?","acceptedAnswer":{"@type":"Answer","text":"Link kısaltma uzun URL'leri daha kısa ve paylaşılabilir hale getiren bir işlemdir."}},
+      {"@type":"Question","name":"Link kısaltma nasıl çalışır? Kısaltılan linkler ne kadar süre geçerli?","acceptedAnswer":{"@type":"Answer","text":"Ana sayfadaki kutuya uzun linkinizi yapıştırıp Kısalt butonuna tıklayın. tektik.la/r/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler 30 gün boyunca aktif kalır."}},
+      {"@type":"Question","name":"QR kod nasıl oluşturulur?","acceptedAnswer":{"@type":"Answer","text":"QR kod oluşturmak için URL veya metni girip QR kod oluştur butonuna basmanız yeterlidir."}},
+      {"@type":"Question","name":"QR kod oluşturucu hangi içerik türlerini destekliyor?","acceptedAnswer":{"@type":"Answer","text":"URL, düz metin, WiFi ağ bilgisi, vCard, telefon numarası ve e-posta için QR kod üretebilirsiniz. PNG ve SVG formatlarında indirme desteği mevcuttur."}},
+      {"@type":"Question","name":"Verilerim güvende mi?","acceptedAnswer":{"@type":"Answer","text":"Araçların büyük çoğunluğu tamamen tarayıcınızda çalışır; veriler sunucumuza gönderilmez. Kısaltılan linkler 30 gün sonra otomatik silinir."}},
+      {"@type":"Question","name":"Çekiliş aracı gerçekten adil mi?","acceptedAnswer":{"@type":"Answer","text":"Çekiliş aracı, tarayıcının kriptografik rastgele sayı üretecini (crypto.getRandomValues) kullanır. Sistem tamamen tarafsız çalışır."}},
+      {"@type":"Question","name":"Mobil cihazlardan da kullanabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet, tektik.la tüm araçları mobil uyumlu tasarıma sahiptir. iPhone, Android veya tablet üzerinden sorunsuz kullanabilirsiniz."}},
+      {"@type":"Question","name":"Yeni araç önerisi veya hata bildirimi için ne yapmalıyım?","acceptedAnswer":{"@type":"Answer","text":"info@tektik.la adresine e-posta gönderebilir veya Twitter/X @tektik_la hesabından ulaşabilirsiniz."}}
+    ]
+  }
+  </script>
+
+  
+<div class="seo-section">
+<h2 class="seo-h2">Ücretsiz Link Kısaltma ve Güvenilir Link Kısaltıcı</h2>
+<p class="seo-desc">Paylaşımlarınızı sadeleştirmek için tektik.la ile anında link kısaltma işlemi yapabilirsiniz. En hızlı ücretsiz link kısaltıcı servisimiz sayesinde karmaşık bağlantıları saniyeler içinde yönetilebilir hale getirin ve dilediğiniz platformda güvenle link kısalt özelliğini kullanın.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=20%2B%20%C3%BCcretsiz%20online%20ara%C3%A7%20tek%20yerde%21%20%40tektik_la&url=https%3A%2F%2Ftektik.la" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Twitter
+    </a>
+    <a class="share-btn wa" href="https://wa.me/?text=20%2B%20%C3%BCcretsiz%20online%20ara%C3%A7%3A%20https%3A%2F%2Ftektik.la" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la&text=20+ ücretsiz online araç" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Telegram
+    </a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A%2F%2Ftektik.la&title=20%2B%20%C3%BCcretsiz%20online%20ara%C3%A7%20tek%20yerde%20%E2%80%94%20link%20k%C4%B1salt%2C%20QR%20kod%2C%20%C3%A7ekili%C5%9F%20ve%20daha%20fazlas%C4%B1" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+      Reddit
+    </a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+
+  <footer>
+    <p>tektik.la</p>
+    <a href="/blog" class="ctrl-btn" style="text-decoration:none">Blog</a>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+
+// ── Link Kısaltma ──────────────────────────────────────────────
+var lang = localStorage.getItem('tektik-lang') || 'tr';
+let sessionLinks = JSON.parse(sessionStorage.getItem('tektik-links') || '[]');
+let currentShortUrl = '';
+
+const SUPABASE_URL = 'https://yxeuthrfqdquqgzwuxvm.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4ZXV0aHJmcWRxdXFnend1eHZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxODE4NzcsImV4cCI6MjA4Nzc1Nzg3N30.h3hNyF_VOuCgnahMfzdGPXzohqDe4pOVVcjHhYyq06s';
+
+function genSlug() {
+  return Math.random().toString(36).slice(2, 8);
+}
+
+async function shortenLink() {
+  const input = document.getElementById('url-input');
+  const url = input.value.trim();
+  if (!url) { showStatus('Lütfen bir link girin.', 'error'); return; }
+  let fullUrl = url;
+  if (!/^https?:\/\//i.test(fullUrl)) fullUrl = 'https://' + fullUrl;
+  try { new URL(fullUrl); } catch { showStatus('Geçersiz link formatı.', 'error'); return; }
+
+  const btn = document.getElementById('shorten-btn');
+  btn.disabled = true;
+  document.getElementById('btn-text').textContent = '...';
+  showStatus('', '');
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('qr-box').style.display = 'none';
+
+  const slug = genSlug();
+  const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/links`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({ slug, original_url: fullUrl, expires_at: expiresAt, click_count: 0 })
+    });
+    if (!res.ok) {
+      const errBody = await res.text();
+      throw new Error(`${res.status}: ${errBody}`);
+    }
+    const shortUrl = `https://tektik.la/r/${slug}`;
+    currentShortUrl = shortUrl;
+    document.getElementById('result-url').textContent = shortUrl;
+    document.getElementById('result-meta').textContent = '30 gün geçerli · 0 tıklama';
+    document.getElementById('result-box').style.display = 'flex';
+    generateQR(shortUrl);
+    addToHistory(slug, shortUrl, fullUrl);
+    showStatus('', '');
+  } catch (e) {
+    showStatus('Hata: ' + e.message, 'error');
+  }
+  btn.disabled = false;
+  document.getElementById('btn-text').textContent = lang === 'en' ? 'Shorten' : 'Kısalt';
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById('status-msg');
+  el.textContent = msg;
+  el.style.color = type === 'error' ? '#ff6060' : '#c8f530';
+  el.style.display = msg ? 'block' : 'none';
+}
+
+function copyResult() {
+  if (!currentShortUrl) return;
+  navigator.clipboard.writeText(currentShortUrl).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Kopyalandı';
+    setTimeout(() => btn.textContent = 'Kopyala', 2000);
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  if (typeof r === 'number') r = { tl: r, tr: r, br: r, bl: r };
+  ctx.beginPath();
+  ctx.moveTo(x + r.tl, y);
+  ctx.lineTo(x + w - r.tr, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r.tr);
+  ctx.lineTo(x + w, y + h - r.br);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r.br, y + h);
+  ctx.lineTo(x + r.bl, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r.bl);
+  ctx.lineTo(x, y + r.tl);
+  ctx.quadraticCurveTo(x, y, x + r.tl, y);
+  ctx.closePath();
+}
+
+var brandOn = true; // varsayılan açık
+
+var bandUrlOn = true;
+
+function toggleBandUrl() {
+  bandUrlOn = !bandUrlOn;
+  const toggle = document.getElementById('toggle-band-url');
+  const thumb = document.getElementById('toggle-band-url-thumb');
+  if (toggle) toggle.style.background = bandUrlOn ? 'var(--accent)' : 'var(--bg3)';
+  if (thumb) thumb.style.transform = bandUrlOn ? 'translateX(16px)' : 'translateX(0)';
+  updateQRBand();
+}
+
+function toggleBrand() {
+  brandOn = !brandOn;
+  const toggle = document.getElementById('toggle-brand');
+  toggle.classList.toggle('off', !brandOn);
+  const bandUrlToggle = document.getElementById('toggle-band-url');
+  if (bandUrlToggle) bandUrlToggle.parentElement.style.opacity = brandOn ? '1' : '0.4';
+  const bandColorRow = document.getElementById('band-color-row');
+  if (bandColorRow) bandColorRow.style.opacity = brandOn ? '1' : '0.4';
+  updateQRBand();
+}
+
+function getBandText() {
+  if (!brandOn) return null;
+  if (bandUrlOn && currentShortUrl) {
+    return currentShortUrl.replace('https://', '');
+  }
+  return 'tektik.la';
+}
+
+function updateQRBand() {
+  const container = document.getElementById('qrcode-result');
+  const canvas = container.querySelector('canvas');
+  if (!canvas) return;
+  // Canvas'ı temizle ve bandı yeniden çiz
+  const ctx = canvas.getContext('2d');
+  const SIZE = 240;
+  const BRAND_H = 28;
+  // Band alanını temizle ve yeniden çiz
+  ctx.clearRect(0, SIZE, SIZE, BRAND_H);
+  if (brandOn) {
+    drawBrand(ctx, SIZE, BRAND_H, getBandText() || 'tektik.la');
+  } else {
+    // Band kapalıysa arka plan rengiyle doldur
+    const lightColor = (document.getElementById('qr-color-light') || {value:'#ffffff'}).value;
+    ctx.fillStyle = lightColor;
+    ctx.fillRect(0, SIZE, SIZE, BRAND_H);
+  }
+}
+
+var lastQRUrl = '';
+
+function regenQR() {
+  if (lastQRUrl) generateQR(lastQRUrl);
+}
+
+function generateQR(url) {
+  lastQRUrl = url;
+  const container = document.getElementById('qrcode-result');
+  container.innerHTML = '';
+
+  const darkColor  = (document.getElementById('qr-color-dark')  || {value:'#000000'}).value;
+  const lightColor = (document.getElementById('qr-color-light') || {value:'#ffffff'}).value;
+
+  const canvas = document.createElement('canvas');
+  const SIZE = 240;
+  const PADDING = 8;
+  const BRAND_H = 28;
+  canvas.width = SIZE;
+  canvas.height = SIZE + BRAND_H;
+  canvas.style.width = '120px';
+  canvas.style.height = ((SIZE + BRAND_H) / 2) + 'px';
+  canvas.style.borderRadius = '8px';
+  canvas.style.display = 'block';
+  container.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  // Tüm arka planı light color ile doldur — boşluksuz
+  ctx.fillStyle = lightColor;
+  ctx.fillRect(0, 0, SIZE, SIZE);
+
+  if (typeof QRCode !== 'undefined' && QRCode.toCanvas) {
+    const tmpCanvas = document.createElement('canvas');
+    QRCode.toCanvas(tmpCanvas, url, {
+      width: SIZE - PADDING * 2,
+      margin: 0,
+      errorCorrectionLevel: 'H',
+      color: { dark: darkColor, light: lightColor }
+    }, function(err) {
+      if (!err) {
+        ctx.drawImage(tmpCanvas, PADDING, PADDING);
+        renderBandOnCanvas(ctx, SIZE, BRAND_H);
+        document.getElementById('qr-box').style.display = 'flex';
+        updateQRBand();
+      }
+    });
+  } else if (typeof QRCode !== 'undefined') {
+    const tmp = document.createElement('div');
+    tmp.style.display = 'none';
+    document.body.appendChild(tmp);
+    new QRCode(tmp, { text: url, width: SIZE - PADDING*2, height: SIZE - PADDING*2, colorDark: darkColor, colorLight: lightColor, correctLevel: QRCode.CorrectLevel.H });
+    setTimeout(function() {
+      const qrCanvas = tmp.querySelector('canvas');
+      if (qrCanvas) {
+        ctx.drawImage(qrCanvas, PADDING, PADDING);
+        renderBandOnCanvas(ctx, SIZE, BRAND_H);
+      }
+      document.body.removeChild(tmp);
+      document.getElementById('qr-box').style.display = 'flex';
+      updateQRBand();
+    }, 150);
+  }
+}
+
+function renderBandOnCanvas(ctx, SIZE, BRAND_H) {
+  // Bant alanını varsayılan olarak tektik.la ile çiz
+  drawBrand(ctx, SIZE, BRAND_H, 'tektik.la');
+}
+
+function drawBrand(ctx, SIZE, BRAND_H, text) {
+  const bandColor = (document.getElementById('qr-color-band') || {value:'#c8f530'}).value;
+  const r = parseInt(bandColor.slice(1,3),16), g = parseInt(bandColor.slice(3,5),16), b = parseInt(bandColor.slice(5,7),16);
+  const luminance = (0.299*r + 0.587*g + 0.114*b) / 255;
+  const textColor = luminance > 0.5 ? '#0a0a0a' : '#ffffff';
+  const textColorFaded = luminance > 0.5 ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.55)';
+  ctx.fillStyle = bandColor;
+  roundRect(ctx, 0, SIZE, SIZE, BRAND_H, { bl: 8, br: 8, tl: 0, tr: 0 });
+  ctx.fill();
+
+  const yMid = SIZE + BRAND_H / 2;
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+
+  // "tektik.la" kısmını ve slug kısmını ayır
+  const dotIndex = text.indexOf('/');
+  const brand = dotIndex > -1 ? text.slice(0, dotIndex) : text;  // "tektik.la"
+  const slug  = dotIndex > -1 ? text.slice(dotIndex) : '';        // "/r/apvcfd"
+
+  // Genişlikleri ölç
+  ctx.font = 'bold 11px monospace';
+  const brandW = ctx.measureText(brand).width;
+  ctx.font = '11px monospace';
+  const slugW  = slug ? ctx.measureText(slug).width : 0;
+  const totalW = brandW + slugW;
+  const startX = (SIZE - totalW) / 2;
+
+  // tektik.la — bold, tam renk
+  ctx.font = 'bold 11px monospace';
+  ctx.fillStyle = textColor;
+  ctx.fillText(brand, startX, yMid);
+
+  // /r/apvcfd — normal weight, soluk
+  if (slug) {
+    ctx.font = '11px monospace';
+    ctx.fillStyle = textColorFaded;
+    ctx.fillText(slug, startX + brandW, yMid);
+  }
+}
+
+function addBrandDiv(container) {
+  // Canvas zaten bandı içeriyor
+}
+
+function downloadQR() {
+  const qrCanvas = document.querySelector('#qrcode-result canvas');
+  if (!qrCanvas) return;
+
+  const bandText = getBandText();
+  const SIZE = 240;
+  const BRAND_H = bandText ? 28 : 0;
+  const SCALE = 2;
+
+  const out = document.createElement('canvas');
+  out.width = SIZE * SCALE;
+  out.height = (SIZE + BRAND_H) * SCALE;
+  const ctx = out.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+
+  // QR kısmını çiz (üst SIZE px)
+  ctx.drawImage(qrCanvas, 0, 0, SIZE, SIZE, 0, 0, SIZE * SCALE, SIZE * SCALE);
+
+  if (bandText) {
+    const bandColor = (document.getElementById('qr-color-band') || {value:'#c8f530'}).value;
+    const r = parseInt(bandColor.slice(1,3),16), g = parseInt(bandColor.slice(3,5),16), b = parseInt(bandColor.slice(5,7),16);
+    const luminance = (0.299*r + 0.587*g + 0.114*b)/255;
+    const textColor = luminance > 0.5 ? '#0a0a0a' : '#ffffff';
+    const textColorFaded = luminance > 0.5 ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.55)';
+    ctx.fillStyle = bandColor;
+    ctx.fillRect(0, SIZE * SCALE, SIZE * SCALE, BRAND_H * SCALE);
+
+    const yMid = SIZE * SCALE + (BRAND_H * SCALE) / 2;
+    const dotIndex = bandText.indexOf('/');
+    const brand = dotIndex > -1 ? bandText.slice(0, dotIndex) : bandText;
+    const slug  = dotIndex > -1 ? bandText.slice(dotIndex) : '';
+
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    ctx.font = `bold ${11 * SCALE}px monospace`;
+    const brandW = ctx.measureText(brand).width;
+    ctx.font = `${11 * SCALE}px monospace`;
+    const slugW = slug ? ctx.measureText(slug).width : 0;
+    const startX = (SIZE * SCALE - brandW - slugW) / 2;
+
+    ctx.font = `bold ${11 * SCALE}px monospace`;
+    ctx.fillStyle = textColor;
+    ctx.fillText(brand, startX, yMid);
+
+    if (slug) {
+      ctx.font = `${11 * SCALE}px monospace`;
+      ctx.fillStyle = textColorFaded;
+      ctx.fillText(slug, startX + brandW, yMid);
+    }
+  }
+
+  const a = document.createElement('a');
+  a.download = 'tektik-qr.png';
+  a.href = out.toDataURL('image/png');
+  a.click();
+}
+
+function addToHistory(slug, shortUrl, original) {
+  sessionLinks.unshift({ slug, shortUrl, original, date: new Date().toLocaleTimeString('tr-TR') });
+  sessionStorage.setItem('tektik-links', JSON.stringify(sessionLinks));
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const section = document.getElementById('history-section');
+  if (!sessionLinks.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  list.innerHTML = sessionLinks.map(l => `
+    <div class="history-item">
+      <div>
+        <div class="history-short" onclick="navigator.clipboard.writeText('${l.shortUrl}').then(()=>{})">${l.shortUrl}</div>
+        <div class="history-orig">${l.original.length > 50 ? l.original.slice(0,50)+'…' : l.original}</div>
+      </div>
+      <div class="history-time">${l.date}</div>
+    </div>`).join('');
+}
+
+function clearHistory() {
+  sessionLinks = [];
+  sessionStorage.removeItem('tektik-links');
+  renderHistory();
+}
+
+renderHistory();
+// ─────────────────────────────────────────────────────────────
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+
+function setLang(l) {
+  lang = l;
+  const tr = {
+    'hero-h1': 'link kısalt,<br><em>tek tıkla</em><br><span style="color:var(--text);opacity:0.4">tektik.la</span>',
+    'hero-sub': 'Uzun linkleri saniyeler içinde kısalt. Reklam yok, kayıt yok, tamamen ücretsiz.',
+    'hero-badges': '✓ Kayıt yok|✓ Reklam yok|✓ 25+ araç|✓ 30 gün link',
+    'card-label': 'Linkinizi kısaltın',
+    'btn-text': 'Kısalt',
+    'section-title': 'tüm araçlar',
+  };
+  const en = {
+    'hero-h1': 'shorten links,<br><em>in one click</em><br><span style="color:var(--text);opacity:0.4">tektik.la</span>',
+    'hero-sub': 'Shorten any URL instantly. No sign up, no ads, completely free.',
+    'hero-badges': '✓ No sign up|✓ No ads|✓ 25+ tools|✓ Links valid 30 days',
+    'card-label': 'Shorten your link',
+    'btn-text': 'Shorten',
+    'section-title': 'all tools',
+  };
+  const texts = lang === 'en' ? en : tr;
+  Object.entries(texts).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (id === 'hero-badges') {
+      el.innerHTML = val.split('|').map(b => `<span class="hero-badge-item">${b.trim()}</span>`).join('');
+    } else {
+      el.innerHTML = val;
+    }
+  });
+  // Placeholder çeviri
+  const inp = document.getElementById('url-input');
+  if (inp) inp.placeholder = lang === 'en' ? 'Paste your link here' : 'Linki buraya yapıştır';
+  document.getElementById('btn-tr') && document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+  document.getElementById('btn-en') && document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  localStorage.setItem('tektik-lang', lang);
+}
+
+if (lang === 'en') setLang('en');
+
+function filterTools(filter) {
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-filter') === filter);
+  });
+  document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) {
+    if (filter === 'all') {
+      card.classList.remove('hidden');
+    } else {
+      const tags = (card.getAttribute('data-tag') || '').split(' ');
+      card.classList.toggle('hidden', !tags.includes(filter));
+    }
+  });
+}
+
+function toggleTheme() {
+  var theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('tektik-theme', theme);
+}
+
+var savedTheme = localStorage.getItem('tektik-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+// İlk girişte Öne Çıkan göster
+document.addEventListener('DOMContentLoaded', function() { filterTools('pick'); });
+filterTools('pick');
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarih Hesaplama Aracı — İki Tarih Arası Fark | tektik.la</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent: #c8f530; --accent2: #a0d020; --card:#141414; --input-bg:#0f0f0f; }
+  :root[data-theme="light"] { --bg: #f5f5f0; --bg3: #e5e4de; --border: #d0cfc8; --text:#111111; --text2: #666; --accent: #5a9e00; --accent2: #4a8500; --card:#ffffff; --input-bg:#fafaf8; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background 0.3s,color 0.3s; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+  header{ padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .hc { display:flex; gap:10px; }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover,.ctrl-btn.active { border-color:var(--accent); color:var(--accent); }
+  .hero { padding:60px 40px 40px; max-width:860px; margin:0 auto; animation:fadeUp 0.6s ease; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; letter-spacing:-3px; margin-bottom:12px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); line-height:1.7; }
+  .main { max-width:860px; margin:0 auto; padding:0 40px 80px; animation:fadeUp 0.6s ease 0.1s both; display:flex; flex-direction:column; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:32px; }
+  .card-title { font-size:18px; font-weight:800; letter-spacing:-0.5px; margin-bottom:4px; }
+  .card-title em { font-style:normal; color:var(--accent); }
+  .card-desc { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); margin-bottom:24px; }
+  .date-row { display:flex; gap:12px; align-items:flex-end; margin-bottom:16px; }
+  .date-field { flex:1; }
+  .field-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+  input[type="date"] { width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:12px 14px; border-radius:8px; font-family:'Space Mono',monospace; font-size:13px; outline:none; transition:border-color 0.2s; color-scheme:dark; }
+  input[type="date"]:focus { border-color:var(--accent); }
+  .results-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .result-box { background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center; }
+  .result-num { font-family:'Space Mono',monospace; font-size:22px; font-weight:700; color:var(--accent); line-height:1; margin-bottom:4px; }
+  .result-lbl { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); text-transform:uppercase; letter-spacing:1px; }
+  .detail-box { background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:12px; font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); line-height:2; }
+  .detail-box strong { color:var(--text); }
+  .add-row { display:flex; gap:12px; align-items:flex-end; }
+  .add-field { flex:1; }
+  input[type="number"] { width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:12px 14px; border-radius:8px; font-family:'Space Mono',monospace; font-size:13px; outline:none; transition:border-color 0.2s; -moz-appearance:textfield; }
+  input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button { -webkit-appearance:none; }
+  input[type="number"]:focus { border-color:var(--accent); }
+  select { width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:12px 14px; border-radius:8px; font-family:'Space Mono',monospace; font-size:13px; outline:none; cursor:pointer; }
+  .result-date { background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:20px; margin-top:16px; text-align:center; }
+  .result-date-num { font-size:clamp(24px,4vw,40px); font-weight:800; color:var(--accent); letter-spacing:-1px; margin-bottom:4px; }
+  .result-date-sub { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+
+  /* SHARE BAR */
+
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  .share-btn.cp:hover { border-color:var(--accent); color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  @media(max-width:600px) { header{padding:16px 20px} .hero,.main{padding-left:20px;padding-right:20px} h1{letter-spacing:-3px} .card{padding:24px} .date-row,.add-row{flex-direction:column} .results-grid{grid-template-columns:repeat(2,1fr)} }
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+  <meta name="description" content="İki tarih arasındaki gün, hafta, ay ve yıl farkını hesapla. Tarihe süre ekle veya çıkar. Ücretsiz.">
+  <meta name="keywords" content="iki tarih arası gün sayısı, kaç gündür yaşıyorum hesaplama, tarih farkı bulma, iş günü hesaplama">
+<meta name="robots" content="index, follow">
+  <meta name="author" content="tektik.la">
+  <meta property="og:title" content="Tarih Hesaplama Aracı — İki Tarih Arası Fark | tektik.la">
+  <meta property="og:description" content="İki tarih arasındaki gün, hafta, ay ve yıl farkını hesapla. Tarihe süre ekle veya çıkar. Ücretsiz.">
+  <meta property="og:url" content="https://tektik.la/tarih">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="tektik.la">
+  <meta property="og:image" content="https://tektik.la/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tarih Hesaplama — tektik.la">
+  <meta name="twitter:description" content="İki tarih arasındaki farkı hesapla. Tarihe gün, hafta, ay veya yıl ekle. Ücretsiz online araç.">
+  <meta name="twitter:image" content="https://tektik.la/og-image.png">
+  <link rel="canonical" href="https://tektik.la/tarih">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="hc">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">tarih hesaplama</div>
+    <h1 id="hero-h1">tarihler<br><em>arası fark</em></h1>
+    <p class="hero-sub" id="hero-sub">İki tarih arasındaki gün, hafta, ay ve yıl farkını hesapla.</p>
+  </div>
+  <div class="main">
+
+    <!-- DIFF CARD -->
+    <div class="card">
+      <div class="card-title" id="diff-title">İki Tarih <em>Arası Fark</em></div>
+      <div class="card-desc" id="diff-desc">Başlangıç ve bitiş tarihi seçin</div>
+      <div class="date-row">
+        <div class="date-field"><div class="field-label" id="l-start">Başlangıç</div><input type="date" id="date1" oninput="calcDiff()"></div>
+        <div class="date-field"><div class="field-label" id="l-end">Bitiş</div><input type="date" id="date2" oninput="calcDiff()"></div>
+      </div>
+      <div class="results-grid">
+        <div class="result-box"><div class="result-num" id="r-days">—</div><div class="result-lbl" id="rl-days">Gün</div></div>
+        <div class="result-box"><div class="result-num" id="r-weeks">—</div><div class="result-lbl" id="rl-weeks">Hafta</div></div>
+        <div class="result-box"><div class="result-num" id="r-months">—</div><div class="result-lbl" id="rl-months">Ay</div></div>
+        <div class="result-box"><div class="result-num" id="r-years">—</div><div class="result-lbl" id="rl-years">Yıl</div></div>
+      </div>
+      <div class="detail-box" id="detail-box" style="display:none"></div>
+    </div>
+
+    <!-- ADD CARD -->
+    <div class="card">
+      <div class="card-title" id="add-title">Tarihe <em>Süre Ekle</em></div>
+      <div class="card-desc" id="add-desc">Bir tarihe gün, hafta veya ay ekleyerek yeni tarihi bul</div>
+      <div class="add-row">
+        <div class="add-field"><div class="field-label" id="l-base">Başlangıç tarihi</div><input type="date" id="base-date" oninput="calcAdd()"></div>
+        <div class="add-field"><div class="field-label" id="l-amount">Miktar</div><input type="number" id="add-amount" placeholder="30" oninput="calcAdd()"></div>
+        <div class="add-field"><div class="field-label" id="l-unit">Birim</div>
+          <select id="add-unit" onchange="calcAdd()">
+            <option value="days" id="opt-days">Gün</option>
+            <option value="weeks" id="opt-weeks">Hafta</option>
+            <option value="months" id="opt-months">Ay</option>
+            <option value="years" id="opt-years">Yıl</option>
+          </select>
+        </div>
+      </div>
+      <div class="result-date" id="add-result" style="display:none">
+        <div class="result-date-num" id="add-result-date">—</div>
+        <div class="result-date-sub" id="add-result-sub">—</div>
+      </div>
+    </div>
+
+  </div>
+
+    
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/iki-tarih-arasi-sure-hesaplama" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    İki Tarih Arası Süre Hesaplama
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">İki Tarih Arasındaki Farkı Anında Hesapla</h2>
+<p class="seo-desc">İki tarih arasında kaç gün, hafta veya ay geçtiğini merak mı ediyorsun? tektik.la/tarih ile karmaşık takvim hesaplamalarına son veriyoruz. Kayıt yok, reklam yok; sadece tarihleri seç ve sonucu gör.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Tarih hesaplama — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Ftarih&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=Tarih hesaplama — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Ftarih" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/tarih&text=Tarih hesaplama — tektik.la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/tarih&title=Tarih%20Hesaplama%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/tarih').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+<script>
+let theme=localStorage.getItem('tektik-theme')||'dark';
+const lang = 'tr';
+document.documentElement.setAttribute('data-theme',theme);
+
+const tx={
+  tr:{ heroTag:'tarih hesaplama', heroH1:'tarihler<br><em>arası fark</em>', heroSub:'İki tarih arasındaki gün, hafta, ay ve yıl farkını hesapla.', diffTitle:'İki Tarih <em>Arası Fark</em>', diffDesc:'Başlangıç ve bitiş tarihi seçin', lStart:'Başlangıç', lEnd:'Bitiş', rlDays:'Gün', rlWeeks:'Hafta', rlMonths:'Ay', rlYears:'Yıl', addTitle:'Tarihe <em>Süre Ekle</em>', addDesc:'Bir tarihe gün, hafta veya ay ekleyerek yeni tarihi bul', lBase:'Başlangıç tarihi', lAmount:'Miktar', lUnit:'Birim', optDays:'Gün', optWeeks:'Hafta', optMonths:'Ay', optYears:'Yıl', footerText:'© 2025 — Tüm araçlar ücretsiz', detailFn:(d,w,m,y,wd)=>`<strong>${d}</strong> gün · <strong>${w}</strong> hafta · <strong>${m}</strong> ay · <strong>${y}</strong> yıl<br>Hafta içi gün: <strong>${wd}</strong>`, addSubFn:(n,u,base)=>`${base} tarihinden ${n} ${u} sonra` },
+  en:{ heroTag:'date calculator', heroH1:'date<br><em>difference</em>', heroSub:'Calculate days, weeks, months and years between two dates.', diffTitle:'Date <em>Difference</em>', diffDesc:'Select start and end date', lStart:'Start', lEnd:'End', rlDays:'Days', rlWeeks:'Weeks', rlMonths:'Months', rlYears:'Years', addTitle:'Add <em>Duration</em> to Date', addDesc:'Add days, weeks or months to find a new date', lBase:'Start date', lAmount:'Amount', lUnit:'Unit', optDays:'Days', optWeeks:'Weeks', optMonths:'Months', optYears:'Years', footerText:'© 2025 — All tools free', detailFn:(d,w,m,y,wd)=>`<strong>${d}</strong> days · <strong>${w}</strong> weeks · <strong>${m}</strong> months · <strong>${y}</strong> years<br>Weekdays: <strong>${wd}</strong>`, addSubFn:(n,u,base)=>`${n} ${u} after ${base}` }
+};
+
+function toggleTheme(){ theme=theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',theme); localStorage.setItem('tektik-theme',theme); }
+
+function countWeekdays(d1,d2){
+  let count=0, cur=new Date(d1);
+  while(cur<=d2){ const day=cur.getDay(); if(day!==0&&day!==6) count++; cur.setDate(cur.getDate()+1); }
+  return count;
+}
+
+function calcDiff(){
+  const v1=document.getElementById('date1').value;
+  const v2=document.getElementById('date2').value;
+  if(!v1||!v2) return;
+  const d1=new Date(v1), d2=new Date(v2);
+  const ms=Math.abs(d2-d1);
+  const days=Math.round(ms/86400000);
+  const weeks=Math.floor(days/7);
+  const months=Math.floor(days/30.44);
+  const years=Math.floor(days/365.25);
+  const wd=countWeekdays(d1<d2?d1:d2, d1<d2?d2:d1);
+  document.getElementById('r-days').textContent=days.toLocaleString();
+  document.getElementById('r-weeks').textContent=weeks.toLocaleString();
+  document.getElementById('r-months').textContent=months.toLocaleString();
+  document.getElementById('r-years').textContent=years.toLocaleString();
+  const det=document.getElementById('detail-box');
+  det.style.display='block';
+  det.innerHTML=tx[lang].detailFn(days.toLocaleString(),weeks.toLocaleString(),months.toLocaleString(),years.toLocaleString(),wd.toLocaleString());
+}
+
+function calcAdd(){
+  const base=document.getElementById('base-date').value;
+  const amount=parseInt(document.getElementById('add-amount').value);
+  const unit=document.getElementById('add-unit').value;
+  if(!base||isNaN(amount)) return;
+  const d=new Date(base);
+  if(unit==='days') d.setDate(d.getDate()+amount);
+  else if(unit==='weeks') d.setDate(d.getDate()+amount*7);
+  else if(unit==='months') d.setMonth(d.getMonth()+amount);
+  else if(unit==='years') d.setFullYear(d.getFullYear()+amount);
+  const locale=lang==='tr'?'tr-TR':'en-GB';
+  const resultStr=d.toLocaleDateString(locale,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const unitLabel=document.getElementById('add-unit').options[document.getElementById('add-unit').selectedIndex].text.toLowerCase();
+  const res=document.getElementById('add-result');
+  res.style.display='block';
+  document.getElementById('add-result-date').textContent=resultStr;
+  document.getElementById('add-result-sub').textContent=tx[lang].addSubFn(amount,unitLabel,new Date(base).toLocaleDateString(locale,{day:'numeric',month:'long',year:'numeric'}));
+}
+
+// Set today's date as default
+const today=new Date().toISOString().split('T')[0];
+document.getElementById('date1').value=today;
+document.getElementById('base-date').value=today;
+
+</script>
+
+<script>
+  // Telegram Mini App init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Tam ekran aç
+    tg.ready();  // Telegram'a hazır olduğumuzu bildir
+    
+    // Back button - alt sayfalarda geri dön
+    if (window.location.pathname !== '/') {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => window.history.back());
+    }
+  }
+</script>
+
+
+<script>
+(function(){
+  var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+  var EN = {"title": "Date Difference Calculator | tektik.la", "meta": "Calculate the duration between two dates in days, weeks, and months. Free, no sign up.", "h1": "Date Difference<br><em>Calculator</em>", "sub": "Calculate time duration between any two dates instantly for free.", "lblStart": "Start Date", "lblEnd": "End Date", "btnCalc": "Calculate", "btnToday": "Today", "lblDays": "Days", "lblWeeks": "Weeks", "lblMonths": "Months", "lblYears": "Years"};
+  var TR = { title: document.title, meta: (document.querySelector('meta[name="description"]')||{}).content||'' };
+
+  function apply(lang) {
+    var d = lang === 'en' ? EN : TR;
+    if (d.title) document.title = d.title;
+    var m = document.querySelector('meta[name="description"]');
+    if (m && d.meta) m.content = d.meta;
+    var h1 = document.getElementById('hero-h1');
+    if (h1) h1.innerHTML = lang==='en' ? EN.h1 : (TR.h1||h1.innerHTML);
+    var sub = document.getElementById('hero-sub');
+    if (sub) sub.textContent = lang==='en' ? EN.sub : (TR.sub||sub.textContent);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = function(lang) {
+    currentLang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    apply(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    TR.h1 = (document.getElementById('hero-h1')||{}).innerHTML||null;
+    TR.sub = (document.getElementById('hero-sub')||{}).textContent||null;
+    if (currentLang==='en') apply('en');
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', currentLang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', currentLang==='en');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('tektik-theme')||'dark')</script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Görsel Kırpıcı & Boyutlandırıcı — Ücretsiz Online | tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="Görseli online kırp ve boyutlandır. PNG, JPEG, WebP destekli. Kayıt yok, ücretsiz.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent:#c8f530;--card:#141414;--input-bg:#0f0f0f}
+:root[data-theme="light"]{--bg:#f5f5f0;--bg3:#e5e4de;--border:#d0cfc8;--text:#111;--text2:#666;--accent:#5a9e00;--card:#fff;--input-bg:#fafaf8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0}
+.content{position:relative;z-index:1 max-width:860px; margin:0 auto;}
+header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text)}
+.logo span{color:var(--accent)}
+.ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s}
+.ctrl-btn:hover,.ctrl-btn.active{border-color:var(--accent);color:var(--accent)}
+.hero{padding:60px 40px 30px;max-width:1000px;margin:0 auto}
+.hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--accent)}
+h1{font-size:clamp(48px,7vw,88px);font-weight:800;line-height:0.95;letter-spacing:-3px;margin-bottom:12px}
+h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:15px;color:var(--text2)}
+.main{max-width:1000px;margin:0 auto;padding:0 40px 80px}
+.upload-zone{border:2px dashed var(--border);border-radius:16px;padding:60px 40px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:20px;background:var(--card)}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:rgba(200,245,48,0.04)}
+.upload-icon{font-size:40px;margin-bottom:12px}
+.upload-text{font-size:16px;font-weight:600;margin-bottom:6px}
+.upload-sub{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)}
+.editor-layout{display:grid;grid-template-columns:1fr 320px;gap:20px;display:none}
+.canvas-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;min-height:400px;display:flex;align-items:center;justify-content:center}
+canvas{max-width:100%;display:block}
+.crop-overlay{position:absolute;inset:0;cursor:crosshair}
+.controls-panel{display:flex;flex-direction:column;gap:12px}
+.panel-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.panel-title{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.mode-tabs{display:flex;gap:4px;background:var(--bg3);border-radius:8px;padding:3px;margin-bottom:12px}
+.mode-tab{flex:1;padding:7px;text-align:center;font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;border-radius:5px;border:none;background:transparent;color:var(--text2);transition:all 0.2s}
+.mode-tab.active{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.input-group{margin-bottom:10px}
+.input-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);margin-bottom:5px;display:flex;justify-content:space-between}
+input[type="number"]{width:100%;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-family:'Space Mono',monospace;font-size:12px;outline:none}
+input[type="number"]:focus{border-color:var(--accent)}
+input[type="range"]{width:100%;accent-color:var(--accent)}
+.aspect-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px}
+.aspect-btn{padding:7px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:10px;cursor:pointer;transition:all 0.2s;text-align:center}
+.aspect-btn:hover,.aspect-btn.active{border-color:var(--accent);color:var(--accent)}
+.format-row{display:flex;gap:6px;margin-bottom:12px}
+.fmt-btn{flex:1;padding:7px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:10px;cursor:pointer;transition:all 0.2s;text-align:center}
+.fmt-btn.active{border-color:var(--accent);color:var(--accent)}
+.btn-primary{width:100%;background:var(--accent);color:#0a0a0a;border:none;padding:12px;border-radius:10px;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-bottom:8px}
+.btn-primary:hover{opacity:0.9}
+.btn-sec{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:10px;border-radius:10px;font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s}
+.btn-sec:hover{border-color:var(--accent);color:var(--accent)}
+.info-badge{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);text-align:center;margin-top:6px}
+.share-bar{border-top:1px solid var(--border);padding:20px 40px;display:flex; justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.share-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;text-decoration:none;transition:all 0.2s;cursor:pointer}
+.share-btn:hover{transform:translateY(-1px)}
+.share-btn.x:hover{border-color:#1d9bf0;color:#1d9bf0}
+.share-btn.wa:hover{border-color:#25d366;color:#25d366}
+.share-btn.tg:hover{border-color:#2aabee;color:#2aabee}
+.share-btn.cp:hover{border-color:var(--accent);color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:20px 40px;display:flex;justify-content:center}
+footer p,footer a{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)!important;text-decoration:none!important}
+footer a:hover{color:var(--accent)!important}
+.crop-rect{position:absolute;border:2px solid var(--accent);pointer-events:none}
+.crop-rect::before{content:'';position:absolute;inset:0;background:rgba(200,245,48,0.08)}
+@media(max-width:768px){header{padding:16px 20px}.hero,.main{padding-left:20px;padding-right:20px}.editor-layout{grid-template-columns:1fr}}
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<link rel="canonical" href="https://tektik.la/gorsel-kirp">
+<meta name="keywords" content="online fotoğraf kırpma, ücretsiz görsel kırpıcı, twitter kapak fotoğrafı boyutu, çözünürlük bozmadan resim kırp">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+
+  <div class="hero">
+    <div class="hero-tag">görsel araç</div>
+    <h1>görsel kırpıcı <em>& boyutlandırıcı</em></h1>
+    <p class="hero-sub">Görseli kırp, boyutlandır, döndür. PNG, JPEG, WebP. Kayıt yok, ücretsiz.</p>
+  </div>
+
+  <div class="main">
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+      <input type="file" id="file-input" accept="image/*" style="display:none" onchange="loadImage(this.files[0])">
+      <div class="upload-icon">🖼</div>
+      <div class="upload-text">Görseli buraya sürükle veya tıkla</div>
+      <div class="upload-sub">PNG, JPEG, WebP, GIF desteklenir</div>
+    </div>
+
+    <div class="editor-layout" id="editor-layout">
+      <div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="preview-canvas"></canvas>
+          <div class="crop-overlay" id="crop-overlay" style="display:none"
+            onmousedown="cropStart(event)" onmousemove="cropMove(event)" onmouseup="cropEnd(event)"></div>
+          <div class="crop-rect" id="crop-rect" style="display:none"></div>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);margin-top:8px;text-align:center" id="img-info"></div>
+      </div>
+
+      <div class="controls-panel">
+        <div class="panel-card">
+          <div class="panel-title">İşlem</div>
+          <div class="mode-tabs">
+            <button class="mode-tab active" onclick="setMode('resize')">Boyutlandır</button>
+            <button class="mode-tab" onclick="setMode('crop')">Kırp</button>
+          </div>
+
+          <div id="resize-panel">
+            <div class="input-group">
+              <div class="input-label"><span>Genişlik (px)</span><span id="w-val"></span></div>
+              <input type="number" id="w-input" min="1" max="8000" oninput="onWidthChange(this.value)">
+            </div>
+            <div class="input-group">
+              <div class="input-label"><span>Yükseklik (px)</span><span id="h-val"></span></div>
+              <input type="number" id="h-input" min="1" max="8000" oninput="onHeightChange(this.value)">
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);margin-bottom:12px;cursor:pointer">
+              <input type="checkbox" id="lock-ratio" checked style="accent-color:var(--accent)"> En/boy oranını koru
+            </label>
+            <div class="panel-title" style="margin-top:4px">Hazır Boyutlar</div>
+            <div class="aspect-btns">
+              <div class="aspect-btn" onclick="setPreset(1080,1080)">1080²<br><span style="font-size:9px">Instagram</span></div>
+              <div class="aspect-btn" onclick="setPreset(1920,1080)">1920×1080<br><span style="font-size:9px">HD</span></div>
+              <div class="aspect-btn" onclick="setPreset(1200,630)">1200×630<br><span style="font-size:9px">OG</span></div>
+              <div class="aspect-btn" onclick="setPreset(800,800)">800²<br><span style="font-size:9px">Kare</span></div>
+              <div class="aspect-btn" onclick="setPreset(1080,1920)">1080×1920<br><span style="font-size:9px">Story</span></div>
+              <div class="aspect-btn" onclick="setPreset(400,400)">400²<br><span style="font-size:9px">Avatar</span></div>
+            </div>
+          </div>
+
+          <div id="crop-panel" style="display:none">
+            <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);margin-bottom:12px">Görselin üzerinde sürükleyerek kırpma alanı seç</div>
+            <div id="crop-info" style="font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:12px"></div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-title">Format & Kalite</div>
+          <div class="format-row">
+            <div class="fmt-btn active" onclick="setFormat('jpeg')">JPEG</div>
+            <div class="fmt-btn" onclick="setFormat('png')">PNG</div>
+            <div class="fmt-btn" onclick="setFormat('webp')">WebP</div>
+          </div>
+          <div class="input-group" id="quality-group">
+            <div class="input-label"><span>Kalite</span><span id="q-val">90%</span></div>
+            <input type="range" id="quality" min="10" max="100" value="90" oninput="document.getElementById('q-val').textContent=this.value+'%'">
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <button class="btn-primary" id="action-btn" onclick="doAction()">⬇ İndir</button>
+          <button class="btn-sec" onclick="resetImage()">↺ Sıfırla</button>
+          <div class="info-badge" id="size-info"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/online-gorsel-kirpma-araci" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Online Görsel Kırpma Aracı
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Fotoğraflarını İstediğin Boyutta Hızlıca Kırp</h2>
+<p class="seo-desc">Görselini hemen düzenlemen mi gerekiyor? Fotoğrafını yükle, oranını seç ve anında indir. Görsellerin asla sunucularımızda saklanmaz. Instagram, Twitter ve diğer platformlar için hazır boyutlar mevcut.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Görsel kırpıcı — tektik.la&url=https://tektik.la/gorsel-kirp" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=https://tektik.la/gorsel-kirp" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/gorsel-kirp" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/gorsel-kirp').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+<script>
+function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('tektik-theme',t)}
+var _lang=localStorage.getItem('tektik-lang')||'tr';
+function setLang(l){_lang=l;localStorage.setItem('tektik-lang',l);document.getElementById('btn-tr').classList.toggle('active',l==='tr');document.getElementById('btn-en').classList.toggle('active',l==='en')}
+setLang(_lang);
+
+var img=null,origW=0,origH=0,currentMode='resize',currentFormat='jpeg';
+var cropActive=false,cropStartX=0,cropStartY=0,cropX=0,cropY=0,cropW=0,cropH=0;
+
+function dragOver(e){e.preventDefault();document.getElementById('upload-zone').classList.add('drag-over')}
+function dragLeave(){document.getElementById('upload-zone').classList.remove('drag-over')}
+function dropFile(e){e.preventDefault();dragLeave();var f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))loadImage(f)}
+
+function loadImage(file){
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    img=new Image();
+    img.onload=function(){
+      origW=img.width;origH=img.height;
+      document.getElementById('w-input').value=origW;
+      document.getElementById('h-input').value=origH;
+      document.getElementById('upload-zone').style.display='none';
+      document.getElementById('editor-layout').style.display='grid';
+      document.getElementById('img-info').textContent=origW+'×'+origH+' px — '+file.name;
+      drawPreview();
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function drawPreview(){
+  var canvas=document.getElementById('preview-canvas');
+  var wrap=document.getElementById('canvas-wrap');
+  var maxW=wrap.offsetWidth-2,maxH=500;
+  var scale=Math.min(maxW/origW,maxH/origH,1);
+  canvas.width=origW*scale;canvas.height=origH*scale;
+  var ctx=canvas.getContext('2d');
+  ctx.drawImage(img,0,0,canvas.width,canvas.height);
+}
+
+function setMode(m){
+  currentMode=m;
+  document.querySelectorAll('.mode-tab').forEach(function(b,i){b.classList.toggle('active',['resize','crop'][i]===m)});
+  document.getElementById('resize-panel').style.display=m==='resize'?'block':'none';
+  document.getElementById('crop-panel').style.display=m==='crop'?'block':'none';
+  document.getElementById('crop-overlay').style.display=m==='crop'?'block':'none';
+  document.getElementById('crop-rect').style.display='none';
+  document.getElementById('action-btn').textContent=m==='resize'?'⬇ Boyutlandır & İndir':'✂ Kırp & İndir';
+}
+
+function onWidthChange(v){
+  if(document.getElementById('lock-ratio').checked&&origW){
+    var ratio=origH/origW;
+    document.getElementById('h-input').value=Math.round(v*ratio);
+  }
+}
+function onHeightChange(v){
+  if(document.getElementById('lock-ratio').checked&&origH){
+    var ratio=origW/origH;
+    document.getElementById('w-input').value=Math.round(v*ratio);
+  }
+}
+function setPreset(w,h){document.getElementById('w-input').value=w;document.getElementById('h-input').value=h}
+function setFormat(f){
+  currentFormat=f;
+  document.querySelectorAll('.fmt-btn').forEach(function(b){b.classList.toggle('active',b.textContent===f.toUpperCase())});
+  document.getElementById('quality-group').style.display=f==='png'?'none':'block';
+}
+
+var cropScaleX=1,cropScaleY=1;
+function cropStart(e){
+  if(!img)return;
+  cropActive=true;
+  var rect=document.getElementById('preview-canvas').getBoundingClientRect();
+  cropScaleX=origW/rect.width;cropScaleY=origH/rect.height;
+  cropStartX=e.clientX-rect.left;cropStartY=e.clientY-rect.top;
+  document.getElementById('crop-rect').style.display='block';
+}
+function cropMove(e){
+  if(!cropActive)return;
+  var rect=document.getElementById('preview-canvas').getBoundingClientRect();
+  var x=Math.max(0,Math.min(e.clientX-rect.left,rect.width));
+  var y=Math.max(0,Math.min(e.clientY-rect.top,rect.height));
+  var l=Math.min(cropStartX,x),t=Math.min(cropStartY,y);
+  var w=Math.abs(x-cropStartX),h=Math.abs(y-cropStartY);
+  var cr=document.getElementById('crop-rect');
+  var wr=document.getElementById('canvas-wrap').getBoundingClientRect();
+  cr.style.left=(rect.left-wr.left+l)+'px';cr.style.top=(rect.top-wr.top+t)+'px';
+  cr.style.width=w+'px';cr.style.height=h+'px';
+  cropX=Math.round(l*cropScaleX);cropY=Math.round(t*cropScaleY);
+  cropW=Math.round(w*cropScaleX);cropH=Math.round(h*cropScaleY);
+  document.getElementById('crop-info').textContent=cropW+'×'+cropH+' px ('+cropX+', '+cropY+')';
+}
+function cropEnd(){cropActive=false}
+
+function doAction(){
+  if(!img)return;
+  var canvas=document.createElement('canvas');
+  var ctx=canvas.getContext('2d');
+  var mime='image/'+currentFormat;
+  var quality=parseInt(document.getElementById('quality').value)/100;
+  if(currentMode==='resize'){
+    var w=parseInt(document.getElementById('w-input').value)||origW;
+    var h=parseInt(document.getElementById('h-input').value)||origH;
+    canvas.width=w;canvas.height=h;
+    ctx.drawImage(img,0,0,w,h);
+  } else {
+    if(!cropW||!cropH){alert('Önce kırpma alanı seçin');return}
+    canvas.width=cropW;canvas.height=cropH;
+    ctx.drawImage(img,cropX,cropY,cropW,cropH,0,0,cropW,cropH);
+  }
+  canvas.toBlob(function(blob){
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;a.download='tektik-gorsel.'+currentFormat;a.click();
+    var kb=Math.round(blob.size/1024);
+    document.getElementById('size-info').textContent='Dosya boyutu: ~'+kb+' KB';
+  },mime,quality);
+}
+
+function resetImage(){
+  img=null;
+  document.getElementById('upload-zone').style.display='block';
+  document.getElementById('editor-layout').style.display='none';
+  document.getElementById('file-input').value='';
+}
+</script>
+
+<script>
+(function(){
+  var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+  var EN = {"title": "Online Image Cropper | tektik.la", "meta": "Crop images to specific aspect ratios or custom sizes. Free, no sign up.", "h1": "Easy Image<br><em>Cropper</em>", "sub": "Crop your photos to perfection for free without any registration or ads.", "btnSelect": "Select Image", "lblRatio": "Aspect Ratio", "optFree": "Free", "optSquare": "Square (1:1)", "optPortrait": "Portrait (4:5)", "optLandscape": "Landscape (16:9)", "btnCrop": "Crop & Download", "btnRotate": "Rotate 90°"};
+  var TR = { title: document.title, meta: (document.querySelector('meta[name="description"]')||{}).content||'' };
+
+  function apply(lang) {
+    var d = lang === 'en' ? EN : TR;
+    if (d.title) document.title = d.title;
+    var m = document.querySelector('meta[name="description"]');
+    if (m && d.meta) m.content = d.meta;
+    var h1 = document.getElementById('hero-h1');
+    if (h1) h1.innerHTML = lang==='en' ? EN.h1 : (TR.h1||h1.innerHTML);
+    var sub = document.getElementById('hero-sub');
+    if (sub) sub.textContent = lang==='en' ? EN.sub : (TR.sub||sub.textContent);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = function(lang) {
+    currentLang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    apply(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    TR.h1 = (document.getElementById('hero-h1')||{}).innerHTML||null;
+    TR.sub = (document.getElementById('hero-sub')||{}).textContent||null;
+    if (currentLang==='en') apply('en');
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', currentLang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', currentLang==='en');
+  });
+})();
+</script>
+</body>
+</html>

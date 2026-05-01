@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tektik.la — yönlendiriliyor</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Space Mono', monospace;
+    background: #0a0a0a;
+    color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
+  .logo { font-size: 20px; font-weight: 700; color: #888; }
+  .logo span { color: #c8f530; }
+  .msg { font-size: 13px; color: #555; }
+  .spinner {
+    width: 24px; height: 24px;
+    border: 2px solid #222;
+    border-top-color: #c8f530;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error-msg { color: #ff6060; font-size: 13px; display: none; }
+  .home-link { color: #c8f530; text-decoration: none; font-size: 12px; margin-top: 8px; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+</head>
+<body>
+<div class="logo">tektik<span>.la</span></div>
+<div class="spinner" id="spinner"></div>
+<div class="msg" id="msg">Yönlendiriliyor...</div>
+<div class="error-msg" id="error">Bu link bulunamadı veya süresi dolmuş.</div>
+<a href="/" class="home-link" id="home-link" style="display:none">← Ana sayfaya dön</a>
+
+<script>
+const SUPABASE_URL = 'https://yxeuthrfqdquqgzwuxvm.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4ZXV0aHJmcWRxdXFnend1eHZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxODE4NzcsImV4cCI6MjA4Nzc1Nzg3N30.h3hNyF_VOuCgnahMfzdGPXzohqDe4pOVVcjHhYyq06s';
+
+async function redirect() {
+  const slug = window.location.pathname.replace('/', '').trim();
+  if (!slug) { window.location.href = '/'; return; }
+
+  try {
+    // Fetch link
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/links?slug=eq.${slug}&select=original_url,expires_at`,
+      {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+    const data = await res.json();
+
+    if (!data || data.length === 0) throw new Error('not found');
+
+    const { original_url, expires_at } = data[0];
+
+    // Check expiry
+    if (new Date(expires_at) < new Date()) throw new Error('expired');
+
+    // Increment click count (fire and forget)
+    fetch(`${SUPABASE_URL}/rest/v1/links?slug=eq.${slug}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      },
+      body: JSON.stringify({ click_count: data[0].click_count + 1 })
+    });
+
+    window.location.href = original_url;
+  } catch (e) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('msg').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('home-link').style.display = 'inline';
+  }
+}
+
+redirect();
+</script>
+</body>
+</html>

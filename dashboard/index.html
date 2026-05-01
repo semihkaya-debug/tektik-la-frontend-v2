@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — tektik.la</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f7fa;
+    min-height: 100vh;
+    color: #333;
+  }
+  
+  .navbar {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .navbar-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #667eea;
+    text-decoration: none;
+  }
+  
+  .nav-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  
+  .btn-primary {
+    background: #667eea;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: #5568d3;
+  }
+  
+  .btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+  }
+  
+  .btn-secondary:hover {
+    background: #e0e0e0;
+  }
+  
+  .btn-danger {
+    background: #ef4444;
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background: #dc2626;
+  }
+  
+  .btn-small {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .url-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .url-banner .url {
+    font-size: 18px;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+  }
+  
+  .card h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .form-row {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  
+  input, textarea, select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border 0.2s;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .item-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .item-content .title {
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  
+  .item-content .url {
+    color: #666;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .add-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+  
+  .add-form-social {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+  
+  @media (max-width: 600px) {
+    .add-form, .add-form-social { 
+      grid-template-columns: 1fr; 
+    }
+  }
+  
+  .empty {
+    text-align: center;
+    color: #999;
+    padding: 30px;
+    font-style: italic;
+  }
+  
+  .alert {
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    display: none;
+  }
+  
+  .alert-success { background: #d1fae5; color: #065f46; }
+  .alert-error { background: #fee2e2; color: #991b1b; }
+  
+  .trial-badge {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-content">
+    <a href="/" class="logo">⚡ tektik.la</a>
+    <div class="nav-actions">
+      <span id="trialBadge" class="trial-badge"></span>
+      <a id="profileLink" href="#" target="_blank" class="btn btn-secondary">Profilimi Gör 👁️</a>
+      <button onclick="Auth.logout()" class="btn btn-secondary">Çıkış</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  
+  <div class="url-banner">
+    <div>
+      <div style="opacity:0.9;font-size:14px;margin-bottom:5px;">Profil URL'in:</div>
+      <div class="url" id="profileUrl">tektik.la/...</div>
+    </div>
+    <button onclick="copyUrl()" class="btn btn-secondary">📋 Kopyala</button>
+  </div>
+  
+  <div id="alert" class="alert"></div>
+  
+  <div class="card">
+    <h2>👤 Profil Bilgilerin</h2>
+    
+    <div class="form-row">
+      <label>Görünen İsim / Başlık</label>
+      <input type="text" id="title" placeholder="Ahmet Yılmaz">
+    </div>
+    
+    <div class="form-row">
+      <label>Biyografi</label>
+      <textarea id="bio" placeholder="Kendinden bahset..."></textarea>
+    </div>
+    
+    <div class="form-row">
+      <label>Avatar URL (opsiyonel)</label>
+      <input type="url" id="avatar_url" placeholder="https://...">
+    </div>
+    
+    <button onclick="saveProfile()" class="btn btn-primary">💾 Kaydet</button>
+  </div>
+  
+  <div class="card">
+    <h2>🔗 Linklerin</h2>
+    
+    <div class="add-form">
+      <div>
+        <label>Başlık</label>
+        <input type="text" id="newLinkTitle" placeholder="YouTube Kanalım">
+      </div>
+      <div>
+        <label>URL</label>
+        <input type="url" id="newLinkUrl" placeholder="https://...">
+      </div>
+      <button onclick="addLink()" class="btn btn-primary">+ Ekle</button>
+    </div>
+    
+    <div id="linksList" style="margin-top: 20px;">
+      <div class="empty">Henüz link yok. Yukarıdan ekleyebilirsin.</div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h2>📱 Sosyal Medya</h2>
+    
+    <div class="add-form-social">
+      <div>
+        <label>Platform</label>
+        <select id="newSocialPlatform">
+          <option value="twitter">𝕏 (Twitter)</option>
+          <option value="instagram">📷 Instagram</option>
+          <option value="threads">🧵 Threads</option>
+          <option value="linkedin">💼 LinkedIn</option>
+          <option value="youtube">▶️ YouTube</option>
+          <option value="tiktok">🎵 TikTok</option>
+          <option value="twitch">🎮 Twitch</option>
+          <option value="kick">⚡ Kick</option>
+          <option value="github">💻 GitHub</option>
+        </select>
+      </div>
+      <div>
+        <label>URL</label>
+        <input type="url" id="newSocialUrl" placeholder="https://...">
+      </div>
+      <button onclick="addSocial()" class="btn btn-primary">+ Ekle</button>
+    </div>
+    
+    <div id="socialsList" style="margin-top: 20px;">
+      <div class="empty">Henüz sosyal medya hesabı yok.</div>
+    </div>
+  </div>
+  
+</div>
+
+<script src="/config.js"></script>
+<script>
+  // Giriş kontrolü
+  if (!Auth.isLoggedIn()) {
+    window.location.href = '/login';
+  }
+  
+  const user = Auth.getUser();
+  const alertEl = document.getElementById('alert');
+  
+  // URL banner doldur
+  document.getElementById('profileUrl').textContent = `tektik.la/${user.slug}`;
+  document.getElementById('profileLink').href = `/${user.slug}`;
+  
+  // Trial bilgisi
+  const trialEnd = new Date(user.trial_ends_at);
+  const daysLeft = Math.ceil((trialEnd - new Date()) / (1000 * 60 * 60 * 24));
+  document.getElementById('trialBadge').textContent = 
+    user.is_paid ? '✅ Premium' : `🎁 ${daysLeft} gün ücretsiz kaldı`;
+  
+  function showAlert(message, type = 'success') {
+    alertEl.textContent = message;
+    alertEl.className = `alert alert-${type}`;
+    alertEl.style.display = 'block';
+    setTimeout(() => alertEl.style.display = 'none', 3000);
+  }
+  
+  function copyUrl() {
+    navigator.clipboard.writeText(`https://tektik.la/${user.slug}`);
+    showAlert('📋 URL kopyalandı!');
+  }
+  
+  // Profil bilgilerini yükle
+  async function loadProfile() {
+    try {
+      const data = await apiCall(`/api/profile/${user.slug}`);
+      document.getElementById('title').value = data.profile.title || '';
+      document.getElementById('bio').value = data.profile.bio || '';
+      document.getElementById('avatar_url').value = data.profile.avatar_url || '';
+      
+      renderLinks(data.links);
+      renderSocials(data.socials);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  async function saveProfile() {
+    try {
+      await apiCall('/api/profile', {
+        method: 'PUT',
+        body: JSON.stringify({
+          title: document.getElementById('title').value,
+          bio: document.getElementById('bio').value,
+          avatar_url: document.getElementById('avatar_url').value
+        })
+      });
+      showAlert('✅ Profil güncellendi!');
+    } catch (error) {
+      showAlert(error.message, 'error');
+    }
+  }
+  
+  function renderLinks(links) {
+    const container = document.getElementById('linksList');
+    if (!links || links.length === 0) {
+      container.innerHTML = '<div class="empty">Henüz link yok. Yukarıdan ekleyebilirsin.</div>';
+      return;
+    }
+    
+    container.innerHTML = links.map(link => `
+      <div class="item">
+        <div class="item-content">
+          <div class="title">🔗 ${escapeHtml(link.title)}</div>
+          <div class="url">${escapeHtml(link.url)}</div>
+        </div>
+        <button onclick="deleteLink('${link.id}')" class="btn btn-danger btn-small">Sil</button>
+      </div>
+    `).join('');
+  }
+  
+  function renderSocials(socials) {
+    const container = document.getElementById('socialsList');
+    if (!socials || socials.length === 0) {
+      container.innerHTML = '<div class="empty">Henüz sosyal medya hesabı yok.</div>';
+      return;
+    }
+    
+    const icons = {
+      twitter: '𝕏', instagram: '📷', threads: '🧵', linkedin: '💼',
+      youtube: '▶️', tiktok: '🎵', twitch: '🎮', kick: '⚡', github: '💻'
+    };
+    
+    container.innerHTML = socials.map(s => `
+      <div class="item">
+        <div class="item-content">
+          <div class="title">${icons[s.platform] || ''} ${s.platform}</div>
+          <div class="url">${escapeHtml(s.url)}</div>
+        </div>
+        <button onclick="deleteSocial('${s.id}')" class="btn btn-danger btn-small">Sil</button>
+      </div>
+    `).join('');
+  }
+  
+  async function addLink() {
+    const title = document.getElementById('newLinkTitle').value.trim();
+    const url = document.getElementById('newLinkUrl').value.trim();
+    
+    if (!title || !url) {
+      showAlert('Başlık ve URL gerekli', 'error');
+      return;
+    }
+    
+    try {
+      await apiCall('/api/links', {
+        method: 'POST',
+        body: JSON.stringify({ title, url })
+      });
+      
+      document.getElementById('newLinkTitle').value = '';
+      document.getElementById('newLinkUrl').value = '';
+      showAlert('✅ Link eklendi!');
+      loadProfile();
+    } catch (error) {
+      showAlert(error.message, 'error');
+    }
+  }
+  
+  async function deleteLink(id) {
+    if (!confirm('Bu linki silmek istediğine emin misin?')) return;
+    
+    try {
+      await apiCall(`/api/links/${id}`, { method: 'DELETE' });
+      showAlert('Link silindi');
+      loadProfile();
+    } catch (error) {
+      showAlert(error.message, 'error');
+    }
+  }
+  
+  async function addSocial() {
+    const platform = document.getElementById('newSocialPlatform').value;
+    const url = document.getElementById('newSocialUrl').value.trim();
+    
+    if (!url) {
+      showAlert('URL gerekli', 'error');
+      return;
+    }
+    
+    try {
+      await apiCall('/api/social', {
+        method: 'POST',
+        body: JSON.stringify({ platform, url })
+      });
+      
+      document.getElementById('newSocialUrl').value = '';
+      showAlert('✅ Sosyal medya eklendi!');
+      loadProfile();
+    } catch (error) {
+      showAlert(error.message, 'error');
+    }
+  }
+  
+  async function deleteSocial(id) {
+    if (!confirm('Silmek istediğine emin misin?')) return;
+    
+    try {
+      await apiCall(`/api/social/${id}`, { method: 'DELETE' });
+      showAlert('Silindi');
+      loadProfile();
+    } catch (error) {
+      showAlert(error.message, 'error');
+    }
+  }
+  
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  // Sayfa yüklendiğinde verileri çek
+  loadProfile();
+</script>
+
+</body>
+</html>

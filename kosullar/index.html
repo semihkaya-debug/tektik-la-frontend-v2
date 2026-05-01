@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kullanım Koşulları — tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent: #c8f530; --card:#141414; }
+  :root[data-theme="light"] { --bg: #f5f5f0; --bg3: #e5e4de; --border: #d0cfc8; --text:#111; --text2: #666; --accent: #5a9e00; --card:#fff; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+  header{ padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  .main { max-width:720px; margin:0 auto; padding:60px 40px 80px; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; letter-spacing:-3px; margin-bottom:8px; line-height:0.95; }
+  .updated { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); margin-bottom:48px; }
+
+  .section { margin-bottom:40px; }
+  .section h2 { font-size:18px; font-weight:800; margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+  .section p { font-size:15px; line-height:1.8; color:var(--text2); margin-bottom:12px; }
+  .section p:last-child { margin-bottom:0; }
+  .section ul { padding-left:20px; }
+  .section ul li { font-size:15px; line-height:1.8; color:var(--text2); margin-bottom:8px; }
+  .section ul li::marker { color:var(--accent); }
+  .section a { color:var(--accent); text-decoration:none; }
+  .section a:hover { text-decoration:underline; }
+
+  .highlight { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; padding:16px 20px; margin-bottom:16px; }
+  .highlight p { color:var(--text); font-size:14px; }
+
+
+  /* SHARE BAR */
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  .share-btn.cp:hover { border-color:var(--accent); color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  footer a { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); text-decoration:none; }
+  footer a:hover { color:var(--accent); }
+  @media(max-width:600px) { header{padding:16px 20px} .main{padding:40px 20px 60px} footer{padding:16px 20px} h1{letter-spacing:-3px} }
+  .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<meta name="description" content="tektik.la kullanım koşulları. Hizmet şartları, gizlilik ve kabul edilebilir kullanım politikası.">
+<meta name="robots" content="index, follow">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<link rel="canonical" href="https://tektik.la/kosullar">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+  </div>
+</header>
+
+  <div class="main">
+    <div class="hero-tag">yasal</div>
+    <h1>Kullanım<br>Koşulları</h1>
+    <p class="updated">Son güncelleme: Mart 2025</p>
+
+    <div class="section">
+      <div class="highlight">
+        <p>tektik.la, ücretsiz online araçlar sunan bir platformdur. Bu siteyi kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>1. Hizmet Tanımı</h2>
+      <p>tektik.la; link kısaltma, QR kod oluşturma, şifre üretme ve diğer yardımcı araçları ücretsiz olarak sunan bir web platformudur. Platform, herhangi bir kayıt gerektirmeksizin kullanılabilir.</p>
+      <p>Hizmetler "olduğu gibi" sunulmaktadır. Kesintisiz veya hatasız erişim garanti edilmez.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Kabul Edilebilir Kullanım</h2>
+      <p>Platformu yalnızca yasal amaçlarla kullanabilirsiniz. Aşağıdaki kullanımlar kesinlikle yasaktır:</p>
+      <ul>
+        <li>Yasadışı içeriklere (çocuk istismarı, terör propagandası, uyuşturucu ticareti vb.) yönlendiren linkler oluşturmak</li>
+        <li>Kimlik avı (phishing), dolandırıcılık veya kötü amaçlı yazılım dağıtımı amacıyla kullanmak</li>
+        <li>Telif hakkıyla korunan içerikleri izinsiz dağıtmak</li>
+        <li>Spam, toplu mesaj veya otomatik kötüye kullanım amaçlı bot trafiği oluşturmak</li>
+        <li>Platformun altyapısına zarar verecek saldırılar gerçekleştirmek</li>
+        <li>Başkalarının gizlilik haklarını ihlal eden içerikler paylaşmak</li>
+        <li>Türkiye Cumhuriyeti yasaları veya uluslararası hukuk kapsamında suç teşkil eden herhangi bir faaliyette bulunmak</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>3. Yer Sağlayıcı Sorumluluğu</h2>
+      <p>tektik.la, 5651 sayılı Bilgi Toplumu Hizmetleri Kanunu kapsamında bir yer sağlayıcıdır. Platform, kullanıcılar tarafından oluşturulan içerikleri önceden denetleme yükümlülüğü taşımamakta; ancak yasadışı içeriklere ilişkin bildirimleri aldığında gerekli işlemleri yerine getirmektedir.</p>
+      <p>Kullanıcılar tarafından oluşturulan içeriklerden doğan hukuki sorumluluk, ilgili içeriği oluşturan kullanıcıya aittir.</p>
+    </div>
+
+    <div class="section">
+      <h2>4. İçerik Kaldırma ve Bildirim</h2>
+      <p>Platformda yasadışı, zararlı veya haklarınızı ihlal ettiğini düşündüğünüz bir içerik fark ederseniz aşağıdaki adrese bildirebilirsiniz:</p>
+      <div class="highlight">
+        <p>📧 <a href="mailto:info@tektik.la">info@tektik.la</a></p>
+        <p style="margin-top:8px; font-size:13px;">Bildiriminizde ilgili linki, ihlal türünü ve iletişim bilgilerinizi belirtiniz. Geçerli bildirimler en kısa sürede değerlendirilecektir.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>5. Gizlilik</h2>
+      <p>tektik.la, kullanıcılardan kişisel veri toplamamaktadır. Kayıt sistemi bulunmamaktadır.</p>
+      <p>Link kısaltma hizmeti kapsamında kısaltılan URL'ler teknik altyapıda saklanmaktadır. Bu veriler üçüncü taraflarla paylaşılmaz, reklam amacıyla kullanılmaz.</p>
+      <p>Site, kullanım istatistiklerini ölçmek amacıyla Google Analytics kullanmaktadır. Bu hizmet tarafından toplanan anonim veriler Google'ın gizlilik politikasına tabidir.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Fikri Mülkiyet</h2>
+      <p>tektik.la'nın tasarımı, kodu ve içeriği platform sahiplerine aittir. İzinsiz kopyalanması, dağıtılması veya ticari amaçla kullanılması yasaktır.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Hizmet Değişiklikleri</h2>
+      <p>tektik.la, herhangi bir bildirim yapmaksızın hizmetlerini değiştirme, askıya alma veya sonlandırma hakkını saklı tutar. Kullanım koşulları önceden haber verilmeksizin güncellenebilir.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Uygulanacak Hukuk</h2>
+      <p>Bu koşullar Türkiye Cumhuriyeti hukukuna tabidir. Uyuşmazlıklarda Türkiye mahkemeleri yetkilidir.</p>
+    </div>
+
+    <div class="section">
+      <h2>İletişim</h2>
+      <p>Sorularınız için: <a href="mailto:info@tektik.la">info@tektik.la</a></p>
+    </div>
+
+  </div>
+
+    <div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Kullanım koşulları — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Fkosullar&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=Kullanım koşulları — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Fkosullar" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/kosullar&text=Kullanım koşulları — tektik.la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/kosullar').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+<script>
+let theme = localStorage.getItem('tektik-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', theme);
+function toggleTheme() { theme=theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',theme); localStorage.setItem('tektik-theme',theme); }
+</script>
+
+<script>
+  // Telegram Mini App init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Tam ekran aç
+    tg.ready();  // Telegram'a hazır olduğumuzu bildir
+    
+    // Back button - alt sayfalarda geri dön
+    if (window.location.pathname !== '/') {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => window.history.back());
+    }
+  }
+</script>
+</body>
+</html>

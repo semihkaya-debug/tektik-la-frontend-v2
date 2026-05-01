@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0;url=/fis?tip=fatura">
+<link rel="canonical" href="https://tektik.la/fis">
+<title>Fatura Oluşturucu — tektik.la</title>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<script>window.location.replace('/fis?tip=fatura');</script>
+
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'invoice<br><em>generator</em>',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var _trLabels = [("Faturayı Düzenleyen", "From (Issuer)"), ("Fatura Kesilen", "Bill To"), ("Fatura No", "Invoice No"), ("Son Ödeme Tarihi", "Due Date"), ("Birim Fiyat", "Unit Price"), ("+ Satır Ekle", "+ Add Row"), ("Satırı Sil", "Delete Row"), ("PDF İndir", "Download PDF"), ("Önizle", "Preview"), ("Ara Toplam", "Subtotal"), ("Genel Toplam", "Grand Total")];
+  var _trPhs = [("Şirket adı", "Company name"), ("Ürün veya hizmet açıklaması", "Product or service description")];
+
+  function _applyDomLang(lang) {
+    if (lang === 'en') {
+      // Text node'larını çevir
+      _trLabels.forEach(function(pair) {
+        document.querySelectorAll('button, label, span, div, p, h2, h3, td, th, option').forEach(function(el) {
+          if (el.children.length === 0 && el.textContent.trim() === pair[0]) {
+            el.textContent = pair[1];
+          }
+        });
+      });
+      // Placeholder'ları çevir
+      _trPhs.forEach(function(pair) {
+        document.querySelectorAll('input, textarea').forEach(function(el) {
+          if (el.placeholder && el.placeholder.indexOf(pair[0]) !== -1) {
+            el.placeholder = el.placeholder.replace(pair[0], pair[1]);
+          }
+        });
+      });
+    }
+  }
+
+  var _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    if (_origSetLang) _origSetLang(lang);
+    _applyDomLang(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = localStorage.getItem('tektik-lang') || 'tr';
+    if (lang === 'en') _applyDomLang('en');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renk Paleti Oluşturucu — HEX, RGB, HSL | tektik.la</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] {
+    --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a;
+    --text:#f0f0f0; --text2:#888; --accent: #c8f530; --accent2: #a0d020;
+    --card:#141414; --input-bg:#0f0f0f;
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f5f0; --bg3: #e5e4de; --border: #d0cfc8;
+    --text:#111111; --text2: #666; --accent: #5a9e00; --accent2: #4a8500;
+    --card:#ffffff; --input-bg:#fafaf8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background 0.3s,color 0.3s; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+
+  header{ padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .hc { display:flex; gap:10px; align-items:center; }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover,.ctrl-btn.active { border-color:var(--accent); color:var(--accent); }
+
+  .hero { padding:60px 40px 40px; max-width:860px; margin:0 auto; animation:fadeUp 0.6s ease; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; letter-spacing:-3px; margin-bottom:12px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); line-height:1.7; }
+
+  .main { max-width:860px; margin:0 auto; padding:0 40px 80px; animation:fadeUp 0.6s ease 0.1s both; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; margin-bottom:16px; }
+
+  /* COLOR PREVIEW */
+  .color-preview {
+    width:100%; height:160px; border-radius:12px; margin-bottom:24px;
+    background:#c8f530; transition:background 0.2s; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Mono',monospace; font-size:11px; color:rgba(0,0,0,0.3);
+    letter-spacing:2px; position:relative; overflow:hidden;
+  }
+  .color-preview-inner { position:relative; z-index:1; }
+  .color-input-hidden { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+
+  /* FORMAT CARDS */
+  .formats-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:24px; }
+  .format-card { background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:16px; cursor:pointer; transition:all 0.2s; }
+  .format-card:hover { border-color:var(--accent); }
+  .format-card.active { border-color:var(--accent); background:rgba(200,245,48,0.05); }
+  .format-name { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+  .format-value { font-family:'Space Mono',monospace; font-size:13px; color:var(--accent); font-weight:700; word-break:break-all; }
+
+  /* INPUT AREA */
+  .input-section { margin-bottom:20px; }
+  .input-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+
+  .input-row { display:flex; gap:10px; }
+  input[type="text"] {
+    flex:1; background:var(--input-bg); border:1px solid var(--border); color:var(--text);
+    padding:14px 16px; border-radius:10px; font-family:'Space Mono',monospace;
+    font-size:14px; outline:none; transition:border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color:var(--accent); }
+  input[type="text"]::placeholder { color:var(--text2); }
+  input[type="text"].error { border-color:#ff4d4d; }
+
+  .btn-primary { background:var(--accent); color:#0a0a0a; border:none; padding:14px 24px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+  .btn-primary:hover { background:var(--accent2); transform:translateY(-1px); }
+
+  /* SLIDERS */
+  .sliders-section { padding-top:24px; border-top:1px solid var(--border); }
+  .slider-row { margin-bottom:16px; }
+  .slider-header{ margin-bottom:8px; }
+  .slider-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  .slider-val { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); font-weight:700; }
+
+  input[type="range"] {
+    width:100%; height:6px; border-radius:3px; outline:none; cursor:pointer;
+    -webkit-appearance:none; appearance:none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:var(--accent); cursor:pointer; border:2px solid var(--bg);
+  }
+  #slider-r { background:linear-gradient(to right,#000,#ff0000); }
+  #slider-g { background:linear-gradient(to right,#000,#00ff00); }
+  #slider-b { background:linear-gradient(to right,#000,#0000ff); }
+  #slider-a { background:linear-gradient(to right,transparent,var(--text)); }
+
+  /* PALETTE */
+  .palette-section { margin-top:32px; padding-top:32px; border-top:1px solid var(--border); }
+  .palette-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+  .palette-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .swatch { height:60px; border-radius:8px; cursor:pointer; transition:transform 0.15s; position:relative; border:1px solid rgba(255,255,255,0.05); }
+  .swatch:hover { transform:scale(1.05); }
+  .swatch-label { font-family:'Space Mono',monospace; font-size:9px; text-align:center; margin-top:4px; color:var(--text2); }
+
+  /* SHARE BAR */
+
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  .share-btn.cp:hover { border-color:var(--accent); color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  @media (max-width:600px) {
+    header { padding:16px 20px; }
+    .hero,.main { padding-left:20px; padding-right:20px; }
+    h1 { letter-spacing:-3px; }
+    .card { padding:24px; }
+    .formats-grid { grid-template-columns:1fr; }
+    .palette-grid { grid-template-columns:repeat(3,1fr); }
+  }
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+  <meta name="description" content="Online renk paleti aracı. HEX, RGB ve HSL kodlarını görüntüle, renk uyumu bul, palette kaydet. Ücretsiz.">
+  <meta name="keywords" content="hex rgb çevirme online, rgb hsl dönüştürücü, ücretsiz renk kodu bulma, web tasarım renk dönüşümü">
+<meta name="robots" content="index, follow">
+  <meta name="author" content="tektik.la">
+  <meta property="og:title" content="Renk Paleti Oluşturucu — HEX, RGB, HSL | tektik.la">
+  <meta property="og:description" content="Online renk paleti aracı. HEX, RGB ve HSL kodlarını görüntüle, renk uyumu bul, palette kaydet. Ücretsiz.">
+  <meta property="og:url" content="https://tektik.la/renk">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="tektik.la">
+  <meta property="og:image" content="https://tektik.la/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Renk Dönüştürücü — tektik.la">
+  <meta name="twitter:description" content="HEX, RGB, HSL renk kodları arasında anında dönüşüm. Uyumlu renk paleti oluştur. Ücretsiz.">
+  <meta name="twitter:image" content="https://tektik.la/og-image.png">
+  <link rel="canonical" href="https://tektik.la/renk">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="hc">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">renk dönüştürücü</div>
+    <h1 id="hero-h1">renkleri<br><em>dönüştür</em></h1>
+    <p class="hero-sub" id="hero-sub">HEX, RGB, HSL, RGBA arası anında dönüşüm. Renk paletini keşfet.</p>
+  </div>
+
+  <div class="main">
+    <div class="card">
+      <!-- PREVIEW -->
+      <div class="color-preview" id="color-preview" onclick="document.getElementById('color-picker').click()">
+        <input type="color" id="color-picker" class="color-input-hidden" value="#c8f530" oninput="onPickerChange(this.value)">
+        <div class="color-preview-inner" id="preview-text">tıkla & seç</div>
+      </div>
+
+      <!-- FORMAT CARDS -->
+      <div class="formats-grid">
+        <div class="format-card active" id="fc-hex" onclick="copyFormat('hex')">
+          <div class="format-name">HEX</div>
+          <div class="format-value" id="fv-hex">#c8f530</div>
+        </div>
+        <div class="format-card" id="fc-rgb" onclick="copyFormat('rgb')">
+          <div class="format-name">RGB</div>
+          <div class="format-value" id="fv-rgb">rgb(200,245,48)</div>
+        </div>
+        <div class="format-card" id="fc-hsl" onclick="copyFormat('hsl')">
+          <div class="format-name">HSL</div>
+          <div class="format-value" id="fv-hsl">hsl(82,91%,57%)</div>
+        </div>
+        <div class="format-card" id="fc-rgba" onclick="copyFormat('rgba')">
+          <div class="format-name">RGBA</div>
+          <div class="format-value" id="fv-rgba">rgba(200,245,48,1)</div>
+        </div>
+        <div class="format-card" id="fc-hsla" onclick="copyFormat('hsla')">
+          <div class="format-name">HSLA</div>
+          <div class="format-value" id="fv-hsla">hsla(82,91%,57%,1)</div>
+        </div>
+        <div class="format-card" id="fc-css" onclick="copyFormat('css')">
+          <div class="format-name">CSS VAR</div>
+          <div class="format-value" id="fv-css">--color: #c8f530</div>
+        </div>
+      </div>
+
+      <!-- MANUAL INPUT -->
+      <div class="input-section">
+        <div class="input-label" id="input-label">Manuel Giriş</div>
+        <div class="input-row">
+          <input type="text" id="manual-input" placeholder="#c8f530 veya rgb(200,245,48)" oninput="onManualInput(this.value)">
+          <button class="btn-primary" onclick="onManualInput(document.getElementById('manual-input').value)" id="convert-btn">Dönüştür</button>
+        </div>
+      </div>
+
+      <!-- RGB SLIDERS -->
+      <div class="sliders-section">
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">R</span><span class="slider-val" id="val-r">200</span></div>
+          <input type="range" id="slider-r" min="0" max="255" value="200" oninput="onSliderChange()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">G</span><span class="slider-val" id="val-g">245</span></div>
+          <input type="range" id="slider-g" min="0" max="255" value="245" oninput="onSliderChange()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label">B</span><span class="slider-val" id="val-b">48</span></div>
+          <input type="range" id="slider-b" min="0" max="255" value="48" oninput="onSliderChange()">
+        </div>
+        <div class="slider-row">
+          <div class="slider-header"><span class="slider-label" id="alpha-label">Alpha (şeffaflık)</span><span class="slider-val" id="val-a">1.00</span></div>
+          <input type="range" id="slider-a" min="0" max="100" value="100" oninput="onSliderChange()">
+        </div>
+      </div>
+
+      <!-- PALETTE -->
+      <div class="palette-section">
+        <div class="palette-label" id="palette-label">Uyumlu Renkler</div>
+        <div class="palette-grid" id="palette-grid"></div>
+      </div>
+    </div>
+  </div>
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/renk-kodlari-donusturme-rehberi" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Renk Kodları Dönüştürme Rehberi
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">HEX, RGB ve HSL Renk Kodlarını Anında Dönüştür</h2>
+<p class="seo-desc">Tasarımcılar ve geliştiriciler için renk kodları arasında kaybolmadan saniyeler içinde dönüşüm yapabilirsin. HEX kodunu yapıştırıp RGB karşılığını alabilir veya tam tersini gerçekleştirebilirsin. Ücretsiz, kayıt gerektirmez.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Renk paleti aracı — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Frenk&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=Renk paleti aracı — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Frenk" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/renk&text=Renk paleti aracı — tektik.la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/renk&title=Renk%20D%C3%B6n%C3%BC%C5%9Ft%C3%BCr%C3%BCc%C3%BC%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/renk').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+let theme = localStorage.getItem('tektik-theme') || 'dark';
+const lang = 'tr';
+document.documentElement.setAttribute('data-theme', theme);
+
+let currentR=200, currentG=245, currentB=48, currentA=1.0;
+let lastCopied = null;
+
+const tx = {
+  tr: {
+    heroTag:'renk dönüştürücü', heroH1:'renkleri<br><em>dönüştür</em>',
+    heroSub:'HEX, RGB, HSL, RGBA arası anında dönüşüm. Renk paletini keşfet.',
+    inputLabel:'Manuel Giriş', convertBtn:'Dönüştür',
+    alphaLabel:'Alpha (şeffaflık)', paletteLabel:'Uyumlu Renkler',
+    placeholder:'#c8f530 veya rgb(200,245,48)',
+    clickPick:'tıkla & seç', copied:'✓',
+    footerText:'© 2025 — Tüm araçlar ücretsiz',
+  },
+  en: {
+    heroTag:'color converter', heroH1:'convert<br><em>colors</em>',
+    heroSub:'Instant conversion between HEX, RGB, HSL, RGBA. Explore your color palette.',
+    inputLabel:'Manual Input', convertBtn:'Convert',
+    alphaLabel:'Alpha (opacity)', paletteLabel:'Complementary Colors',
+    placeholder:'#c8f530 or rgb(200,245,48)',
+    clickPick:'click & pick', copied:'✓',
+    footerText:'© 2025 — All tools free',
+  }
+};
+
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('tektik-theme', theme);
+}
+
+// ── CONVERSIONS ───────────────────────────────────────
+function rgbToHex(r,g,b) {
+  return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
+}
+
+function hexToRgb(hex) {
+  hex = hex.replace('#','');
+  if (hex.length === 3) hex = hex.split('').map(c=>c+c).join('');
+  const n = parseInt(hex, 16);
+  return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
+}
+
+function rgbToHsl(r,g,b) {
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h,s,l=(max+min)/2;
+  if (max===min) { h=s=0; }
+  else {
+    const d=max-min;
+    s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max) {
+      case r: h=(g-b)/d+(g<b?6:0); break;
+      case g: h=(b-r)/d+2; break;
+      case b: h=(r-g)/d+4; break;
+    }
+    h/=6;
+  }
+  return { h:Math.round(h*360), s:Math.round(s*100), l:Math.round(l*100) };
+}
+
+function parseColor(str) {
+  str = str.trim();
+  if (str.startsWith('#')) {
+    const rgb = hexToRgb(str);
+    if (rgb) return { ...rgb, a:1 };
+  }
+  let m = str.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+))?\s*\)/);
+  if (m) return { r:+m[1], g:+m[2], b:+m[3], a:m[4]!==undefined?+m[4]:1 };
+  m = str.match(/hsla?\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*(?:,\s*([\d.]+))?\s*\)/);
+  if (m) {
+    const rgb = hslToRgb(+m[1], +m[2], +m[3]);
+    return { ...rgb, a:m[4]!==undefined?+m[4]:1 };
+  }
+  return null;
+}
+
+function hslToRgb(h,s,l) {
+  s/=100; l/=100;
+  const k=n=>(n+h/30)%12;
+  const a=s*Math.min(l,1-l);
+  const f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));
+  return { r:Math.round(f(0)*255), g:Math.round(f(8)*255), b:Math.round(f(4)*255) };
+}
+
+function updateAll() {
+  const r=currentR, g=currentG, b=currentB, a=currentA;
+  const hex = rgbToHex(r,g,b);
+  const hsl = rgbToHsl(r,g,b);
+
+  // Preview
+  const preview = document.getElementById('color-preview');
+  preview.style.background = `rgba(${r},${g},${b},${a})`;
+  document.getElementById('color-picker').value = hex;
+
+  // Determine text color
+  const luma = 0.299*r + 0.587*g + 0.114*b;
+  const textColor = luma > 128 ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)';
+  document.getElementById('preview-text').style.color = textColor;
+
+  // Format values
+  document.getElementById('fv-hex').textContent = hex;
+  document.getElementById('fv-rgb').textContent = `rgb(${r},${g},${b})`;
+  document.getElementById('fv-hsl').textContent = `hsl(${hsl.h},${hsl.s}%,${hsl.l}%)`;
+  document.getElementById('fv-rgba').textContent = `rgba(${r},${g},${b},${a.toFixed(2)})`;
+  document.getElementById('fv-hsla').textContent = `hsla(${hsl.h},${hsl.s}%,${hsl.l}%,${a.toFixed(2)})`;
+  document.getElementById('fv-css').textContent = `--color: ${hex}`;
+
+  // Sliders
+  document.getElementById('slider-r').value = r;
+  document.getElementById('slider-g').value = g;
+  document.getElementById('slider-b').value = b;
+  document.getElementById('slider-a').value = Math.round(a*100);
+  document.getElementById('val-r').textContent = r;
+  document.getElementById('val-g').textContent = g;
+  document.getElementById('val-b').textContent = b;
+  document.getElementById('val-a').textContent = a.toFixed(2);
+
+  // Palette
+  generatePalette(hsl.h, hsl.s, hsl.l);
+}
+
+function generatePalette(h, s, l) {
+  const grid = document.getElementById('palette-grid');
+  const swatches = [
+    { label:'Comp', h:(h+180)%360, s, l },
+    { label:'Split 1', h:(h+150)%360, s, l },
+    { label:'Split 2', h:(h+210)%360, s, l },
+    { label:'Triad 1', h:(h+120)%360, s, l },
+    { label:'Triad 2', h:(h+240)%360, s, l },
+    { label:'Light', h, s, l:Math.min(90,l+20) },
+    { label:'Dark', h, s, l:Math.max(10,l-20) },
+    { label:'Sat+', h, s:Math.min(100,s+20), l },
+    { label:'Sat-', h, s:Math.max(0,s-20), l },
+    { label:'Mono', h, s:0, l },
+  ];
+  grid.innerHTML = swatches.map(sw => {
+    const rgb = hslToRgb(sw.h, sw.s, sw.l);
+    const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+    return `<div>
+      <div class="swatch" style="background:${hex}" title="${hex}" onclick="setColor(${rgb.r},${rgb.g},${rgb.b},1)"></div>
+      <div class="swatch-label">${sw.label}</div>
+    </div>`;
+  }).join('');
+}
+
+function setColor(r,g,b,a) {
+  currentR=r; currentG=g; currentB=b; currentA=a;
+  updateAll();
+}
+
+function onPickerChange(hex) {
+  const rgb = hexToRgb(hex);
+  if (rgb) { currentR=rgb.r; currentG=rgb.g; currentB=rgb.b; updateAll(); }
+}
+
+function onSliderChange() {
+  currentR = parseInt(document.getElementById('slider-r').value);
+  currentG = parseInt(document.getElementById('slider-g').value);
+  currentB = parseInt(document.getElementById('slider-b').value);
+  currentA = parseInt(document.getElementById('slider-a').value) / 100;
+  updateAll();
+}
+
+function onManualInput(val) {
+  const parsed = parseColor(val);
+  const input = document.getElementById('manual-input');
+  if (parsed) {
+    input.classList.remove('error');
+    currentR=parsed.r; currentG=parsed.g; currentB=parsed.b; currentA=parsed.a;
+    updateAll();
+  } else if (val.length > 2) {
+    input.classList.add('error');
+  }
+}
+
+function copyFormat(type) {
+  const values = {
+    hex: document.getElementById('fv-hex').textContent,
+    rgb: document.getElementById('fv-rgb').textContent,
+    hsl: document.getElementById('fv-hsl').textContent,
+    rgba: document.getElementById('fv-rgba').textContent,
+    hsla: document.getElementById('fv-hsla').textContent,
+    css: document.getElementById('fv-css').textContent,
+  };
+  navigator.clipboard.writeText(values[type]).then(() => {
+    const card = document.getElementById('fc-'+type);
+    const valEl = document.getElementById('fv-'+type);
+    const orig = valEl.textContent;
+    valEl.textContent = '✓ ' + tx[lang].copied;
+    setTimeout(() => { valEl.textContent = orig; }, 1500);
+  });
+}
+
+// Init
+updateAll();
+</script>
+
+<script>
+  // Telegram Mini App init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Tam ekran aç
+    tg.ready();  // Telegram'a hazır olduğumuzu bildir
+    
+    // Back button - alt sayfalarda geri dön
+    if (window.location.pathname !== '/') {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => window.history.back());
+    }
+  }
+</script>
+
+
+<script>
+(function(){
+  var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+  var EN = {"title": "Color Converter HEX, RGB, HSL | tektik.la", "meta": "Convert color codes between HEX, RGB, and HSL formats instantly. Free, no sign up.", "h1": "Color Code<br><em>Converter</em>", "sub": "Convert any color format in seconds for free with no account or ads.", "lblHex": "HEX", "lblRgb": "RGB", "lblHsl": "HSL", "btnCopy": "Copy", "lblPick": "Select color", "lblPalette": "Palette"};
+  var TR = { title: document.title, meta: (document.querySelector('meta[name="description"]')||{}).content||'' };
+
+  function apply(lang) {
+    var d = lang === 'en' ? EN : TR;
+    if (d.title) document.title = d.title;
+    var m = document.querySelector('meta[name="description"]');
+    if (m && d.meta) m.content = d.meta;
+    var h1 = document.getElementById('hero-h1');
+    if (h1) h1.innerHTML = lang==='en' ? EN.h1 : (TR.h1||h1.innerHTML);
+    var sub = document.getElementById('hero-sub');
+    if (sub) sub.textContent = lang==='en' ? EN.sub : (TR.sub||sub.textContent);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = function(lang) {
+    currentLang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    apply(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    TR.h1 = (document.getElementById('hero-h1')||{}).innerHTML||null;
+    TR.sub = (document.getElementById('hero-sub')||{}).textContent||null;
+    if (currentLang==='en') apply('en');
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', currentLang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', currentLang==='en');
+  });
+})();
+</script>
+</body>
+</html>

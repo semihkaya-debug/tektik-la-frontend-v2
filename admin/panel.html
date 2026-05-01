@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - User Ekleme</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root[data-theme="dark"] {
+      --bg: #0a0a0a;
+      --bg2: #141414;
+      --bg3: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --text2: #888;
+      --accent: #c8f530;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Bricolage Grotesque', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px; }
+    
+    .container { max-width: 600px; margin: 0 auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    
+    .header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 20px; font-weight: 600; margin: 0; }
+    .logout-btn { background: transparent; border: 1px solid var(--border); color: var(--text2); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+    .logout-btn:hover { border-color: #ff6060; color: #ff6060; }
+    
+    .form-section { padding: 24px; }
+    
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; color: var(--text); }
+    
+    input, textarea { width: 100%; padding: 10px 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; }
+    input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 80px; }
+    
+    .form-note { font-size: 12px; color: var(--text2); margin-top: 4px; }
+    
+    .message { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; display: none; }
+    .message.show { display: block; }
+    .message.success { background: #4ecdc420; color: #4ecdc4; border: 1px solid #4ecdc440; }
+    .message.error { background: #ff606020; color: #ff6060; border: 1px solid #ff606040; }
+    
+    .slug-preview { padding: 8px 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text2); margin-top: 4px; }
+    
+    .trial-info { padding: 12px 16px; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; font-size: 12px; color: var(--text2); margin-top: 16px; }
+    
+    .email-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .email-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; color: var(--text); }
+    
+    .email-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 16px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); line-height: 1.6; white-space: pre-wrap; word-break: break-word; max-height: 250px; overflow-y: auto; margin-bottom: 12px; }
+    
+    .copy-btn { padding: 8px 12px; background: var(--bg3); border: 1px solid var(--border); color: var(--text2); border-radius: 4px; cursor: pointer; font-size: 12px; transition: all 0.2s; }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+    
+    .form-actions { display: flex; gap: 12px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+    
+    button.primary { flex: 1; padding: 12px 16px; background: var(--accent); color: #000; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; }
+    button.primary:hover:not(:disabled) { opacity: 0.9; }
+    button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    button.secondary { flex: 1; padding: 12px 16px; background: transparent; color: var(--text); border: 1px solid var(--border); border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; }
+    button.secondary:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Admin Panel</h1>
+      <button class="logout-btn" onclick="logout()">Çıkış</button>
+    </div>
+
+    <div class="form-section">
+      <div id="message" class="message"></div>
+
+      <form id="userForm">
+        <div class="form-group">
+          <label>Profil Adresi *</label>
+          <input type="text" id="slug" placeholder="ahmet" required pattern="[a-z0-9_-]+">
+          <div class="slug-preview">tektik.la/<span id="slugPreview">ahmet</span></div>
+          <div class="form-note">Küçük harf, rakam, tire ve alt çizgi</div>
+        </div>
+
+        <div class="form-group">
+          <label>E-posta *</label>
+          <input type="email" id="email" placeholder="kullanici@example.com" required>
+          <div class="form-note">Aktivasyon ve iletişim için</div>
+        </div>
+
+        <div class="form-group">
+          <label>Bio</label>
+          <textarea id="bio" placeholder="Ben kimim..."></textarea>
+          <div class="form-note">Opsiyonel</div>
+        </div>
+
+        <div class="form-group">
+          <label>Avatar URL</label>
+          <input type="url" id="avatar" placeholder="https://...">
+          <div class="form-note">Opsiyonel</div>
+        </div>
+
+        <div class="trial-info">
+          ✓ Trial: 30 gün otomatik<br>
+          ✓ Bitiş: <span id="trialDate">30 gün sonra</span>
+        </div>
+
+        <div class="email-section">
+          <div class="email-title">Email Önizlemesi</div>
+          <div class="email-box" id="emailPreview">Formu doldur...</div>
+          <button type="button" class="copy-btn" onclick="copyEmail()">📋 Kopyala</button>
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="secondary">Temizle</button>
+          <button type="submit" class="primary" id="submitBtn">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://yxeuthrfqdquqgzwuxvm.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_O4VYFOGfeqjd1ctSMseamg_j3TKgf12';
+
+    // Check login
+    if (!sessionStorage.getItem('adminLoggedIn')) {
+      window.location.href = '/admin';
+    }
+
+    // Slug preview
+    document.getElementById('slug').addEventListener('input', (e) => {
+      const slug = e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+      e.target.value = slug;
+      document.getElementById('slugPreview').textContent = slug || 'ahmet';
+      updateEmail();
+      updateTrialDate();
+    });
+
+    document.getElementById('email').addEventListener('input', updateEmail);
+    document.getElementById('bio').addEventListener('input', updateEmail);
+
+    function updateTrialDate() {
+      const date = new Date();
+      date.setDate(date.getDate() + 30);
+      document.getElementById('trialDate').textContent = date.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function updateEmail() {
+      const slug = document.getElementById('slug').value || '[slug]';
+      const email = document.getElementById('email').value || '[email]';
+      
+      const template = `Konu: tektik.la - Profilin Hazır! 🎉
+
+Merhaba ${slug}!
+
+Tebrikler! tektik.la üzerinde profilin oluşturuldu.
+
+📍 Profil Adresin:
+https://tektik.la/${slug}
+
+🎯 Şu anda yapabileceklerin:
+• Profil fotoğrafı ekle
+• Bio yazı değiştir
+• Sosyal medya linkleri ekle
+• Kişisel linkler ekle
+
+⏱️ Deneme Süresi: 30 gün ücretsiz
+
+Sorularınız varsa:
+📧 info@tektik.la
+
+Hoşça kalın!
+tektik.la Ekibi`;
+      
+      document.getElementById('emailPreview').textContent = template;
+    }
+
+    function copyEmail() {
+      navigator.clipboard.writeText(document.getElementById('emailPreview').textContent).then(() => {
+        showMessage('✓ Kopyalandı!', 'success');
+      });
+    }
+
+    function logout() {
+      sessionStorage.removeItem('adminLoggedIn');
+      window.location.href = '/admin';
+    }
+
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = `message show ${type}`;
+      setTimeout(() => msg.classList.remove('show'), 3000);
+    }
+
+    // Form submit
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const slug = document.getElementById('slug').value;
+      const email = document.getElementById('email').value;
+      const bio = document.getElementById('bio').value;
+      const avatar = document.getElementById('avatar').value;
+
+      if (!slug || !email) {
+        showMessage('❌ Slug ve email gerekli!', 'error');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Yükleniyor...';
+
+      try {
+        const trialEndsAt = new Date();
+        trialEndsAt.setDate(trialEndsAt.getDate() + 30);
+
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/user_profiles`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+          },
+          body: JSON.stringify({
+            slug: slug,
+            email: email,
+            bio: bio || null,
+            avatar_url: avatar || null,
+            trial_ends_at: trialEndsAt.toISOString(),
+            is_paid: false,
+            password: 'temppass123' // Default password
+          })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Hata!');
+        }
+
+        showMessage('✓ User oluşturuldu! Email kopyaladığını seç.', 'success');
+        document.getElementById('userForm').reset();
+        updateEmail();
+        updateTrialDate();
+
+      } catch (error) {
+        showMessage(`❌ Hata: ${error.message}`, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Kaydet';
+      }
+    });
+
+    // Init
+    updateTrialDate();
+    updateEmail();
+  </script>
+</body>
+</html>

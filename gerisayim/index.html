@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geri Sayım Sayacı — Etkinlik ve Doğum Günü | tektik.la</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent: #c8f530; --accent2: #a0d020; --card:#141414; --input-bg:#0f0f0f; }
+  :root[data-theme="light"] { --bg: #f5f5f0; --bg3: #e5e4de; --border: #d0cfc8; --text:#111111; --text2: #666; --accent: #5a9e00; --accent2: #4a8500; --card:#ffffff; --input-bg:#fafaf8; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background 0.3s,color 0.3s; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+  header{ padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .hc { display:flex; gap:10px; }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover,.ctrl-btn.active { border-color:var(--accent); color:var(--accent); }
+  .hero { padding:60px 40px 40px; max-width:860px; margin:0 auto; animation:fadeUp 0.6s ease; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; letter-spacing:-3px; margin-bottom:12px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); line-height:1.7; }
+  .main { max-width:860px; margin:0 auto; padding:0 40px 80px; animation:fadeUp 0.6s ease 0.1s both; display:flex; flex-direction:column; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; }
+  .card-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+  .field { margin-bottom:16px; }
+  .field-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+  input[type="text"], input[type="datetime-local"], input[type="date"] {
+    width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text);
+    padding:12px 16px; border-radius:8px; font-family:'Space Mono',monospace; font-size:14px;
+    outline:none; transition:border-color 0.2s; color-scheme:dark;
+  }
+  input:focus { border-color:var(--accent); }
+  input::placeholder { color:var(--text2); }
+  .btn-primary { background:var(--accent); color:#0a0a0a; border:none; padding:16px 32px; border-radius:10px; font-family:'Space Mono',monospace; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; width:100%; }
+  .btn-primary:hover { background:var(--accent2); transform:translateY(-1px); }
+  .btn-ghost { background:transparent; color:var(--text2); border:1px solid var(--border); padding:12px; border-radius:10px; font-family:'Space Mono',monospace; font-size:12px; cursor:pointer; transition:all 0.2s; width:100%; margin-top:8px; }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* COUNTDOWN DISPLAY */
+  .countdown-display { display:none; }
+  .countdown-display.show { display:block; }
+  .event-title { text-align:center; font-size:clamp(28px,4vw,52px); font-weight:800; letter-spacing:-2px; margin-bottom:10px; line-height:1.1; }
+  .event-subtitle { text-align:center; font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); margin-bottom:36px; letter-spacing:1px; text-transform:uppercase; }
+  .time-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:24px; }
+  .time-box { background:var(--bg3); border:1px solid var(--border); border-radius:14px; padding:20px 8px 14px; text-align:center; position:relative; }
+  .time-num { font-family:'Space Mono',monospace; font-size:clamp(24px,4vw,44px); font-weight:700; color:var(--accent); line-height:1; margin-bottom:8px; transition:color 0.3s; }
+  .time-num.tick { color:var(--text); }
+  .time-label { font-family:'Space Mono',monospace; font-size:9px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; }
+  .progress-bar-wrap { background:var(--bg3); border:1px solid var(--border); border-radius:6px; height:6px; overflow:hidden; margin-bottom:20px; }
+  .progress-bar { height:100%; background:var(--accent); border-radius:6px; transition:width 1s linear; }
+  .share-row { display:flex; gap:10px; }
+  .share-row .btn-ghost { flex:1; margin-top:0; }
+
+  /* FINISHED */
+  .finished { display:none; text-align:center; padding:40px 0; }
+  .finished.show { display:block; }
+  .finished-emoji { font-size:64px; margin-bottom:16px; }
+  .finished-title { font-size:32px; font-weight:800; letter-spacing:-1px; }
+  .finished-sub { font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); margin-top:8px; }
+
+  /* PRESETS */
+  .presets { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .preset-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:8px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:11px; transition:all 0.2s; white-space:nowrap; }
+  .preset-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* SHARE BAR */
+
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  .share-btn.cp:hover { border-color:var(--accent); color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.02)} }
+  @media(max-width:600px) { header{padding:16px 20px} .hero,.main{padding-left:20px;padding-right:20px} h1{letter-spacing:-3px} .card{padding:24px} .time-grid{grid-template-columns:repeat(3,1fr)} .share-row{flex-direction:column} }
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+  <meta name="description" content="Etkinlik, doğum günü veya özel gün için geri sayım oluştur. Link ile paylaş. Ücretsiz online geri sayım.">
+  <meta name="keywords" content="geri sayım sayacı oluştur, sınava kaç gün kaldı, online canlı geri sayım, düğün tatil geri sayım">
+<meta name="robots" content="index, follow">
+  <meta name="author" content="tektik.la">
+  <meta property="og:title" content="Geri Sayım Sayacı — Etkinlik ve Doğum Günü | tektik.la">
+  <meta property="og:description" content="Etkinlik, doğum günü veya özel gün için geri sayım oluştur. Link ile paylaş. Ücretsiz online geri sayım.">
+  <meta property="og:url" content="https://tektik.la/gerisayim">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="tektik.la">
+  <meta property="og:image" content="https://tektik.la/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Geri Sayım Sayacı — tektik.la">
+  <meta name="twitter:description" content="Etkinlik, doğum günü veya düğün için geri sayım oluştur. Link ile paylaş. Ücretsiz.">
+  <meta name="twitter:image" content="https://tektik.la/og-image.png">
+  <link rel="canonical" href="https://tektik.la/gerisayim">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="hc">
+      <button class="ctrl-btn" id="sound-btn" onclick="toggleSound()" title="Ses aç/kapat">🔔</button>
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">geri sayım</div>
+    <h1 id="hero-h1">özel<br><em>geri sayım</em></h1>
+    <p class="hero-sub" id="hero-sub">Etkinlik, doğum günü, düğün için geri sayım oluştur.</p>
+  </div>
+
+  <div class="main">
+
+    <!-- SETUP CARD -->
+    <div class="card" id="setup-card">
+      <div class="card-label" id="lbl-setup">Etkinliği Ayarla</div>
+
+      <div class="field">
+        <div class="field-label" id="lbl-event-name">Etkinlik Adı</div>
+        <input type="text" id="f-event" placeholder="Doğum Günüm 🎂">
+      </div>
+
+      <div class="field">
+        <div class="field-label" id="lbl-target">Hedef Tarih & Saat</div>
+        <input type="datetime-local" id="f-target">
+      </div>
+
+      <div class="field">
+        <div class="field-label" id="lbl-presets-label">Hızlı Seç</div>
+        <div class="presets" id="presets-row"></div>
+      </div>
+
+      <button class="btn-primary" onclick="startCountdown()" id="start-btn">▶ Geri Sayımı Başlat</button>
+    </div>
+
+    <!-- COUNTDOWN CARD -->
+    <div class="card countdown-display" id="countdown-card">
+      <div style="text-align:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="width:20px;height:1px;background:var(--accent);display:inline-block"></span><span id="display-event-label">GERİ SAYIM</span><span style="width:20px;height:1px;background:var(--accent);display:inline-block"></span></div>
+      <div class="event-title" id="display-event-title">Etkinlik</div>
+      <div class="event-subtitle" id="display-event-subtitle">—</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+      <div class="time-grid">
+        <div class="time-box"><div class="time-num" id="t-years">00</div><div class="time-label" id="tl-years">Yıl</div></div>
+        <div class="time-box"><div class="time-num" id="t-months">00</div><div class="time-label" id="tl-months">Ay</div></div>
+        <div class="time-box"><div class="time-num" id="t-days">00</div><div class="time-label" id="tl-days">Gün</div></div>
+        <div class="time-box"><div class="time-num" id="t-hours">00</div><div class="time-label" id="tl-hours">Saat</div></div>
+        <div class="time-box"><div class="time-num" id="t-mins">00</div><div class="time-label" id="tl-mins">Dakika</div></div>
+        <div class="time-box"><div class="time-num" id="t-secs">00</div><div class="time-label" id="tl-secs">Saniye</div></div>
+      </div>
+      <div class="share-row">
+        <button class="btn-ghost" onclick="copyLink()" id="share-btn">🔗 Linki Kopyala</button>
+        <button class="btn-ghost" onclick="resetCountdown()" id="reset-btn">↺ Sıfırla</button>
+      </div>
+    </div>
+
+    <!-- FINISHED CARD -->
+    <div class="card finished" id="finished-card">
+      <div class="finished-emoji">🎉</div>
+      <div class="finished-title" id="finished-title">Zaman Doldu!</div>
+      <div class="finished-sub" id="finished-sub">Etkinlik başladı.</div>
+      <button class="btn-ghost" onclick="resetCountdown()" id="finished-reset-btn" style="margin-top:24px;max-width:240px;margin-left:auto;margin-right:auto">↺ Yeni Geri Sayım</button>
+    </div>
+
+  </div>
+
+    
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/online-geri-sayim-sayaci-kullanimi" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Geri Sayım Sayacı Kullanımı
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Özel Günlerin İçin Canlı Geri Sayım Başlat</h2>
+<p class="seo-desc">Doğum günleri, sınavlar veya tatiller için tektik.la geri sayım aracı ile anlık takip et. Tarihini seçip geri sayımı başlatman yeterli. Oluşturduğun geri sayım linkini arkadaşlarınla paylaşabilirsin.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Geri sayım sayacı — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Fgerisayim&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=Geri sayım sayacı — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Fgerisayim" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/gerisayim&text=Geri sayım sayacı — tektik.la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/gerisayim&title=Geri%20Say%C4%B1m%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/gerisayim').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+let theme=localStorage.getItem('tektik-theme')||'dark';
+let soundOn = localStorage.getItem('tektik-sound') !== 'off';
+
+function toggleSound() {
+  soundOn = !soundOn;
+  localStorage.setItem('tektik-sound', soundOn ? 'on' : 'off');
+  document.getElementById('sound-btn').textContent = soundOn ? '🔔' : '🔕';
+}
+
+function playAlarm() {
+  if (!soundOn) return;
+  try {
+    const ctx = new AudioContext();
+    [523, 659, 784, 1046].forEach(function(freq, i) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      const t = ctx.currentTime + i * 0.22;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.4, t + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+      osc.start(t); osc.stop(t + 0.2);
+    });
+  } catch(e) {}
+}
+const lang = 'tr';
+document.documentElement.setAttribute('data-theme',theme);
+
+let countdownInterval=null;
+let targetTime=null;
+let startTime=null;
+let eventName='';
+
+const tx={
+  tr:{
+    heroTag:'geri sayım', heroH1:'özel<br><em>geri sayım</em>', heroSub:'Etkinlik, doğum günü, düğün için geri sayım oluştur.',
+    lblSetup:'Etkinliği Ayarla', lblEventName:'Etkinlik Adı', lblTarget:'Hedef Tarih & Saat',
+    lblPresetsLabel:'Hızlı Seç', startBtn:'▶ Geri Sayımı Başlat',
+    tlDays:'Gün', tlHours:'Saat', tlMins:'Dakika', tlSecs:'Saniye',
+    shareBtn:'🔗 Linki Kopyala', linkCopied:'✓ Kopyalandı', resetBtn:'↺ Sıfırla',
+    finishedTitle:'Zaman Doldu!', finishedSub:'Etkinlik başladı.',
+    finishedResetBtn:'↺ Yeni Geri Sayım', footerText:'© 2025 — Tüm araçlar ücretsiz',
+    eventPlaceholder:'Doğum Günüm 🎂',
+    presets:[
+      {label:'Yeni Yıl 🎆', fn:()=>nextDate(1,1)},
+      {label:'1 Hafta', fn:()=>addDays(7)},
+      {label:'1 Ay', fn:()=>addDays(30)},
+      {label:'100 Gün', fn:()=>addDays(100)},
+      {label:'Yaz Başı ☀️', fn:()=>nextDate(6,21)},
+    ],
+    subtitleFn:(d)=>`${d} tarihine kadar`,
+  },
+  en:{
+    heroTag:'countdown', heroH1:'event<br><em>countdown</em>', heroSub:'Create shareable countdowns for events, birthdays and deadlines.',
+    lblSetup:'Set Up Event', lblEventName:'Event Name', lblTarget:'Target Date & Time',
+    lblPresetsLabel:'Quick Select', startBtn:'▶ Start Countdown',
+    tlDays:'Days', tlHours:'Hours', tlMins:'Minutes', tlSecs:'Seconds',
+    tlYears:'Years', tlMonths:'Months',
+    shareBtn:'🔗 Copy Link', linkCopied:'✓ Copied', resetBtn:'↺ Reset',
+    finishedTitle:"Time's Up!", finishedSub:'The event has started.',
+    finishedResetBtn:'↺ New Countdown', footerText:'© 2025 — All tools free',
+    eventPlaceholder:'My Birthday 🎂',
+    presets:[
+      {label:'New Year 🎆', fn:()=>nextDate(1,1)},
+      {label:'1 Week', fn:()=>addDays(7)},
+      {label:'1 Month', fn:()=>addDays(30)},
+      {label:'100 Days', fn:()=>addDays(100)},
+      {label:'Summer ☀️', fn:()=>nextDate(6,21)},
+    ],
+    subtitleFn:(d)=>`Counting down to ${d}`,
+  }
+};
+
+function nextDate(month,day){
+  const now=new Date(), d=new Date(now.getFullYear(),month-1,day,0,0,0);
+  if(d<=now) d.setFullYear(d.getFullYear()+1);
+  return d;
+}
+function addDays(n){ const d=new Date(); d.setDate(d.getDate()+n); return d; }
+
+function toLocalInputVal(d){ const pad=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+
+function renderPresets(){
+  const t=tx[lang];
+  document.getElementById('presets-row').innerHTML=t.presets.map((p,i)=>
+    `<button class="preset-btn" onclick="applyPreset(${i})">${p.label}</button>`
+  ).join('');
+}
+
+function applyPreset(i){
+  const d=tx[lang].presets[i].fn();
+  document.getElementById('f-target').value=toLocalInputVal(d);
+}
+
+function toggleTheme(){ theme=theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',theme); localStorage.setItem('tektik-theme',theme); }
+document.getElementById('sound-btn').textContent = soundOn ? '🔔' : '🔕';
+
+function startCountdown(){
+  const targetVal=document.getElementById('f-target').value;
+  if(!targetVal) return;
+  targetTime=new Date(targetVal).getTime();
+  startTime=Date.now();
+  eventName=document.getElementById('f-event').value||tx[lang].eventPlaceholder;
+
+  if(targetTime<=Date.now()){ showFinished(); return; }
+
+  document.getElementById('setup-card').style.display='none';
+  document.getElementById('countdown-card').classList.add('show');
+  document.getElementById('display-event-title').textContent=eventName;
+
+  const locale=lang==='tr'?'tr-TR':'en-GB';
+  const dateStr=new Date(targetVal).toLocaleDateString(locale,{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('display-event-subtitle').textContent=tx[lang].subtitleFn(dateStr);
+
+  tick();
+  countdownInterval=setInterval(tick,1000);
+
+  // Save to URL
+  const params=new URLSearchParams({e:encodeURIComponent(eventName),t:targetVal});
+  history.replaceState(null,'',`?${params}`);
+}
+
+function tick(){
+  const now=Date.now();
+  const diff=targetTime-now;
+  if(diff<=0){ clearInterval(countdownInterval); showFinished(); return; }
+
+  const nowDate = new Date(now);
+  const targetDate = new Date(targetTime);
+
+  let years = targetDate.getFullYear() - nowDate.getFullYear();
+  let months = targetDate.getMonth() - nowDate.getMonth();
+  let days = targetDate.getDate() - nowDate.getDate();
+
+  if (days < 0) { months--; days += new Date(nowDate.getFullYear(), nowDate.getMonth()+1, 0).getDate(); }
+  if (months < 0) { years--; months += 12; }
+
+  const remainAfterMonths = targetTime - new Date(nowDate.getFullYear() + years, nowDate.getMonth() + months, nowDate.getDate(), nowDate.getHours(), nowDate.getMinutes(), nowDate.getSeconds()).getTime();
+  const remDays = Math.floor(remainAfterMonths / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+
+  const pad=n=>String(n).padStart(2,'0');
+  setTime('t-years', pad(years));
+  setTime('t-months', pad(months));
+  setTime('t-days', pad(remDays));
+  setTime('t-hours', pad(hours));
+  setTime('t-mins', pad(mins));
+  setTime('t-secs', pad(secs));
+
+  const elapsed=now-startTime;
+  const total=targetTime-startTime;
+  const pct=Math.min(100,Math.max(0,(elapsed/total)*100));
+  document.getElementById('progress-bar').style.width=pct+'%';
+}
+
+function setTime(id,val){
+  const el=document.getElementById(id);
+  if(el.textContent!==val){
+    el.textContent=val;
+    el.classList.add('tick');
+    setTimeout(()=>el.classList.remove('tick'),300);
+  }
+}
+
+function showFinished(){
+  playAlarm();
+  document.getElementById('countdown-card').classList.remove('show');
+  document.getElementById('setup-card').style.display='none';
+  document.getElementById('finished-card').classList.add('show');
+}
+
+function resetCountdown(){
+  clearInterval(countdownInterval);
+  document.getElementById('countdown-card').classList.remove('show');
+  document.getElementById('finished-card').classList.remove('show');
+  document.getElementById('setup-card').style.display='block';
+  history.replaceState(null,'',window.location.pathname);
+}
+
+function copyLink(){
+  navigator.clipboard.writeText(window.location.href).then(()=>{
+    const btn=document.getElementById('share-btn');
+    btn.textContent=tx[lang].linkCopied;
+    setTimeout(()=>btn.textContent=tx[lang].shareBtn,2000);
+  });
+}
+
+// Load from URL params
+const params=new URLSearchParams(window.location.search);
+if(params.get('e')&&params.get('t')){
+  document.getElementById('f-event').value=decodeURIComponent(params.get('e'));
+  document.getElementById('f-target').value=params.get('t');
+  setTimeout(startCountdown,100);
+}
+
+// Default: set target to tomorrow
+const tmrw=new Date(); tmrw.setDate(tmrw.getDate()+1); tmrw.setHours(0,0,0,0);
+if(!params.get('t')) document.getElementById('f-target').value=toLocalInputVal(tmrw);
+
+</script>
+
+<script>
+  // Telegram Mini App init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Tam ekran aç
+    tg.ready();  // Telegram'a hazır olduğumuzu bildir
+    
+    // Back button - alt sayfalarda geri dön
+    if (window.location.pathname !== '/') {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => window.history.back());
+    }
+  }
+</script>
+
+</body>
+</html>

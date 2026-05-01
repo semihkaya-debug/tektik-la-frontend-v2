@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tektik.la — Çekiliş Yap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] {
+    --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a;
+    --text:#f0f0f0; --text2:#888; --accent:#c8f530; --accent2:#a0d020;
+    --card:#141414; --input-bg:#0f0f0f; --warn:#f5a623; --warn-bg:rgba(245,166,35,0.08);
+  }
+  :root[data-theme="light"] {
+    --bg:#f5f5f0; --bg3:#e5e4de; --border:#d0cfc8;
+    --text:#111111; --text2:#666; --accent:#1a6b00; --accent2:#2a8b10;
+    --card:#ffffff; --input-bg:#fafaf8; --warn:#b86e00; --warn-bg:rgba(184,110,0,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background 0.3s,color 0.3s; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; }
+
+  header { display:flex; align-items:center; justify-content:space-between; padding:20px 40px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .hc { display:flex; gap:10px; align-items:center; }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover,.ctrl-btn.active { border-color:var(--accent); color:var(--accent); }
+
+  .hero { padding:60px 40px 40px; max-width:860px; margin:0 auto; animation:fadeUp 0.6s ease; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(36px,5vw,64px); font-weight:800; line-height:1; letter-spacing:-2px; margin-bottom:12px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); line-height:1.7; }
+
+  .main { max-width:860px; margin:0 auto; padding:0 40px 80px; animation:fadeUp 0.6s ease 0.1s both; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; margin-bottom:16px; }
+  .card-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+
+  textarea { width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:16px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; resize:vertical; min-height:160px; outline:none; transition:border-color 0.2s; line-height:1.8; }
+  textarea:focus { border-color:var(--accent); }
+  textarea::placeholder { color:var(--text2); }
+
+  .dup-warning { display:none; margin-top:10px; padding:10px 14px; background:var(--warn-bg); border:1px solid var(--warn); border-radius:8px; font-family:'Space Mono',monospace; font-size:11px; color:var(--warn); line-height:1.6; }
+  .dup-warning.show { display:block; }
+
+  .meta-row { display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
+  .count-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--bg3); border:1px solid var(--border); border-radius:6px; font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); }
+  .count-badge strong { color:var(--accent); }
+
+  .winner-count-row { display:flex; align-items:center; gap:12px; margin-top:20px; padding:16px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; }
+  .winner-count-label { font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); flex:1; }
+  .count-control { display:flex; align-items:center; }
+  .count-btn { width:36px; height:36px; background:var(--card); border:1px solid var(--border); color:var(--text); font-size:18px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; user-select:none; }
+  .count-btn:first-child { border-radius:6px 0 0 6px; }
+  .count-btn:last-child { border-radius:0 6px 6px 0; }
+  .count-btn:hover { border-color:var(--accent); color:var(--accent); background:var(--bg3); }
+  .count-display { width:52px; height:36px; background:var(--input-bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:16px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+
+  .btn-primary { background:var(--accent); color:#0a0a0a; border:none; padding:16px 32px; border-radius:10px; font-family:'Space Mono',monospace; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; width:100%; margin-top:20px; }
+  .btn-primary:hover:not(:disabled) { background:var(--accent2); transform:translateY(-1px); }
+  .btn-primary:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+  .btn-ghost { background:transparent; color:var(--text2); border:1px solid var(--border); padding:12px 24px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; cursor:pointer; transition:all 0.2s; }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+
+  .rolling { display:none; text-align:center; padding:40px; }
+  .rolling.show { display:block; }
+  .roll-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+  .roll-name { font-size:clamp(28px,5vw,56px); font-weight:800; letter-spacing:-2px; color:var(--accent); font-family:'Space Mono',monospace; min-height:80px; display:flex; align-items:center; justify-content:center; }
+
+  .winners-section { display:none; }
+  .winners-section.show { display:block; }
+  .winners-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+  .winners-title { font-size:24px; font-weight:800; letter-spacing:-1px; }
+  .winners-title em { font-style:normal; color:var(--accent); }
+  .winners-grid { display:grid; gap:12px; margin-bottom:20px; }
+  .winner-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; display:flex; align-items:center; gap:16px; animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both; }
+  .winner-item:first-child { border-color:var(--accent); }
+  .winner-rank { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); width:32px; flex-shrink:0; }
+  .winner-item:first-child .winner-rank { color:var(--accent); font-weight:700; }
+  .winner-item-name { font-size:22px; font-weight:800; letter-spacing:-0.5px; flex:1; }
+  .winners-actions { display:flex; gap:12px; flex-wrap:wrap; }
+  .winners-actions .btn-primary { width:auto; margin-top:0; flex:1; }
+
+  canvas { display:none; }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:space-between; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes popIn { from{opacity:0;transform:scale(0.8) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+  @media (max-width:600px) {
+    header { padding:16px 20px; }
+    .hero,.main { padding-left:20px; padding-right:20px; }
+    h1 { letter-spacing:-1px; }
+    .card { padding:24px; }
+    .winners-actions { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<canvas id="winner-canvas" width="1080" height="1080"></canvas>
+
+<div class="content">
+  <header>
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="hc">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">çekiliş aracı</div>
+    <h1 id="hero-h1">adil &<br><em>şeffaf</em> çekiliş</h1>
+    <p class="hero-sub" id="hero-sub">İsim listeni gir, kaç kazanan istediğini seç, çekilişi başlat.</p>
+  </div>
+
+  <div class="main">
+    <div class="card" id="input-card">
+      <div class="card-label" id="card-label">Katılımcı Listesi</div>
+      <textarea id="names-input" placeholder="Her satıra bir isim yaz:&#10;&#10;Ahmet Yılmaz&#10;Fatma Kaya&#10;Mehmet Demir&#10;Ayşe Çelik"></textarea>
+      <div class="dup-warning" id="dup-warning"></div>
+      <div class="meta-row">
+        <div class="count-badge">👥 <strong id="count-num">0</strong> <span id="participants-label">katılımcı</span></div>
+      </div>
+      <div class="winner-count-row">
+        <div class="winner-count-label" id="winner-count-label">Kaç kazanan seçilsin?</div>
+        <div class="count-control">
+          <button class="count-btn" onclick="changeWinnerCount(-1)">−</button>
+          <div class="count-display" id="winner-count-display">1</div>
+          <button class="count-btn" onclick="changeWinnerCount(1)">+</button>
+        </div>
+      </div>
+      <button class="btn-primary" id="draw-btn" onclick="startDraw()" disabled>
+        🎲 <span id="draw-btn-text">Çekilişi Başlat</span>
+      </button>
+    </div>
+
+    <div class="card rolling" id="rolling-card">
+      <div class="roll-label" id="roll-label">Kazanan aranıyor...</div>
+      <div class="roll-name" id="roll-name">—</div>
+    </div>
+
+    <div class="winners-section" id="winners-section">
+      <div class="card">
+        <div class="winners-header">
+          <div class="winners-title">🎉 <em id="winners-title-text">Kazanan</em></div>
+        </div>
+        <div class="winners-grid" id="winners-grid"></div>
+        <div class="winners-actions">
+          <button class="btn-primary" id="dl-btn" onclick="downloadWinners()">⬇ Görseli İndir</button>
+          <button class="btn-ghost" id="reset-btn" onclick="resetDraw()">↺ Yeni Çekiliş</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>tektik.la</p>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────
+let theme = localStorage.getItem('tektik-theme') || 'dark';
+let lang = localStorage.getItem('tektik-lang') || 'tr';
+let participants = [];
+let winnerCount = 1;
+let winners = [];
+let rollTimer = null;
+
+// Apply theme immediately on load
+document.documentElement.setAttribute('data-theme', theme);
+
+// ── TRANSLATIONS ───────────────────────────────────────
+const tx = {
+  tr: {
+    heroTag: 'çekiliş aracı',
+    heroH1: 'adil &<br><em>şeffaf</em> çekiliş',
+    heroSub: 'İsim listeni gir, kaç kazanan istediğini seç, çekilişi başlat.',
+    cardLabel: 'Katılımcı Listesi',
+    participantsLabel: 'katılımcı',
+    winnerCountLabel: 'Kaç kazanan seçilsin?',
+    drawBtnText: 'Çekilişi Başlat',
+    dlBtn: '⬇ Görseli İndir',
+    resetBtn: '↺ Yeni Çekiliş',
+    placeholder: 'Her satıra bir isim yaz:\n\nAhmet Yılmaz\nFatma Kaya\nMehmet Demir\nAyşe Çelik',
+    dupWarning: (d) => `⚠ Tekrarlayan: ${d.join(', ')} — eşit ağırlıkta dahil edilecek.`,
+    rollLabel: (i, t) => t > 1 ? `${i}. kazanan aranıyor...` : 'Kazanan aranıyor...',
+    winnersTitle: (n) => n > 1 ? `${n} Kazanan` : 'Kazanan',
+    canvasParticipants: (n) => `${n} katılımcı`,
+    canvasDate: () => new Date().toLocaleDateString('tr-TR', {day:'numeric',month:'long',year:'numeric'}),
+  },
+  en: {
+    heroTag: 'giveaway tool',
+    heroH1: 'fair &<br><em>transparent</em> giveaway',
+    heroSub: 'Enter names, choose how many winners, start the draw.',
+    cardLabel: 'Participant List',
+    participantsLabel: 'participants',
+    winnerCountLabel: 'How many winners?',
+    drawBtnText: 'Start Draw',
+    dlBtn: '⬇ Download Image',
+    resetBtn: '↺ New Draw',
+    placeholder: 'One name per line:\n\nJohn Smith\nJane Doe\nAlex Johnson\nSarah Lee',
+    dupWarning: (d) => `⚠ Duplicates: ${d.join(', ')} — included with equal weight.`,
+    rollLabel: (i, t) => t > 1 ? `Finding winner ${i}...` : 'Finding winner...',
+    winnersTitle: (n) => n > 1 ? `${n} Winners` : 'Winner',
+    canvasParticipants: (n) => `${n} participants`,
+    canvasDate: () => new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}),
+  }
+};
+
+// ── LANG ──────────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('tektik-lang', l);
+  document.getElementById('btn-tr').classList.toggle('active', l === 'tr');
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  const t = tx[l];
+  document.getElementById('hero-tag').textContent = t.heroTag;
+  document.getElementById('hero-h1').innerHTML = t.heroH1;
+  document.getElementById('hero-sub').textContent = t.heroSub;
+  document.getElementById('card-label').textContent = t.cardLabel;
+  document.getElementById('participants-label').textContent = t.participantsLabel;
+  document.getElementById('winner-count-label').textContent = t.winnerCountLabel;
+  document.getElementById('draw-btn-text').textContent = t.drawBtnText;
+  document.getElementById('dl-btn').textContent = t.dlBtn;
+  document.getElementById('reset-btn').textContent = t.resetBtn;
+  document.getElementById('names-input').placeholder = t.placeholder;
+}
+
+// ── THEME ─────────────────────────────────────────────
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('tektik-theme', theme);
+}
+
+// ── WINNER COUNT ──────────────────────────────────────
+function changeWinnerCount(delta) {
+  const max = participants.length > 1 ? participants.length : 99;
+  winnerCount = Math.min(max, Math.max(1, winnerCount + delta));
+  document.getElementById('winner-count-display').textContent = winnerCount;
+}
+
+// ── TEXTAREA ──────────────────────────────────────────
+document.getElementById('names-input').addEventListener('input', function() {
+  const lines = this.value.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+  participants = lines;
+  document.getElementById('count-num').textContent = participants.length;
+  document.getElementById('draw-btn').disabled = participants.length < 2;
+
+  // Duplicate check
+  const seen = {}, dups = [];
+  lines.forEach(name => {
+    const key = name.toLowerCase();
+    if (seen[key]) { if (!dups.includes(name)) dups.push(name); }
+    else seen[key] = true;
+  });
+  const dupEl = document.getElementById('dup-warning');
+  if (dups.length > 0) {
+    dupEl.textContent = tx[lang].dupWarning(dups);
+    dupEl.classList.add('show');
+  } else {
+    dupEl.classList.remove('show');
+  }
+
+  // Clamp winner count
+  if (winnerCount >= participants.length && participants.length > 1) {
+    winnerCount = participants.length - 1;
+    document.getElementById('winner-count-display').textContent = winnerCount;
+  }
+});
+
+// ── DRAW ──────────────────────────────────────────────
+function startDraw() {
+  if (participants.length < 2) return;
+  winners = [];
+  document.getElementById('input-card').style.display = 'none';
+  document.getElementById('winners-section').classList.remove('show');
+  document.getElementById('rolling-card').classList.add('show');
+  rollNext();
+}
+
+function rollNext() {
+  const remaining = participants.filter(p => !winners.includes(p));
+  if (remaining.length === 0 || winners.length >= winnerCount) {
+    showWinners();
+    return;
+  }
+
+  const rollEl = document.getElementById('roll-name');
+  document.getElementById('roll-label').textContent = tx[lang].rollLabel(winners.length + 1, winnerCount);
+
+  let count = 0;
+  const totalFrames = 35 + Math.floor(Math.random() * 10);
+
+  function roll() {
+    rollEl.textContent = remaining[Math.floor(Math.random() * remaining.length)];
+    count++;
+    const speed = 50 + 130 * (count / totalFrames);
+    if (count < totalFrames) {
+      rollTimer = setTimeout(roll, speed);
+    } else {
+      const picked = remaining[Math.floor(Math.random() * remaining.length)];
+      winners.push(picked);
+      rollEl.textContent = picked;
+      if (winners.length < winnerCount) {
+        rollTimer = setTimeout(rollNext, 900);
+      } else {
+        rollTimer = setTimeout(showWinners, 700);
+      }
+    }
+  }
+  roll();
+}
+
+function showWinners() {
+  document.getElementById('rolling-card').classList.remove('show');
+  document.getElementById('winners-title-text').textContent = tx[lang].winnersTitle(winnerCount);
+  const medals = ['🥇','🥈','🥉'];
+  document.getElementById('winners-grid').innerHTML = winners.map((name, i) => `
+    <div class="winner-item" style="animation-delay:${i*0.12}s">
+      <div class="winner-rank">${medals[i] || '#'+(i+1)}</div>
+      <div class="winner-item-name">${name}</div>
+    </div>
+  `).join('');
+  document.getElementById('winners-section').classList.add('show');
+}
+
+function resetDraw() {
+  clearTimeout(rollTimer);
+  winners = [];
+  document.getElementById('winners-section').classList.remove('show');
+  document.getElementById('rolling-card').classList.remove('show');
+  document.getElementById('input-card').style.display = 'block';
+}
+
+// ── DOWNLOAD ──────────────────────────────────────────
+function downloadWinners() {
+  const canvas = document.getElementById('winner-canvas');
+  const ctx = canvas.getContext('2d');
+  const w = 1080, h = 1080;
+
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+  for (let y = 0; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+
+  // Glow
+  const grd = ctx.createRadialGradient(w/2,h/2,0,w/2,h/2,420);
+  grd.addColorStop(0,'rgba(200,245,48,0.07)');
+  grd.addColorStop(1,'transparent');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0,0,w,h);
+
+  // Border
+  ctx.strokeStyle = '#c8f530';
+  ctx.lineWidth = 5;
+  ctx.strokeRect(40,40,w-80,h-80);
+
+  // Logo
+  ctx.font = 'bold 28px monospace';
+  ctx.fillStyle = '#c8f530';
+  ctx.textAlign = 'center';
+  ctx.fillText('tektik.la', w/2, 120);
+
+  // Meta
+  ctx.font = '18px monospace';
+  ctx.fillStyle = '#555';
+  ctx.fillText(`${tx[lang].canvasParticipants(participants.length)} · ${tx[lang].canvasDate()}`, w/2, 162);
+
+  // Divider
+  ctx.strokeStyle = '#2a2a2a';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(120,188); ctx.lineTo(w-120,188); ctx.stroke();
+
+  // Winners list
+  const itemH = winners.length > 3 ? 130 : 160;
+  const medals = ['🥇','🥈','🥉'];
+
+  winners.forEach((name, i) => {
+    const y = 250 + i * itemH;
+    ctx.font = i === 0 ? 'bold 44px monospace' : '30px monospace';
+    ctx.fillStyle = i === 0 ? '#c8f530' : '#555';
+    ctx.textAlign = 'left';
+    ctx.fillText(medals[i] || `#${i+1}`, 120, y + 10);
+
+    const fs = Math.min(name.length > 20 ? 44 : name.length > 12 ? 56 : 68, itemH * 0.48);
+    ctx.font = `bold ${fs}px sans-serif`;
+    ctx.fillStyle = i === 0 ? '#f0f0f0' : '#888';
+    ctx.fillText(name, 210, y + 20);
+
+    if (i < winners.length - 1) {
+      ctx.strokeStyle = '#1a1a1a';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(120, y+itemH-20); ctx.lineTo(w-120, y+itemH-20); ctx.stroke();
+    }
+  });
+
+  const link = document.createElement('a');
+  link.download = `tektik-cekilis-${Date.now()}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// ── INIT ──────────────────────────────────────────────
+setLang(lang);
+</script>
+</body>
+</html>

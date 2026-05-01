@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ücretsiz CV Oluşturucu — PDF İndir | tektik.la</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="Ücretsiz CV ve özgeçmiş oluştur. PDF olarak indir. Kayıt yok, reklam yok. Profesyonel şablonlar.">
+<meta name="keywords" content="ücretsiz pdf cv oluşturma, üye olmadan cv hazırla, modern özgeçmiş oluşturucu, reklamsız cv yapma">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Ücretsiz CV Oluşturucu — PDF İndir | tektik.la">
+<meta property="og:description" content="Profesyonel CV oluştur, PDF olarak indir. Kayıt yok, ücretsiz.">
+<meta property="og:url" content="https://tektik.la/cv">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<link rel="canonical" href="https://tektik.la/cv">
+<style>
+:root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent: #c8f530;--accent2: #a0d020;--card:#141414;--input-bg:#0f0f0f;}
+:root[data-theme="light"]{--bg: #f5f5f0;--bg3: #e5e4de;--border: #d0cfc8;--text:#2d1810;--text2: #666;--accent: #5a9e00;--accent2: #4a8500;--card:#fff;--input-bg:#fffcf9;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+.content{position:relative;z-index:1; max-width:860px; margin:0 auto;}
+header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;}
+.logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text);}
+.logo span{color:var(--accent);}
+.ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s;}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent);}
+.hero{padding:60px 40px 40px;max-width:1200px;margin:0 auto;}
+.hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+h1{font-size:clamp(48px,7vw,88px);font-weight:800;line-height:0.95;letter-spacing:-3px;margin-bottom:12px;}
+h1 em{font-style:normal;color:var(--accent);}
+.hero-sub{font-size:15px;color:var(--text2);}
+.main{max-width:1200px;margin:0 auto;padding:0 40px 80px;display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:start;}
+.form-col{display:flex;flex-direction:column;gap:16px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.card-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.field{margin-bottom:12px;}
+.field:last-child{margin-bottom:0;}
+.field-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+input[type="text"],input[type="email"],input[type="tel"],input[type="url"],textarea,select{width:100%;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:8px;font-family:'Space Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);}
+input::placeholder,textarea::placeholder{color:var(--text2);}
+textarea{resize:none;height:80px;line-height:1.6;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* ŞABLON SEÇİMİ */
+.template-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:0;}
+.template-btn{padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg3);cursor:pointer;transition:all 0.2s;text-align:center;}
+.template-btn.active{border-color:var(--accent);background:rgba(200,245,48,0.06);}
+.template-btn:hover{border-color:var(--accent);}
+.template-name{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);margin-top:6px;}
+.template-btn.active .template-name{color:var(--accent);}
+.template-preview{height:50px;border-radius:6px;overflow:hidden;display:flex;gap:2px;}
+.tp-sidebar{background:#1d9bf0;width:30%;}
+.tp-main{background:#333;flex:1;}
+.tp-classic .tp-sidebar{display:none;}
+.tp-classic .tp-main{background:#444;}
+.tp-minimal .tp-sidebar{background:#c8f530;width:4px;}
+.tp-minimal .tp-main{background:#222;}
+
+/* DENEYİM / EĞİTİM EKLE */
+.entries-list{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
+.entry-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;}
+.entry-card input,  .entry-card textarea{background:var(--input-bg);}
+.entry-remove{position:absolute;top:10px;right:10px;background:transparent;border:1px solid var(--border);color:var(--text2);width:24px;height:24px;border-radius:4px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.entry-remove:hover{border-color:#ff4d4d;color:#ff4d4d;}
+.add-btn{background:transparent;border:1px dashed var(--border);color:var(--text2);padding:10px;border-radius:8px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;width:100%;transition:all 0.2s;}
+.add-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* BECERİLER */
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.skill-tag{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-family:'Space Mono',monospace;font-size:12px;display:flex;align-items:center;gap:6px;}
+.skill-tag button{background:none;border:none;color:var(--text2);cursor:pointer;font-size:14px;padding:0;line-height:1;}
+.skill-tag button:hover{color:#ff4d4d;}
+.skill-input-row{display:flex;gap:8px;}
+.skill-input-row input{flex:1;}
+.skill-add-btn{background:var(--accent);color:#0a0a0a;border:none;padding:8px 16px;border-radius:8px;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
+
+/* PREVIEW COL */
+.preview-col{position:sticky;top:90px;}
+.preview-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.preview-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px;}
+.btn-primary{background:var(--accent);color:#0a0a0a;border:none;padding:16px 32px;border-radius:10px;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;width:100%;margin-top:8px;}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);}
+
+/* FOTO UPLOAD */
+.photo-upload{width:80px;height:80px;border-radius:50%;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:border-color 0.2s;flex-shrink:0;}
+.photo-upload:hover{border-color:var(--accent);}
+.photo-upload img{width:100%;height:100%;object-fit:cover;}
+.photo-upload span{font-size:24px;}
+.photo-row{display:flex;align-items:center;gap:16px;}
+.photo-fields{flex:1;}
+
+/* SHARE BAR */
+.share-bar{border-top:1px solid var(--border);padding:20px 40px;display:flex; justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;}
+.share-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-right:4px;}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;text-decoration:none;transition:all 0.2s;cursor:pointer;}
+.share-btn:hover{transform:translateY(-1px);}
+.share-btn.x:hover{border-color:#1d9bf0;color:#1d9bf0;}
+.share-btn.wa:hover{border-color:#25d366;color:#25d366;}
+.share-btn.tg:hover{border-color:#2aabee;color:#2aabee;}
+.share-btn.cp:hover{border-color:var(--accent);color:var(--accent);}
+
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;}
+footer p,footer a{text-decoration:none!important;color:var(--text2)!important;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+
+/* ===== CV ŞABLONLARI ===== */
+/* MODERN (mavi sidebar) */
+.cv-modern{display:grid;grid-template-columns:160px 1fr;font-family:Arial,sans-serif;font-size:11px;background:white;color:#111;min-height:500px;}
+.cv-modern .cv-sidebar{background:#1a1a2e;color:#fff;padding:20px 14px;display:flex;flex-direction:column;gap:16px;}
+.cv-modern .cv-sidebar .cv-photo{width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);margin:0 auto 8px;}
+.cv-modern .cv-photo-placeholder{width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,0.1);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.cv-modern .cv-name{font-size:14px;font-weight:800;text-align:center;line-height:1.2;}
+.cv-modern .cv-title-job{font-size:10px;color:rgba(255,255,255,0.6);text-align:center;margin-top:2px;}
+.cv-modern .cv-s-section{margin-bottom:12px;}
+.cv-modern .cv-s-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#c8f530;margin-bottom:6px;font-weight:700;}
+.cv-modern .cv-s-item{font-size:10px;color:rgba(255,255,255,0.8);margin-bottom:3px;line-height:1.4;}
+.cv-modern .cv-main{padding:20px 18px;display:flex;flex-direction:column;gap:14px;}
+.cv-modern .cv-section-title{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#1a1a2e;border-bottom:2px solid #1a1a2e;padding-bottom:4px;margin-bottom:8px;}
+.cv-modern .cv-about{font-size:10px;color:#444;line-height:1.6;}
+.cv-modern .cv-entry{margin-bottom:8px;}
+.cv-modern .cv-entry-title{font-size:11px;font-weight:700;color:#111;}
+.cv-modern .cv-entry-sub{font-size:10px;color:#888;margin-bottom:2px;}
+.cv-modern .cv-entry-desc{font-size:10px;color:#444;line-height:1.5;}
+.cv-modern .cv-skills-wrap{display:flex;flex-wrap:wrap;gap:4px;}
+.cv-modern .cv-skill{background:#f0f0f0;border-radius:3px;padding:2px 6px;font-size:9px;color:#333;}
+
+/* KLASİK (beyaz, temiz) */
+.cv-classic{font-family:'Georgia',serif;font-size:11px;background:white;color:#111;padding:28px 32px;}
+.cv-classic .cv-header{text-align:center;border-bottom:2px solid #111;padding-bottom:14px;margin-bottom:16px;}
+.cv-classic .cv-photo-row{display:flex;align-items:center;gap:20px;justify-content:center;margin-bottom:10px;}
+.cv-classic .cv-photo{width:70px;height:70px;border-radius:50%;object-fit:cover;}
+.cv-classic .cv-photo-placeholder{width:70px;height:70px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.cv-classic .cv-name{font-size:22px;font-weight:700;letter-spacing:-0.5px;}
+.cv-classic .cv-title-job{font-size:12px;color:#666;margin-top:2px;}
+.cv-classic .cv-contact-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:6px;}
+.cv-classic .cv-contact-item{font-size:10px;color:#666;font-family:Arial,sans-serif;}
+.cv-classic .cv-section{margin-bottom:14px;}
+.cv-classic .cv-section-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#111;border-bottom:1px solid #ccc;padding-bottom:3px;margin-bottom:8px;}
+.cv-classic .cv-about{font-size:10px;color:#444;line-height:1.6;}
+.cv-classic .cv-entry{margin-bottom:8px;}
+.cv-classic .cv-entry-title{font-size:11px;font-weight:700;}
+.cv-classic .cv-entry-sub{font-size:10px;color:#888;font-style:italic;margin-bottom:2px;}
+.cv-classic .cv-entry-desc{font-size:10px;color:#444;line-height:1.5;}
+.cv-classic .cv-skills-wrap{display:flex;flex-wrap:wrap;gap:4px;}
+.cv-classic .cv-skill{border:1px solid #ccc;border-radius:2px;padding:2px 6px;font-size:9px;font-family:Arial,sans-serif;}
+
+/* MİNİMAL (sol çizgi) */
+.cv-minimal{font-family:Arial,sans-serif;font-size:11px;background:white;color:#111;padding:28px 32px;border-left:4px solid #c8f530;}
+.cv-minimal .cv-header{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #eee;}
+.cv-minimal .cv-photo-row{display:flex;align-items:center;gap:16px;margin-bottom:8px;}
+.cv-minimal .cv-photo{width:64px;height:64px;border-radius:8px;object-fit:cover;}
+.cv-minimal .cv-photo-placeholder{width:64px;height:64px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.cv-minimal .cv-name{font-size:20px;font-weight:800;letter-spacing:-0.5px;}
+.cv-minimal .cv-title-job{font-size:11px;color:#888;margin-top:2px;}
+.cv-minimal .cv-contact-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
+.cv-minimal .cv-contact-item{font-size:10px;color:#666;}
+.cv-minimal .cv-body{display:grid;grid-template-columns:1fr 140px;gap:20px;}
+.cv-minimal .cv-section{margin-bottom:14px;}
+.cv-minimal .cv-section-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c8a000;margin-bottom:8px;}
+.cv-minimal .cv-about{font-size:10px;color:#444;line-height:1.6;}
+.cv-minimal .cv-entry{margin-bottom:8px;}
+.cv-minimal .cv-entry-title{font-size:11px;font-weight:700;}
+.cv-minimal .cv-entry-sub{font-size:10px;color:#888;margin-bottom:2px;}
+.cv-minimal .cv-entry-desc{font-size:10px;color:#444;line-height:1.5;}
+.cv-minimal .cv-skills-wrap{display:flex;flex-wrap:wrap;gap:4px;}
+.cv-minimal .cv-skill{background:#f5f5f0;border-radius:3px;padding:2px 6px;font-size:9px;}
+
+@media(max-width:860px){.main{grid-template-columns:1fr}.preview-col{position:static}header{padding:16px 20px}.hero,.main{padding-left:20px;padding-right:20px}.card{padding:20px}}
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+<header>
+  <div class="header-inner">  <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px;align-items:center">
+  <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+</div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">kariyer aracı</div>
+  <h1>ücretsiz <em>cv</em><br>oluşturucu</h1>
+  <p class="hero-sub">Profesyonel CV oluştur, PDF olarak indir. Kayıt yok, ücretsiz.</p>
+</div>
+
+<div class="main">
+  <div class="form-col">
+
+    <!-- ŞABLON -->
+    <div class="card">
+      <div class="card-label">Şablon Seç</div>
+      <div class="template-grid">
+        <div class="template-btn active" id="tpl-modern" onclick="setTemplate('modern')">
+          <div class="template-preview"><div class="tp-sidebar"></div><div class="tp-main"></div></div>
+          <div class="template-name">Modern</div>
+        </div>
+        <div class="template-btn" id="tpl-classic" onclick="setTemplate('classic')">
+          <div class="template-preview tp-classic"><div class="tp-sidebar"></div><div class="tp-main"></div></div>
+          <div class="template-name">Klasik</div>
+        </div>
+        <div class="template-btn" id="tpl-minimal" onclick="setTemplate('minimal')">
+          <div class="template-preview tp-minimal"><div class="tp-sidebar"></div><div class="tp-main"></div></div>
+          <div class="template-name">Minimal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KİŞİSEL -->
+    <div class="card">
+      <div class="card-label">Kişisel Bilgiler</div>
+      <div class="photo-row">
+        <div class="photo-upload" onclick="document.getElementById('photo-input').click()" id="photo-upload-btn">
+          <span>📷</span>
+        </div>
+        <div class="photo-fields">
+          <div class="field"><div class="field-label" data-tr="Ad Soyad" data-en="Full Name">Ad Soyad</div><input type="text" id="f-name" placeholder="Ahmet Yılmaz" data-tr-ph="Ahmet Yılmaz" data-en-ph="John Smith" oninput="render()"></div>
+          <div class="field"><div class="field-label" data-tr="Unvan / Meslek" data-en="Title / Position">Unvan / Meslek</div><input type="text" id="f-title" placeholder="Frontend Geliştirici" data-tr-ph="Frontend Geliştirici" data-en-ph="Frontend Developer" oninput="render()"></div>
+        </div>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="loadPhoto(this)">
+      <div class="two-col" style="margin-top:12px;">
+        <div class="field"><div class="field-label" data-tr="E-posta" data-en="Email">E-posta</div><input type="email" id="f-email" placeholder="ahmet@email.com" data-tr-ph="ahmet@email.com" data-en-ph="john@email.com" oninput="render()"></div>
+        <div class="field"><div class="field-label" data-tr="Telefon" data-en="Phone">Telefon</div><input type="tel" id="f-phone" placeholder="+90 555 000 00 00" data-tr-ph="+90 555 000 00 00" data-en-ph="+1 555 000 0000" oninput="render()"></div>
+      </div>
+      <div class="two-col">
+        <div class="field"><div class="field-label" data-tr="Şehir" data-en="City">Şehir</div><input type="text" id="f-city" placeholder="İstanbul, Türkiye" data-tr-ph="İstanbul, Türkiye" data-en-ph="New York, USA" oninput="render()"></div>
+        <div class="field"><div class="field-label" data-tr="LinkedIn / Website" data-en="LinkedIn / Website">LinkedIn / Website</div><input type="url" id="f-link" placeholder="linkedin.com/in/ahmet" data-tr-ph="linkedin.com/in/ahmet" data-en-ph="linkedin.com/in/username" oninput="render()"></div>
+      </div>
+      <div class="field"><div class="field-label" data-tr="Hakkımda / Özet" data-en="Summary / About Me">Hakkımda / Özet</div><textarea id="f-about" placeholder="Kendinizi kısaca tanıtın..." data-tr-ph="Kendinizi kısaca tanıtın..." data-en-ph="Brief introduction about yourself..." oninput="render()"></textarea></div>
+    </div>
+
+    <!-- DENEYİM -->
+    <div class="card">
+      <div class="card-label">İş Deneyimi</div>
+      <div class="entries-list" id="exp-list"></div>
+      <button class="add-btn" onclick="addEntry('exp')" data-tr="+ Deneyim Ekle" data-en="+ Add Experience">+ Deneyim Ekle</button>
+    </div>
+
+    <!-- EĞİTİM -->
+    <div class="card">
+      <div class="card-label">Eğitim</div>
+      <div class="entries-list" id="edu-list"></div>
+      <button class="add-btn" onclick="addEntry('edu')" data-tr="+ Eğitim Ekle" data-en="+ Add Education">+ Eğitim Ekle</button>
+    </div>
+
+    <!-- BECERİLER -->
+    <div class="card">
+      <div class="card-label" data-tr="Beceriler" data-en="Skills">Beceriler</div>
+      <div class="skills-wrap" id="skills-wrap"></div>
+      <div class="skill-input-row">
+        <input type="text" id="skill-input" placeholder="Beceri ekle (ör: Photoshop)" data-tr-ph="Beceri ekle (ör: Photoshop)" data-en-ph="Add skill (e.g. Photoshop)" onkeydown="if(event.key==='Enter')addSkill()">
+        <button class="skill-add-btn" onclick="addSkill()">Ekle</button>
+      </div>
+    </div>
+
+    <!-- DİLLER -->
+    <div class="card">
+      <div class="card-label">Diller</div>
+      <div class="entries-list" id="lang-list"></div>
+      <button class="add-btn" onclick="addLang()" data-tr="+ Dil Ekle" data-en="+ Add Language">+ Dil Ekle</button>
+    </div>
+
+    <button class="btn-primary" onclick="downloadPDF()" data-tr="⬇ PDF Olarak İndir" data-en="⬇ Download as PDF">⬇ PDF Olarak İndir</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-col">
+    <div class="preview-label">
+      <span>Önizleme</span>
+    </div>
+    <div class="preview-wrap">
+      <div id="cv-preview" style="transform-origin:top left;"></div>
+    </div>
+  </div>
+</div>
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/profesyonel-cv-hazirlama-ipuclari" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Profesyonel CV Hazırlama İpuçları
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Ücretsiz CV Hazırla ve Profesyonel CV Oluştur</h2>
+<p class="seo-desc">Kariyerinizde yeni bir adım atmak için modern bir cv oluştur aracıyla özgeçmişinizi dakikalar içinde tamamlayın. Hazır bir cv şablonu seçerek bilgilerinizi doldurun ve reklamsız, ücretsiz cv hazırla seçeneğiyle PDF formatında dosyanızı hemen indirin.</p>
+</div>
+<div class="share-bar">
+  <span class="share-label">Paylaş</span>
+  <a class="share-btn x" href="https://twitter.com/intent/tweet?text=CV%27mi%20tektik.la%20ile%20olu%C5%9Fturdum%2C%20bedava%20ve%20kay%C4%B1ts%C4%B1z!%20%F0%9F%9A%80&url=https%3A%2F%2Ftektik.la%2Fcv&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+  <a class="share-btn wa" href="https://wa.me/?text=CV%27mi%20tektik.la%20ile%20olu%C5%9Fturdum%2C%20bedava%20ve%20kay%C4%B1ts%C4%B1z!%20https%3A%2F%2Ftektik.la%2Fcv" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+  <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/cv&text=Ücretsiz CV oluşturucu" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/cv&title=CV%20Olu%C5%9Fturucu%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+  <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/cv').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+</div>
+
+  <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+let theme=localStorage.getItem('tektik-theme')||'dark';
+document.documentElement.setAttribute('data-theme',theme);
+function toggleTheme(){theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme);localStorage.setItem('tektik-theme',theme);}
+
+if(window.Telegram&&window.Telegram.WebApp){const tg=window.Telegram.WebApp;tg.expand();tg.ready();if(window.location.pathname!=='/'){tg.BackButton.show();tg.BackButton.onClick(()=>window.history.back());}}
+
+let currentTemplate='modern';
+let skills=[];
+let experiences=[{title:'',company:'',date:'',desc:''}];
+let educations=[{school:'',dept:'',date:'',desc:''}];
+let languages=[{lang:'',level:''}];
+let photoData=null;
+
+function setTemplate(t){
+  currentTemplate=t;
+  ['modern','classic','minimal'].forEach(k=>document.getElementById('tpl-'+k).classList.toggle('active',k===t));
+  render();
+}
+
+function loadPhoto(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    photoData=e.target.result;
+    const btn=document.getElementById('photo-upload-btn');
+    btn.innerHTML=`<img src="${photoData}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+
+function addEntry(type){
+  if(type==='exp') experiences.push({title:'',company:'',date:'',desc:''});
+  else educations.push({school:'',dept:'',date:'',desc:''});
+  renderEntries();
+  render();
+}
+
+function removeEntry(type,i){
+  if(type==='exp') experiences.splice(i,1);
+  else educations.splice(i,1);
+  renderEntries();
+  render();
+}
+
+function addLang(){languages.push({lang:'',level:''});renderLangs();render();}
+function removeLang(i){languages.splice(i,1);renderLangs();render();}
+
+function renderEntries(){
+  ['exp','edu'].forEach(type=>{
+    const arr=type==='exp'?experiences:educations;
+    document.getElementById(type+'-list').innerHTML=arr.map((e,i)=>`
+      <div class="entry-card">
+        <button class="entry-remove" onclick="removeEntry('${type}',${i})">×</button>
+        ${type==='exp'?`
+        <div class="field"><div class="field-label">${window.cvLang==='en'?'Position':'Pozisyon'}</div><input type="text" placeholder="Frontend Geliştirici" value="${e.title}" oninput="experiences[${i}].title=this.value;render()"></div>
+        <div class="two-col">
+          <div class="field"><div class="field-label">${window.cvLang==='en'?'Company':'Şirket'}</div><input type="text" placeholder="${window.cvLang==='en'?'Company Name':'Şirket Adı'}" value="${e.company}" oninput="experiences[${i}].company=this.value;render()"></div>
+          <div class="field"><div class="field-label">${window.cvLang==='en'?'Dates':'Tarih'}</div><input type="text" placeholder="${window.cvLang==='en'?'2022 – Present':'2022 – Günümüz'}" value="${e.date}" oninput="experiences[${i}].date=this.value;render()"></div>
+        </div>
+        <div class="field"><div class="field-label">${window.cvLang==='en'?'Description':'Açıklama'}</div><textarea placeholder="${window.cvLang==='en'?'Your duties and achievements...':'Görev ve başarılarınız...'}" oninput="experiences[${i}].desc=this.value;render()">${e.desc}</textarea></div>
+        `:`
+        <div class="field"><div class="field-label">${window.cvLang==='en'?'School / University':'Okul / Üniversite'}</div><input type="text" placeholder="${window.cvLang==='en'?'University Name':'İstanbul Üniversitesi'}" value="${e.school}" oninput="educations[${i}].school=this.value;render()"></div>
+        <div class="two-col">
+          <div class="field"><div class="field-label">${window.cvLang==='en'?'Department':'Bölüm'}</div><input type="text" placeholder="${window.cvLang==='en'?'Computer Engineering':'Bilgisayar Mühendisliği'}" value="${e.dept}" oninput="educations[${i}].dept=this.value;render()"></div>
+          <div class="field"><div class="field-label">${window.cvLang==='en'?'Dates':'Tarih'}</div><input type="text" placeholder="${window.cvLang==='en'?'2018 – 2022':'2018 – 2022'}" value="${e.date}" oninput="educations[${i}].date=this.value;render()"></div>
+        </div>
+        <div class="field"><div class="field-label">${window.cvLang==='en'?'Description (optional)':'Açıklama (opsiyonel)'}</div><textarea placeholder="${window.cvLang==='en'?'Department, achievements...':'Bölüm, başarılar...'}" oninput="educations[${i}].desc=this.value;render()">${e.desc}</textarea></div>
+        `}
+      </div>`).join('');
+  });
+}
+
+function renderLangs(){
+  const levels = window.cvLang === 'en' ? ['Beginner','Intermediate','Good','Advanced','Native'] : ['Başlangıç','Orta','İyi','İleri','Anadil'];
+  document.getElementById('lang-list').innerHTML=languages.map((l,i)=>`
+    <div class="entry-card" style="padding:10px 14px;">
+      <button class="entry-remove" onclick="removeLang(${i})">×</button>
+      <div class="two-col">
+        <div class="field"><div class="field-label">${window.cvLang==='en'?'Language':'Dil'}</div><input type="text" placeholder="${window.cvLang==='en'?'English':'İngilizce'}" value="${l.lang}" oninput="languages[${i}].lang=this.value;render()"></div>
+        <div class="field"><div class="field-label">${window.cvLang==='en'?'Level':'Seviye'}</div>
+          <select oninput="languages[${i}].level=this.value;render()">
+            ${levels.map(lv=>`<option value="${lv}" ${l.level===lv?'selected':''}>${lv}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function addSkill(){
+  const inp=document.getElementById('skill-input');
+  const val=inp.value.trim();
+  if(!val)return;
+  skills.push(val);
+  inp.value='';
+  renderSkills();
+  render();
+}
+
+function removeSkill(i){skills.splice(i,1);renderSkills();render();}
+
+function renderSkills(){
+  document.getElementById('skills-wrap').innerHTML=skills.map((s,i)=>`
+    <div class="skill-tag">${s}<button onclick="removeSkill(${i})">×</button></div>`).join('');
+}
+
+function g(id){return document.getElementById(id).value;}
+
+function photoImg(cls){
+  if(photoData) return `<img src="${photoData}" class="cv-photo ${cls}">`;
+  return `<div class="cv-photo-placeholder ${cls}">👤</div>`;
+}
+
+function render(){
+  const name=g('f-name')||'Ad Soyad';
+  const title=g('f-title')||'Unvan / Meslek';
+  const email=g('f-email');
+  const phone=g('f-phone');
+  const city=g('f-city');
+  const link=g('f-link');
+  const about=g('f-about');
+
+  const contactItems=[email,phone,city,link].filter(Boolean).map(c=>`<span class="cv-contact-item">${c}</span>`).join('');
+
+  const expHTML=experiences.filter(e=>e.title||e.company).map(e=>`
+    <div class="cv-entry">
+      <div class="cv-entry-title">${e.title||''}</div>
+      <div class="cv-entry-sub">${[e.company,e.date].filter(Boolean).join(' · ')}</div>
+      ${e.desc?`<div class="cv-entry-desc">${e.desc}</div>`:''}
+    </div>`).join('');
+
+  const eduHTML=educations.filter(e=>e.school||e.dept).map(e=>`
+    <div class="cv-entry">
+      <div class="cv-entry-title">${e.school||''}</div>
+      <div class="cv-entry-sub">${[e.dept,e.date].filter(Boolean).join(' · ')}</div>
+      ${e.desc?`<div class="cv-entry-desc">${e.desc}</div>`:''}
+    </div>`).join('');
+
+  const skillsHTML=skills.length?`<div class="cv-skills-wrap">${skills.map(s=>`<span class="cv-skill">${s}</span>`).join('')}</div>`:'';
+  const langHTML=languages.filter(l=>l.lang).map(l=>`<div class="cv-s-item">${l.lang}${l.level?' — '+l.level:''}</div>`).join('');
+
+  let html='';
+
+  if(currentTemplate==='modern'){
+    html=`<div class="cv-modern">
+      <div class="cv-sidebar">
+        ${photoImg('cv-photo')}
+        <div class="cv-name">${name}</div>
+        <div class="cv-title-job">${title}</div>
+        ${email?`<div class="cv-s-section"><div class="cv-s-label">İletişim</div>${[email,phone,city,link].filter(Boolean).map(c=>`<div class="cv-s-item">${c}</div>`).join('')}</div>`:''}
+        ${skills.length?`<div class="cv-s-section"><div class="cv-s-label">Beceriler</div>${skills.map(s=>`<div class="cv-s-item">▸ ${s}</div>`).join('')}</div>`:''}
+        ${langHTML?`<div class="cv-s-section"><div class="cv-s-label">Diller</div>${langHTML}</div>`:''}
+      </div>
+      <div class="cv-main">
+        ${about?`<div><div class="cv-section-title">Hakkımda</div><div class="cv-about">${about}</div></div>`:''}
+        ${expHTML?`<div><div class="cv-section-title">Deneyim</div>${expHTML}</div>`:''}
+        ${eduHTML?`<div><div class="cv-section-title">Eğitim</div>${eduHTML}</div>`:''}
+      </div>
+    </div>`;
+  } else if(currentTemplate==='classic'){
+    html=`<div class="cv-classic">
+      <div class="cv-header">
+        <div class="cv-photo-row">${photoImg('cv-photo')}<div><div class="cv-name">${name}</div><div class="cv-title-job">${title}</div></div></div>
+        <div class="cv-contact-row">${contactItems}</div>
+      </div>
+      ${about?`<div class="cv-section"><div class="cv-section-title">Özet</div><div class="cv-about">${about}</div></div>`:''}
+      ${expHTML?`<div class="cv-section"><div class="cv-section-title">İş Deneyimi</div>${expHTML}</div>`:''}
+      ${eduHTML?`<div class="cv-section"><div class="cv-section-title">Eğitim</div>${eduHTML}</div>`:''}
+      ${skillsHTML?`<div class="cv-section"><div class="cv-section-title">Beceriler</div>${skillsHTML}</div>`:''}
+      ${langHTML?`<div class="cv-section"><div class="cv-section-title">Diller</div>${langHTML}</div>`:''}
+    </div>`;
+  } else {
+    html=`<div class="cv-minimal">
+      <div class="cv-header">
+        <div class="cv-photo-row">${photoImg('cv-photo')}<div><div class="cv-name">${name}</div><div class="cv-title-job">${title}</div><div class="cv-contact-row">${contactItems}</div></div></div>
+      </div>
+      <div class="cv-body">
+        <div>
+          ${about?`<div class="cv-section"><div class="cv-section-title">Hakkımda</div><div class="cv-about">${about}</div></div>`:''}
+          ${expHTML?`<div class="cv-section"><div class="cv-section-title">Deneyim</div>${expHTML}</div>`:''}
+          ${eduHTML?`<div class="cv-section"><div class="cv-section-title">Eğitim</div>${eduHTML}</div>`:''}
+        </div>
+        <div>
+          ${skillsHTML?`<div class="cv-section"><div class="cv-section-title">Beceriler</div>${skillsHTML}</div>`:''}
+          ${langHTML?`<div class="cv-section"><div class="cv-section-title">Diller</div>${langHTML}</div>`:''}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Preview'da scale uygula
+  const wrap=document.querySelector('.preview-wrap');
+  const wrapW=wrap.offsetWidth-24;
+  const cvW=currentTemplate==='modern'?560:480;
+  const scale=wrapW/cvW;
+  document.getElementById('cv-preview').innerHTML=html;
+  document.getElementById('cv-preview').style.cssText=`transform:scale(${scale});transform-origin:top left;width:${cvW}px;`;
+  wrap.style.height=(document.getElementById('cv-preview').scrollHeight*scale+24)+'px';
+}
+
+function downloadPDF(){
+  const name=g('f-name')||'cv';
+  const previewHTML=document.getElementById('cv-preview').innerHTML;
+  const tpl=currentTemplate;
+
+  const styles = document.querySelector('style').textContent;
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <title>CV — ${name}</title>
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:Arial,sans-serif;}
+      ${styles}
+      .cv-modern,.cv-classic,.cv-minimal{min-height:auto;}
+      @page{size:A4;margin:0;}
+      @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+      .cv-modern{min-height:100vh;} }
+    </style>
+  </head><body>${previewHTML}<script>window.onload=function(){window.print();}<\/script>
+
+<script>
+(function(){
+  var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+  var CV_EN = {
+    title: 'Free Online CV Builder - Create Professional PDF Resume | tektik.la',
+    meta: 'Build a professional CV in minutes. No account required. Download as PDF for free.',
+    h1: 'Professional CV<br><em>Builder</em>',
+    sub: 'Create your job-winning resume for free without signing up.',
+    tmplModern:'Modern', tmplClassic:'Classic', tmplMinimal:'Minimal',
+    lblName:'Full Name', lblTitle:'Title/Position', lblEmail:'Email Address',
+    lblPhone:'Phone Number', lblCity:'City', lblWeb:'Website', lblLinkedin:'LinkedIn',
+    lblSummary:'Summary', lblCompany:'Company Name', lblPosition:'Position',
+    lblDates:'Start-End Date', lblDesc:'Description',
+    btnAddExp:'+ Add Experience', btnRemove:'Remove',
+    lblSchool:'School/University', lblDept:'Department', lblGradYear:'Graduation Year',
+    btnAddEdu:'+ Add Education', phSkill:'Enter a skill...',
+    lblLang:'Language', lblLevel:'Level',
+    lvlBeg:'Beginner', lvlInt:'Intermediate', lvlAdv:'Advanced', lvlNative:'Native',
+    btnPdf:'Download PDF', btnPreview:'Preview', btnUpdate:'Update',
+    secExp:'Work Experience', secEdu:'Education', secSkills:'Skills',
+    secLangs:'Languages', secSummary:'Summary',
+  };
+  var CV_TR = { title: document.title, meta: (document.querySelector('meta[name="description"]')||{}).content||'' };
+
+  function applyCV(lang) {
+    var d = lang === 'en' ? CV_EN : CV_TR;
+    document.title = d.title;
+    var m = document.querySelector('meta[name="description"]'); if (m) m.content = d.meta;
+    var h1 = document.getElementById('hero-h1');
+    if (h1) h1.innerHTML = lang==='en' ? CV_EN.h1 : (CV_TR.h1||h1.innerHTML);
+    var sub = document.getElementById('hero-sub');
+    if (sub) sub.textContent = lang==='en' ? CV_EN.sub : (CV_TR.sub||sub.textContent);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = function(lang) {
+    currentLang = lang; localStorage.setItem('tektik-lang', lang); applyCV(lang);
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    CV_TR.h1 = (document.getElementById('hero-h1')||{}).innerHTML||null;
+    CV_TR.sub = (document.getElementById('hero-sub')||{}).textContent||null;
+    if (currentLang==='en') applyCV('en');
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', currentLang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', currentLang==='en');
+  });
+})();
+</scr'+'ipt>
+
+<script>
+(function() {
+  window.cvLang = localStorage.getItem('tektik-lang') || 'tr';
+
+  function applyLang(l) {
+    window.cvLang = l;
+    localStorage.setItem('tektik-lang', l);
+
+    if (l === 'en') {
+      document.title = 'Free Online CV Builder - Create Professional PDF Resume | tektik.la';
+      var m = document.querySelector('meta[name="description"]');
+      if (m) m.content = 'Build a professional CV in minutes. No account required. Download as PDF for free.';
+      var h1 = document.getElementById('hero-h1');
+      if (h1) h1.innerHTML = 'Professional CV<br><em>Builder</em>';
+      var sub = document.getElementById('hero-sub');
+      if (sub) sub.textContent = 'Create your job-winning resume for free without signing up.';
+    } else {
+      document.title = 'Ücretsiz CV Oluşturucu — PDF CV Hazırla | tektik.la';
+      var h1 = document.getElementById('hero-h1');
+      if (h1) h1.innerHTML = 'CV<br><em>Oluşturucu</em>';
+      var sub = document.getElementById('hero-sub');
+      if (sub) sub.textContent = 'Profesyonel CV oluştur, PDF olarak indir. Kayıt gerekmez.';
+    }
+
+    // data-tr/data-en statik elementler
+    document.querySelectorAll('[data-tr]').forEach(function(el) {
+      var val = el.getAttribute('data-' + l);
+      if (val) el.textContent = val;
+    });
+    document.querySelectorAll('[data-tr-ph]').forEach(function(el) {
+      var ph = el.getAttribute('data-' + l + '-ph');
+      if (ph) el.placeholder = ph;
+    });
+
+    // Dinamik alanları yeniden render et
+    if (typeof renderEntries === 'function') { renderEntries(); }
+    if (typeof renderLangs === 'function') { renderLangs(); }
+
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', l === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', l === 'en');
+  }
+
+  window.setLang = applyLang;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.cvLang !== 'tr') applyLang(window.cvLang);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', window.cvLang === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', window.cvLang === 'en');
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'free <em>cv</em><br>builder',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+</body></html>`);
+  win.document.close();
+}
+
+// INIT
+renderEntries();
+renderLangs();
+render();
+window.addEventListener('resize',render);
+</script>
+
+
+<script>
+(function(){
+  var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+  var CV_EN = {
+    title: 'Free Online CV Builder - Create Professional PDF Resume | tektik.la',
+    meta: 'Build a professional CV in minutes. No account required. Download as PDF for free.',
+    h1: 'Professional CV<br><em>Builder</em>',
+    sub: 'Create your job-winning resume for free without signing up.',
+    tmplModern:'Modern', tmplClassic:'Classic', tmplMinimal:'Minimal',
+    lblName:'Full Name', lblTitle:'Title/Position', lblEmail:'Email Address',
+    lblPhone:'Phone Number', lblCity:'City', lblWeb:'Website', lblLinkedin:'LinkedIn',
+    lblSummary:'Summary', lblCompany:'Company Name', lblPosition:'Position',
+    lblDates:'Start-End Date', lblDesc:'Description',
+    btnAddExp:'+ Add Experience', btnRemove:'Remove',
+    lblSchool:'School/University', lblDept:'Department', lblGradYear:'Graduation Year',
+    btnAddEdu:'+ Add Education', phSkill:'Enter a skill...',
+    lblLang:'Language', lblLevel:'Level',
+    lvlBeg:'Beginner', lvlInt:'Intermediate', lvlAdv:'Advanced', lvlNative:'Native',
+    btnPdf:'Download PDF', btnPreview:'Preview', btnUpdate:'Update',
+    secExp:'Work Experience', secEdu:'Education', secSkills:'Skills',
+    secLangs:'Languages', secSummary:'Summary',
+  };
+  var CV_TR = { title: document.title, meta: (document.querySelector('meta[name="description"]')||{}).content||'' };
+
+  function applyCV(lang) {
+    var d = lang === 'en' ? CV_EN : CV_TR;
+    document.title = d.title;
+    var m = document.querySelector('meta[name="description"]'); if (m) m.content = d.meta;
+    var h1 = document.getElementById('hero-h1');
+    if (h1) h1.innerHTML = lang==='en' ? CV_EN.h1 : (CV_TR.h1||h1.innerHTML);
+    var sub = document.getElementById('hero-sub');
+    if (sub) sub.textContent = lang==='en' ? CV_EN.sub : (CV_TR.sub||sub.textContent);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = function(lang) {
+    currentLang = lang; localStorage.setItem('tektik-lang', lang); applyCV(lang);
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    CV_TR.h1 = (document.getElementById('hero-h1')||{}).innerHTML||null;
+    CV_TR.sub = (document.getElementById('hero-sub')||{}).textContent||null;
+    if (currentLang==='en') applyCV('en');
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', currentLang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', currentLang==='en');
+  });
+})();
+</script>
+
+<script>
+(function() {
+  window.cvLang = localStorage.getItem('tektik-lang') || 'tr';
+
+  function applyLang(l) {
+    window.cvLang = l;
+    localStorage.setItem('tektik-lang', l);
+
+    if (l === 'en') {
+      document.title = 'Free Online CV Builder - Create Professional PDF Resume | tektik.la';
+      var m = document.querySelector('meta[name="description"]');
+      if (m) m.content = 'Build a professional CV in minutes. No account required. Download as PDF for free.';
+      var h1 = document.getElementById('hero-h1');
+      if (h1) h1.innerHTML = 'Professional CV<br><em>Builder</em>';
+      var sub = document.getElementById('hero-sub');
+      if (sub) sub.textContent = 'Create your job-winning resume for free without signing up.';
+    } else {
+      document.title = 'Ücretsiz CV Oluşturucu — PDF CV Hazırla | tektik.la';
+      var h1 = document.getElementById('hero-h1');
+      if (h1) h1.innerHTML = 'CV<br><em>Oluşturucu</em>';
+      var sub = document.getElementById('hero-sub');
+      if (sub) sub.textContent = 'Profesyonel CV oluştur, PDF olarak indir. Kayıt gerekmez.';
+    }
+
+    // data-tr/data-en statik elementler
+    document.querySelectorAll('[data-tr]').forEach(function(el) {
+      var val = el.getAttribute('data-' + l);
+      if (val) el.textContent = val;
+    });
+    document.querySelectorAll('[data-tr-ph]').forEach(function(el) {
+      var ph = el.getAttribute('data-' + l + '-ph');
+      if (ph) el.placeholder = ph;
+    });
+
+    // Dinamik alanları yeniden render et
+    if (typeof renderEntries === 'function') { renderEntries(); }
+    if (typeof renderLangs === 'function') { renderLangs(); }
+
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', l === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', l === 'en');
+  }
+
+  window.setLang = applyLang;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.cvLang !== 'tr') applyLang(window.cvLang);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', window.cvLang === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', window.cvLang === 'en');
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'free <em>cv</em><br>builder',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+</body>
+</html>

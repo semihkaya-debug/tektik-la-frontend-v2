@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yükleniyor... — tektik.la</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  
+  .avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    object-fit: cover;
+  }
+  
+  .avatar.has-image {
+    background: none;
+  }
+  
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 24px;
+  }
+  
+  .slug {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .bio {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+  }
+  
+  .social-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.2s;
+  }
+  
+  .social-btn:hover {
+    transform: translateY(-2px);
+    background: #667eea;
+    color: white;
+  }
+  
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .link {
+    display: block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);
+  }
+  
+  .link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+  }
+  
+  .footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+  }
+  
+  .error h2 {
+    font-size: 60px;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="content">
+  <div class="loading">⏳ Yükleniyor...</div>
+</div>
+
+<div class="footer">
+  Senin de profilin olsun! <a href="/signup">tektik.la'da kayıt ol</a>
+</div>
+
+<script src="/config.js"></script>
+<script>
+  // URL'den slug'ı al
+  // Örnekler:
+  // tektik.la/ahmet → "ahmet"
+  // tektik.la/profile.html?slug=ahmet → "ahmet"
+  
+  function getSlug() {
+    // Önce query string'e bak
+    // Önce query string'e bak (?slug=ahmet)
+    const urlParams = new URLSearchParams(window.location.search);
+    const querySlug = urlParams.get('slug');
+    if (querySlug) return querySlug;
+    
+    // /profile/ahmet → "ahmet"
+    const path = window.location.pathname;
+    const profileMatch = path.match(/^\/profile\/([^\/]+)\/?$/);
+    if (profileMatch) {
+      return profileMatch[1];
+    }
+    
+    // /ahmet → "ahmet" (kısa URL)
+    const shortMatch = path.match(/^\/([^\/]+)\/?$/);
+    if (shortMatch && shortMatch[1] !== 'profile.html' && shortMatch[1] !== 'profile') {
+      return shortMatch[1];
+    }
+    
+    return null;
+  }
+  
+  const slug = getSlug();
+  const content = document.getElementById('content');
+  
+  const socialIcons = {
+    twitter: '𝕏', instagram: '📷', threads: '🧵', linkedin: '💼',
+    youtube: '▶️', tiktok: '🎵', twitch: '🎮', kick: '⚡', github: '💻'
+  };
+  
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  async function loadProfile() {
+    if (!slug) {
+      content.innerHTML = `
+        <div class="error">
+          <h2>🤔</h2>
+          <p>Hangi profili görmek istediğini anlayamadım.</p>
+        </div>
+      `;
+      return;
+    }
+    
+    try {
+      const data = await apiCall(`/api/profile/${slug}`);
+      const { profile, links, socials } = data;
+      
+      document.title = `${profile.title || profile.slug} — tektik.la`;
+      
+      const avatarHtml = profile.avatar_url
+        ? `<div class="avatar has-image"><img class="avatar-img" src="${escapeHtml(profile.avatar_url)}" alt=""></div>`
+        : `<div class="avatar">${profile.slug.charAt(0).toUpperCase()}</div>`;
+      
+      const socialsHtml = socials && socials.length > 0
+        ? `<div class="socials">${socials.map(s => 
+            `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-btn" title="${s.platform}">${socialIcons[s.platform] || '🔗'}</a>`
+          ).join('')}</div>`
+        : '';
+      
+      const linksHtml = links && links.length > 0
+        ? `<div class="links">${links.map(l => 
+            `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener" class="link">${escapeHtml(l.title)}</a>`
+          ).join('')}</div>`
+        : '<div class="loading">Henüz link eklenmemiş.</div>';
+      
+      content.innerHTML = `
+        ${avatarHtml}
+        <h1>${escapeHtml(profile.title || profile.slug)}</h1>
+        <div class="slug">tektik.la/${escapeHtml(profile.slug)}</div>
+        ${profile.bio ? `<div class="bio">${escapeHtml(profile.bio)}</div>` : ''}
+        ${socialsHtml}
+        ${linksHtml}
+      `;
+      
+    } catch (error) {
+      content.innerHTML = `
+        <div class="error">
+          <h2>😕</h2>
+          <p><strong>Profil bulunamadı</strong></p>
+          <p style="margin-top: 10px; font-size: 14px;">tektik.la/${escapeHtml(slug)} adresinde kimse yok.</p>
+          <p style="margin-top: 20px;"><a href="/signup" style="color: #667eea; font-weight: 600;">Bu adı sen kap!</a></p>
+        </div>
+      `;
+      document.title = 'Bulunamadı — tektik.la';
+    }
+  }
+  
+  loadProfile();
+</script>
+
+</body>
+</html>

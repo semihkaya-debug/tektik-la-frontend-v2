@@ -1,0 +1,101 @@
+# ============================================
+# tektik.la - Routing Kuralları
+# ============================================
+# Bu dosya sadece spesifik yönlendirmeler için.
+# Catch-all (/* → /profile.html) artık 
+# functions/[[catchall]].js içinde.
+
+# ---- Statik dosyalar (zaten Cloudflare otomatik serve eder) ----
+/sitemap.xml      /sitemap.xml      200
+/robots.txt       /robots.txt       200
+
+# ---- Araç sayfaları - klasör isimleri uzantısız erişim ----
+/sifre            /password/index.html        200
+/password         /password/index.html        200
+/whitespace       /whitespace/index.html      200
+/html-encode      /html-encode/index.html     200
+/renk-tonu        /renk-tonu/index.html       200
+/gorsel-kirp      /gorsel-kirp/index.html     200
+/hesap            /hesap/index.html           200
+/base64           /base64/index.html          200
+/binary           /binary/index.html          200
+/btk              /btk/index.html             200
+/cekilis          /cekilis/index.html         200
+/cv               /cv/index.html              200
+/fatura           /fatura/index.html          200
+/fis              /fis/index.html             200
+/foto             /foto/index.html            200
+/gerisayim        /gerisayim/index.html       200
+/gorsel           /gorsel/index.html          200
+/gradient         /gradient/index.html        200
+/hashtag          /hashtag/index.html         200
+/json             /json/index.html            200
+/kelime           /kelime/index.html          200
+/kosullar         /kosullar/index.html        200
+/lorem            /lorem/index.html           200
+/markdown         /markdown/index.html        200
+/metin            /metin/index.html           200
+/pomodoro         /pomodoro/index.html        200
+/qr               /qr/index.html              200
+/regex            /regex/index.html           200
+/renk             /renk/index.html            200
+/saat             /saat/index.html            200
+/tarih            /tarih/index.html           200
+/turkce           /turkce/index.html          200
+/uuid             /uuid/index.html            200
+/yuzde            /yuzde/index.html           200
+
+# ---- Eski URL yönlendirmeleri ----
+/barkod           /qr/?mod=barkod             301
+/barkod/          /qr/?mod=barkod             301
+
+# ---- Auth sayfaları ----
+/signup           /signup/index.html          200
+/login            /login/index.html           200
+/dashboard        /dashboard/index.html       200
+
+# ---- Admin ----
+/admin            /admin/index.html           200
+
+# ---- Blog (özel sayfaları) ----
+/blog             /blog/index.html            200
+/blog/link-kisaltma-avantajlari                                /blog/link-kisaltma-avantajlari/index.html                              200
+/blog/profesyonel-qr-kod-kullanimi                             /blog/profesyonel-qr-kod-kullanimi/index.html                           200
+/blog/online-cekilis-nasil-duzenlenir                          /blog/online-cekilis-nasil-duzenlenir/index.html                        200
+/blog/dijital-makbuz-hazirlama-rehberi                         /blog/dijital-makbuz-hazirlama-rehberi/index.html                       200
+/blog/profesyonel-cv-hazirlama-ipuclari                        /blog/profesyonel-cv-hazirlama-ipuclari/index.html                      200
+/blog/guvenli-sifre-olusturma-yontemleri                       /blog/guvenli-sifre-olusturma-yontemleri/index.html                     200
+/blog/hizli-yuzde-hesaplama-araci                              /blog/hizli-yuzde-hesaplama-araci/index.html                            200
+/blog/iki-tarih-arasi-sure-hesaplama                           /blog/iki-tarih-arasi-sure-hesaplama/index.html                         200
+/blog/emeklilik-ve-bilesik-faiz-hesaplama-rehberi              /blog/emeklilik-ve-bilesik-faiz-hesaplama-rehberi/index.html            200
+/blog/foto-sikistirma-ve-gorsel-optimizasyon-rehberi           /blog/foto-sikistirma-ve-gorsel-optimizasyon-rehberi/index.html         200
+/blog/dunya-saat-dilimleri-ve-takibi                           /blog/dunya-saat-dilimleri-ve-takibi/index.html                         200
+/blog/canli-markdown-editoru-kullanimi                         /blog/canli-markdown-editoru-kullanimi/index.html                       200
+/blog/binary-hexadecimal-decimal-donusturme-rehberi            /blog/binary-hexadecimal-decimal-donusturme-rehberi/index.html          200
+/blog/base64-kodlama-ve-kod-cozme-rehberi                      /blog/base64-kodlama-ve-kod-cozme-rehberi/index.html                    200
+/blog/best-free-online-link-shortener-no-ads                   /blog/best-free-online-link-shortener-no-ads/index.html                 200
+/blog/build-professional-resume-pdf-no-signup                  /blog/build-professional-resume-pdf-no-signup/index.html                200
+/blog/calculate-compound-interest-for-retirement-savings       /blog/calculate-compound-interest-for-retirement-savings/index.html     200
+/blog/convert-hex-to-rgb-color-codes-for-web-design            /blog/convert-hex-to-rgb-color-codes-for-web-design/index.html          200
+/blog/how-to-format-and-validate-json-data-online              /blog/how-to-format-and-validate-json-data-online/index.html            200
+/blog/json-verisi-nasil-okunur                                 /blog/json-verisi-nasil-okunur/index.html                               200
+/blog/random-name-picker-for-instagram-giveaways               /blog/random-name-picker-for-instagram-giveaways/index.html             200
+/blog/lorem-ipsum-generator-for-ui-ux-designers                /blog/lorem-ipsum-generator-for-ui-ux-designers/index.html              200
+/blog/regex-nedir-nasil-test-edilir                            /blog/regex-nedir-nasil-test-edilir/index.html                          200
+/blog/uuid-nedir-ve-nerelerde-kullanilir                       /blog/uuid-nedir-ve-nerelerde-kullanilir/index.html                     200
+/blog/how-to-crop-images-online-for-social-media               /blog/how-to-crop-images-online-for-social-media/index.html             200
+/blog/convert-binary-to-decimal-and-hex-instantly              /blog/convert-binary-to-decimal-and-hex-instantly/index.html            200
+/blog/best-online-pomodoro-timer-for-remote-work               /blog/best-online-pomodoro-timer-for-remote-work/index.html             200
+/blog/compress-images-online-without-quality-loss              /blog/compress-images-online-without-quality-loss/index.html            200
+/blog/create-professional-digital-receipts-for-freelancers     /blog/create-professional-digital-receipts-for-freelancers/index.html   200
+/blog/calculate-percentage-increase-and-decrease-fast          /blog/calculate-percentage-increase-and-decrease-fast/index.html        200
+
+# ---- /profile (slug'sız) → signup ----
+/profile          /signup/index.html         200
+/profile/         /signup/index.html         200
+
+# ---- /profile/ahmet → profile.html (uzun versiyon) ----
+/profile/*        /profile.html              200
+
+# NOT: /:slug catch-all kuralı YOK!
+# /semih → profile.html yönlendirmesi functions/[[catchall]].js içinde yapılıyor.

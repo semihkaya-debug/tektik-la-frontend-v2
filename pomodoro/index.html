@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomodoro Timer — Ücretsiz Online Odak Zamanlayıcısı | tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="25 dakika çalış, 5 dakika mola ver. Pomodoro tekniğiyle odaklan ve üretkenliğini artır. Ücretsiz.">
+<meta property="og:title" content="Pomodoro Timer — Ücretsiz Online Odak Zamanlayıcısı | tektik.la">
+<meta property="og:description" content="25 dakika çalış, 5 dakika mola ver. Pomodoro tekniğiyle odaklan ve üretkenliğini artır. Ücretsiz.">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg2:#111; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent: #c8f530; --card:#141414; }
+  :root[data-theme="light"] { --bg: #f5f5f0; --bg2:#eee; --bg3: #e5e4de; --border: #d0cfc8; --text:#111; --text2: #666; --accent: #5a9e00; --card:#fff; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+  header{ padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  .main { max-width:600px; margin:0 auto; padding:40px 40px 80px; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; letter-spacing:-3px; margin-bottom:8px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:14px; color:var(--text2); margin-bottom:40px; }
+
+  /* MODE TABS */
+  .mode-tabs { display:flex; gap:0; margin-bottom:32px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:4px; }
+  .mode-tab { flex:1; padding:10px; text-align:center; font-family:'Space Mono',monospace; font-size:11px; cursor:pointer; border-radius:7px; transition:all 0.2s; color:var(--text2); border:none; background:transparent; }
+  .mode-tab.active { background:var(--card); color:var(--text); border:1px solid var(--border); }
+
+  /* TIMER */
+  .timer-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:48px 32px; text-align:center; margin-bottom:20px; position:relative; overflow:hidden; }
+  .timer-card.work { border-color:var(--accent); }
+  .timer-card.break { border-color:#4ecdc4; }
+  .timer-card.longbreak { border-color:#a78bfa; }
+  .session-label { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:3px; text-transform:uppercase; margin-bottom:24px; }
+  .session-label.work { color:var(--accent); }
+  .session-label.break { color:#4ecdc4; }
+  .session-label.longbreak { color:#a78bfa; }
+
+  /* Ring */
+  .ring-wrap { position:relative; width:200px; height:200px; margin:0 auto 32px; }
+  .ring-svg { transform:rotate(-90deg); }
+  .ring-bg { fill:none; stroke:var(--border); stroke-width:8; }
+  .ring-fill { fill:none; stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset 1s linear; }
+  .ring-fill.work { stroke:var(--accent); }
+  .ring-fill.break { stroke:#4ecdc4; }
+  .ring-fill.longbreak { stroke:#a78bfa; }
+  .time-display { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .time-text { font-family:'Space Mono',monospace; font-size:52px; font-weight:700; letter-spacing:-2px; line-height:1; }
+  .pomodoro-dots { display:flex; gap:6px; justify-content:center; margin-bottom:32px; }
+  .pom-dot { width:10px; height:10px; border-radius:50%; background:var(--border); transition:background 0.3s; }
+  .pom-dot.done { background:var(--accent); }
+  .pom-dot.current { background:var(--accent); opacity:0.5; }
+
+  /* CONTROLS */
+  .controls { display:flex; gap:12px; justify-content:center; }
+  .btn-main { background:var(--accent); color:#0a0a0a; border:none; padding:16px 48px; border-radius:12px; font-family:'Space Mono',monospace; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; letter-spacing:1px; }
+  .btn-main:hover { opacity:0.9; transform:translateY(-1px); }
+  .btn-secondary { background:transparent; color:var(--text2); border:1px solid var(--border); padding:16px 24px; border-radius:12px; font-family:'Space Mono',monospace; font-size:13px; cursor:pointer; transition:all 0.2s; }
+  .btn-secondary:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* SETTINGS */
+  .settings-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; }
+  .settings-title { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+  .setting-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); }
+  .setting-row:last-child { border-bottom:none; }
+  .setting-label { font-size:13px; font-weight:600; }
+  .setting-sub { font-size:11px; color:var(--text2); font-family:'Space Mono',monospace; }
+  .num-ctrl { display:flex; align-items:center; gap:12px; }
+  .num-btn { width:28px; height:28px; background:var(--bg3); border:1px solid var(--border); color:var(--text); font-size:14px; cursor:pointer; border-radius:6px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+  .num-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .num-val { font-family:'Space Mono',monospace; font-size:14px; font-weight:700; min-width:28px; text-align:center; }
+
+  /* STATS */
+  .stats-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; text-align:center; }
+  .stat-val { font-family:'Space Mono',monospace; font-size:28px; font-weight:700; color:var(--accent); }
+  .stat-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
+
+  /* SHARE BAR */
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  .share-btn.cp:hover { border-color:var(--accent); color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; }
+  footer a.footer-mail { text-decoration:none!important; color:var(--text2)!important; font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); text-decoration:none; transition:color 0.2s; }
+  footer a.footer-mail:hover { color:var(--accent); }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  @media(max-width:600px) { header{padding:16px 20px} .main{padding:32px 20px 60px} h1{letter-spacing:-3px} }
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<link rel="canonical" href="https://tektik.la/pomodoro">
+<meta name="robots" content="index, follow">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px">
+      <button class="ctrl-btn" id="sound-btn" onclick="toggleSound()" title="Ses aç/kapat">🔔</button>
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+
+  <div class="main">
+    <div class="hero-tag">pomodoro timer</div>
+    <h1>odaklan,<br><em>bitir.</em></h1>
+    <p class="hero-sub">25 dakika çalış, 5 dakika mola ver. Tekrarla.</p>
+
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="tab-work" onclick="switchMode('work')">Odak</button>
+      <button class="mode-tab" id="tab-break" onclick="switchMode('break')">Kısa Mola</button>
+      <button class="mode-tab" id="tab-longbreak" onclick="switchMode('longbreak')">Uzun Mola</button>
+    </div>
+
+    <div class="timer-card work" id="timer-card">
+      <div class="session-label work" id="session-label">ODAK ZAMANI</div>
+      <div class="ring-wrap">
+        <svg class="ring-svg" width="200" height="200" viewBox="0 0 200 200">
+          <circle class="ring-bg" cx="100" cy="100" r="88"/>
+          <circle class="ring-fill work" id="ring" cx="100" cy="100" r="88"
+            stroke-dasharray="553" stroke-dashoffset="0"/>
+        </svg>
+        <div class="time-display">
+          <div class="time-text" id="time-display">25:00</div>
+        </div>
+      </div>
+      <div class="pomodoro-dots" id="pom-dots"></div>
+      <div class="controls">
+        <button class="btn-secondary" onclick="resetTimer()">↺</button>
+        <button class="btn-main" id="start-btn" onclick="toggleTimer()">BAŞLAT</button>
+        <button class="btn-secondary" onclick="skipSession()">⏭</button>
+      </div>
+    </div>
+
+    <div class="stats-card">
+      <div><div class="stat-val" id="stat-completed">0</div><div class="stat-label">Tamamlanan</div></div>
+      <div><div class="stat-val" id="stat-focus">0</div><div class="stat-label">Odak (dk)</div></div>
+      <div><div class="stat-val" id="stat-streak">0</div><div class="stat-label">Seri</div></div>
+    </div>
+
+    <div class="settings-card">
+      <div class="settings-title">Ayarlar</div>
+      <div class="setting-row">
+        <div><div class="setting-label">Odak süresi</div><div class="setting-sub">dakika</div></div>
+        <div class="num-ctrl">
+          <button class="num-btn" onclick="changeSetting('work',-1)">−</button>
+          <span class="num-val" id="set-work">25</span>
+          <button class="num-btn" onclick="changeSetting('work',1)">+</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <div><div class="setting-label">Kısa mola</div><div class="setting-sub">dakika</div></div>
+        <div class="num-ctrl">
+          <button class="num-btn" onclick="changeSetting('break',-1)">−</button>
+          <span class="num-val" id="set-break">5</span>
+          <button class="num-btn" onclick="changeSetting('break',1)">+</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <div><div class="setting-label">Uzun mola</div><div class="setting-sub">dakika</div></div>
+        <div class="num-ctrl">
+          <button class="num-btn" onclick="changeSetting('longbreak',-1)">−</button>
+          <span class="num-val" id="set-longbreak">15</span>
+          <button class="num-btn" onclick="changeSetting('longbreak',1)">+</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <div><div class="setting-label">Uzun molaya kadar</div><div class="setting-sub">pomodoro sayısı</div></div>
+        <div class="num-ctrl">
+          <button class="num-btn" onclick="changeSetting('longAfter',-1)">−</button>
+          <span class="num-val" id="set-longafter">4</span>
+          <button class="num-btn" onclick="changeSetting('longAfter',1)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/pomodoro-teknigi-ile-odaklanma-ve-verimlilik" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Pomodoro Tekniği ile Odaklanma
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Ücretsiz Online Pomodoro Timer ile Odaklan</h2>
+<p class="seo-desc">25 dakika çalış, 5 dakika mola ver. Pomodoro tekniğinin en sade hali tektik.la'da. Kayıt olmadan, reklam görmeden sadece odaklanmana yardımcı olan bir zamanlayıcı. Süre dolduğunda sesli uyarı alırsın.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Pomodoro timer — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Fpomodoro&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=Pomodoro timer — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Fpomodoro" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/pomodoro&text=Pomodoro timer — tektik.la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/pomodoro&title=Pomodoro%20Timer%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/pomodoro').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+let theme = localStorage.getItem('tektik-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', theme);
+function toggleTheme() { theme = theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',theme); localStorage.setItem('tektik-theme',theme); }
+document.getElementById('sound-btn').textContent = soundOn ? '🔔' : '🔕';
+
+const settings = { work:25, break:5, longbreak:15, longAfter:4 };
+const CIRCUMFERENCE = 2 * Math.PI * 88; // 553
+
+let mode = 'work';
+let timeLeft = settings.work * 60;
+let totalTime = settings.work * 60;
+let running = false;
+let interval = null;
+let completedPomodoros = 0;
+let totalFocusMinutes = 0;
+let streak = 0;
+
+const LABELS = { work:'ODAK ZAMANI', break:'KISA MOLA', longbreak:'UZUN MOLA' };
+
+function switchMode(m) {
+  clearInterval(interval);
+  running = false;
+  mode = m;
+  ['work','break','longbreak'].forEach(k => {
+    document.getElementById('tab-'+k).classList.toggle('active', k===m);
+  });
+  resetTimer();
+}
+
+function updateDisplay() {
+  const m = Math.floor(timeLeft / 60).toString().padStart(2,'0');
+  const s = (timeLeft % 60).toString().padStart(2,'0');
+  document.getElementById('time-display').textContent = `${m}:${s}`;
+  document.title = `${m}:${s} — ${LABELS[mode]} — tektik.la`;
+
+  // Ring
+  const progress = timeLeft / totalTime;
+  const offset = CIRCUMFERENCE * (1 - progress);
+  document.getElementById('ring').style.strokeDashoffset = offset;
+}
+
+function updateCard() {
+  const card = document.getElementById('timer-card');
+  const label = document.getElementById('session-label');
+  const ring = document.getElementById('ring');
+  card.className = 'timer-card ' + mode;
+  label.className = 'session-label ' + mode;
+  ring.className = 'ring-fill ' + mode;
+  label.textContent = LABELS[mode];
+}
+
+function renderDots() {
+  const container = document.getElementById('pom-dots');
+  const n = settings.longAfter;
+  container.innerHTML = Array.from({length:n}, (_,i) => {
+    let cls = 'pom-dot';
+    if (i < completedPomodoros % n) cls += ' done';
+    else if (i === completedPomodoros % n && mode === 'work') cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function toggleTimer() {
+  if (running) {
+    clearInterval(interval);
+    running = false;
+    document.getElementById('start-btn').textContent = 'DEVAM';
+  } else {
+    running = true;
+    document.getElementById('start-btn').textContent = 'DURAKLAT';
+    interval = setInterval(() => {
+      timeLeft--;
+      updateDisplay();
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        running = false;
+        onSessionEnd();
+      }
+    }, 1000);
+  }
+}
+
+var soundOn = localStorage.getItem('tektik-sound') !== 'off';
+
+function toggleSound() {
+  soundOn = !soundOn;
+  localStorage.setItem('tektik-sound', soundOn ? 'on' : 'off');
+  document.getElementById('sound-btn').textContent = soundOn ? '🔔' : '🔕';
+}
+
+function playAlarm(type) {
+  if (!soundOn) return;
+  try {
+    const ctx = new AudioContext();
+    const freqs = type === 'work' ? [523, 659, 784] : [784, 659, 523];
+    freqs.forEach(function(freq, i) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      const t = ctx.currentTime + i * 0.28;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.35, t + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      osc.start(t); osc.stop(t + 0.25);
+    });
+  } catch(e) {}
+}
+
+function onSessionEnd() {
+  playAlarm(mode);
+
+  if (mode === 'work') {
+    completedPomodoros++;
+    totalFocusMinutes += settings.work;
+    streak++;
+    document.getElementById('stat-completed').textContent = completedPomodoros;
+    document.getElementById('stat-focus').textContent = totalFocusMinutes;
+    document.getElementById('stat-streak').textContent = streak;
+    // Uzun mola zamanı mı?
+    if (completedPomodoros % settings.longAfter === 0) {
+      switchMode('longbreak');
+    } else {
+      switchMode('break');
+    }
+  } else {
+    switchMode('work');
+  }
+  renderDots();
+  // Otomatik başlat
+  toggleTimer();
+}
+
+function resetTimer() {
+  clearInterval(interval);
+  running = false;
+  timeLeft = settings[mode] * 60;
+  totalTime = settings[mode] * 60;
+  document.getElementById('start-btn').textContent = 'BAŞLAT';
+  updateCard();
+  updateDisplay();
+  renderDots();
+}
+
+function skipSession() {
+  clearInterval(interval);
+  running = false;
+  onSessionEnd();
+}
+
+function changeSetting(key, delta) {
+  const min = key === 'longAfter' ? 2 : 1;
+  const max = key === 'longAfter' ? 8 : 60;
+  settings[key] = Math.max(min, Math.min(max, settings[key] + delta));
+  const displayKey = key === 'longAfter' ? 'longafter' : key;
+  document.getElementById('set-' + displayKey).textContent = settings[key];
+  if (!running) resetTimer();
+}
+
+// Init
+document.getElementById('ring').style.strokeDasharray = CIRCUMFERENCE;
+resetTimer();
+</script>
+
+<script>
+  // Telegram Mini App init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Tam ekran aç
+    tg.ready();  // Telegram'a hazır olduğumuzu bildir
+    
+    // Back button - alt sayfalarda geri dön
+    if (window.location.pathname !== '/') {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => window.history.back());
+    }
+  }
+</script>
+
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'focus,<br><em>get it done.</em>',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var _trLabels = [("Başlat", "Start"), ("Duraklat", "Pause"), ("Sıfırla", "Reset"), ("Atla", "Skip"), ("Odaklanma Süresi", "Focus Time"), ("Mola Süresi", "Short Break"), ("Uzun Mola", "Long Break"), ("Tamamlanan Tur", "Rounds Completed"), ("Odaklanma zamanı!", "Focus time!"), ("Mola zamanı!", "Break time!")];
+  var _trPhs = [];
+
+  function _applyDomLang(lang) {
+    if (lang === 'en') {
+      // Text node'larını çevir
+      _trLabels.forEach(function(pair) {
+        document.querySelectorAll('button, label, span, div, p, h2, h3, td, th, option').forEach(function(el) {
+          if (el.children.length === 0 && el.textContent.trim() === pair[0]) {
+            el.textContent = pair[1];
+          }
+        });
+      });
+      // Placeholder'ları çevir
+      _trPhs.forEach(function(pair) {
+        document.querySelectorAll('input, textarea').forEach(function(el) {
+          if (el.placeholder && el.placeholder.indexOf(pair[0]) !== -1) {
+            el.placeholder = el.placeholder.replace(pair[0], pair[1]);
+          }
+        });
+      });
+    }
+  }
+
+  var _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    if (_origSetLang) _origSetLang(lang);
+    _applyDomLang(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = localStorage.getItem('tektik-lang') || 'tr';
+    if (lang === 'en') _applyDomLang('en');
+  });
+})();
+</script>
+</body>
+</html>

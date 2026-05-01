@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.setAttribute('data-theme',localStorage.getItem('tektik-theme')||'dark')</script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whitespace Temizleyici — Boşluk ve Tab Temizle | tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="Metindeki gereksiz boşluk, tab ve boş satırları temizle.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent:#c8f530;--card:#141414;--input-bg:#0f0f0f}
+:root[data-theme="light"]{--bg:#f5f5f0;--bg3:#e5e4de;--border:#d0cfc8;--text:#111;--text2:#666;--accent:#5a9e00;--card:#fff;--input-bg:#fafaf8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0}
+.content{position:relative;z-index:1 max-width:860px; margin:0 auto;}
+header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text)}
+.logo span{color:var(--accent)}
+.ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s}
+.ctrl-btn:hover,.ctrl-btn.active{border-color:var(--accent);color:var(--accent)}
+.hero{padding:60px 40px 30px;max-width:860px;margin:0 auto}
+.hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--accent)}
+h1{font-size:clamp(48px,7vw,88px);font-weight:800;line-height:0.95;letter-spacing:-3px;margin-bottom:12px}
+h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:15px;color:var(--text2)}
+.main{max-width:860px;margin:0 auto;padding:0 40px 80px}
+.options-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.opt-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;transition:all 0.2s;user-select:none}
+.opt-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,245,48,0.06)}
+.opt-btn input{accent-color:var(--accent);cursor:pointer}
+.editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.pane{display:flex;flex-direction:column;gap:8px}
+.pane-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+textarea{flex:1;min-height:300px;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:16px;border-radius:10px;font-family:'Space Mono',monospace;font-size:12px;line-height:1.7;resize:vertical;outline:none;transition:border-color 0.2s}
+textarea:focus{border-color:var(--accent)}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.btn-primary{background:var(--accent);color:#0a0a0a;border:none;padding:12px 24px;border-radius:10px;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-sec{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:12px 20px;border-radius:10px;font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s}
+.btn-sec:hover{border-color:var(--accent);color:var(--accent)}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap}
+.stat-pill{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:5px 12px;border-radius:20px}
+.share-bar{border-top:1px solid var(--border);padding:20px 40px;display:flex; justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.share-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;text-decoration:none;transition:all 0.2s;cursor:pointer}
+.share-btn:hover{transform:translateY(-1px)}
+.share-btn.x:hover{border-color:#1d9bf0;color:#1d9bf0}
+.share-btn.wa:hover{border-color:#25d366;color:#25d366}
+.share-btn.tg:hover{border-color:#2aabee;color:#2aabee}
+.share-btn.cp:hover{border-color:var(--accent);color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:20px 40px;display:flex;justify-content:center}
+footer p,footer a{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)!important;text-decoration:none!important}
+footer a:hover{color:var(--accent)!important}
+@media(max-width:600px){header{padding:16px 20px}.hero,.main{padding-left:20px;padding-right:20px}.editor-grid{grid-template-columns:1fr}}
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<link rel="canonical" href="https://tektik.la/whitespace">
+<meta name="keywords" content="gereksiz boşluk silme, online boşluk temizleme, çift boşluk kaldırma, temiz metin elde etme">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+
+  <div class="hero">
+    <div class="hero-tag">metin aracı</div>
+    <h1>whitespace <em>temizleyici</em></h1>
+    <p class="hero-sub">Gereksiz boşluk, tab ve boş satırları tek tıkla temizle.</p>
+  </div>
+
+  <div class="main">
+    <div class="options-row">
+      <label class="opt-btn active"><input type="checkbox" id="opt-multi" checked> Çoklu boşlukları teke indir</label>
+      <label class="opt-btn active"><input type="checkbox" id="opt-trim" checked> Satır başı/sonu boşluk</label>
+      <label class="opt-btn"><input type="checkbox" id="opt-lines"> Boş satırları kaldır</label>
+      <label class="opt-btn"><input type="checkbox" id="opt-tabs"> Tab → boşluk</label>
+      <label class="opt-btn"><input type="checkbox" id="opt-newlines"> Tek satıra indir</label>
+    </div>
+
+    <div class="editor-grid">
+      <div class="pane">
+        <div class="pane-label"><span>GİRİŞ</span><span id="in-count">0 karakter</span></div>
+        <textarea id="input" placeholder="Temizlenecek metni buraya yapıştır..." oninput="clean()"></textarea>
+      </div>
+      <div class="pane">
+        <div class="pane-label"><span>ÇIKTI</span><span id="out-count">0 karakter</span></div>
+        <textarea id="output" readonly placeholder="Temizlenmiş metin burada görünür..."></textarea>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-primary" onclick="copyOutput()">Kopyala</button>
+      <button class="btn-sec" onclick="swapTexts()">⇄ Yer Değiştir</button>
+      <button class="btn-sec" onclick="clearAll()">✕ Temizle</button>
+      <button class="btn-sec" onclick="loadSample()">Örnek Metin</button>
+    </div>
+    <div class="stats-row" id="stats-row"></div>
+  </div>
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/metinlerde-gereksiz-bosluklari-temizleme" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Metinlerde Gereksiz Boşlukları Temizleme
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Metinlerdeki Gereksiz Boşlukları Tek Tıkla Silin</h2>
+<p class="seo-desc">Çift boşluklar, satır başı fazlalıkları ve gereksiz sekmeler canını mı sıkıyor? Metnini yapıştır ve tertemiz bir yazı al. Kodlarını küçültmek veya makalelerini yayına hazır hale getirmek için idealdir.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Whitespace temizleyici — tektik.la&url=https://tektik.la/whitespace" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=https://tektik.la/whitespace" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/whitespace" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/whitespace').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+<script>
+function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('tektik-theme',t)}
+var _lang=localStorage.getItem('tektik-lang')||'tr';
+function setLang(l){_lang=l;localStorage.setItem('tektik-lang',l);document.getElementById('btn-tr').classList.toggle('active',l==='tr');document.getElementById('btn-en').classList.toggle('active',l==='en')}
+setLang(_lang);
+
+document.querySelectorAll('.opt-btn input').forEach(function(cb){
+  cb.addEventListener('change',function(){this.closest('.opt-btn').classList.toggle('active',this.checked);clean()});
+});
+
+function clean(){
+  var input=document.getElementById('input').value;
+  document.getElementById('in-count').textContent=input.length+' karakter';
+  if(!input.trim()){document.getElementById('output').value='';document.getElementById('out-count').textContent='0 karakter';document.getElementById('stats-row').innerHTML='';return}
+  var r=input;
+  if(document.getElementById('opt-tabs').checked) r=r.replace(/\t/g,' ');
+  if(document.getElementById('opt-trim').checked) r=r.split('\n').map(function(l){return l.trim()}).join('\n');
+  if(document.getElementById('opt-multi').checked) r=r.replace(/ {2,}/g,' ');
+  if(document.getElementById('opt-lines').checked) r=r.split('\n').filter(function(l){return l.trim()!==''}).join('\n');
+  if(document.getElementById('opt-newlines').checked) r=r.replace(/\n+/g,' ').trim();
+  document.getElementById('output').value=r;
+  document.getElementById('out-count').textContent=r.length+' karakter';
+  var removed=input.length-r.length;
+  document.getElementById('stats-row').innerHTML='<div class="stat-pill">Kaldırılan: <strong>'+removed+'</strong> karakter</div><div class="stat-pill">Sıkıştırma: <strong>'+Math.round((1-r.length/input.length)*100)+'%</strong></div>';
+}
+function copyOutput(){var o=document.getElementById('output').value;if(!o)return;navigator.clipboard.writeText(o).then(function(){var b=document.querySelector('.btn-primary');b.textContent='✓ Kopyalandı';setTimeout(function(){b.textContent='Kopyala'},2000)})}
+function swapTexts(){var i=document.getElementById('input'),o=document.getElementById('output');i.value=o.value;clean()}
+function clearAll(){document.getElementById('input').value='';document.getElementById('output').value='';document.getElementById('in-count').textContent='0 karakter';document.getElementById('out-count').textContent='0 karakter';document.getElementById('stats-row').innerHTML=''}
+function loadSample(){document.getElementById('input').value='Bu   metinde    çok   fazla    boşluk var.\n  Satır başlarında da boşluklar mevcut.   \n\nBu satırın altında boş satırlar var.\n\n\n\tTab\tkarakterleri\tde\tburada.\n  Temizle ve düzenle!  ';clean()}
+</script>
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'whitespace<br><em>remover</em>',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var _trLabels = [("Tüm boşlukları kaldır", "Remove all spaces"), ("Çift boşlukları kaldır", "Remove double spaces"), ("Boş satırları kaldır", "Remove empty lines"), ("Baş/son boşlukları kaldır", "Trim start & end"), ("Temizle", "Clean"), ("Kopyala", "Copy"), ("Sıfırla", "Reset"), ("Kaldırılan karakter sayısı", "Characters removed")];
+  var _trPhs = [("Metni buraya yapıştırın", "Paste text here")];
+
+  function _applyDomLang(lang) {
+    if (lang === 'en') {
+      // Text node'larını çevir
+      _trLabels.forEach(function(pair) {
+        document.querySelectorAll('button, label, span, div, p, h2, h3, td, th, option').forEach(function(el) {
+          if (el.children.length === 0 && el.textContent.trim() === pair[0]) {
+            el.textContent = pair[1];
+          }
+        });
+      });
+      // Placeholder'ları çevir
+      _trPhs.forEach(function(pair) {
+        document.querySelectorAll('input, textarea').forEach(function(el) {
+          if (el.placeholder && el.placeholder.indexOf(pair[0]) !== -1) {
+            el.placeholder = el.placeholder.replace(pair[0], pair[1]);
+          }
+        });
+      });
+    }
+  }
+
+  var _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    if (_origSetLang) _origSetLang(lang);
+    _applyDomLang(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = localStorage.getItem('tektik-lang') || 'tr';
+    if (lang === 'en') _applyDomLang('en');
+  });
+})();
+</script>
+</body>
+</html>

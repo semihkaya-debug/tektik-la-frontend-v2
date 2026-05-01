@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ücretsiz Online Çekiliş Yap — Adil ve Şeffaf | tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="Ücretsiz online çekiliş aracı. Katılımcı listesi gir, kazananı saniyeler içinde belirle. Kayıt yok, reklam yok.">
+<meta name="keywords" content="online çekiliş yapma, reklamsız çekiliş, instagram çekiliş kazananı, adil şeffaf çekiliş, kayıt olmadan çekiliş">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Ücretsiz Online Çekiliş Yap — Adil ve Şeffaf | tektik.la">
+<meta property="og:description" content="Ücretsiz online çekiliş aracı. Katılımcı listesi gir, kazananı saniyeler içinde belirle. Kayıt yok, reklam yok.">
+<meta property="og:url" content="https://tektik.la/cekilis">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<link rel="canonical" href="https://tektik.la/cekilis">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent: #c8f530; --accent2: #a0d020; --card:#141414; --input-bg:#0f0f0f; --warn:#f5a623; --warn-bg:rgba(245,166,35,0.08); }
+  :root[data-theme="light"] { --bg: #f5f5f0; --bg3: #e5e4de; --border: #d0cfc8; --text:#111; --text2: #666; --accent: #5a9e00; --accent2: #4a8500; --card:#fff; --input-bg:#fafaf8; --warn:#b86e00; --warn-bg:rgba(184,110,0,0.08); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+  header{ padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .hero { padding:60px 40px 40px; max-width:860px; margin:0 auto; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; letter-spacing:-3px; margin-bottom:12px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); }
+  .main { max-width:860px; margin:0 auto; padding:0 40px 80px; display:flex; flex-direction:column; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:32px; }
+  .card-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+  textarea { width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:16px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; resize:vertical; min-height:160px; outline:none; transition:border-color 0.2s; line-height:1.8; }
+  textarea:focus { border-color:var(--accent); }
+  textarea::placeholder { color:var(--text2); }
+  .dup-warning { display:none; margin-top:10px; padding:10px 14px; background:var(--warn-bg); border:1px solid var(--warn); border-radius:8px; font-family:'Space Mono',monospace; font-size:11px; color:var(--warn); }
+  .dup-warning.show { display:block; }
+  .meta-row { margin-top:12px; }
+  .count-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--bg3); border:1px solid var(--border); border-radius:6px; font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); }
+  .count-badge strong { color:var(--accent); }
+  .winner-count-row { display:flex; align-items:center; gap:12px; margin-top:16px; padding:16px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; }
+  .winner-count-label { font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); flex:1; }
+  .count-control { display:flex; align-items:center; }
+  .count-btn { width:36px; height:36px; background:var(--card); border:1px solid var(--border); color:var(--text); font-size:18px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; }
+  .count-btn:first-child { border-radius:6px 0 0 6px; }
+  .count-btn:last-child { border-radius:0 6px 6px 0; }
+  .count-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .count-display { width:52px; height:36px; background:var(--input-bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:16px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .btn-primary { background:var(--accent); color:#0a0a0a; border:none; padding:16px 32px; border-radius:10px; font-family:'Space Mono',monospace; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; width:100%; margin-top:16px; }
+  .btn-primary:hover:not(:disabled) { background:var(--accent2); transform:translateY(-1px); }
+  .btn-primary:disabled { opacity:0.4; cursor:not-allowed; }
+  .btn-ghost { background:transparent; color:var(--text2); border:1px solid var(--border); padding:14px 24px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; cursor:pointer; transition:all 0.2s; }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+  .rolling { display:none; text-align:center; padding:40px; }
+  .rolling.show { display:block; }
+  .roll-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+  .roll-name { font-size:clamp(28px,5vw,56px); font-weight:800; letter-spacing:-2px; color:var(--accent); font-family:'Space Mono',monospace; min-height:80px; display:flex; align-items:center; justify-content:center; }
+  .results-section { display:none; }
+  .results-section.show { display:block; }
+  .block-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+  .winners-block { margin-bottom:28px; }
+  .winners-grid { display:flex; flex-direction:column; gap:10px; }
+  .winner-item { background:rgba(200,245,48,0.06); border:2px solid var(--accent); border-radius:12px; padding:16px 24px; display:flex; align-items:center; gap:16px; animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both; }
+  .winner-medal { font-size:28px; flex-shrink:0; }
+  .winner-name { font-size:clamp(22px,3vw,34px); font-weight:800; letter-spacing:-1px; color:var(--accent); }
+  .participants-block { margin-bottom:24px; padding-top:24px; border-top:1px solid var(--border); }
+  .participants-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:8px; margin-top:12px; }
+  .p-pill { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:9px 14px; font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); display:flex; align-items:center; gap:8px; }
+  .p-pill.winner { background:rgba(200,245,48,0.08); border-color:var(--accent); color:var(--accent); font-weight:700; }
+  .p-pip { width:6px; height:6px; border-radius:50%; background:var(--border); flex-shrink:0; }
+  .p-pill.winner .p-pip { background:var(--accent); }
+  .result-actions { display:flex; gap:12px; flex-wrap:wrap; }
+  .result-actions .btn-primary { width:auto; flex:1; margin-top:0; }
+  canvas { display:none; }
+
+  /* SHARE BAR */
+
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  .share-btn.cp:hover { border-color:var(--accent); color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:12px; }
+  footer p, footer a { text-decoration:none!important; color:var(--text2)!important; font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); text-decoration:none; }
+  footer a:hover { color:var(--accent); }
+  @keyframes popIn { from{opacity:0;transform:scale(0.8) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+  @media(max-width:600px) { header{padding:16px 20px} .hero,.main{padding-left:20px;padding-right:20px} h1{letter-spacing:-3px} .card{padding:20px} .participants-list{grid-template-columns:1fr 1fr} .result-actions{flex-direction:column} }
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<canvas id="c" width="1200" height="630"></canvas>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+  <div class="hero">
+    <div class="hero-tag">çekiliş aracı</div>
+    <h1>adil &<br><em>şeffaf</em> çekiliş</h1>
+    <p class="hero-sub">İsim listeni gir, kaç kazanan istediğini seç, çekilişi başlat.</p>
+  </div>
+  <div class="main">
+    <div class="card" id="input-card">
+      <div class="card-label">Çekiliş Ayarları</div>
+
+      <div style="margin-bottom:16px">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Çekiliş İsmi (opsiyonel)</div>
+        <input type="text" id="draw-title" placeholder="Örn: Yılbaşı Çekilişi" style="width:100%;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:12px 14px;border-radius:10px;font-family:'Space Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+
+      <div class="card-label">Katılımcı Listesi</div>
+      <textarea id="names-input" placeholder="Her satıra bir isim yaz:&#10;&#10;Ahmet Yılmaz&#10;Fatma Kaya&#10;Mehmet Demir&#10;Ayşe Çelik" oninput="onInput()"></textarea>
+      <div class="dup-warning" id="dup-warning"></div>
+      <div class="meta-row"><div class="count-badge">👥 <strong id="count-num">0</strong> katılımcı</div></div>
+
+      <div class="winner-count-row">
+        <div class="winner-count-label">Kaç kazanan seçilsin?</div>
+        <div class="count-control">
+          <button class="count-btn" onclick="chg(-1)">−</button>
+          <div class="count-display" id="wcd">1</div>
+          <button class="count-btn" onclick="chg(1)">+</button>
+        </div>
+      </div>
+
+      <div class="winner-count-row" style="margin-top:8px">
+        <div class="winner-count-label">Yedek kişi sayısı?</div>
+        <div class="count-control">
+          <button class="count-btn" onclick="chgBackup(-1)">−</button>
+          <div class="count-display" id="bcd">0</div>
+          <button class="count-btn" onclick="chgBackup(1)">+</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--text2)">Tekrar eden katılımcılar</div>
+        <div style="display:flex;gap:8px">
+          <label style="display:flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);cursor:pointer">
+            <input type="radio" name="dup-mode" value="once" checked style="accent-color:var(--accent)"> Yalnızca 1 katılım hakkı
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);cursor:pointer">
+            <input type="radio" name="dup-mode" value="multi" style="accent-color:var(--accent)"> Birden fazla katılım hakkı
+          </label>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="draw-btn" onclick="startDraw()" disabled>🎲 Çekilişi Başlat</button>
+    </div>
+
+    <div class="card rolling" id="rolling-card">
+      <div class="roll-label" id="roll-label">Kazanan aranıyor...</div>
+      <div class="roll-name" id="roll-name">—</div>
+    </div>
+
+    <div class="results-section" id="results-section">
+      <div class="card">
+        <div class="winners-block">
+          <div class="block-label" id="winners-label">🏆 Kazanan</div>
+          <div class="winners-grid" id="winners-grid"></div>
+        </div>
+        <div id="backup-block" style="display:none"></div>
+        <div class="participants-block">
+          <div class="block-label">👥 Tüm Katılımcılar (<span id="total-count">0</span> kişi)</div>
+          <div class="participants-list" id="participants-list"></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn-primary" onclick="download()">⬇ Sonucu İndir</button>
+          <button class="btn-ghost" onclick="reset()">↺ Yeni Çekiliş</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/online-cekilis-nasil-duzenlenir" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Online Çekiliş Nasıl Düzenlenir?
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Online Çekiliş Yap ve Ücretsiz Çekiliş Oluştur</h2>
+<p class="seo-desc">Sosyal medya veya etkinlikleriniz için online çekiliş yap aracımızı kullanarak kazananı şeffaf bir şekilde belirleyin. Listeyi yapıştırarak saniyeler içinde çekiliş oluştur ve katılımcılarınıza ücretsiz çekiliş sonuçlarını anında ilan etme kolaylığını yaşayın.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Ücretsiz çekiliş aracı — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Fcekilis&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=Ücretsiz çekiliş aracı — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Fcekilis" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/cekilis&text=Ücretsiz çekiliş aracı — tektik.la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/cekilis&title=%C3%87ekili%C5%9F%20Yap%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/cekilis').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+<script>
+let theme=localStorage.getItem('tektik-theme')||'dark';
+document.documentElement.setAttribute('data-theme',theme);
+function toggleTheme(){theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme);localStorage.setItem('tektik-theme',theme);}
+
+let participants=[],winnerCount=1,backupCount=0,winners=[],backups=[],timer=null;
+
+function chg(d){const max=Math.max(1,participants.length-1);winnerCount=Math.min(max,Math.max(1,winnerCount+d));document.getElementById('wcd').textContent=winnerCount;}
+function chgBackup(d){const max=Math.max(0,participants.length-winnerCount-1);backupCount=Math.min(max,Math.max(0,backupCount+d));document.getElementById('bcd').textContent=backupCount;}
+
+function getParticipants(){
+  const raw=document.getElementById('names-input').value.split('\n').map(n=>n.trim()).filter(n=>n);
+  const mode=document.querySelector('input[name="dup-mode"]:checked').value;
+  if(mode==='multi') return raw; // Tekrar edenleri koru
+  // Tekil mod: her isim bir kez
+  const seen=new Set(),result=[];
+  raw.forEach(n=>{const k=n.toLowerCase();if(!seen.has(k)){seen.add(k);result.push(n);}});
+  return result;
+}
+
+function onInput(){
+  const lines=document.getElementById('names-input').value.split('\n').map(n=>n.trim()).filter(n=>n);
+  participants=lines;
+  document.getElementById('count-num').textContent=lines.length;
+  document.getElementById('draw-btn').disabled=lines.length<2;
+  const seen={},dups=[];
+  lines.forEach(n=>{const k=n.toLowerCase();if(seen[k]){if(!dups.includes(n))dups.push(n);}else seen[k]=true;});
+  const el=document.getElementById('dup-warning');
+  if(dups.length){el.textContent='⚠ Tekrarlayan: '+dups.join(', ');el.classList.add('show');}else el.classList.remove('show');
+  if(winnerCount>=lines.length&&lines.length>1){winnerCount=1;document.getElementById('wcd').textContent=1;}
+}
+
+function startDraw(){
+  if(participants.length<2)return;
+  participants=getParticipants();
+  winners=[];backups=[];
+  document.getElementById('input-card').style.display='none';
+  document.getElementById('results-section').classList.remove('show');
+  document.getElementById('rolling-card').classList.add('show');
+  rollNext();
+}
+
+var drawingBackups=false;
+function rollNext(){
+  const rem=participants.filter(p=>![...winners,...backups].includes(p));
+  const currentList=drawingBackups?backups:winners;
+  const currentMax=drawingBackups?backupCount:winnerCount;
+
+  if(currentList.length>=currentMax){
+    if(!drawingBackups&&backupCount>0&&rem.length>0){
+      drawingBackups=true;rollNext();return;
+    }
+    showResults();return;
+  }
+  if(!rem.length){showResults();return;}
+
+  const el=document.getElementById('roll-name');
+  document.getElementById('roll-label').textContent=drawingBackups
+    ?`${backups.length+1}. yedek aranıyor...`
+    :winnerCount>1?`${winners.length+1}. kazanan aranıyor...`:'Kazanan aranıyor...';
+  let count=0,total=35+Math.floor(Math.random()*10);
+  function roll(){
+    el.textContent=rem[Math.floor(Math.random()*rem.length)];
+    count++;
+    if(count<total){timer=setTimeout(roll,50+130*(count/total));}
+    else{
+      const p=rem[Math.floor(Math.random()*rem.length)];
+      if(drawingBackups) backups.push(p); else winners.push(p);
+      el.textContent=p;
+      const more=(drawingBackups?backups.length<backupCount:winners.length<winnerCount)&&rem.length>1;
+      timer=setTimeout(more?rollNext:()=>{
+        if(!drawingBackups&&backupCount>0&&rem.filter(r=>r!==p).length>0){drawingBackups=true;timer=setTimeout(rollNext,900);}
+        else showResults();
+      },more?900:700);
+    }
+  }
+  roll();
+}
+
+function showResults(){
+  drawingBackups=false;
+  document.getElementById('rolling-card').classList.remove('show');
+  const title=document.getElementById('draw-title').value.trim();
+  document.getElementById('winners-label').textContent=(title?title+' — ':'')+'🏆 Kazanan'+(winners.length>1?`lar (${winners.length} kişi)`:'');
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('winners-grid').innerHTML=winners.map((n,i)=>`
+    <div class="winner-item" style="animation-delay:${i*0.12}s">
+      <div class="winner-medal">${medals[i]||'🏅'}</div>
+      <div class="winner-name">${n}</div>
+    </div>`).join('');
+
+  // Yedek bölümü
+  const backupBlock=document.getElementById('backup-block');
+  if(backups.length>0){
+    backupBlock.style.display='block';
+    backupBlock.innerHTML=`<div class="block-label" style="margin-top:16px">🔄 Yedekler (${backups.length} kişi)</div>`+
+      backups.map((n,i)=>`<div class="p-pill" style="background:rgba(255,170,0,0.08);border-color:rgba(255,170,0,0.3)"><div class="p-pip" style="background:#ffaa00"></div><span>${i+1}. ${n}</span></div>`).join('');
+  } else backupBlock.style.display='none';
+
+  document.getElementById('total-count').textContent=participants.length;
+  const ws=new Set(winners),bs=new Set(backups);
+  const sorted=[...winners,...backups,...participants.filter(p=>!ws.has(p)&&!bs.has(p))];
+  document.getElementById('participants-list').innerHTML=sorted.map(n=>{
+    const w=ws.has(n),b=bs.has(n);
+    return`<div class="p-pill${w?' winner':b?' backup':''}"><div class="p-pip" style="${b?'background:#ffaa00':''}"></div><span>${n}</span></div>`;
+  }).join('');
+  document.getElementById('results-section').classList.add('show');
+}
+
+function reset(){
+  clearTimeout(timer);winners=[];backups=[];drawingBackups=false;
+  document.getElementById('results-section').classList.remove('show');
+  document.getElementById('rolling-card').classList.remove('show');
+  document.getElementById('input-card').style.display='block';
+}
+
+function download(){
+  const canvas=document.getElementById('c'),ctx=canvas.getContext('2d'),w=1200,h=630;
+  ctx.fillStyle='#0a0a0a';ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='rgba(255,255,255,0.025)';
+  for(let x=0;x<w;x+=40)for(let y=0;y<h;y+=40){ctx.beginPath();ctx.arc(x,y,1,0,Math.PI*2);ctx.fill();}
+  ctx.fillStyle='#c8f530';ctx.fillRect(0,0,6,h);
+  ctx.font='bold 20px monospace';ctx.fillStyle='#c8f530';ctx.textAlign='left';ctx.fillText('tektik.la',40,46);
+  ctx.font='14px monospace';ctx.fillStyle='#444';ctx.fillText(new Date().toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'}),40,70);
+  ctx.font='bold 13px monospace';ctx.fillStyle='#555';ctx.fillText('KAZANAN'+(winners.length>1?'LAR':''),40,115);
+  const medals=['🥇','🥈','🥉'];
+  winners.forEach((n,i)=>{
+    const y=150+i*88,fs=n.length>20?36:n.length>12?46:56;
+    ctx.font=`bold ${fs}px sans-serif`;ctx.fillStyle=i===0?'#c8f530':'#aaa';
+    ctx.fillText((medals[i]||`#${i+1}`)+' '+n,40,y);
+  });
+  const cx=w*0.56;
+  ctx.font='bold 13px monospace';ctx.fillStyle='#444';ctx.fillText(`TÜM KATILIMCILAR (${participants.length})`,cx,115);
+  const ws=new Set(winners),sorted=[...winners,...participants.filter(p=>!ws.has(p))],max=16;
+  sorted.slice(0,max).forEach((n,i)=>{
+    const col=i<8?0:1,row=i%8,x=cx+col*270,y=145+row*58,iw=ws.has(n);
+    if(iw){ctx.fillStyle='rgba(200,245,48,0.07)';ctx.beginPath();ctx.roundRect(x-4,y-20,255,34,5);ctx.fill();}
+    ctx.font=(iw?'bold ':'')+`14px sans-serif`;ctx.fillStyle=iw?'#c8f530':'#555';
+    ctx.fillText((iw?'● ':'○ ')+n,x,y);
+  });
+  if(participants.length>max){ctx.font='12px monospace';ctx.fillStyle='#333';ctx.fillText(`+ ${participants.length-max} kişi daha`,cx,145+8*58);}
+  ctx.fillStyle='#111';ctx.fillRect(0,h-44,w,44);
+  ctx.font='13px monospace';ctx.fillStyle='#444';ctx.textAlign='center';ctx.fillText('tektik.la — Ücretsiz online çekiliş aracı',w/2,h-16);
+  const a=document.createElement('a');a.download=`tektik-cekilis-${Date.now()}.png`;a.href=canvas.toDataURL('image/png');a.click();
+}
+</script>
+
+<script>
+  // Telegram Mini App init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Tam ekran aç
+    tg.ready();  // Telegram'a hazır olduğumuzu bildir
+    
+    // Back button - alt sayfalarda geri dön
+    if (window.location.pathname !== '/') {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => window.history.back());
+    }
+  }
+</script>
+
+<script>
+(function() {
+  var langData = {
+    tr: {
+      'page-title': document.title,
+      'meta-desc': document.querySelector('meta[name="description"]') ? document.querySelector('meta[name="description"]').content : '',
+    },
+    en: {
+      'page-title': 'Online Random Name Picker - Free Giveaways | tektik.la',
+      'meta-desc': 'Run fair giveaways with our random name picker. No registration needed. Perfect for social media contests and classroom draws.',
+      'hero-h1': 'Random Name Picker',
+      'hero-sub': 'Choose winners fairly and quickly with no ads or sign ups.',
+    }
+  };
+  
+  var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+  
+
+  // Çekiliş sayfası ek çeviriler
+  var cekilisTexts = {
+    tr: {
+      drawTitle: 'Çekiliş İsmi (opsiyonel)',
+      drawTitlePh: 'Örn: Yılbaşı Çekilişi',
+      participantList: 'Katılımcı Listesi',
+      namesPh: 'Her satıra bir isim yaz:\n\nAhmet Yılmaz\nFatma Kaya\nMehmet Demir',
+      winnerCount: 'Kaç kazanan seçilsin?',
+      backupCount: 'Yedek kişi sayısı?',
+      drawBtn: '🎲 Çekilişi Başlat',
+      rolling: 'Kazanan aranıyor...',
+      duplicates: 'Tekrar eden katılımcılar',
+      oneEntry: 'Yalnızca 1 katılım hakkı',
+      multiEntry: 'Birden fazla katılım hakkı',
+      participants: 'katılımcı',
+    },
+    en: {
+      drawTitle: 'Draw Title (optional)',
+      drawTitlePh: 'E.g. New Year Giveaway',
+      participantList: 'Participant List',
+      namesPh: 'Enter one name per line:\n\nJohn Smith\nJane Doe\nBob Wilson',
+      winnerCount: 'Number of Winners',
+      backupCount: 'Number of Alternates',
+      drawBtn: '🎲 Start Draw',
+      rolling: 'Finding winner...',
+      duplicates: 'Duplicate participants',
+      oneEntry: 'One entry per person',
+      multiEntry: 'Multiple entries allowed',
+      participants: 'participants',
+    }
+  };
+
+  function applyCekilisLang(lang) {
+    var t = cekilisTexts[lang];
+    var drawTitle = document.getElementById('draw-title');
+    if (drawTitle) drawTitle.placeholder = t.drawTitlePh;
+    var namesInput = document.getElementById('names-input');
+    if (namesInput) namesInput.placeholder = t.namesPh;
+    var drawBtn = document.getElementById('draw-btn');
+    if (drawBtn) drawBtn.textContent = t.drawBtn;
+    var rollLabel = document.getElementById('roll-label');
+    if (rollLabel) rollLabel.textContent = t.rolling;
+    // winner-count-label'ları
+    var labels = document.querySelectorAll('.winner-count-label');
+    if (labels[0]) labels[0].textContent = t.winnerCount;
+    if (labels[1]) labels[1].textContent = t.backupCount;
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    
+    // Title ve meta
+    if (langData[lang]['page-title']) document.title = langData[lang]['page-title'];
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && langData[lang]['meta-desc']) metaDesc.content = langData[lang]['meta-desc'];
+    
+    // H1 ve subtitle
+    var h1 = document.getElementById('hero-h1');
+    if (h1 && langData[lang]['hero-h1']) h1.textContent = langData[lang]['hero-h1'];
+    var sub = document.getElementById('hero-sub');
+    if (sub && langData[lang]['hero-sub']) sub.textContent = langData[lang]['hero-sub'];
+    
+    // Buton aktif durumu
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+    applyCekilisLang(lang);
+  }
+  
+  window.setLang = setLang;
+  
+  // Sayfa yüklenince mevcut dili uygula
+  if (currentLang === 'en') setLang('en');
+  
+  // Buton aktif durumunu ayarla
+  document.addEventListener('DOMContentLoaded', function() {
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', currentLang === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', currentLang === 'en');
+  });
+})();
+</script>
+</body>
+</html>

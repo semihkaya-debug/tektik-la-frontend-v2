@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metinlerdeki Karakter Karmaşasına Son: Bozuk Yazıları Düzeltin | tektik.la</title>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('tektik-theme') || 'dark');</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta name="description" content="İngilizce klavyeyle yazılmış Türkçe metinleri anında düzeltin. Ücretsiz, kayıt yok, reklam yok. tektik.la Türkçe düzeltici.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Metinlerdeki Karakter Karmaşasına Son: Bozuk Yazıları Düzeltin | tektik.la">
+<meta property="og:description" content="İngilizce klavyeyle yazılmış Türkçe metinleri anında düzeltin. Ücretsiz, kayıt yok, reklam yok. tektik.la Türkçe düzeltici.">
+<meta property="og:url" content="https://tektik.la/blog/turkce-karakter-sorunu-ve-cozumu">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://tektik.la/blog/turkce-karakter-sorunu-ve-cozumu">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Metinlerdeki Karakter Karmaşasına Son: Bozuk Yazıları Düzeltin","description":"İngilizce klavyeyle yazılmış Türkçe metinleri anında düzeltin. Ücretsiz, kayıt yok, reklam yok. tektik.la Türkçe düzeltici.","url":"https://tektik.la/blog/turkce-karakter-sorunu-ve-cozumu","publisher":{"@type":"Organization","name":"tektik.la","url":"https://tektik.la"}}
+</script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent:#c8f530;--accent2:#a0d020;--card:#141414;}
+:root[data-theme="light"]{--bg:#f5f5f0;--bg3:#e5e4de;--border:#d0cfc8;--text:#111;--text2:#666;--accent:#1a6b00;--accent2:#2a8b10;--card:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+.content{position:relative;z-index:1; max-width:860px; margin:0 auto;}
+header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;}
+.logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text);}
+.logo span{color:var(--accent);}
+.ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s;}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent);}
+.article{max-width:720px;margin:0 auto;padding:60px 24px 80px;}
+.article-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.article-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+h1{font-size:clamp(28px,4vw,46px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px;}
+.article-intro{font-size:17px;color:var(--text2);line-height:1.8;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border);}
+h2{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin:40px 0 14px;}
+p{font-size:15px;line-height:1.85;color:var(--text2);margin-bottom:24px;}
+.cta-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;margin-top:48px;}
+.cta-box p{color:var(--text2);margin-bottom:20px;font-size:15px;}
+.cta-btn{display:inline-block;background:var(--accent);color:#0a0a0a;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all 0.2s;}
+.cta-btn:hover{background:var(--accent2);transform:translateY(-1px);}
+.breadcrumb{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);margin-bottom:28px;display:flex;gap:8px;align-items:center;}
+.breadcrumb a{color:var(--text2);text-decoration:none;}
+.breadcrumb a:hover{color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;}
+footer p,footer a{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+@media(max-width:600px){header{padding:16px 20px;}footer{padding:16px 20px;}.article{padding:40px 20px 60px;}}
+  .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+<header>
+  <div class="header-inner">  <a href="/" class="logo">tektik<span>.la</span></a>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="/" class="ctrl-btn" style="text-decoration:none">← Ana Sayfa</a>
+    <a href="/blog" class="ctrl-btn" style="text-decoration:none">Blog</a>
+    <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+  </div>
+</div>
+</header>
+
+<article class="article">
+  <div class="breadcrumb">
+    <a href="/">Ana Sayfa</a> › <a href="/blog">Blog</a> › Türkçe Karakter Düzeltici
+  </div>
+  <div class="article-tag">blog</div>
+  <h1>Metinlerdeki Karakter Karmaşasına Son: Bozuk Yazıları Düzeltin</h1>
+  <p class="article-intro">Farklı klavye dillerinde yazılmış veya teknik aktarımlar sırasında bozulmuş metinlerdeki karakter sorunu artık canınızı sıkmasın. tektik.la/turkce ile metinlerinizi anında okunabilir ve kurallara uygun hale getirebilirsiniz.</p>
+  <h2>Dijital Metinlerde Profesyonel Dokunuş</h2>
+<p>Özellikle İngilizce klavyeyle yazılmış uzun metinleri tek tek manuel olarak düzeltmek büyük bir zaman kaybıdır. tektik.la algoritması, metindeki hatalı simgeleri tespit ederek onları doğru Türkçe karakterlerle değiştirir.</p>
+<h2>Arama Motoru Dostu Okunabilir İçerikler</h2>
+<p>Bozuk karakterli metinler hem okuyucular hem de dijital platformlar için anlaşılması zor içeriklerdir. tektik.la üzerinde düzelttiğiniz metinler, standartlara uygun hale gelerek daha geniş kitlelere hitap eder.</p>
+<p>Türkçe karakterlerin encoding sorunları çoğu zaman veri aktarımında ortaya çıkar. <a href="/base64">character encoding tool</a> kullanarak sorunlu karakterleri güvenle iletebilirsiniz.</p>
+<h2>Gizlilik Odaklı ve Hızlı İşlem</h2>
+<p>Düzeltilmesini istediğiniz notlarınız veya ödevleriniz asla sunucularımızda kaydedilmez. Metin işleme süreci tamamen sizin cihazınızda biter.</p>
+
+  <div class="cta-box">
+    <p>Bozuk karakterli yazıları saniyeler içinde anlamlı ve tertemiz metinlere dönüştürmek için hemen deneyin.</p>
+    <a href="https://tektik.la/turkce" class="cta-btn">Hemen Kullan →</a>
+  </div>
+</article>
+
+<footer>
+  <p>tektik.la</p>
+  <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">𝕏 @tektik_la</a>
+  <a href="mailto:info@tektik.la">info@tektik.la</a>
+  <p>© 2025 — Tüm araçlar ücretsiz</p>
+</footer>
+</div>
+<script>
+function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('tektik-theme',t);}
+</script>
+</body>
+</html>

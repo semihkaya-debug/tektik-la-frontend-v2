@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Blog — Ücretsiz Online Araç Rehberleri | tektik.la</title>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('tektik-theme') || 'dark');</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta id="meta-desc" name="description" content="tektik.la araç rehberleri. Geliştirici araçları, tasarım, verimlilik ve daha fazlası için ücretsiz rehberler.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Blog — tektik.la">
+<meta property="og:url" content="https://tektik.la/blog">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<link rel="canonical" href="https://tektik.la/blog">
+<style>
+:root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent:#c8f530;--accent2:#a0d020;--card:#141414;}
+:root[data-theme="light"]{--bg:#f5f5f0;--bg3:#e5e4de;--border:#d0cfc8;--text:#111;--text2:#666;--accent:#1a6b00;--accent2:#2a8b10;--card:#fff;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+.content{position:relative;z-index:1;max-width:860px;margin:0 auto;}
+header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;}
+.header-inner{max-width:860px;margin:0 auto;width:100%;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text);}
+.logo span{color:var(--accent);}
+.ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.ctrl-btn:hover,.ctrl-btn.active{border-color:var(--accent);color:var(--accent);}
+.ctrl-btn.active{background:rgba(200,245,48,0.08);}
+.hero{padding:60px 40px 40px;}
+.hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+h1{font-size:clamp(32px,5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-2px;margin-bottom:14px;}
+h1 em{font-style:normal;color:var(--accent);}
+.hero-sub{font-size:16px;color:var(--text2);line-height:1.7;max-width:520px;}
+/* Filtre butonları */
+.filter-bar{padding:0 40px 32px;display:flex;gap:8px;flex-wrap:wrap;}
+.filter-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;transition:all 0.2s;letter-spacing:0.5px;}
+.filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,245,48,0.08);}
+/* Kategori bölümleri */
+.cat-section{padding:0 40px 60px;}
+.cat-header{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.cat-title{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.cat-title::before{content:'';width:16px;height:1px;background:var(--accent);}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;text-decoration:none;color:var(--text);transition:border-color .18s,transform .15s;display:flex;flex-direction:column;gap:10px;}
+.blog-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.blog-tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;}
+.blog-title{font-size:15px;font-weight:700;line-height:1.35;letter-spacing:-0.3px;}
+.blog-desc{font-size:13px;color:var(--text2);line-height:1.6;flex:1;}
+.blog-cta{font-size:12px;font-weight:600;color:var(--accent);margin-top:4px;}
+.cat-section.hidden{display:none;}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:24px;}
+footer p,footer a{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+@media(max-width:600px){.header-inner{padding:16px 20px;}.hero{padding:40px 20px 32px;}.filter-bar{padding:0 16px 24px;}.cat-section{padding:0 16px 40px;}.blog-grid{grid-template-columns:1fr;}footer{padding:16px 20px;}}
+</style>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag" id="hero-tag">blog</div>
+  <h1 id="hero-h1">araç <em>rehberleri</em></h1>
+  <p class="hero-sub" id="hero-sub">Ücretsiz online araçlarımızı en verimli şekilde kullanmanız için hazırlanmış pratik rehberler.</p>
+</div>
+
+<!-- FİLTRE BUTONLARI -->
+<div class="filter-bar" id="filter-bar">
+  <button class="filter-btn active" onclick="filterCat('all')" data-cat="all" id="filter-all">Tümü</button>
+  <button class="filter-btn" onclick="filterCat('dev')" data-cat="dev" id="filter-dev">Geliştirici</button>
+  <button class="filter-btn" onclick="filterCat('design')" data-cat="design" id="filter-design">Tasarım</button>
+  <button class="filter-btn" onclick="filterCat('productivity')" data-cat="productivity" id="filter-productivity">Verimlilik</button>
+  <button class="filter-btn" onclick="filterCat('business')" data-cat="business" id="filter-business">İş & Finans</button>
+  <button class="filter-btn" onclick="filterCat('general')" data-cat="general" id="filter-general">Genel</button>
+</div>
+
+<!-- ── GELİŞTİRİCİ ARAÇLARI ── -->
+<section class="cat-section" id="cat-dev" data-lang="tr">
+  <div class="cat-header">
+    <div class="cat-title" id="cat-dev-title">Geliştirici Araçları</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/json-verisi-nasil-okunur" class="blog-card">
+      <div class="blog-tag">JSON</div>
+      <div class="blog-title">Veri Hiyerarşisinde Netlik: Karmaşık JSON Kodlarını Düzenleyin</div>
+      <div class="blog-desc">API yanıtlarını okunabilir formata dönüştürün, hataları anında tespit edin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/regex-nedir-nasil-test-edilir" class="blog-card">
+      <div class="blog-tag">Regex</div>
+      <div class="blog-title">Yazılımda Düzenli İfadeler: Regex Test ve Doğrulama</div>
+      <div class="blog-desc">Regex kalıplarınızı canlı test edin, eşleşmeleri anında görün.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/binary-hexadecimal-decimal-donusturme-rehberi" class="blog-card">
+      <div class="blog-tag">Binary</div>
+      <div class="blog-title">Sayı Sistemleri Arasında Hızlı Geçiş: Binary ve Hex Çevirici</div>
+      <div class="blog-desc">Decimal, binary, hex ve octal formatlar arasında anında dönüşüm.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/base64-kodlama-ve-kod-cozme-rehberi" class="blog-card">
+      <div class="blog-tag">Base64</div>
+      <div class="blog-title">Veri İletişiminde Güvenli Köprü: Base64 Formatı</div>
+      <div class="blog-desc">Verileri Base64 formatına kodlayın veya mevcut kodları çözün.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/uuid-nedir-ve-nerelerde-kullanilir" class="blog-card">
+      <div class="blog-tag">UUID</div>
+      <div class="blog-title">Benzersiz Kimliklerin Gücü: Yazılımda UUID v4 Kullanımı</div>
+      <div class="blog-desc">Veritabanı kayıtları için çakışma riski olmayan kimlikler üretin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/html-karakter-donusturme-ve-entity-rehberi" class="blog-card">
+      <div class="blog-tag">HTML Encode</div>
+      <div class="blog-title">Web Geliştiriciler İçin HTML Encode ve Decode İşlemleri</div>
+      <div class="blog-desc">HTML entity kodlarına dönüştürün veya çözün. XSS güvenliği için şart.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/canli-markdown-editoru-kullanimi" class="blog-card">
+      <div class="blog-tag">Markdown</div>
+      <div class="blog-title">Teknik Yazarların Tercihi: Canlı Önizlemeli Markdown Editörü</div>
+      <div class="blog-desc">Yazılım kurmadan Markdown yazın ve anında HTML'e dönüştürün.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── TASARIM ── -->
+<section class="cat-section" id="cat-design" data-lang="tr">
+  <div class="cat-header">
+    <div class="cat-title" id="cat-design-title">Tasarım Araçları</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/renk-kodlari-donusturme-rehberi" class="blog-card">
+      <div class="blog-tag">Renk</div>
+      <div class="blog-title">Tasarımın Evrensel Dili: HEX, RGB ve HSL Kod Dönüşümü</div>
+      <div class="blog-desc">Renk formatları arasında saniyeler içinde hatasız geçiş yapın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/modern-css-gradient-tasarimi" class="blog-card">
+      <div class="blog-tag">Gradient</div>
+      <div class="blog-title">Görsel Derinlik Katın: Web Siteniz İçin Şık Renk Geçişleri</div>
+      <div class="blog-desc">Kod yazmadan göz alıcı CSS gradient'lar oluşturun ve kopyalayın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/uyumlu-renk-paleti-olusturma" class="blog-card">
+      <div class="blog-tag">Renk Paleti</div>
+      <div class="blog-title">Tasarımda Estetik Denge: Renk Tonlarını Keşfedin</div>
+      <div class="blog-desc">Bir ana renkten 10 uyumlu ton oluşturun, CSS değişkenlerini kopyalayın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/tasarimda-lorem-ipsum-kullanimi" class="blog-card">
+      <div class="blog-tag">Lorem Ipsum</div>
+      <div class="blog-title">Tasarımın Görünmez Kahramanı: Lorem Ipsum Metinleri</div>
+      <div class="blog-desc">Tasarım projeleriniz için profesyonel dolgu metinleri oluşturun.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/online-gorsel-kirpma-araci" class="blog-card">
+      <div class="blog-tag">Görsel Kırpıcı</div>
+      <div class="blog-title">Kusursuz Kadraj: Fotoğraflarınızı Online ve Hızlı Kırpın</div>
+      <div class="blog-desc">Program kurmadan fotoğraflarınızı istediğiniz oranda kırpın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/foto-sikistirma-ve-gorsel-optimizasyon-rehberi" class="blog-card">
+      <div class="blog-tag">Fotoğraf</div>
+      <div class="blog-title">Web Sitenizi Hızlandırın: Kalite Kaybı Olmadan Fotoğraf Sıkıştırın</div>
+      <div class="blog-desc">JPEG, PNG ve WebP görsellerini tarayıcıda sıkıştırın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── VERİMLİLİK ── -->
+<section class="cat-section" id="cat-productivity" data-lang="tr">
+  <div class="cat-header">
+    <div class="cat-title" id="cat-productivity-title">Verimlilik</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/pomodoro-teknigi-ile-odaklanma-ve-verimlilik" class="blog-card">
+      <div class="blog-tag">Pomodoro</div>
+      <div class="blog-title">Odaklanma Zamanlayıcısı: Pomodoro Tekniği ile Verimliliği Artırın</div>
+      <div class="blog-desc">25 dakika çalış, 5 dakika mola. Bilimsel temelli odaklanma tekniği.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/online-geri-sayim-sayaci-kullanimi" class="blog-card">
+      <div class="blog-tag">Geri Sayım</div>
+      <div class="blog-title">Heyecanı Canlı Tutun: Önemli Anlar İçin Geri Sayım Sayacı</div>
+      <div class="blog-desc">Sınav, tatil veya doğum günü için paylaşılabilir geri sayım oluşturun.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/kelime-sayisi-ve-metin-analizi" class="blog-card">
+      <div class="blog-tag">Kelime Sayacı</div>
+      <div class="blog-title">İçeriğinizin Sınırlarını Belirleyin: Profesyonel Kelime Sayacı</div>
+      <div class="blog-desc">Kelime, karakter sayısı ve okuma süresini anında öğrenin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/iki-tarih-arasi-sure-hesaplama" class="blog-card">
+      <div class="blog-tag">Tarih</div>
+      <div class="blog-title">Zamanı Yönetin: Tarihler Arasındaki Farkı Anında Hesaplayın</div>
+      <div class="blog-desc">İki tarih arasındaki gün, hafta ve ay farkını hatasız hesaplayın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/dunya-saat-dilimleri-ve-takibi" class="blog-card">
+      <div class="blog-tag">Dünya Saati</div>
+      <div class="blog-title">Küresel Bağlantılar İçin Zaman Takibi: Dünya Şehirleri Saat Kaç?</div>
+      <div class="blog-desc">Dünya şehirlerinin güncel saatlerini canlı olarak takip edin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/metin-formatlandirma-ve-donusturme" class="blog-card">
+      <div class="blog-tag">Metin</div>
+      <div class="blog-title">Büyük/Küçük Harf Karmaşasına Tek Tıkla Profesyonel Çözüm</div>
+      <div class="blog-desc">Metinlerinizi dilediğiniz formata anında ve hatasız dönüştürün.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/metinlerde-gereksiz-bosluklari-temizleme" class="blog-card">
+      <div class="blog-tag">Whitespace</div>
+      <div class="blog-title">Tertemiz Metinler ve Kodlar: Boşluklardan Kurtulun</div>
+      <div class="blog-desc">Gereksiz boşlukları, çift aralıkları ve boş satırları tek tıkla temizleyin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── İŞ & FİNANS ── -->
+<section class="cat-section" id="cat-business" data-lang="tr">
+  <div class="cat-header">
+    <div class="cat-title" id="cat-business-title">İş & Finans</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/profesyonel-cv-hazirlama-ipuclari" class="blog-card">
+      <div class="blog-tag">CV</div>
+      <div class="blog-title">Kariyerinizde Fark Yaratın: 5 Dakikada Modern CV</div>
+      <div class="blog-desc">Profesyonel CV şablonlarıyla iş başvurularında öne çıkın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/ucretsiz-online-fatura-olusturma-yontemleri" class="blog-card">
+      <div class="blog-tag">Fatura</div>
+      <div class="blog-title">Küçük İşletmeler ve Freelancerlar İçin Profesyonel Fatura</div>
+      <div class="blog-desc">Saniyeler içinde profesyonel PDF fatura oluşturun, veri kaydedilmez.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/dijital-makbuz-hazirlama-rehberi" class="blog-card">
+      <div class="blog-tag">Fiş</div>
+      <div class="blog-title">İşlemlerinizi Kolaylaştırın: Dijital Fiş ve Makbuz Tasarımı</div>
+      <div class="blog-desc">Karmaşık programlara gerek duymadan profesyonel dijital makbuzlar oluşturun.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/emeklilik-ve-bilesik-faiz-hesaplama-rehberi" class="blog-card">
+      <div class="blog-tag">Emeklilik</div>
+      <div class="blog-title">Geleceğinizi Planlayın: Emeklilik ve Yatırım Getirisi Hesaplama</div>
+      <div class="blog-desc">Aylık birikim, faiz ve enflasyona göre emeklilik hesabı yapın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/hizli-yuzde-hesaplama-araci" class="blog-card">
+      <div class="blog-tag">Yüzde</div>
+      <div class="blog-title">Matematiksel İşlemlerde Pratiklik: Hızlı Yüzde Hesaplama</div>
+      <div class="blog-desc">İndirimleri, artışları ve oranları formüle gerek kalmadan hesaplayın.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── GENEL ── -->
+<section class="cat-section" id="cat-general" data-lang="tr">
+  <div class="cat-header">
+    <div class="cat-title" id="cat-general-title">Genel Araçlar</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/link-kisaltma-avantajlari" class="blog-card">
+      <div class="blog-tag">Link Kısaltma</div>
+      <div class="blog-title">Dijital Paylaşımlarınızı Sadeleştirin: Link Kısaltmanın Gücü</div>
+      <div class="blog-desc">Uzun ve karmaşık URL'leri saniyeler içinde kısa linklere dönüştürün.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/profesyonel-qr-kod-kullanimi" class="blog-card">
+      <div class="blog-tag">QR Kod</div>
+      <div class="blog-title">Bilgiye Erişimi Hızlandırın: QR Kod ile Dijital Dönüşüm</div>
+      <div class="blog-desc">Web siteniz, kartvizitiniz veya WiFi bilginiz için ücretsiz QR kod oluşturun.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/online-cekilis-nasil-duzenlenir" class="blog-card">
+      <div class="blog-tag">Çekiliş</div>
+      <div class="blog-title">Şeffaf ve Güvenilir Çekilişlerle Kitlenizi Büyütün</div>
+      <div class="blog-desc">Sosyal medya etkileşimini artırmak için adil çekilişler düzenleyin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/guvenli-sifre-olusturma-yontemleri" class="blog-card">
+      <div class="blog-tag">Şifre</div>
+      <div class="blog-title">Dijital Güvenliğin Kilidi: Kırılamaz Şifreler Oluşturun</div>
+      <div class="blog-desc">Siber saldırılara karşı güçlü ve benzersiz şifreler üretin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/sosyal-medya-hashtag-stratejileri" class="blog-card">
+      <div class="blog-tag">Hashtag</div>
+      <div class="blog-title">Erişiminizi Artırın: Doğru Hashtag Kullanım Rehberi</div>
+      <div class="blog-desc">Sosyal medya paylaşımlarınız için etkili hashtagler oluşturun.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+    <a href="/blog/turkce-karakter-sorunu-ve-cozumu" class="blog-card">
+      <div class="blog-tag">Türkçe Karakter</div>
+      <div class="blog-title">Metinlerdeki Karakter Karmaşasına Son: Bozuk Yazıları Düzeltin</div>
+      <div class="blog-desc">İngilizce klavyeyle yazılmış metinleri anında Türkçe karakterlere çevirin.</div>
+      <div class="blog-cta">Okumaya devam →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── EN: DEVELOPER TOOLS ── -->
+<section class="cat-section hidden" id="cat-dev-en" data-lang="en">
+  <div class="cat-header">
+    <div class="cat-title">Developer Tools</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/how-to-format-and-validate-json-data-online" class="blog-card">
+      <div class="blog-tag">JSON</div>
+      <div class="blog-title">How to Format and Validate Complex JSON Data Online</div>
+      <div class="blog-desc">Instant beautify and validate. No ads, no registration.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/convert-binary-to-decimal-and-hex-instantly" class="blog-card">
+      <div class="blog-tag">Binary</div>
+      <div class="blog-title">Convert Binary to Decimal and Hexadecimal Instantly</div>
+      <div class="blog-desc">Supports Hex, Octal, and Decimal. Free, no sign up.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/base64-kodlama-ve-kod-cozme-rehberi" class="blog-card">
+      <div class="blog-tag">Base64</div>
+      <div class="blog-title">Base64 Encoding and Decoding Guide</div>
+      <div class="blog-desc">Encode and decode your data securely. Free, browser-based.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── EN: DESIGN TOOLS ── -->
+<section class="cat-section hidden" id="cat-design-en" data-lang="en">
+  <div class="cat-header">
+    <div class="cat-title">Design Tools</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/convert-hex-to-rgb-color-codes-for-web-design" class="blog-card">
+      <div class="blog-tag">Color</div>
+      <div class="blog-title">Fast Way to Convert HEX to RGB Color Codes for Web Design</div>
+      <div class="blog-desc">Instantly convert between HEX, RGB, and HSL. Free, no sign up.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/lorem-ipsum-generator-for-ui-ux-designers" class="blog-card">
+      <div class="blog-tag">Lorem Ipsum</div>
+      <div class="blog-title">Professional Lorem Ipsum Generator for UI/UX Designers</div>
+      <div class="blog-desc">Custom placeholder text for mockups. Free, no ads.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/how-to-crop-images-online-for-social-media" class="blog-card">
+      <div class="blog-tag">Image Cropper</div>
+      <div class="blog-title">How to Crop Images Online for Social Media Profiles Perfectly</div>
+      <div class="blog-desc">Perfect ratios for Instagram, X, and LinkedIn. No ads, no sign up.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/compress-images-online-without-quality-loss" class="blog-card">
+      <div class="blog-tag">Image Compressor</div>
+      <div class="blog-title">How to Compress Images Online Without Losing Quality</div>
+      <div class="blog-desc">Speed up your website. Free, browser-based compression.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── EN: PRODUCTIVITY ── -->
+<section class="cat-section hidden" id="cat-productivity-en" data-lang="en">
+  <div class="cat-header">
+    <div class="cat-title">Productivity</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/best-online-pomodoro-timer-for-remote-work" class="blog-card">
+      <div class="blog-tag">Pomodoro</div>
+      <div class="blog-title">Boost Your Productivity: Best Online Pomodoro Timer for Remote Work</div>
+      <div class="blog-desc">No ads, no sign up, no distractions. Pure focus.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── EN: BUSINESS ── -->
+<section class="cat-section hidden" id="cat-business-en" data-lang="en">
+  <div class="cat-header">
+    <div class="cat-title">Business & Finance</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/build-professional-resume-pdf-no-signup" class="blog-card">
+      <div class="blog-tag">CV</div>
+      <div class="blog-title">How to Build a Professional Resume PDF Without Signing Up</div>
+      <div class="blog-desc">Professional PDF templates, no ads, no hidden fees.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/create-professional-digital-receipts-for-freelancers" class="blog-card">
+      <div class="blog-tag">Receipt</div>
+      <div class="blog-title">Create Professional Digital Receipts for Freelancers in Seconds</div>
+      <div class="blog-desc">No sign up, no ads, professional PDF templates.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/calculate-compound-interest-for-retirement-savings" class="blog-card">
+      <div class="blog-tag">Finance</div>
+      <div class="blog-title">How to Calculate Compound Interest for Your Retirement Savings</div>
+      <div class="blog-desc">Plan your future for free. No ads, no sign up.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/calculate-percentage-increase-and-decrease-fast" class="blog-card">
+      <div class="blog-tag">Percentage</div>
+      <div class="blog-title">The Easiest Way to Calculate Percentage Increase and Decrease</div>
+      <div class="blog-desc">Instant results for discounts, tax, and ratios. Free.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── EN: GENERAL ── -->
+<section class="cat-section hidden" id="cat-general-en" data-lang="en">
+  <div class="cat-header">
+    <div class="cat-title">General Tools</div>
+  </div>
+  <div class="blog-grid">
+    <a href="/blog/best-free-online-link-shortener-no-ads" class="blog-card">
+      <div class="blog-tag">Link Shortener</div>
+      <div class="blog-title">Best Free Online Link Shortener Without Ads in 2026</div>
+      <div class="blog-desc">No registration, no tracking, total privacy.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/how-to-create-qr-code-for-wifi-free" class="blog-card">
+      <div class="blog-tag">QR Code</div>
+      <div class="blog-title">How to Create a Permanent QR Code for WiFi for Free</div>
+      <div class="blog-desc">No apps, no ads, no sign up required.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/random-name-picker-for-instagram-giveaways" class="blog-card">
+      <div class="blog-tag">Giveaway</div>
+      <div class="blog-title">The Best Random Name Picker for Fair Instagram Giveaways</div>
+      <div class="blog-desc">100% fair results. No registration needed.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+    <a href="/blog/generate-strong-passwords-online-securely" class="blog-card">
+      <div class="blog-tag">Password</div>
+      <div class="blog-title">How to Generate Strong Unhackable Passwords Online Securely</div>
+      <div class="blog-desc">No data storage, no ads, 100% browser-based.</div>
+      <div class="blog-cta">Read more →</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>tektik.la</p>
+  <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">𝕏 @tektik_la</a>
+  <a href="mailto:info@tektik.la">info@tektik.la</a>
+  <p id="footer-copy">© 2025 — Tüm araçlar ücretsiz</p>
+</footer>
+</div>
+
+<script>
+var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+var currentCat = 'all';
+
+var texts = {
+  tr: {
+    title: 'Blog — Ücretsiz Online Araç Rehberleri | tektik.la',
+    meta: 'tektik.la araç rehberleri. Geliştirici araçları, tasarım, verimlilik ve daha fazlası.',
+    h1: 'araç <em>rehberleri</em>',
+    sub: 'Ücretsiz online araçlarımızı en verimli şekilde kullanmanız için hazırlanmış pratik rehberler.',
+    footer: '© 2025 — Tüm araçlar ücretsiz',
+    cats: { all:'Tümü', dev:'Geliştirici', design:'Tasarım', productivity:'Verimlilik', business:'İş & Finans', general:'Genel' },
+    catTitles: { dev:'Geliştirici Araçları', design:'Tasarım Araçları', productivity:'Verimlilik', business:'İş & Finans', general:'Genel Araçlar' },
+  },
+  en: {
+    title: 'Blog — Free Online Tool Guides | tektik.la',
+    meta: 'tektik.la tool guides. Developer tools, design, productivity and more.',
+    h1: 'tool <em>guides</em>',
+    sub: 'Practical guides to help you get the most out of our free online tools.',
+    footer: '© 2025 — All tools free',
+    cats: { all:'All', dev:'Developer', design:'Design', productivity:'Productivity', business:'Business', general:'General' },
+    catTitles: { dev:'Developer Tools', design:'Design Tools', productivity:'Productivity', business:'Business & Finance', general:'General Tools' },
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('tektik-lang', lang);
+  var t = texts[lang];
+  document.title = t.title;
+  document.getElementById('meta-desc').content = t.meta;
+  document.getElementById('hero-h1').innerHTML = t.h1;
+  document.getElementById('hero-sub').textContent = t.sub;
+  document.getElementById('footer-copy').textContent = t.footer;
+  document.documentElement.lang = lang;
+
+  // Filtre buton metinlerini güncelle
+  Object.keys(t.cats).forEach(function(cat) {
+    var btn = document.getElementById('filter-' + cat);
+    if (btn) btn.textContent = t.cats[cat];
+  });
+
+  // TR/EN section'larını göster/gizle
+  document.querySelectorAll('.cat-section').forEach(function(sec) {
+    var secLang = sec.getAttribute('data-lang');
+    sec.classList.add('hidden');
+    if (secLang === lang) {
+      // Aktif kategoriye göre göster
+      var catMatch = currentCat === 'all' || sec.id === 'cat-' + currentCat || sec.id === 'cat-' + currentCat + '-en';
+      if (catMatch) sec.classList.remove('hidden');
+    }
+  });
+
+  // Buton aktif durumu
+  document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+  filterCat(currentCat);
+}
+
+function filterCat(cat) {
+  currentCat = cat;
+
+  // Filtre buton aktif durumu
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-cat') === cat);
+  });
+
+  // Section'ları göster/gizle
+  document.querySelectorAll('.cat-section').forEach(function(sec) {
+    var secLang = sec.getAttribute('data-lang');
+    if (secLang !== currentLang) { sec.classList.add('hidden'); return; }
+    if (cat === 'all') {
+      sec.classList.remove('hidden');
+    } else {
+      var secId = sec.id.replace('-en','').replace('cat-','');
+      sec.classList.toggle('hidden', secId !== cat);
+    }
+  });
+}
+
+function toggleTheme() {
+  var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('tektik-theme', t);
+}
+
+// Sayfa yüklenince
+setLang(currentLang);
+</script>
+</body>
+</html>

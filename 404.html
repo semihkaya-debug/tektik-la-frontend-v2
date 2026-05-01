@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Sayfa Bulunamadı | tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent:#c8f530; --card:#141414; }
+  :root[data-theme="light"] { --bg:#f5f5f0; --bg3:#e5e4de; --border:#d0cfc8; --text:#111; --text2:#666; --accent:#1a6b00; --card:#fff; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; flex:1; display:flex; flex-direction:column; }
+  header { display:flex; align-items:center; justify-content:space-between; padding:20px 40px; border-bottom:1px solid var(--border); background:var(--bg); }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  .main { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 40px; text-align:center; }
+
+  .code { font-family:'Space Mono',monospace; font-size:clamp(80px,15vw,160px); font-weight:700; line-height:1; color:var(--accent); letter-spacing:-4px; animation: flicker 4s infinite; }
+  @keyframes flicker {
+    0%,95%,100% { opacity:1; }
+    96% { opacity:0.4; }
+    97% { opacity:1; }
+    98% { opacity:0.2; }
+    99% { opacity:1; }
+  }
+
+  .title { font-size:clamp(20px,4vw,36px); font-weight:800; letter-spacing:-1px; margin-bottom:12px; margin-top:8px; }
+  .sub { font-family:'Space Mono',monospace; font-size:13px; color:var(--text2); margin-bottom:40px; max-width:400px; line-height:1.7; }
+  .sub span { color:var(--accent); }
+
+  .actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:60px; }
+  .btn-primary { background:var(--accent); color:#0a0a0a; border:none; padding:14px 32px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; font-weight:700; cursor:pointer; text-decoration:none; transition:all 0.2s; }
+  .btn-primary:hover { opacity:0.9; transform:translateY(-1px); }
+  .btn-ghost { background:transparent; color:var(--text2); border:1px solid var(--border); padding:14px 32px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; cursor:pointer; text-decoration:none; transition:all 0.2s; }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+
+  .tools-row { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; max-width:600px; }
+  .tool-pill { background:var(--card); border:1px solid var(--border); color:var(--text2); padding:8px 16px; border-radius:20px; font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; }
+  .tool-pill:hover { border-color:var(--accent); color:var(--accent); }
+  .tools-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+
+  footer { border-top:1px solid var(--border); padding:20px 40px; display:flex; justify-content:space-between; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+
+  @media(max-width:600px) { header{padding:16px 20px} .main{padding:40px 20px} footer{padding:16px 20px} .code{letter-spacing:-2px} }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+  </header>
+
+  <div class="main">
+    <div class="code">404</div>
+    <div class="title">Sayfa bulunamadı.</div>
+    <p class="sub">
+      <span id="path-display"></span> diye bir şey yok burada.<br>
+      Belki bir link süresi dolmuş, belki yazım hatası var.
+    </p>
+
+    <div class="actions">
+      <a href="/" class="btn-primary">← Ana Sayfaya Dön</a>
+      <a href="/" class="btn-ghost">Link Kısalt</a>
+    </div>
+
+    <div class="tools-label">Seni bekleyen araçlar</div>
+    <div class="tools-row">
+      <a href="/cekilis" class="tool-pill">🎁 Çekiliş</a>
+      <a href="/fis" class="tool-pill">🧾 Fiş Oluşturucu</a>
+      <a href="/password" class="tool-pill">🔑 Şifre</a>
+      <a href="/kelime" class="tool-pill">🔢 Kelime Sayacı</a>
+      <a href="/yuzde" class="tool-pill">💯 Yüzde</a>
+      <a href="/tarih" class="tool-pill">📅 Tarih</a>
+      <a href="/renk" class="tool-pill">🎨 Renk</a>
+      <a href="/pomodoro" class="tool-pill">🍅 Pomodoro</a>
+      <a href="/gradient" class="tool-pill">🌈 Gradient</a>
+      <a href="/markdown" class="tool-pill">📝 Markdown</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>tektik.la</p>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+let theme = localStorage.getItem('tektik-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', theme);
+function toggleTheme() { theme=theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',theme); localStorage.setItem('tektik-theme',theme); }
+
+const path = window.location.pathname;
+const el = document.getElementById('path-display');
+
+// /r/SLUG ise Supabase'den çekip redirect et
+const rMatch = path.match(/^\/r\/([a-zA-Z0-9_-]+)$/);
+if (rMatch) {
+  const slug = rMatch[1];
+  const SUPABASE_URL = 'https://yxeuthrfqdquqgzwuxvm.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4ZXV0aHJmcWRxdXFnend1eHZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxODE4NzcsImV4cCI6MjA4Nzc1Nzg3N30.h3hNyF_VOuCgnahMfzdGPXzohqDe4pOVVcjHhYyq06s';
+
+  // Yönlendiriliyor ekranı göster
+  document.querySelector('.main').innerHTML = '<div class="code" style="font-size:40px;letter-spacing:0">↗</div><div class="title" style="margin-top:16px">Yönlendiriliyor...</div><p class="sub">tektik.la/r/' + slug + '</p>';
+
+  fetch(SUPABASE_URL + '/rest/v1/links?slug=eq.' + slug + '&select=original_url,expires_at,click_count', {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if (!data || data.length === 0) {
+      document.querySelector('.main').innerHTML = '<div class="code">404</div><div class="title" style="margin-top:8px">Link bulunamadı.</div><p class="sub">Bu link mevcut değil veya süresi dolmuş.</p><div class="actions"><a href="/" class="btn-primary">← Ana Sayfaya Dön</a></div>';
+      return;
+    }
+    if (data[0].expires_at && new Date(data[0].expires_at) < new Date()) {
+      document.querySelector('.main').innerHTML = '<div class="code">410</div><div class="title" style="margin-top:8px">Link süresi dolmuş.</div><p class="sub">Bu link artık geçerli değil.</p><div class="actions"><a href="/" class="btn-primary">← Ana Sayfaya Dön</a></div>';
+      return;
+    }
+    // Click artır
+    fetch(SUPABASE_URL + '/rest/v1/links?slug=eq.' + slug, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY },
+      body: JSON.stringify({ click_count: (data[0].click_count || 0) + 1 })
+    });
+    window.location.replace(data[0].original_url);
+  })
+  .catch(function(){
+    document.querySelector('.main').innerHTML = '<div class="code">500</div><div class="title" style="margin-top:8px">Bir hata oluştu.</div><div class="actions"><a href="/" class="btn-primary">← Ana Sayfaya Dön</a></div>';
+  });
+} else {
+  if (path && path !== '/404') {
+    el.textContent = '"tektik.la' + path + '"';
+  } else {
+    el.textContent = 'Aradığın sayfa';
+  }
+}
+</script>
+</body>
+</html>

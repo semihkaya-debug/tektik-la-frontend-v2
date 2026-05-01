@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Görsel Kırpıcı & Boyutlandırıcı — Ücretsiz Online | tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+  :root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent:#c8f530;--accent2:#a0d020;--card:#141414;--input-bg:#0f0f0f;}
+  :root[data-theme="light"]{--bg:#f5f5f0;--bg3:#e5e4de;--border:#d0cfc8;--text:#111;--text2:#666;--accent:#5a9e00;--accent2:#4a8500;--card:#fff;--input-bg:#fafaf8;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  .grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+  .content{position:relative;z-index:1; max-width:860px; margin:0 auto;}
+  header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;}
+  .logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text);}
+  .logo span{color:var(--accent);}
+  .ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s;}
+  .ctrl-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .hero{padding:60px 40px 32px;max-width:1100px;margin:0 auto;}
+  .hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .hero-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+  h1{font-size:clamp(48px,7vw,88px);font-weight:800;line-height:0.95;letter-spacing:-3px;margin-bottom:12px;}
+  h1 em{font-style:normal;color:var(--accent);}
+  .hero-sub{font-size:15px;color:var(--text2);}
+  .main{max-width:1100px;margin:0 auto;padding:0 40px 80px;display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;}
+  .card-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .drop-zone{border:2px dashed var(--border);border-radius:12px;padding:48px 24px;text-align:center;cursor:pointer;transition:all 0.2s;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(200,245,48,0.04);}
+  .drop-zone svg{opacity:0.4;}
+  .drop-title{font-size:16px;font-weight:700;color:var(--text);}
+  .drop-sub{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);}
+  .canvas-wrap{position:relative;border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#888 0% 25%, transparent 0% 50%) 0 0/16px 16px;}
+  canvas{display:block;max-width:100%;cursor:crosshair;}
+  .crop-overlay{position:absolute;inset:0;pointer-events:none;}
+  .field-row{display:flex;gap:10px;align-items:center;margin-bottom:10px;}
+  .field-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);min-width:60px;}
+  .num-input{background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:8px;font-family:'Space Mono',monospace;font-size:12px;outline:none;width:80px;text-align:center;}
+  .num-input:focus{border-color:var(--accent);}
+  .lock-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:8px 10px;border-radius:8px;cursor:pointer;font-size:14px;transition:all 0.2s;}
+  .lock-btn.active{border-color:var(--accent);color:var(--accent);}
+  .tabs{display:flex;gap:0;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:3px;margin-bottom:16px;}
+  .tab{flex:1;padding:8px;font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;border-radius:6px;border:none;background:transparent;color:var(--text2);transition:all 0.2s;text-align:center;}
+  .tab.active{background:var(--card);color:var(--text);border:1px solid var(--border);}
+  .preset-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;}
+  .preset-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:8px;border-radius:7px;cursor:pointer;font-family:'Space Mono',monospace;font-size:10px;transition:all 0.2s;text-align:center;}
+  .preset-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-primary{background:var(--accent);color:#0a0a0a;border:none;padding:13px;border-radius:10px;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;width:100%;}
+  .btn-primary:hover{background:var(--accent2);}
+  .btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border);padding:10px;border-radius:10px;font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s;width:100%;}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .info-row{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+  footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:center;}
+  footer p,footer a{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)!important;text-decoration:none!important;}
+  @media(max-width:800px){.main{grid-template-columns:1fr}header{padding:16px 20px}.hero,.main{padding-left:20px;padding-right:20px}}
+  .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<link rel="canonical" href="https://tektik.la/gorsel">
+<meta name="description" content="Görseli online kırp ve boyutlandır. Sürükle bırak, oran kilitle, PNG/JPG/WebP indir. Ücretsiz.">
+<meta name="robots" content="index, follow">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+<header>
+  <div class="header-inner">  <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px;align-items:center">
+  <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+</div>
+</header>
+<div class="hero">
+  <div class="hero-tag">görsel araç</div>
+  <h1>görsel kırpıcı & <em>boyutlandırıcı</em></h1>
+  <p class="hero-sub">Görseli kırp, boyutlandır, formatını değiştir. Tarayıcında çalışır, sunucuya gönderilmez.</p>
+</div>
+<div class="main">
+  <!-- SOL: Önizleme -->
+  <div>
+    <div class="card">
+      <div id="drop-area">
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="20" r="3" stroke="currentColor" stroke-width="2"/><path d="M6 32 L16 22 L24 30 L32 22 L42 32" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="drop-title">Görsel yükle veya sürükle</div>
+          <div class="drop-sub">PNG, JPG, WebP, GIF desteklenir</div>
+        </div>
+        <input type="file" id="file-input" accept="image/*" style="display:none" onchange="loadImage(this)">
+      </div>
+      <div id="canvas-area" style="display:none">
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="canvas"></canvas>
+          <canvas id="crop-canvas" style="position:absolute;inset:0;cursor:crosshair"></canvas>
+        </div>
+        <div class="info-row" id="info-row"></div>
+        <button class="btn-ghost" style="margin-top:12px" onclick="resetImage()">↩ Yeni Görsel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAĞ: Kontroller -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" onclick="setTool('resize')">Boyutlandır</button>
+        <button class="tab" onclick="setTool('crop')">Kırp</button>
+      </div>
+
+      <!-- BOYUTLANDIRMA -->
+      <div id="tool-resize">
+        <div class="card-label">Boyut</div>
+        <div class="field-row">
+          <span class="field-label">Genişlik</span>
+          <input type="number" class="num-input" id="out-w" placeholder="800" oninput="onWChange()">
+          <span style="color:var(--text2);font-size:12px">px</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Yükseklik</span>
+          <input type="number" class="num-input" id="out-h" placeholder="600" oninput="onHChange()">
+          <span style="color:var(--text2);font-size:12px">px</span>
+          <button class="lock-btn active" id="lock-btn" onclick="toggleLock()" title="Oran kilidi">🔒</button>
+        </div>
+        <div class="card-label" style="margin-top:14px">Hazır Boyutlar</div>
+        <div class="preset-grid">
+          <button class="preset-btn" onclick="setPreset(1920,1080)">1920×1080</button>
+          <button class="preset-btn" onclick="setPreset(1280,720)">1280×720</button>
+          <button class="preset-btn" onclick="setPreset(800,600)">800×600</button>
+          <button class="preset-btn" onclick="setPreset(1080,1080)">1080×1080</button>
+          <button class="preset-btn" onclick="setPreset(1080,1920)">Story (1080×1920)</button>
+          <button class="preset-btn" onclick="setPreset(1200,630)">OG (1200×630)</button>
+        </div>
+      </div>
+
+      <!-- KIRPMA -->
+      <div id="tool-crop" style="display:none">
+        <div class="card-label">Kırpma Alanı</div>
+        <div class="field-row">
+          <span class="field-label">X</span>
+          <input type="number" class="num-input" id="crop-x" value="0" oninput="updateCropFromInputs()">
+          <span class="field-label" style="margin-left:8px">Y</span>
+          <input type="number" class="num-input" id="crop-y" value="0" oninput="updateCropFromInputs()">
+        </div>
+        <div class="field-row">
+          <span class="field-label">Genişlik</span>
+          <input type="number" class="num-input" id="crop-w" value="100" oninput="updateCropFromInputs()">
+          <span class="field-label" style="margin-left:8px">Yükseklik</span>
+          <input type="number" class="num-input" id="crop-h" value="100" oninput="updateCropFromInputs()">
+        </div>
+        <div class="card-label" style="margin-top:14px">Hazır Oranlar</div>
+        <div class="preset-grid">
+          <button class="preset-btn" onclick="setCropRatio(1,1)">1:1 Kare</button>
+          <button class="preset-btn" onclick="setCropRatio(16,9)">16:9</button>
+          <button class="preset-btn" onclick="setCropRatio(4,3)">4:3</button>
+          <button class="preset-btn" onclick="setCropRatio(3,2)">3:2</button>
+          <button class="preset-btn" onclick="setCropRatio(9,16)">9:16 Story</button>
+          <button class="preset-btn" onclick="setCropRatio(0,0)">Serbest</button>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);margin-top:8px">Canvas üzerinde sürükleyerek kırpma alanı çizin</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Format & Kalite</div>
+      <div class="field-row">
+        <span class="field-label">Format</span>
+        <select id="out-format" style="background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-family:'Space Mono',monospace;font-size:12px;outline:none;cursor:pointer">
+          <option value="image/png">PNG</option>
+          <option value="image/jpeg" selected>JPG</option>
+          <option value="image/webp">WebP</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Kalite</span>
+        <input type="range" id="quality" min="10" max="100" value="90" style="flex:1;accent-color:var(--accent)">
+        <span id="quality-val" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--accent);min-width:36px">90%</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="download()">⬇ İndir</button>
+  </div>
+</div>
+  <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+<script>
+let theme=localStorage.getItem('tektik-theme')||'dark';
+document.documentElement.setAttribute('data-theme',theme);
+function toggleTheme(){theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme);localStorage.setItem('tektik-theme',theme);}
+
+let img=null,origW=0,origH=0,locked=true,currentTool='resize';
+let cropRect={x:0,y:0,w:0,h:0},cropRatio=0,isDragging=false,dragStart={x:0,y:0};
+
+document.getElementById('quality').oninput=function(){document.getElementById('quality-val').textContent=this.value+'%';};
+
+function setTool(t){
+  currentTool=t;
+  document.querySelectorAll('.tab').forEach((tab,i)=>tab.classList.toggle('active',['resize','crop'][i]===t));
+  document.getElementById('tool-resize').style.display=t==='resize'?'block':'none';
+  document.getElementById('tool-crop').style.display=t==='crop'?'block':'none';
+  if(t==='crop'&&img)initCrop();
+}
+
+function onDragOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('dragover');}
+function onDragLeave(){document.getElementById('drop-zone').classList.remove('dragover');}
+function onDrop(e){e.preventDefault();document.getElementById('drop-zone').classList.remove('dragover');const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))loadFile(f);}
+
+function loadImage(input){if(input.files[0])loadFile(input.files[0]);}
+function loadFile(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    img=new Image();
+    img.onload=()=>{
+      origW=img.width;origH=img.height;
+      document.getElementById('out-w').value=origW;
+      document.getElementById('out-h').value=origH;
+      document.getElementById('drop-area').style.display='none';
+      document.getElementById('canvas-area').style.display='block';
+      drawPreview();
+      updateInfo();
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function drawPreview(){
+  const canvas=document.getElementById('canvas');
+  const wrap=document.getElementById('canvas-wrap');
+  const maxW=wrap.clientWidth||600;
+  const scale=Math.min(1,maxW/origW);
+  canvas.width=Math.round(origW*scale);
+  canvas.height=Math.round(origH*scale);
+  const cropC=document.getElementById('crop-canvas');
+  cropC.width=canvas.width;cropC.height=canvas.height;
+  const ctx=canvas.getContext('2d');
+  ctx.drawImage(img,0,0,canvas.width,canvas.height);
+}
+
+function initCrop(){
+  const cw=document.getElementById('canvas').width;
+  const ch=document.getElementById('canvas').height;
+  cropRect={x:0,y:0,w:cw,h:ch};
+  document.getElementById('crop-x').value=0;
+  document.getElementById('crop-y').value=0;
+  document.getElementById('crop-w').value=origW;
+  document.getElementById('crop-h').value=origH;
+  drawCropOverlay();
+  const cropC=document.getElementById('crop-canvas');
+  cropC.onmousedown=startCrop;cropC.onmousemove=moveCrop;cropC.onmouseup=endCrop;
+  cropC.ontouchstart=e=>{e.preventDefault();startCrop({clientX:e.touches[0].clientX,clientY:e.touches[0].clientY});};
+  cropC.ontouchmove=e=>{e.preventDefault();moveCrop({clientX:e.touches[0].clientX,clientY:e.touches[0].clientY});};
+  cropC.ontouchend=endCrop;
+}
+
+function getCanvasPos(e){
+  const rect=document.getElementById('crop-canvas').getBoundingClientRect();
+  return{x:e.clientX-rect.left,y:e.clientY-rect.top};
+}
+
+function startCrop(e){isDragging=true;dragStart=getCanvasPos(e);cropRect={x:dragStart.x,y:dragStart.y,w:0,h:0};}
+function moveCrop(e){
+  if(!isDragging)return;
+  const pos=getCanvasPos(e);
+  let w=pos.x-dragStart.x,h=pos.y-dragStart.y;
+  if(cropRatio&&w){h=Math.abs(w)/cropRatio*(h<0?-1:1);}
+  cropRect={x:w<0?pos.x:dragStart.x,y:h<0?pos.y:dragStart.y,w:Math.abs(w),h:Math.abs(h)};
+  syncCropInputs();drawCropOverlay();
+}
+function endCrop(){isDragging=false;}
+
+function syncCropInputs(){
+  const canvas=document.getElementById('canvas');
+  const sx=origW/canvas.width,sy=origH/canvas.height;
+  document.getElementById('crop-x').value=Math.round(cropRect.x*sx);
+  document.getElementById('crop-y').value=Math.round(cropRect.y*sy);
+  document.getElementById('crop-w').value=Math.round(cropRect.w*sx);
+  document.getElementById('crop-h').value=Math.round(cropRect.h*sy);
+}
+
+function updateCropFromInputs(){
+  const canvas=document.getElementById('canvas');
+  const sx=canvas.width/origW,sy=canvas.height/origH;
+  cropRect={
+    x:parseInt(document.getElementById('crop-x').value||0)*sx,
+    y:parseInt(document.getElementById('crop-y').value||0)*sy,
+    w:parseInt(document.getElementById('crop-w').value||0)*sx,
+    h:parseInt(document.getElementById('crop-h').value||0)*sy,
+  };
+  drawCropOverlay();
+}
+
+function setCropRatio(w,h){cropRatio=w&&h?w/h:0;}
+
+function drawCropOverlay(){
+  const c=document.getElementById('crop-canvas');
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle='rgba(0,0,0,0.5)';
+  ctx.fillRect(0,0,c.width,c.height);
+  ctx.clearRect(cropRect.x,cropRect.y,cropRect.w,cropRect.h);
+  ctx.strokeStyle='#c8f530';ctx.lineWidth=1.5;
+  ctx.strokeRect(cropRect.x,cropRect.y,cropRect.w,cropRect.h);
+}
+
+function toggleLock(){locked=!locked;document.getElementById('lock-btn').classList.toggle('active',locked);document.getElementById('lock-btn').textContent=locked?'🔒':'🔓';}
+
+function onWChange(){
+  if(locked&&img){const h=Math.round(parseInt(document.getElementById('out-w').value||0)*origH/origW);document.getElementById('out-h').value=h;}
+}
+function onHChange(){
+  if(locked&&img){const w=Math.round(parseInt(document.getElementById('out-h').value||0)*origW/origH);document.getElementById('out-w').value=w;}
+}
+
+function setPreset(w,h){document.getElementById('out-w').value=w;document.getElementById('out-h').value=h;}
+
+function updateInfo(){
+  document.getElementById('info-row').innerHTML=`<span>${origW}×${origH}px</span><span>${img.src.length>100?Math.round(img.src.length*0.75/1024)+'KB':'–'}</span>`;
+}
+
+function resetImage(){
+  img=null;
+  document.getElementById('drop-area').style.display='block';
+  document.getElementById('canvas-area').style.display='none';
+  document.getElementById('file-input').value='';
+}
+
+function download(){
+  if(!img)return;
+  const outCanvas=document.createElement('canvas');
+  const ctx=outCanvas.getContext('2d');
+  const format=document.getElementById('out-format').value;
+  const quality=parseInt(document.getElementById('quality').value)/100;
+
+  if(currentTool==='resize'){
+    const w=parseInt(document.getElementById('out-w').value)||origW;
+    const h=parseInt(document.getElementById('out-h').value)||origH;
+    outCanvas.width=w;outCanvas.height=h;
+    ctx.drawImage(img,0,0,w,h);
+  } else {
+    const canvas=document.getElementById('canvas');
+    const sx=origW/canvas.width,sy=origH/canvas.height;
+    const cx=Math.round(cropRect.x*sx),cy=Math.round(cropRect.y*sy);
+    const cw=Math.round(cropRect.w*sx)||origW,ch=Math.round(cropRect.h*sy)||origH;
+    outCanvas.width=cw;outCanvas.height=ch;
+    ctx.drawImage(img,cx,cy,cw,ch,0,0,cw,ch);
+  }
+
+  const ext=format==='image/png'?'png':format==='image/webp'?'webp':'jpg';
+  const a=document.createElement('a');
+  a.download=`tektik-gorsel.${ext}`;
+  a.href=outCanvas.toDataURL(format,quality);
+  a.click();
+}
+</script>
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'image cropper &<br><em>resizer</em>',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var _trLabels = [("Görsel Yükle", "Upload Image"), ("İndir", "Download"), ("Sıfırla", "Reset"), ("Uygula", "Apply"), ("Parlaklık", "Brightness"), ("Kontrast", "Contrast"), ("Doygunluk", "Saturation"), ("Ton", "Hue"), ("Bulanıklık", "Blur"), ("Keskinlik", "Sharpen")];
+  var _trPhs = [];
+
+  function _applyDomLang(lang) {
+    if (lang === 'en') {
+      // Text node'larını çevir
+      _trLabels.forEach(function(pair) {
+        document.querySelectorAll('button, label, span, div, p, h2, h3, td, th, option').forEach(function(el) {
+          if (el.children.length === 0 && el.textContent.trim() === pair[0]) {
+            el.textContent = pair[1];
+          }
+        });
+      });
+      // Placeholder'ları çevir
+      _trPhs.forEach(function(pair) {
+        document.querySelectorAll('input, textarea').forEach(function(el) {
+          if (el.placeholder && el.placeholder.indexOf(pair[0]) !== -1) {
+            el.placeholder = el.placeholder.replace(pair[0], pair[1]);
+          }
+        });
+      });
+    }
+  }
+
+  var _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    if (_origSetLang) _origSetLang(lang);
+    _applyDomLang(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = localStorage.getItem('tektik-lang') || 'tr';
+    if (lang === 'en') _applyDomLang('en');
+  });
+})();
+</script>
+</body>
+</html>

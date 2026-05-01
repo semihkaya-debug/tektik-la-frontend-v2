@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metin Dönüştürücü — Büyük Harf, Slug, Morse Kodu | tektik.la</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent: #c8f530; --card:#141414; --input-bg:#0f0f0f; }
+  :root[data-theme="light"] { --bg: #f5f5f0; --bg3: #e5e4de; --border: #d0cfc8; --text:#111111; --text2: #666; --accent: #5a9e00; --card:#ffffff; --input-bg:#fafaf8; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+  header{ padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .hc { display:flex; gap:10px; }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover,.ctrl-btn.active { border-color:var(--accent); color:var(--accent); }
+  .hero { padding:60px 40px 40px; max-width:860px; margin:0 auto; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; letter-spacing:-3px; margin-bottom:12px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); line-height:1.7; }
+  .main { max-width:860px; margin:0 auto; padding:0 40px 80px; display:flex; flex-direction:column; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:32px; }
+  .card-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+  textarea { width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:16px; border-radius:10px; font-family:'Space Mono',monospace; font-size:13px; resize:vertical; min-height:140px; outline:none; transition:border-color 0.2s; line-height:1.8; }
+  textarea:focus { border-color:var(--accent); }
+  textarea::placeholder { color:var(--text2); }
+  .btns-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:16px; }
+  .conv-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:12px 10px; border-radius:8px; cursor:pointer; font-family:'Space Mono',monospace; font-size:11px; text-align:center; transition:all 0.2s; line-height:1.4; }
+  .conv-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .conv-btn.active { border-color:var(--accent); background:rgba(200,245,48,0.07); color:var(--accent); }
+  .output-section { margin-top:16px; }
+  .output-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:center; align-items:center; }
+  .copy-small { background:transparent; border:1px solid var(--border); color:var(--text2); padding:4px 12px; border-radius:4px; font-family:'Space Mono',monospace; font-size:10px; cursor:pointer; transition:all 0.2s; }
+  .copy-small:hover { border-color:var(--accent); color:var(--accent); }
+  .output-box { background:var(--input-bg); border:1px solid var(--border); border-radius:10px; padding:16px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.8; color:var(--text); min-height:80px; white-space:pre-wrap; word-break:break-word; }
+
+  /* SHARE BAR */
+
+  .share-bar { border-top:1px solid var(--border); padding:20px 40px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:4px; }
+  .share-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:11px; text-decoration:none; transition:all 0.2s; cursor:pointer; }
+  .share-btn:hover { transform:translateY(-1px); }
+  .share-btn.x:hover { border-color:#1d9bf0; color:#1d9bf0; }
+  .share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+  .share-btn.tg:hover { border-color:#2aabee; color:#2aabee; }
+  .share-btn.rd:hover { border-color:#ff4500; color:#ff4500; }
+  .share-btn.cp:hover { border-color:var(--accent); color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  @media(max-width:600px) { header{padding:16px 20px} .hero,.main{padding-left:20px;padding-right:20px} h1{letter-spacing:-3px} .card{padding:24px} .btns-grid{grid-template-columns:repeat(2,1fr)} }
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+  <meta name="description" content="Metni büyük/küçük harfe çevir, slug oluştur, morse koduna dönüştür ve daha fazlası. 12 dönüşüm modu.">
+  <meta name="keywords" content="büyük harf küçük harf çevirme, baş harfi büyütme, metni tersine çevirme, online case converter türkçe">
+<meta name="robots" content="index, follow">
+  <meta name="author" content="tektik.la">
+  <meta property="og:title" content="Metin Dönüştürücü — Büyük Harf, Slug, Morse Kodu | tektik.la">
+  <meta property="og:description" content="Metni büyük/küçük harfe çevir, slug oluştur, morse koduna dönüştür ve daha fazlası. 12 dönüşüm modu.">
+  <meta property="og:url" content="https://tektik.la/metin">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="tektik.la">
+  <meta property="og:image" content="https://tektik.la/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Metin Dönüştürücü — tektik.la">
+  <meta name="twitter:description" content="Büyük/küçük harf, başlık formatı, slug, morse kodu ve daha fazlası. Anında metin dönüşümü.">
+  <meta name="twitter:image" content="https://tektik.la/og-image.png">
+  <link rel="canonical" href="https://tektik.la/metin">
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+  <div class="header-inner">    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="hc">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </div>
+</header>
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">metin dönüştür</div>
+    <h1 id="hero-h1">metni<br><em>dönüştür</em></h1>
+    <p class="hero-sub" id="hero-sub">Büyük/küçük harf, başlık formatı, slug ve daha fazlası.</p>
+  </div>
+  <div class="main">
+    <div class="card">
+      <div class="card-label" id="lbl-input">Metin Girin</div>
+      <textarea id="input-text" placeholder="Dönüştürmek istediğiniz metni buraya yazın..." oninput="convert()"></textarea>
+      <div class="btns-grid" id="btns-grid"></div>
+    </div>
+    <div class="card" id="output-card">
+      <div class="output-label">
+        <span id="lbl-result">Sonuç</span>
+        <button class="copy-small" onclick="copyOutput()" id="copy-btn">Kopyala</button>
+      </div>
+      <div class="output-box" id="output-box">—</div>
+    </div>
+  </div>
+
+    
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/metin-formatlandirma-ve-donusturme" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Metin Formatlama ve Dönüştürme
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Büyük/Küçük Harf ve Yazım Formatı Dönüştürücü</h2>
+<p class="seo-desc">Metinlerini kopyalayıp yapıştırarak dilediğin formata saniyeler içinde dönüştürebilirsin. Türkçe karakter hassasiyetine sahip sistemimiz harf dönüşümlerini hatasız yapar. Kayıt olmadan, ücretsiz kullan.</p>
+</div>
+<div class="share-bar">
+    <span class="share-label">Paylaş</span>
+    <a class="share-btn x" href="https://twitter.com/intent/tweet?text=Metin dönüştürücü — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Fmetin&via=tektik_la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+    <a class="share-btn wa" href="https://wa.me/?text=Metin dönüştürücü — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Fmetin" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+    <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/metin&text=Metin dönüştürücü — tektik.la" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/metin&title=Metin%20D%C3%B6n%C3%BC%C5%9Ft%C3%BCr%C3%BCc%C3%BC%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+    <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/metin').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+  </div>
+    <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+<script>
+let theme=localStorage.getItem('tektik-theme')||'dark';
+const lang = 'tr';
+let activeMode='uppercase';
+document.documentElement.setAttribute('data-theme',theme);
+
+const modes = {
+  uppercase:  { tr:'BÜYÜK HARF',      en:'UPPER CASE',     fn: s=>s.toUpperCase() },
+  lowercase:  { tr:'küçük harf',       en:'lower case',     fn: s=>s.toLowerCase() },
+  titlecase:  { tr:'Başlık Formatı',   en:'Title Case',     fn: s=>s.replace(/\w\S*/g,w=>w[0].toUpperCase()+w.slice(1).toLowerCase()) },
+  sentencecase:{tr:'Cümle formatı',    en:'Sentence case',  fn: s=>s.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g,c=>c.toUpperCase()) },
+  alternating:{ tr:'aLtErNaTiF',       en:'aLtErNaTiNg',    fn: s=>[...s].map((c,i)=>i%2===0?c.toLowerCase():c.toUpperCase()).join('') },
+  reverse:    { tr:'stiX srevelR',     en:'esreveR txeT',   fn: s=>s.split('').reverse().join('') },
+  slug:       { tr:'slug-formatı',     en:'slug-format',    fn: s=>s.toLowerCase().replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-') },
+  removeSpace:{ tr:'Boşluksuz',        en:'NoSpaces',       fn: s=>s.replace(/\s/g,'') },
+  trim:       { tr:'Boşluk Temizle',   en:'Trim Spaces',    fn: s=>s.split('\n').map(l=>l.trim()).join('\n') },
+  linebreak:  { tr:'Satır → Virgül',   en:'Lines → Commas', fn: s=>s.split('\n').filter(l=>l.trim()).join(', ') },
+  morse:      { tr:'Morse Kodu',       en:'Morse Code',     fn: toMorse },
+  countChars: { tr:'Karakter Sayısı',  en:'Char Count',     fn: s=>`Karakter: ${s.length}\nKelime: ${s.trim()?s.trim().split(/\s+/).length:0}\nSatır: ${s.split('\n').length}` },
+};
+
+const MORSE = {A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',0:'-----',1:'.----',2:'..---',3:'...--',4:'....-',5:'.....',6:'-....',7:'--...',8:'---..',9:'----.',' ':'/'};
+function toMorse(s){ return s.toUpperCase().split('').map(c=>MORSE[c]||c).join(' '); }
+
+const tx = {
+  tr:{ heroTag:'metin dönüştür', heroH1:'metni<br><em>dönüştür</em>', heroSub:'Büyük/küçük harf, başlık formatı, slug ve daha fazlası.', lblInput:'Metin Girin', lblResult:'Sonuç', copyBtn:'Kopyala', copied:'✓ Kopyalandı', placeholder:'Dönüştürmek istediğiniz metni buraya yazın...', footerText:'© 2025 — Tüm araçlar ücretsiz' },
+  en:{
+    heroTag:'text converter', heroH1:'text<br><em>converter</em>',
+    heroSub:'Transform your text format effortlessly with a single click.',
+    inputPh:'Paste your text here...',
+    btnUpper:'UPPERCASE', btnLower:'lowercase', btnTitle:'Title Case',
+    btnSentence:'Sentence case', btnReverse:'Reverse Text', btnSlug:'URL Slug',
+    btnCopy:'Copy', btnClear:'Clear', copied:'✓ Copied',
+    charCount:'characters', wordCount:'words',
+  }
+};
+
+function toggleTheme(){ theme=theme==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',theme); localStorage.setItem('tektik-theme',theme); }
+
+function renderBtns(){
+  const grid=document.getElementById('btns-grid');
+  grid.innerHTML=Object.entries(modes).map(([key,m])=>
+    `<button class="conv-btn${activeMode===key?' active':''}" onclick="setMode('${key}')">${m[lang]}</button>`
+  ).join('');
+}
+
+function setMode(m){ activeMode=m; renderBtns(); convert(); }
+
+function convert(){
+  const text=document.getElementById('input-text').value;
+  const result=text?modes[activeMode].fn(text):'—';
+  document.getElementById('output-box').textContent=result;
+}
+
+function copyOutput(){
+  const text=document.getElementById('output-box').textContent;
+  if(text==='—') return;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('copy-btn');
+    btn.textContent=tx[lang].copied;
+    setTimeout(()=>btn.textContent=tx[lang].copyBtn,2000);
+  });
+}
+
+</script>
+
+<script>
+  // Telegram Mini App init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Tam ekran aç
+    tg.ready();  // Telegram'a hazır olduğumuzu bildir
+    
+    // Back button - alt sayfalarda geri dön
+    if (window.location.pathname !== '/') {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => window.history.back());
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ücretsiz Fotoğraf Sıkıştırıcı — Sınırsız, Kayıtsız | tektik.la</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="Fotoğraf ve resim sıkıştır. JPEG, PNG, WebP destekli. Sınırsız, ücretsiz, kayıt yok. TinyPNG alternatifi.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Ücretsiz Fotoğraf Sıkıştırıcı — Sınırsız | tektik.la">
+<meta property="og:description" content="Resim sıkıştır, boyutu küçült. JPEG, PNG, WebP. Sınırsız ücretsiz, kayıt yok.">
+<meta property="og:url" content="https://tektik.la/foto">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<link rel="canonical" href="https://tektik.la/foto">
+<style>
+:root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent: #c8f530;--accent2: #a0d020;--card:#141414;--input-bg:#0f0f0f;}
+:root[data-theme="light"]{--bg: #f5f5f0;--bg3: #e5e4de;--border: #d0cfc8;--text:#2d1810;--text2: #666;--accent: #5a9e00;--accent2: #4a8500;--card:#fff;--input-bg:#fffcf9;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+.content{position:relative;z-index:1; max-width:860px; margin:0 auto;}
+header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;}
+.logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text);}
+.logo span{color:var(--accent);}
+.ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s;}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent);}
+.hero{padding:60px 40px 40px;max-width:860px;margin:0 auto;}
+.hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+h1{font-size:clamp(48px,7vw,88px);font-weight:800;line-height:0.95;letter-spacing:-3px;margin-bottom:12px;}
+h1 em{font-style:normal;color:var(--accent);}
+.hero-sub{font-size:15px;color:var(--text2);}
+.main{max-width:860px;margin:0 auto;padding:0 40px 80px;display:flex;flex-direction:column;gap:16px;}
+
+/* DROP ZONE */
+.drop-zone{border:2px dashed var(--border);border-radius:16px;padding:60px 40px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--card);}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent);background:rgba(200,245,48,0.04);}
+.drop-icon{font-size:48px;margin-bottom:16px;}
+.drop-title{font-size:18px;font-weight:700;margin-bottom:8px;}
+.drop-sub{font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);}
+.drop-btn{display:inline-block;margin-top:20px;background:var(--accent);color:#0a0a0a;padding:12px 28px;border-radius:10px;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;border:none;}
+.drop-btn:hover{background:var(--accent2);}
+
+/* AYARLAR */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.card-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.settings-row{display:flex;gap:20px;flex-wrap:wrap;align-items:center;}
+.setting-item{display:flex;flex-direction:column;gap:8px;flex:1;min-width:160px;}
+.setting-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;display:flex;justify-content:space-between;}
+.setting-val{color:var(--accent);}
+input[type="range"]{width:100%;accent-color:var(--accent);height:4px;}
+.format-btns{display:flex;gap:8px;}
+.format-btn{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s;}
+.format-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,245,48,0.06);}
+
+/* SONUÇLAR */
+.results-grid{display:flex;flex-direction:column;gap:12px;}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:grid;grid-template-columns:60px 1fr auto;gap:16px;align-items:center;}
+.result-thumb{width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid var(--border);}
+.result-info{}
+.result-name{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px;}
+.result-sizes{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);display:flex;gap:12px;flex-wrap:wrap;}
+.result-saving{color:var(--accent);font-weight:700;}
+.result-bar-wrap{height:4px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden;}
+.result-bar{height:100%;background:var(--accent);border-radius:2px;transition:width 0.6s ease;}
+.result-actions{display:flex;gap:8px;}
+.dl-btn{background:var(--accent);color:#0a0a0a;border:none;padding:10px 16px;border-radius:8px;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+.dl-btn:hover{background:var(--accent2);}
+
+/* TOPLU İNDİR */
+.bulk-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2);padding:10px 20px;border-radius:10px;font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:var(--accent);color:#0a0a0a;border:none;padding:12px 24px;border-radius:10px;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-primary:hover{background:var(--accent2);}
+
+/* ÖZET */
+.summary-pills{display:flex;gap:10px;flex-wrap:wrap;}
+.pill{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);}
+.pill strong{color:var(--accent);}
+
+/* SHARE */
+.share-bar{border-top:1px solid var(--border);padding:20px 40px;display:flex; justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;}
+.share-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;text-decoration:none;transition:all 0.2s;cursor:pointer;}
+.share-btn:hover{transform:translateY(-1px);}
+.share-btn.x:hover{border-color:#1d9bf0;color:#1d9bf0;}
+.share-btn.wa:hover{border-color:#25d366;color:#25d366;}
+.share-btn.tg:hover{border-color:#2aabee;color:#2aabee;}
+.share-btn.cp:hover{border-color:var(--accent);color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;}
+footer p,footer a{text-decoration:none!important;color:var(--text2)!important;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+.hidden{display:none!important;}
+@media(max-width:600px){header{padding:16px 20px}.hero,.main{padding-left:20px;padding-right:20px}.result-card{grid-template-columns:48px 1fr;}.result-actions{grid-column:1/-1;}}
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+<header>
+  <div class="header-inner">  <a href="/" class="logo">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px;align-items:center">
+  <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+</div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">görsel aracı</div>
+  <h1>fotoğraf<br><em>sıkıştırıcı</em></h1>
+  <p class="hero-sub">JPEG, PNG ve WebP resimlerini sıkıştır. Sınırsız, ücretsiz, kayıt yok. Tüm işlem tarayıcında yapılır.</p>
+</div>
+
+<div class="main">
+
+  <!-- DROP ZONE -->
+  <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+    <div class="drop-icon">🖼️</div>
+    <div class="drop-title">Resimleri buraya sürükle</div>
+    <div class="drop-sub">veya tıkla, seç</div>
+    <div class="drop-sub" style="margin-top:8px;">JPEG · PNG · WebP · Çoklu dosya desteklenir</div>
+    <button class="drop-btn" onclick="event.stopPropagation();document.getElementById('file-input').click()">Dosya Seç</button>
+  </div>
+  <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" multiple style="display:none" onchange="handleFiles(this.files)">
+
+  <!-- AYARLAR -->
+  <div class="card" id="settings-card" style="display:none">
+    <div class="card-label">Sıkıştırma Ayarları</div>
+    <div class="settings-row">
+      <div class="setting-item">
+        <div class="setting-label">Kalite <span class="setting-val" id="quality-val">80%</span></div>
+        <input type="range" id="quality" min="10" max="100" value="80" oninput="document.getElementById('quality-val').textContent=this.value+'%'">
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Format</div>
+        <div class="format-btns">
+          <button class="format-btn active" data-fmt="jpeg" onclick="setFormat('jpeg')">JPEG</button>
+          <button class="format-btn" data-fmt="png" onclick="setFormat('png')">PNG</button>
+          <button class="format-btn" data-fmt="webp" onclick="setFormat('webp')">WebP</button>
+        </div>
+      </div>
+      <div class="setting-item" style="min-width:auto">
+        <div class="setting-label">Yeniden Boyutlandır</div>
+        <div class="format-btns">
+          <button class="format-btn active" data-scale="100" onclick="setScale(100)">Orijinal</button>
+          <button class="format-btn" data-scale="75" onclick="setScale(75)">%75</button>
+          <button class="format-btn" data-scale="50" onclick="setScale(50)">%50</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="compressAll()">🗜️ Sıkıştır</button>
+      <button class="btn-ghost" onclick="addMore()">+ Daha Fazla Ekle</button>
+    </div>
+  </div>
+
+  <!-- ÖZET -->
+  <div class="card hidden" id="summary-card">
+    <div class="card-label">Özet</div>
+    <div class="summary-pills" id="summary-pills"></div>
+  </div>
+
+  <!-- SONUÇLAR -->
+  <div class="card hidden" id="results-card">
+    <div class="bulk-bar">
+      <div class="card-label" style="margin:0">Sonuçlar</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-ghost" onclick="clearAll()">✕ Temizle</button>
+        <button class="btn-primary" id="dl-all-btn" onclick="downloadAll()">⬇ Tümünü İndir</button>
+      </div>
+    </div>
+    <div class="results-grid" id="results-grid" style="margin-top:16px;"></div>
+  </div>
+
+</div>
+
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/foto-sikistirma-ve-gorsel-optimizasyon-rehberi" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Fotoğraf Sıkıştırma ve Optimizasyon
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Online Fotoğraf Sıkıştırıcı ve Resim Küçültme Sitesi</h2>
+<p class="seo-desc">Kaliteden ödün vermeden fotoğraf sıkıştır aracımızla dosyalarınızın boyutunu anında düşürün. Web sitenizin hızını artırmak için resim küçültme işlemlerini yapabilir, online fotoğraf sıkıştırıcı sayesinde depolama alanınızdan tasarruf edebilirsiniz.</p>
+</div>
+<div class="share-bar">
+  <span class="share-label">Paylaş</span>
+  <a class="share-btn x" href="https://twitter.com/intent/tweet?text=S%C4%B1n%C4%B1rs%C4%B1z%20%C3%BCcretsiz%20foto%C4%9Fraf%20s%C4%B1k%C4%B1%C5%9Ft%C4%B1r%C4%B1c%C4%B1%21%20TinyPNG%20alternati%C5%9Fi%20%40tektik_la&url=https%3A%2F%2Ftektik.la%2Ffoto" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+  <a class="share-btn wa" href="https://wa.me/?text=S%C4%B1n%C4%B1rs%C4%B1z%20%C3%BCcretsiz%20foto%C4%9Fraf%20s%C4%B1k%C4%B1%C5%9Ft%C4%B1r%C4%B1c%C4%B1%3A%20https%3A%2F%2Ftektik.la%2Ffoto" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+  <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/foto&text=Sınırsız ücretsiz fotoğraf sıkıştırıcı" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/foto&title=Foto%C4%9Fraf%20S%C4%B1k%C4%B1%C5%9Ft%C4%B1r%C4%B1c%C4%B1%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+  <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/foto').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+</div>
+
+  <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+if(window.Telegram&&window.Telegram.WebApp){const tg=window.Telegram.WebApp;tg.expand();tg.ready();tg.BackButton.show();tg.BackButton.onClick(()=>window.history.back());}
+
+let theme=localStorage.getItem('tektik-theme')||'dark';
+document.documentElement.setAttribute('data-theme',theme);
+function toggleTheme(){theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme);localStorage.setItem('tektik-theme',theme);}
+
+let files=[];
+let results=[];
+let outputFormat='jpeg';
+let outputScale=100;
+
+function setFormat(fmt){
+  outputFormat=fmt;
+  document.querySelectorAll('[data-fmt]').forEach(b=>b.classList.toggle('active',b.dataset.fmt===fmt));
+}
+function setScale(s){
+  outputScale=s;
+  document.querySelectorAll('[data-scale]').forEach(b=>b.classList.toggle('active',b.dataset.scale==s));
+}
+
+function onDragOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('drag-over');}
+function onDragLeave(e){document.getElementById('drop-zone').classList.remove('drag-over');}
+function onDrop(e){
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  handleFiles(e.dataTransfer.files);
+}
+
+function handleFiles(newFiles){
+  const valid=['image/jpeg','image/png','image/webp'];
+  Array.from(newFiles).forEach(f=>{
+    if(valid.includes(f.type)) files.push(f);
+  });
+  if(files.length>0){
+    document.getElementById('settings-card').style.display='';
+    document.getElementById('drop-zone').style.display='none';
+  }
+}
+
+function addMore(){document.getElementById('file-input').click();}
+
+function fmtSize(bytes){
+  if(bytes<1024)return bytes+'B';
+  if(bytes<1024*1024)return (bytes/1024).toFixed(1)+'KB';
+  return (bytes/1024/1024).toFixed(2)+'MB';
+}
+
+async function compressFile(file){
+  return new Promise((resolve, reject)=>{
+    const img=new Image();
+    const url=URL.createObjectURL(file);
+    img.onerror=()=>{ URL.revokeObjectURL(url); reject(new Error('Resim yüklenemedi: '+file.name)); };
+    img.onload=()=>{
+      const w=Math.round(img.naturalWidth*(outputScale/100));
+      const h=Math.round(img.naturalHeight*(outputScale/100));
+      const canvas=document.createElement('canvas');
+      canvas.width=w; canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      // PNG için kalite parametresi geçersiz, webp/jpeg için geçerli
+      const mime=outputFormat==='jpg'?'image/jpeg':'image/'+outputFormat;
+      const quality=outputFormat==='png'?undefined:parseInt(document.getElementById('quality').value)/100;
+      canvas.toBlob(blob=>{
+        URL.revokeObjectURL(url);
+        if(!blob){ reject(new Error('Dönüştürme başarısız')); return; }
+        resolve({file,blob,originalSize:file.size,compressedSize:blob.size,w,h,thumb:canvas.toDataURL(mime,0.3)});
+      },mime,quality);
+    };
+    img.src=url;
+  });
+}
+
+async function compressAll(){
+  if(files.length===0){ alert('Önce bir resim seçin'); return; }
+  results=[];
+  document.getElementById('results-card').classList.remove('hidden');
+  document.getElementById('results-grid').innerHTML='<div style="padding:20px;font-family:Space Mono,monospace;font-size:13px;color:var(--text2);">Sıkıştırılıyor...</div>';
+
+  for(const file of files){
+    try {
+      const r=await compressFile(file);
+      results.push(r);
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  if(results.length===0){
+    document.getElementById('results-grid').innerHTML='<div style="padding:20px;color:#f66">Hiçbir dosya işlenemedi.</div>';
+    return;
+  }
+  renderResults();
+  renderSummary();
+}
+
+function renderResults(){
+  document.getElementById('results-grid').innerHTML=results.map((r,i)=>{
+    const saving=Math.round((1-r.compressedSize/r.originalSize)*100);
+    const ext=outputFormat==='jpeg'?'jpg':outputFormat;
+    const name=r.file.name.replace(/\.[^.]+$/,'.')+ext;
+    return `<div class="result-card">
+      <img class="result-thumb" src="${r.thumb}">
+      <div class="result-info">
+        <div class="result-name">${r.file.name}</div>
+        <div class="result-sizes">
+          <span>Önce: ${fmtSize(r.originalSize)}</span>
+          <span>Sonra: ${fmtSize(r.compressedSize)}</span>
+          <span class="result-saving">${saving>0?'↓'+saving+'% küçüldü':'—'}</span>
+          <span>${r.w}×${r.h}px</span>
+        </div>
+        <div class="result-bar-wrap"><div class="result-bar" style="width:${100-saving}%"></div></div>
+      </div>
+      <div class="result-actions">
+        <button class="dl-btn" onclick="downloadOne(${i})">⬇ İndir</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderSummary(){
+  const totalOrig=results.reduce((s,r)=>s+r.originalSize,0);
+  const totalComp=results.reduce((s,r)=>s+r.compressedSize,0);
+  const saving=Math.round((1-totalComp/totalOrig)*100);
+  document.getElementById('summary-card').classList.remove('hidden');
+  document.getElementById('summary-pills').innerHTML=`
+    <div class="pill">Toplam dosya: <strong>${results.length}</strong></div>
+    <div class="pill">Orijinal boyut: <strong>${fmtSize(totalOrig)}</strong></div>
+    <div class="pill">Sıkıştırılmış: <strong>${fmtSize(totalComp)}</strong></div>
+    <div class="pill">Kazanılan alan: <strong>${fmtSize(totalOrig-totalComp)} (${saving}%)</strong></div>`;
+}
+
+function downloadOne(i){
+  const r=results[i];
+  const ext=outputFormat==='jpeg'?'jpg':outputFormat;
+  const name=r.file.name.replace(/\.[^.]+$/,'')+'-sikistirilmis.'+ext;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(r.blob);
+  a.download=name;
+  a.click();
+}
+
+function downloadAll(){
+  results.forEach((_,i)=>setTimeout(()=>downloadOne(i),i*200));
+}
+
+function clearAll(){
+  files=[];results=[];
+  document.getElementById('drop-zone').style.display='';
+  document.getElementById('settings-card').style.display='none';
+  document.getElementById('results-card').classList.add('hidden');
+  document.getElementById('summary-card').classList.add('hidden');
+  document.getElementById('file-input').value='';
+}
+</script>
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'image<br><em>compressor</em>',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var _trLabels = [("Fotoğraf Seç", "Select Photos"), ("Sıkıştır", "Compress"), ("İndir", "Download"), ("Tümünü İndir", "Download All"), ("Temizle", "Clear"), ("Kalite", "Quality"), ("Orijinal Boyut", "Original Size"), ("Yeni Boyut", "New Size"), ("Tasarruf", "Savings"), ("Sıkıştırılıyor...", "Compressing..."), ("Tamamlandı", "Complete")];
+  var _trPhs = [("Fotoğraf sürükleyin veya seçin", "Drag & drop or select photos")];
+
+  function _applyDomLang(lang) {
+    if (lang === 'en') {
+      // Text node'larını çevir
+      _trLabels.forEach(function(pair) {
+        document.querySelectorAll('button, label, span, div, p, h2, h3, td, th, option').forEach(function(el) {
+          if (el.children.length === 0 && el.textContent.trim() === pair[0]) {
+            el.textContent = pair[1];
+          }
+        });
+      });
+      // Placeholder'ları çevir
+      _trPhs.forEach(function(pair) {
+        document.querySelectorAll('input, textarea').forEach(function(el) {
+          if (el.placeholder && el.placeholder.indexOf(pair[0]) !== -1) {
+            el.placeholder = el.placeholder.replace(pair[0], pair[1]);
+          }
+        });
+      });
+    }
+  }
+
+  var _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    if (_origSetLang) _origSetLang(lang);
+    _applyDomLang(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = localStorage.getItem('tektik-lang') || 'tr';
+    if (lang === 'en') _applyDomLang('en');
+  });
+})();
+</script>
+</body>
+</html>

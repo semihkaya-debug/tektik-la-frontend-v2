@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Kod ve Barkod Oluşturucu — URL, WiFi, EAN | tektik.la</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<meta name="description" content="Ücretsiz QR kod ve barkod oluştur. EAN-13, Code128, UPC barkod desteği. URL, WiFi, vCard destekli. PNG olarak indir. Kayıt yok.">
+<meta name="keywords" content="online barkod oluşturucu, ücretsiz qr kod oluştur, barkod oluştur, wifi qr kod yapma, ean-13 barkod, kayıtsız qr kod">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Ücretsiz QR Kod Oluşturucu — Renkli, Logolu | tektik.la">
+<meta property="og:description" content="QR kod oluştur, özelleştir, indir. URL, WiFi, vCard desteği. Ücretsiz.">
+<meta property="og:url" content="https://tektik.la/qr">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<link rel="canonical" href="https://tektik.la/qr">
+<style>
+:root[data-theme="dark"]{--bg:#0a0a0a;--bg3:#1a1a1a;--border:#2a2a2a;--text:#f0f0f0;--text2:#888;--accent:#c8f530;--accent2:#a0d020;--card:#141414;--input-bg:#0f0f0f;}
+:root[data-theme="light"]{--bg:#f5f5f0;--bg3:#e5e4de;--border:#d0cfc8;--text:#111;--text2:#666;--accent:#1a6b00;--accent2:#2a8b10;--card:#fff;--input-bg:#fafaf8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Bricolage Grotesque',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:0.03;background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+.content{position:relative;z-index:1; max-width:860px; margin:0 auto;}
+header{padding:0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;}
+.logo{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;text-decoration:none;color:var(--text);}
+.logo span{color:var(--accent);}
+.ctrl-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;transition:all 0.2s;}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent);}
+.hero{padding:60px 40px 40px;max-width:1000px;margin:0 auto;}
+.hero-tag{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
+h1{font-size:clamp(48px,7vw,88px);font-weight:800;line-height:0.95;letter-spacing:-3px;margin-bottom:12px;}
+h1 em{font-style:normal;color:var(--accent);}
+.hero-sub{font-size:15px;color:var(--text2);}
+.main{max-width:1000px;margin:0 auto;padding:0 40px 80px;display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;}
+.form-col{display:flex;flex-direction:column;gap:16px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.card-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.field{margin-bottom:12px;}
+.field:last-child{margin-bottom:0;}
+.field-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+input[type="text"],input[type="url"],input[type="password"],input[type="color"],textarea,select{width:100%;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:8px;font-family:'Space Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);}
+input::placeholder,textarea::placeholder{color:var(--text2);}
+textarea{resize:none;height:80px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* TİP TOGGLE */
+.type-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.type-tab{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;transition:all 0.2s;}
+.type-tab.active{border-color:var(--accent);color:var(--accent);background:rgba(200,245,48,0.06);}
+
+/* MOD TOGGLE */
+.mode-toggle{display:flex;gap:8px;margin-bottom:16px;}
+.mode-btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.mode-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(200,245,48,0.06);}
+
+/* RENK INPUT */
+.color-row{display:flex;gap:8px;align-items:center;}
+.color-row input[type="color"]{width:48px;height:40px;padding:4px;border-radius:8px;cursor:pointer;}
+.color-row input[type="text"]{flex:1;}
+
+/* LOGO UPLOAD */
+.logo-upload{border:2px dashed var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all 0.2s;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);}
+.logo-upload:hover{border-color:var(--accent);color:var(--accent);}
+
+/* PREVIEW */
+.preview-col{position:sticky;top:90px;}
+.preview-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.preview-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:16px;}
+#qr-container{display:flex;align-items:center;justify-content:center;min-height:200px;}
+#qr-container canvas,#qr-container img{border-radius:8px;}
+.btn-primary{background:var(--accent);color:#0a0a0a;border:none;padding:14px 24px;border-radius:10px;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;width:100%;}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2);padding:12px 24px;border-radius:10px;font-family:'Space Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.2s;width:100%;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.qr-size-row{display:flex;gap:8px;width:100%;}
+.size-btn{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.size-btn.active{border-color:var(--accent);color:var(--accent);}
+
+/* SHARE BAR */
+.share-bar{border-top:1px solid var(--border);padding:20px 40px;display:flex; justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;}
+.share-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'Space Mono',monospace;font-size:11px;text-decoration:none;transition:all 0.2s;cursor:pointer;}
+.share-btn:hover{transform:translateY(-1px);}
+.share-btn.x:hover{border-color:#1d9bf0;color:#1d9bf0;}
+.share-btn.wa:hover{border-color:#25d366;color:#25d366;}
+.share-btn.tg:hover{border-color:#2aabee;color:#2aabee;}
+.share-btn.cp:hover{border-color:var(--accent);color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;}
+footer p,footer a{text-decoration:none!important;color:var(--text2)!important;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);text-decoration:none;}
+footer a:hover{color:var(--accent);}
+.hidden{display:none!important;}
+input[type="range"]{accent-color:var(--accent);}
+@media(max-width:800px){.main{grid-template-columns:1fr}.preview-col{position:static}header{padding:16px 20px}.hero,.main{padding-left:20px;padding-right:20px}}
+  .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
+  .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
+  .seo-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px}
+  .seo-faq{display:flex;flex-direction:column;gap:10px}
+  .seo-faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+  .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
+    .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+</style>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+<header style="cursor:pointer" onclick="window.location.href='/'">
+  <div class="header-inner">
+  <a href="/" class="logo" onclick="event.stopPropagation()">tektik<span>.la</span></a>
+    <div style="display:flex;gap:8px;align-items:center">
+  <button class="ctrl-btn" onclick="event.stopPropagation();toggleTheme()">◐</button>
+</div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">görsel araç</div>
+  <h1>qr kod & barkod<br><em>oluşturucu</em></h1>
+  <p class="hero-sub">URL, WiFi, vCard ve metin için QR kod oluştur. Renklendir, logo ekle, indir.</p>
+</div>
+
+<div class="main">
+  <div class="form-col">
+
+    <!-- MOD -->
+    <div class="card">
+      <div class="card-label">Mod</div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" onclick="setMode('basit')" data-tr="⚡ Basit" data-en="⚡ Simple">⚡ Basit</button>
+        <button class="mode-btn" onclick="setMode('gelismis')" data-tr="✨ Gelişmiş" data-en="✨ Advanced">✨ Gelişmiş</button>
+        <button class="mode-btn" onclick="setMode('barkod')" data-tr="▮▯ Barkod" data-en="▮▯ Barcode">▮▯ Barkod</button>
+      </div>
+
+      <!-- BARKOD BÖLÜMÜ -->
+      <div id="section-barkod" style="display:none">
+        <div class="card-label" style="margin-top:12px">Barkod Tipi</div>
+        <div class="type-tabs" style="margin-bottom:12px">
+          <button class="type-tab active" onclick="setBarkodType('CODE128')">CODE128</button>
+          <button class="type-tab" onclick="setBarkodType('EAN13')">EAN-13</button>
+          <button class="type-tab" onclick="setBarkodType('EAN8')">EAN-8</button>
+          <button class="type-tab" onclick="setBarkodType('UPC')">UPC-A</button>
+          <button class="type-tab" onclick="setBarkodType('CODE39')">CODE39</button>
+          <button class="type-tab" onclick="setBarkodType('ITF14')">ITF-14</button>
+        </div>
+        <div class="field-label" data-tr="Değer" data-en="Value">Değer</div>
+        <input type="text" id="barkod-input" placeholder="Metin veya sayı girin..." data-tr-ph="Metin veya sayı girin..." data-en-ph="Enter text or number..." oninput="generateBarkod()" style="width:100%;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:8px;font-family:'Space Mono',monospace;font-size:13px;outline:none;margin-bottom:12px">
+        <div class="field-label" style="margin-top:8px">Renk</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+          <label style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">Çizgi <input type="color" id="barkod-dark" value="#000000" oninput="generateBarkod()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px;margin-left:6px"></label>
+          <label style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">Arka plan <input type="color" id="barkod-light" value="#ffffff" oninput="generateBarkod()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px;margin-left:6px"></label>
+        </div>
+        <div id="barkod-error" style="font-family:'Space Mono',monospace;font-size:11px;color:#ff6060;margin-bottom:8px;display:none"></div>
+      </div>
+
+      <!-- İÇERİK TİPİ -->
+      <div class="card-label">İçerik Tipi</div>
+      <div class="type-tabs">
+        <button class="type-tab active" onclick="setType('url')" data-tr="🔗 URL" data-en="🔗 URL">🔗 URL</button>
+        <button class="type-tab" onclick="setType('metin')" data-tr="📝 Metin" data-en="📝 Text">📝 Metin</button>
+        <button class="type-tab" onclick="setType('wifi')" data-tr="📶 WiFi" data-en="📶 WiFi">📶 WiFi</button>
+        <button class="type-tab" onclick="setType('vcard')" data-tr="👤 vCard" data-en="👤 vCard">👤 vCard</button>
+        <button class="type-tab" onclick="setType('tel')">📞 Telefon</button>
+        <button class="type-tab" onclick="setType('email')">✉️ E-posta</button>
+      </div>
+
+      <!-- URL -->
+      <div id="form-url">
+        <div class="field"><div class="field-label">URL</div><input type="url" id="f-url" placeholder="https://tektik.la" oninput="generate()"></div>
+      </div>
+
+      <!-- METİN -->
+      <div id="form-metin" class="hidden">
+        <div class="field"><div class="field-label" data-tr="Metin" data-en="Text">Metin</div><textarea id="f-metin" placeholder="QR koda eklenecek metin..." data-tr-ph="QR koda eklenecek metin..." data-en-ph="Text to encode in QR..." oninput="generate()"></textarea></div>
+      </div>
+
+      <!-- WiFi -->
+      <div id="form-wifi" class="hidden">
+        <div class="field"><div class="field-label" data-tr="Ağ Adı (SSID)" data-en="Network Name (SSID)">Ağ Adı (SSID)</div><input type="text" id="f-wifi-ssid" placeholder="Ev WiFi" data-tr-ph="Ev WiFi" data-en-ph="Home WiFi" oninput="generate()"></div>
+        <div class="two-col">
+          <div class="field"><div class="field-label" data-tr="Şifre" data-en="Password">Şifre</div><input type="password" id="f-wifi-pass" placeholder="••••••••" oninput="generate()"></div>
+          <div class="field"><div class="field-label" data-tr="Güvenlik" data-en="Security Type">Güvenlik</div>
+            <select id="f-wifi-sec" onchange="generate()">
+              <option value="WPA">WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">Şifresiz</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- vCard -->
+      <div id="form-vcard" class="hidden">
+        <div class="two-col">
+          <div class="field"><div class="field-label" data-tr="Ad" data-en="Full Name">Ad</div><input type="text" id="f-vc-name" placeholder="Ahmet Yılmaz" data-tr-ph="Ahmet Yılmaz" data-en-ph="John Smith" oninput="generate()"></div>
+          <div class="field"><div class="field-label" data-tr="Unvan" data-en="Job Title">Unvan</div><input type="text" id="f-vc-title" placeholder="Yazılımcı" data-tr-ph="Yazılımcı" data-en-ph="Software Engineer" oninput="generate()"></div>
+        </div>
+        <div class="two-col">
+          <div class="field"><div class="field-label" data-tr="Telefon" data-en="Phone Number">Telefon</div><input type="text" id="f-vc-tel" placeholder="+90 555 000 00 00" data-tr-ph="+90 555 000 00 00" data-en-ph="+1 555 000 0000" oninput="generate()"></div>
+          <div class="field"><div class="field-label" data-tr="E-posta" data-en="Email Address">E-posta</div><input type="text" id="f-vc-email" placeholder="ahmet@email.com" oninput="generate()"></div>
+        </div>
+        <div class="field"><div class="field-label">Website</div><input type="text" id="f-vc-url" placeholder="https://tektik.la" oninput="generate()"></div>
+        <div class="field"><div class="field-label" data-tr="Şirket" data-en="Company">Şirket</div><input type="text" id="f-vc-org" placeholder="Şirket Adı" data-tr-ph="Şirket Adı" data-en-ph="Company Name" oninput="generate()"></div>
+      </div>
+
+      <!-- Telefon -->
+      <div id="form-tel" class="hidden">
+        <div class="field"><div class="field-label">Telefon Numarası</div><input type="text" id="f-tel" placeholder="+90 555 000 00 00" oninput="generate()"></div>
+      </div>
+
+      <!-- E-posta -->
+      <div id="form-email" class="hidden">
+        <div class="field"><div class="field-label">E-posta</div><input type="text" id="f-email-to" placeholder="ornek@email.com" oninput="generate()"></div>
+        <div class="field"><div class="field-label">Konu (opsiyonel)</div><input type="text" id="f-email-sub" placeholder="Konu" oninput="generate()"></div>
+      </div>
+    </div>
+
+    <!-- BASIT MOD RENK -->
+    <div class="card" id="basit-color-panel">
+      <div style="display:flex;gap:16px;align-items:center">
+        <div class="field" style="flex:1;margin:0">
+          <div class="field-label" data-tr="QR Rengi" data-en="QR Color">QR Rengi</div>
+          <input type="color" id="f-color-dark" value="#000000" oninput="syncColor('dark',this.value);generate()" style="width:100%;height:36px;cursor:pointer;border-radius:6px;border:1px solid var(--border)">
+        </div>
+        <div class="field" style="flex:1;margin:0">
+          <div class="field-label" data-tr="Arka Plan" data-en="Background">Arka Plan</div>
+          <input type="color" id="f-color-light" value="#ffffff" oninput="syncColor('light',this.value);generate()" style="width:100%;height:36px;cursor:pointer;border-radius:6px;border:1px solid var(--border)">
+        </div>
+      </div>
+    </div>
+
+    <!-- GELİŞMİŞ AYARLAR -->
+    <div class="card" id="gelismis-panel" style="display:none;">
+      <div class="card-label">Özelleştir</div>
+
+      <div class="field">
+        <div class="field-label" data-tr="Hata Düzeltme Seviyesi" data-en="Error Correction">Hata Düzeltme Seviyesi</div>
+        <select id="f-ec" onchange="generate()">
+          <option value="L">L — Düşük (%7) — Daha küçük</option>
+          <option value="M" selected>M — Orta (%15)</option>
+          <option value="Q">Q — Yüksek (%25)</option>
+          <option value="H">H — Çok Yüksek (%30) — Logo için</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <div class="field-label" data-tr="Logo Ekle (opsiyonel)" data-en="Add Logo (optional)">Logo Ekle (opsiyonel)</div>
+        <div class="logo-upload" onclick="document.getElementById('logo-input').click()" id="logo-upload-area">
+          📷 Logo yükle (PNG/SVG önerilir)
+        </div>
+        <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="loadLogo(this)">
+        <button class="btn-ghost" id="logo-remove-btn" onclick="removeLogo()" style="margin-top:8px;display:none;">✕ Logoyu Kaldır</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-col">
+    <div class="preview-label" data-tr="Önizleme" data-en="Preview">Önizleme</div>
+    <div class="preview-wrap">
+      <div id="qr-container"></div>
+
+      <div class="qr-size-row">
+        <button class="size-btn active" onclick="setSize(256)">256px</button>
+        <button class="size-btn" onclick="setSize(512)">512px</button>
+        <button class="size-btn" onclick="setSize(1024)">1024px</button>
+      </div>
+
+      <button class="btn-primary" id="btn-dl-qr" onclick="currentMode==='barkod'?downloadBarkod():download('png')" data-tr="⬇ PNG İndir" data-en="⬇ Download PNG">⬇ PNG İndir</button>
+      <button class="btn-ghost" id="btn-dl-svg" onclick="download('svg')" style="" data-tr="⬇ SVG İndir" data-en="⬇ Download SVG">⬇ SVG İndir</button>
+    </div>
+  </div>
+</div>
+
+
+<div style="max-width:860px;margin:0 auto;padding:0 40px 40px;border-top:none">
+  <a href="/blog/profesyonel-qr-kod-kullanimi" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:10px 16px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    QR Kod Kullanım Rehberi
+  </a>
+</div>
+<div class="seo-section">
+<h2 class="seo-h2">Ücretsiz QR Kod Oluştur ve Hızlı QR Kod Oluşturucu</h2>
+<p class="seo-desc">Web siteniz veya sosyal medya hesaplarınız için saniyeler içinde ücretsiz qr kod tasarlayabilirsiniz. Profesyonel qr kod oluşturucu aracımızla bilgilerinizi girerek yüksek çözünürlüklü çıktı alabilir ve hemen her yerde kendi qr kod oluştur seçeneğiyle fark yaratabilirsiniz.</p>
+<div class="seo-faq"><div class="seo-faq-item"><div class="seo-faq-q">QR kod oluşturmak için üye olmalı mıyım?</div><div class="seo-faq-a">Hayır, herhangi bir kayıt oluşturmadan bilgilerinizi girerek anında QR kodunuzu hazırlayabilir ve indirebilirsiniz.</div></div>
+<div class="seo-faq-item"><div class="seo-faq-q">Oluşturduğum QR kodun bir okuma sınırı var mı?</div><div class="seo-faq-a">Hayır, oluşturduğunuz QR kodlar sınırsız tarama özelliğine sahiptir ve dilediğiniz kadar kişi tarafından kullanılabilir.</div></div>
+<div class="seo-faq-item"><div class="seo-faq-q">QR kodun içine hangi bilgileri ekleyebilirim?</div><div class="seo-faq-a">Web sitesi linki, Wi-Fi bilgileri, metin mesajları veya sosyal medya profil bağlantıları gibi birçok veriyi ekleyebilirsiniz.</div></div>
+</div>
+<div class="share-bar">
+  <span class="share-label">Paylaş</span>
+  <a class="share-btn x" href="https://twitter.com/intent/tweet?text=QR%20kod%20olu%C5%9Fturucu%20%E2%80%94%20renkli%2C%20logolu%2C%20%C3%BCcretsiz!%20%40tektik_la&url=https%3A%2F%2Ftektik.la%2Fqr" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</a>
+  <a class="share-btn wa" href="https://wa.me/?text=QR%20kod%20olu%C5%9Fturucu%3A%20https%3A%2F%2Ftektik.la%2Fqr" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+  <a class="share-btn tg" href="https://t.me/share/url?url=https://tektik.la/qr&text=Ücretsiz QR kod oluşturucu" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</a>
+    <a class="share-btn rd" href="https://www.reddit.com/submit?url=https%3A//tektik.la/qr&title=QR%20Kod%20Olu%C5%9Fturucu%20%E2%80%94%20tektik.la%20%C3%BCcretsiz%20online%20ara%C3%A7" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg> Reddit</a>
+  <button class="share-btn cp" onclick="navigator.clipboard.writeText('https://tektik.la/qr').then(()=>{this.textContent='✓ Kopyalandı!';setTimeout(()=>this.textContent='🔗 Linki Kopyala',2000)})">🔗 Linki Kopyala</button>
+</div>
+
+  <footer>
+    <p>tektik.la</p>
+    <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@tektik.la
+    </a>
+    <p>© 2025 — Tüm araçlar ücretsiz</p>
+  </footer>
+</div>
+
+<script>
+if(window.Telegram&&window.Telegram.WebApp){const tg=window.Telegram.WebApp;tg.expand();tg.ready();tg.BackButton.show();tg.BackButton.onClick(()=>window.history.back());}
+let theme=localStorage.getItem('tektik-theme')||'dark';
+document.documentElement.setAttribute('data-theme',theme);
+function toggleTheme(){theme=theme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',theme);localStorage.setItem('tektik-theme',theme);}
+
+let currentType='url';
+let currentMode='basit';
+let currentSize=256;
+let logoData=null;
+let qrInstance=null;
+
+function setMode(mode){
+  currentMode=mode;
+  document.querySelectorAll('.mode-btn').forEach(b=>{
+    b.classList.toggle('active',
+      (mode==='basit'&&b.textContent.includes('Basit'))||
+      (mode==='gelismis'&&b.textContent.includes('Gelişmiş'))||
+      (mode==='barkod'&&b.textContent.includes('Barkod'))
+    );
+  });
+  document.getElementById('gelismis-panel').style.display=mode==='gelismis'?'':'none';
+  document.getElementById('basit-color-panel').style.display=mode==='basit'?'':'none';
+  document.getElementById('section-barkod').style.display=mode==='barkod'?'block':'none';
+  // QR içerik ve önizleme bölümleri
+  const qrSections=['type-tabs-row','qr-forms-row'];
+  document.querySelectorAll('.type-tabs,.field,#form-url,#form-metin,#form-wifi,#form-vcard,#form-tel,#form-email').forEach(el=>{
+    el.style.display=mode==='barkod'?'none':'';
+  });
+  if(mode==='barkod'){
+    document.getElementById('qr-container').innerHTML='';
+    generateBarkod();
+  } else {
+    generate();
+  }
+}
+
+function setType(type){
+  currentType=type;
+  document.querySelectorAll('.type-tab').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  ['url','metin','wifi','vcard','tel','email'].forEach(t=>{
+    document.getElementById('form-'+t).classList.toggle('hidden',t!==type);
+  });
+  generate();
+}
+
+function setSize(s){
+  currentSize=s;
+  document.querySelectorAll('.size-btn').forEach(b=>b.classList.toggle('active',b.textContent===s+'px'));
+  generate();
+}
+
+function getData(){
+  switch(currentType){
+    case 'url': return document.getElementById('f-url').value||'https://tektik.la';
+    case 'metin': return document.getElementById('f-metin').value||'tektik.la';
+    case 'wifi':{
+      const ssid=document.getElementById('f-wifi-ssid').value;
+      const pass=document.getElementById('f-wifi-pass').value;
+      const sec=document.getElementById('f-wifi-sec').value;
+      return `WIFI:T:${sec};S:${ssid};P:${pass};;`;
+    }
+    case 'vcard':{
+      const n=document.getElementById('f-vc-name').value;
+      const t=document.getElementById('f-vc-title').value;
+      const tel=document.getElementById('f-vc-tel').value;
+      const em=document.getElementById('f-vc-email').value;
+      const url=document.getElementById('f-vc-url').value;
+      const org=document.getElementById('f-vc-org').value;
+      return `BEGIN:VCARD\nVERSION:3.0\nFN:${n}\nTITLE:${t}\nTEL:${tel}\nEMAIL:${em}\nURL:${url}\nORG:${org}\nEND:VCARD`;
+    }
+    case 'tel': return 'tel:'+document.getElementById('f-tel').value;
+    case 'email':{
+      const to=document.getElementById('f-email-to').value;
+      const sub=document.getElementById('f-email-sub').value;
+      return `mailto:${to}${sub?'?subject='+encodeURIComponent(sub):''}`;
+    }
+    default: return 'https://tektik.la';
+  }
+}
+
+function generate(){
+  const data=getData();
+  if(!data) return;
+  const container=document.getElementById('qr-container');
+  container.innerHTML='';
+
+  const darkColor=document.getElementById('f-color-dark').value;
+  const lightColor=document.getElementById('f-color-light').value;
+  const ec=currentMode==='gelismis'?document.getElementById('f-ec').value:'H';
+
+  if(typeof QRCode !== 'undefined' && QRCode.toCanvas){
+    // qrcode.js — yüksek kalite, antialiasing yok, piksel mükemmel
+    const canvas=document.createElement('canvas');
+    container.appendChild(canvas);
+    QRCode.toCanvas(canvas, data, {
+      width: currentSize,
+      margin: 2,
+      errorCorrectionLevel: ec,
+      color: { dark: darkColor, light: lightColor }
+    }, function(err){
+      if(!err){
+        canvas.style.borderRadius='8px';
+        qrInstance=canvas;
+        if(logoData && currentMode==='gelismis') setTimeout(()=>addLogo(),50);
+      }
+    });
+  } else {
+    // Fallback: qrcodejs
+    const ecMap={L:QRCode.CorrectLevel.L,M:QRCode.CorrectLevel.M,Q:QRCode.CorrectLevel.Q,H:QRCode.CorrectLevel.H};
+    qrInstance=new QRCode(container,{
+      text:data,
+      width:currentSize,
+      height:currentSize,
+      colorDark:darkColor,
+      colorLight:lightColor,
+      correctLevel:ecMap[ec]
+    });
+    if(logoData && currentMode==='gelismis') setTimeout(()=>addLogo(),100);
+  }
+}
+
+function addLogo(){
+  const canvas=document.querySelector('#qr-container canvas');
+  if(!canvas||!logoData) return;
+  const ctx=canvas.getContext('2d');
+  const img=new Image();
+  img.onload=()=>{
+    const size=canvas.width*0.22;
+    const x=(canvas.width-size)/2;
+    const y=(canvas.height-size)/2;
+    ctx.fillStyle='#ffffff';
+    ctx.beginPath();
+    ctx.roundRect(x-6,y-6,size+12,size+12,8);
+    ctx.fill();
+    ctx.drawImage(img,x,y,size,size);
+  };
+  img.src=logoData;
+}
+
+function loadLogo(input){
+  const file=input.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    logoData=e.target.result;
+    document.getElementById('logo-upload-area').textContent='✓ '+file.name;
+    document.getElementById('logo-remove-btn').style.display='';
+    // Logo için H seviyesine geç
+    document.getElementById('f-ec').value='H';
+    generate();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeLogo(){
+  logoData=null;
+  document.getElementById('logo-upload-area').textContent='📷 Logo yükle (PNG/SVG önerilir)';
+  document.getElementById('logo-remove-btn').style.display='none';
+  document.getElementById('logo-input').value='';
+  generate();
+}
+
+function syncColor(type,val){
+  document.getElementById('f-color-'+type+'-txt').value=val;
+}
+function syncColorTxt(type,val){
+  if(/^#[0-9a-fA-F]{6}$/.test(val)){
+    document.getElementById('f-color-'+type).value=val;
+    generate();
+  }
+}
+
+function download(format){
+  const canvas=document.querySelector('#qr-container canvas');
+  if(!canvas) return;
+  const name='tektik-qr-'+currentType;
+  if(format==='png'){
+    const a=document.createElement('a');
+    a.href=canvas.toDataURL('image/png');
+    a.download=name+'.png';
+    a.click();
+  } else {
+    // SVG indirme
+    const size=currentSize;
+    const darkColor=document.getElementById('f-color-dark').value;
+    const lightColor=document.getElementById('f-color-light').value;
+    const svgData=`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><image href="${canvas.toDataURL()}" width="${size}" height="${size}"/></svg>`;
+    const blob=new Blob([svgData],{type:'image/svg+xml'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=name+'.svg';
+    a.click();
+  }
+}
+
+// Init
+if(new URLSearchParams(window.location.search).get('mod')==='barkod'){
+  setMode('barkod');
+} else {
+  generate();
+}
+
+// ── BARKOD ─────────────────────────────────────────
+var currentBarkodType='CODE128';
+
+function setBarkodType(type){
+  currentBarkodType=type;
+  document.querySelectorAll('#section-barkod .type-tab').forEach(b=>{
+    b.classList.toggle('active', b.textContent.includes(type.replace('EAN13','EAN-13').replace('EAN8','EAN-8').replace('UPC','UPC-A').replace('ITF14','ITF-14')));
+  });
+  generateBarkod();
+}
+
+function generateBarkod(){
+  const val=document.getElementById('barkod-input').value.trim();
+  const errEl=document.getElementById('barkod-error');
+  const container=document.getElementById('qr-container');
+
+  if(!val){
+    container.innerHTML='';
+    errEl.style.display='none';
+    return;
+  }
+
+  try{
+    container.innerHTML='<svg id="barkod-svg"></svg>';
+    JsBarcode('#barkod-svg', val, {
+      format: currentBarkodType,
+      lineColor: document.getElementById('barkod-dark').value,
+      background: document.getElementById('barkod-light').value,
+      width: 2,
+      height: 100,
+      displayValue: true,
+      fontSize: 14,
+      fontOptions: 'bold',
+      margin: 16,
+    });
+    errEl.style.display='none';
+  } catch(e){
+    container.innerHTML='';
+    errEl.textContent='⚠ Geçersiz değer: '+e.message;
+    errEl.style.display='block';
+  }
+}
+
+function downloadBarkod(){
+  const svg=document.getElementById('barkod-svg');
+  if(!svg)return;
+  // SVG → Canvas → PNG
+  const s=new XMLSerializer().serializeToString(svg);
+  const blob=new Blob([s],{type:'image/svg+xml'});
+  const url=URL.createObjectURL(blob);
+  const img=new Image();
+  img.onload=function(){
+    const canvas=document.createElement('canvas');
+    canvas.width=img.width*2;canvas.height=img.height*2;
+    const ctx=canvas.getContext('2d');
+    ctx.scale(2,2);ctx.drawImage(img,0,0);
+    const a=document.createElement('a');
+    a.download='tektik-barkod.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  img.src=url;
+}
+</script>
+
+
+<script>
+(function(){
+  var currentLang = localStorage.getItem('tektik-lang') || 'tr';
+  var QR_EN = {
+    title: 'Free QR Code Generator - Create QR Codes Online | tektik.la',
+    meta: 'Create high-quality QR codes for URLs, WiFi, and vCards. Free, no sign up, no ads.',
+    h1: 'Free QR Code<br><em>Generator</em>',
+    sub: 'Generate professional QR codes for links, WiFi, or contacts in one click.',
+    tabs: { url:'URL', wifi:'WiFi', vcard:'vCard', text:'Text', barcode:'Barcode' },
+    urlPh: 'Website or link',
+    wifiSSID: 'SSID Name', wifiPw: 'Password', wifiSec: 'Security Type',
+    wpaLabel: 'WPA/WPA2', wepLabel: 'WEP', openLabel: 'Open',
+    vcName: 'Full Name', vcTitle: 'Job Title', vcPhone: 'Phone Number',
+    vcEmail: 'Email Address', vcWeb: 'Website', vcCompany: 'Company',
+    textPh: 'Text content',
+    barcodeData: 'Barcode data', barcodeType: 'Barcode type',
+    colorQR: 'QR Code Color', colorBG: 'Background Color', sizeLabel: 'Size',
+    addLogo: 'Add Logo', tektikBand: 'tektik.la banner',
+    addShortLink: 'Include short link', bandColor: 'Banner color',
+    btnDownload: 'Download PNG', btnCopy: 'Copy', btnCopied: '✓ Copied',
+    errUrl: 'Please enter a valid URL', errSSID: 'Network name (SSID) cannot be empty',
+    previewTitle: 'QR CODE', previewAuto: 'Your short link QR code was automatically generated',
+  };
+  var QR_TR = {
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+    h1: null, sub: null,
+  };
+
+  function applyQRLang(lang) {
+    var d = lang === 'en' ? QR_EN : QR_TR;
+    document.title = d.title || document.title;
+    var m = document.querySelector('meta[name="description"]');
+    if (m && d.meta) m.content = d.meta;
+    var h1 = document.getElementById('hero-h1');
+    if (h1) { if (lang==='en') h1.innerHTML = QR_EN.h1; else if (QR_TR.h1) h1.innerHTML = QR_TR.h1; }
+    var sub = document.getElementById('hero-sub');
+    if (sub) { if (lang==='en') sub.textContent = QR_EN.sub; else if (QR_TR.sub) sub.textContent = QR_TR.sub; }
+
+    if (lang === 'en') {
+      // Tab butonları
+      var tabs = document.querySelectorAll('.type-tab');
+      var tabKeys = ['url','wifi','vcard','text','barcode'];
+      var tabVals = ['URL','WiFi','vCard','Text','Barcode'];
+      tabs.forEach(function(t,i){ if(tabVals[i]) t.textContent = tabVals[i]; });
+      // URL placeholder
+      var urlInput = document.querySelector('input[id*="url"], input[placeholder*="https://"]');
+      if (urlInput) urlInput.placeholder = QR_EN.urlPh;
+      // Renk/tasarım etiketleri - data-tr attr ile
+      document.querySelectorAll('[data-tr]').forEach(function(el){
+        var en = el.getAttribute('data-en');
+        if (en) el.textContent = en;
+      });
+      document.querySelectorAll('[data-tr-ph]').forEach(function(el){
+        var en = el.getAttribute('data-en-ph');
+        if (en) el.placeholder = en;
+      });
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = function(lang) {
+    currentLang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    applyQRLang(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    QR_TR.h1 = (document.getElementById('hero-h1')||{}).innerHTML || null;
+    QR_TR.sub = (document.getElementById('hero-sub')||{}).textContent || null;
+    if (currentLang === 'en') applyQRLang('en');
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', currentLang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', currentLang==='en');
+  });
+})();
+</script>
+
+<script>
+(function() {
+  var lang = localStorage.getItem('tektik-lang') || 'tr';
+
+  function applyLang(l) {
+    lang = l;
+    localStorage.setItem('tektik-lang', l);
+
+    // Title/meta
+    if (l === 'en') {
+      document.title = 'Free QR Code Generator - Create QR Codes Online | tektik.la';
+      var m = document.querySelector('meta[name="description"]');
+      if (m) m.content = 'Create high-quality QR codes for URLs, WiFi, and vCards. Free, no sign up, no ads.';
+      var h1 = document.getElementById('hero-h1');
+      if (h1) h1.innerHTML = 'Free QR Code<br><em>Generator</em>';
+      var sub = document.getElementById('hero-sub');
+      if (sub) sub.textContent = 'Generate professional QR codes for links, WiFi, or contacts in one click.';
+    } else {
+      document.title = 'QR Kod ve Barkod Oluşturucu — URL, WiFi, EAN | tektik.la';
+      var h1 = document.getElementById('hero-h1');
+      if (h1) h1.innerHTML = 'QR Kod &<br><em>Barkod Üretici</em>';
+      var sub = document.getElementById('hero-sub');
+      if (sub) sub.textContent = 'URL, WiFi, vCard ve barkod için ücretsiz QR kod oluşturucu.';
+    }
+
+    // data-tr/data-en elementler
+    document.querySelectorAll('[data-tr]').forEach(function(el) {
+      var val = el.getAttribute('data-' + l);
+      if (val) {
+        if (el.tagName === 'BUTTON' || el.tagName === 'DIV') el.textContent = val;
+      }
+    });
+
+    // Placeholder'lar
+    document.querySelectorAll('[data-tr-ph]').forEach(function(el) {
+      var ph = el.getAttribute('data-' + l + '-ph');
+      if (ph) el.placeholder = ph;
+    });
+
+    // Select option'ları
+    var secEl = document.getElementById('f-wifi-sec');
+    if (secEl) {
+      var opts = secEl.querySelectorAll('option');
+      var secMap = l === 'en'
+        ? {WPA: 'WPA/WPA2', WEP: 'WEP', '': 'Open'}
+        : {WPA: 'WPA/WPA2', WEP: 'WEP', '': 'Açık'};
+      opts.forEach(function(o) {
+        if (secMap[o.value] !== undefined) o.textContent = secMap[o.value];
+      });
+    }
+
+    // Buton aktif durumu
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', l === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', l === 'en');
+  }
+
+  window.setLang = applyLang;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (lang !== 'tr') applyLang(lang);
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang === 'tr');
+    if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  var _lang = localStorage.getItem('tektik-lang') || 'tr';
+  var _tr_h1 = null, _tr_sub = null;
+
+  var _en = {
+    h1: 'qr code & barcode<br><em>generator</em>',
+    sub: '',
+    title: document.title,
+    meta: (document.querySelector('meta[name="description"]')||{}).content||'',
+  };
+
+  function _applyLang(lang) {
+    _lang = lang;
+    localStorage.setItem('tektik-lang', lang);
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (lang === 'en') {
+      if (h1 && _en.h1) h1.innerHTML = _en.h1;
+      if (sub && _en.sub) sub.textContent = _en.sub;
+    } else {
+      if (h1 && _tr_h1) h1.innerHTML = _tr_h1;
+      if (sub && _tr_sub) sub.textContent = _tr_sub;
+    }
+    var btnTr = document.getElementById('btn-tr');
+    var btnEn = document.getElementById('btn-en');
+    if (btnTr) btnTr.classList.toggle('active', lang==='tr');
+    if (btnEn) btnEn.classList.toggle('active', lang==='en');
+  }
+
+  window.setLang = _applyLang;
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var h1 = document.getElementById('hero-h1');
+    var sub = document.getElementById('hero-sub');
+    if (h1) _tr_h1 = h1.innerHTML;
+    if (sub) _tr_sub = sub.textContent;
+    _applyLang(_lang);
+  });
+})();
+</script>
+</body>
+</html>

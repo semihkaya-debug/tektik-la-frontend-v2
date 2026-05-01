@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - tektik.la</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root[data-theme="dark"] { --bg:#0a0a0a; --bg2:#141414; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent:#c8f530; --error:#ff6060; --success:#4ecdc4; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding:20px; }
+    .container { max-width:600px; margin:0 auto; background:var(--bg2); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .header { padding:20px 24px; border-bottom:1px solid var(--border); background:var(--bg); display:flex; justify-content:space-between; align-items:center; }
+    .header h1 { font-size:20px; font-weight:600; margin:0; }
+    .logout-btn { background:transparent; border:1px solid var(--border); color:var(--text2); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:12px; }
+    .logout-btn:hover { border-color:var(--error); color:var(--error); }
+    .form-section { padding:24px; }
+    .form-group { margin-bottom:20px; }
+    label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; text-transform:uppercase; }
+    input, textarea { width:100%; padding:10px 12px; background:var(--bg3); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:inherit; font-size:14px; }
+    input:focus, textarea:focus { outline:none; border-color:var(--accent); }
+    textarea { resize:vertical; min-height:80px; }
+    .message { padding:12px 16px; border-radius:6px; margin-bottom:16px; font-size:13px; display:none; }
+    .message.show { display:block; }
+    .message.error { background:var(--error)20; color:var(--error); border:1px solid var(--error)40; }
+    .message.success { background:var(--success)20; color:var(--success); border:1px solid var(--success)40; }
+    .slug-preview { padding:8px 12px; background:var(--bg3); border:1px solid var(--border); border-radius:4px; font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); margin-top:4px; }
+    .trial-info { padding:12px 16px; background:var(--bg3); border:1px solid var(--border); border-radius:6px; font-size:12px; color:var(--text2); margin-top:16px; }
+    button { width:100%; padding:12px; background:var(--accent); color:#000; border:none; border-radius:6px; font-weight:600; cursor:pointer; font-size:14px; }
+    button:hover { opacity:0.9; }
+    button:disabled { opacity:0.5; cursor:not-allowed; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Admin Panel</h1>
+      <button class="logout-btn" onclick="logout()">Çıkış</button>
+    </div>
+
+    <div class="form-section">
+      <div id="message" class="message"></div>
+
+      <form id="userForm">
+        <div class="form-group">
+          <label>Profil Adresi *</label>
+          <input type="text" id="slug" placeholder="mahmut" required pattern="[a-z0-9_-]+" title="Küçük harf, rakam, tire ve alt çizgi">
+          <div class="slug-preview">tektik.la/<span id="slugPreview">mahmut</span></div>
+        </div>
+
+        <div class="form-group">
+          <label>E-posta *</label>
+          <input type="email" id="email" placeholder="kullanici@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Bio</label>
+          <textarea id="bio" placeholder="Ben kimim..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Avatar URL</label>
+          <input type="url" id="avatar" placeholder="https://...">
+        </div>
+
+        <div class="trial-info">
+          ✓ Trial: 30 gün otomatik<br>
+          ✓ Bitiş: <span id="trialDate">30 gün sonra</span>
+        </div>
+
+        <button type="submit" id="submitBtn">Kullanıcı Oluştur</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/+esm';
+
+    const SUPABASE_URL = 'https://yxeuthrfqdquqgzwuxvm.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_O4VYFOGfeqjd1ctSMseamg_j3TKgf12';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const ADMIN_PASSWORD = 'tektik2024!admin';
+
+    // Check login
+    if (!sessionStorage.getItem('adminLoggedIn')) {
+      showLoginScreen();
+    } else {
+      showAdminPanel();
+    }
+
+    function showLoginScreen() {
+      document.body.innerHTML = `
+        <div class="container" style="margin-top:100px;">
+          <div class="form-section" style="text-align:center;">
+            <div style="font-size:48px; margin-bottom:24px;">🔐</div>
+            <h2 style="font-size:24px; font-weight:600; margin-bottom:8px;">Admin Girişi</h2>
+            <p style="color:var(--text2); margin-bottom:32px;">Şifre gir</p>
+            <form id="loginForm">
+              <input type="password" id="password" placeholder="Şifre" required style="margin-bottom:16px;">
+              <button type="submit">Giriş Yap</button>
+            </form>
+            <div id="loginMessage" class="message"></div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const password = document.getElementById('password').value;
+        
+        if (password === ADMIN_PASSWORD) {
+          sessionStorage.setItem('adminLoggedIn', 'true');
+          location.reload();
+        } else {
+          const msg = document.getElementById('loginMessage');
+          msg.textContent = '❌ Yanlış şifre!';
+          msg.className = 'message show error';
+          document.getElementById('password').value = '';
+        }
+      });
+    }
+
+    function showAdminPanel() {
+      // Already shown in HTML
+      document.getElementById('slug').addEventListener('input', (e) => {
+        const slug = e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+        e.target.value = slug;
+        document.getElementById('slugPreview').textContent = slug || 'mahmut';
+      });
+
+      updateTrialDate();
+
+      document.getElementById('userForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const slug = document.getElementById('slug').value.toLowerCase();
+        const email = document.getElementById('email').value;
+        const bio = document.getElementById('bio').value;
+        const avatar = document.getElementById('avatar').value;
+        const submitBtn = document.getElementById('submitBtn');
+
+        if (!slug || !email) {
+          showMessage('Slug ve email gerekli!', 'error');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Yükleniyor...';
+
+        try {
+          const trialEndsAt = new Date();
+          trialEndsAt.setDate(trialEndsAt.getDate() + 30);
+
+          // Only insert fields that exist in schema
+          const { error } = await supabase
+            .from('user_profiles')
+            .insert({
+              slug: slug,
+              email: email,
+              bio: bio || null,
+              avatar_url: avatar || null,
+              trial_ends_at: trialEndsAt.toISOString(),
+              is_paid: false
+            });
+
+          if (error) throw error;
+
+          showMessage(`✓ Kullanıcı oluşturuldu! tektik.la/${slug}`, 'success');
+          document.getElementById('userForm').reset();
+          document.getElementById('slugPreview').textContent = 'mahmut';
+
+        } catch (error) {
+          console.error('Error:', error);
+          showMessage(`❌ Hata: ${error.message}`, 'error');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Kullanıcı Oluştur';
+        }
+      });
+    }
+
+    function updateTrialDate() {
+      const date = new Date();
+      date.setDate(date.getDate() + 30);
+      document.getElementById('trialDate').textContent = date.toLocaleDateString('tr-TR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = `message show ${type}`;
+      setTimeout(() => msg.classList.remove('show'), 4000);
+    }
+
+    function logout() {
+      sessionStorage.removeItem('adminLoggedIn');
+      location.reload();
+    }
+
+    window.logout = logout;
+  </script>
+</body>
+</html>
