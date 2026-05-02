@@ -278,91 +278,127 @@
   }
 
   /* Mini profile preview card */
+  /* ============================================
+     PHONE FRAME — Mini profil önizlemesi
+     Telefon çerçevesi içinde profil görünümü
+     ============================================ */
   .promo-preview {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 0 0 1px transparent;
+    display: block;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 28px;
+    padding: 8px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    max-width: 260px;
+    margin: 0 auto;
   }
   .promo-preview:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 0 1px var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent);
   }
-  .promo-preview-head {
+  .phone-screen {
+    background: #0a0a0a;
+    border-radius: 22px;
+    overflow: hidden;
+  }
+  .phone-statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--text2);
+  }
+  .phone-statusbar .url {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .phone-content {
+    padding: 16px 14px 18px;
+    text-align: center;
+  }
+  .phone-avatar {
+    width: 56px;
+    height: 56px;
+    background: var(--bg3);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 auto 10px;
+  }
+  .phone-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .phone-slug {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--text2);
     margin-bottom: 14px;
   }
-  .promo-avatar {
-    width: 40px;
-    height: 40px;
+  .phone-slug span { color: var(--accent); }
+  .phone-socials {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .phone-social {
+    width: 26px;
+    height: 26px;
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
-  .promo-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-  .promo-slug {
+    color: var(--text2);
     font-family: 'Space Mono', monospace;
     font-size: 10px;
-    color: var(--text2);
+    font-weight: 700;
   }
-  .promo-slug span { color: var(--accent); }
-  .promo-links {
+  .phone-links {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
   }
-  .promo-link {
+  .phone-link {
     background: var(--bg3);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 9px 12px;
-    border-radius: 6px;
-    font-size: 12px;
+    padding: 8px;
+    border-radius: 7px;
+    font-size: 10px;
     font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
+    text-align: center;
   }
-  .promo-link.featured {
+  .phone-link.featured {
     background: var(--accent);
     color: #0a0a0a;
     border-color: var(--accent);
-  }
-  .promo-link .arrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    opacity: 0.7;
+    font-weight: 700;
   }
 
   /* Mobile: Stack vertically */
   @media (max-width: 768px) {
-    .profile-promo { padding: 40px 20px; }
+    .profile-promo { padding: 60px 20px; }
     .profile-promo-inner {
       grid-template-columns: 1fr;
       gap: 28px;
     }
     .promo-text-block { order: 1; }
-    .promo-preview { order: 2; max-width: 360px; margin: 0 auto; width: 100%; }
+    .promo-preview { order: 2; max-width: 240px; margin: 0 auto; }
   }
 
   /* ============================================
@@ -644,25 +680,28 @@
       </div>
 
       <a href="/semih" class="promo-preview" target="_blank">
-        <div class="promo-preview-head">
-          <div class="promo-avatar">S</div>
-          <div>
-            <div class="promo-name" id="promo-preview-name">semih</div>
-            <div class="promo-slug">tektik.la<span>/semih</span></div>
+        <div class="phone-screen">
+          <div class="phone-statusbar">
+            <span>09:41</span>
+            <span class="url">tektik.la/semih</span>
+            <span>📶</span>
           </div>
-        </div>
-        <div class="promo-links">
-          <div class="promo-link featured">
-            <span>YouTube Kanalım</span>
-            <span class="arrow">→</span>
-          </div>
-          <div class="promo-link">
-            <span>Twitch Yayınım</span>
-            <span class="arrow">→</span>
-          </div>
-          <div class="promo-link">
-            <span>Podcast</span>
-            <span class="arrow">→</span>
+          <div class="phone-content">
+            <div class="phone-avatar">S</div>
+            <div class="phone-name">semih</div>
+            <div class="phone-slug">tektik.la<span>/semih</span></div>
+            <div class="phone-socials">
+              <div class="phone-social">𝕏</div>
+              <div class="phone-social">IG</div>
+              <div class="phone-social">▶</div>
+              <div class="phone-social">tw</div>
+            </div>
+            <div class="phone-links">
+              <div class="phone-link featured">YouTube Kanalım</div>
+              <div class="phone-link">Twitch Yayınım</div>
+              <div class="phone-link">Podcast</div>
+              <div class="phone-link">Online Mağaza</div>
+            </div>
           </div>
         </div>
       </a>
