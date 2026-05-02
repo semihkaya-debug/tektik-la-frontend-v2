@@ -135,6 +135,223 @@
   .tools-section { border-top: 1px solid var(--border); padding: 60px 40px; }
   .tools-inner { max-width: 860px; margin: 0 auto; }
 
+  /* ============================================
+     PROFILE PROMO SECTION (yeni özellik tanıtımı)
+     ============================================ */
+  .profile-promo {
+    border-top: 1px solid var(--border);
+    padding: 60px 40px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+  .profile-promo-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .promo-text-block .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+  .promo-text-block .section-tag::before { content: "— "; }
+  .promo-title {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .promo-title em { font-style: normal; color: var(--accent); }
+  .promo-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    max-width: 380px;
+  }
+  .promo-desc code {
+    background: var(--bg3);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .promo-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 14px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  .promo-cta:hover {
+    transform: translateY(-1px);
+    background: var(--accent2);
+  }
+  .promo-cta-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 1px;
+    margin-top: 12px;
+    display: block;
+  }
+
+  /* Mini profile preview card */
+  .promo-preview {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 0 1px transparent;
+  }
+  .promo-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .promo-preview-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+  }
+  .promo-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .promo-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .promo-slug {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+  }
+  .promo-slug span { color: var(--accent); }
+  .promo-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .promo-link {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+  }
+  .promo-link.featured {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent);
+  }
+  .promo-link .arrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  /* Mobile: Stack vertically */
+  @media (max-width: 768px) {
+    .profile-promo { padding: 40px 20px; }
+    .profile-promo-inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .promo-text-block { order: 1; }
+    .promo-preview { order: 2; max-width: 360px; margin: 0 auto; width: 100%; }
+  }
+
+  /* ============================================
+     STICKY CTA (sayfa kaydırıldığında çıkar)
+     ============================================ */
+  .sticky-cta {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(200, 245, 48, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    z-index: 100;
+  }
+  .sticky-cta.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .sticky-cta:hover {
+    background: var(--accent2);
+    transform: translateY(-2px);
+  }
+  .sticky-cta .icon { font-size: 14px; }
+
+  /* Mobile: full-width centered */
+  @media (max-width: 640px) {
+    .sticky-cta {
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      justify-content: center;
+      padding: 14px;
+      font-size: 12px;
+    }
+    .sticky-cta .meta-text { display: inline; }
+  }
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .sticky-cta .meta-text { display: none; }
+  }
+
   /* FILTER BAR */
   .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
   .filter-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:10px; border:1px solid var(--border); background:var(--bg3); color:var(--text2); font-family:'Space Mono',monospace; font-size:12px; cursor:pointer; transition:all 0.2s; }
@@ -335,6 +552,52 @@
       </div>
     </div>
   </div>
+
+  <!-- ============================================
+       PROFILE PROMO SECTION (Linktree tarzı)
+       ============================================ -->
+  <section class="profile-promo">
+    <div class="profile-promo-inner">
+
+      <div class="promo-text-block">
+        <span class="section-tag" id="promo-tag">YENİ · LINKTREE TARZI</span>
+        <h2 class="promo-title" id="promo-title">tüm linklerin<br><em>tek sayfada</em></h2>
+        <p class="promo-desc" id="promo-desc">
+          <code>tektik.la/<span id="promo-slug-demo">adın</span></code> ile sosyal medyanı, içeriklerini, projelerini tek bir kişisel sayfada topla.
+        </p>
+        <a href="/signup" class="promo-cta" id="promo-cta">
+          <span id="promo-cta-text">PROFİLİNİ OLUŞTUR</span>
+          <span>→</span>
+        </a>
+        <span class="promo-cta-meta" id="promo-meta">30 GÜN ÜCRETSİZ · KART YOK</span>
+      </div>
+
+      <a href="/semih" class="promo-preview" target="_blank">
+        <div class="promo-preview-head">
+          <div class="promo-avatar">S</div>
+          <div>
+            <div class="promo-name" id="promo-preview-name">semih</div>
+            <div class="promo-slug">tektik.la<span>/semih</span></div>
+          </div>
+        </div>
+        <div class="promo-links">
+          <div class="promo-link featured">
+            <span>YouTube Kanalım</span>
+            <span class="arrow">→</span>
+          </div>
+          <div class="promo-link">
+            <span>Twitch Yayınım</span>
+            <span class="arrow">→</span>
+          </div>
+          <div class="promo-link">
+            <span>Podcast</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
 
   <!-- TOOLS SECTION -->
   <div class="tools-section">
@@ -1122,6 +1385,69 @@ document.documentElement.setAttribute('data-theme', savedTheme);
 // İlk girişte Öne Çıkan göster
 document.addEventListener('DOMContentLoaded', function() { filterTools('pick'); });
 filterTools('pick');
+
+// ============================================
+// STICKY CTA — Akıllı görünme/gizlenme
+// ============================================
+(function setupStickyCta() {
+  // Eğer kullanıcı zaten giriş yapmışsa hiç gösterme
+  if (localStorage.getItem('tektik_token')) {
+    return;
+  }
+
+  const stickyCta = document.getElementById('sticky-cta');
+  if (!stickyCta) return;
+
+  function checkScroll() {
+    // 600px aşağı kaydırılınca sticky CTA görünür
+    // (Hero ve link kısaltma alanı görünmez olduğunda)
+    if (window.scrollY > 600) {
+      stickyCta.classList.add('visible');
+    } else {
+      stickyCta.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  window.addEventListener('resize', checkScroll);
+  // İlk kontrol
+  setTimeout(checkScroll, 200);
+})();
+
+// ============================================
+// PROMO SECTION — Dil değişikliğine bağla
+// ============================================
+(function setupPromoLanguage() {
+  // Sayfa dili kontrol et ve metinleri güncelle
+  const lang = document.documentElement.getAttribute('data-lang') || 'tr';
+  
+  if (lang === 'en') {
+    const promoTag = document.getElementById('promo-tag');
+    const promoTitle = document.getElementById('promo-title');
+    const promoSlugDemo = document.getElementById('promo-slug-demo');
+    const promoCtaText = document.getElementById('promo-cta-text');
+    const promoMeta = document.getElementById('promo-meta');
+    const promoDesc = document.getElementById('promo-desc');
+    const stickyCtaText = document.getElementById('sticky-cta-text');
+    
+    if (promoTag) promoTag.textContent = 'NEW · LINKTREE STYLE';
+    if (promoTitle) promoTitle.innerHTML = 'all your links<br><em>in one page</em>';
+    if (promoSlugDemo) promoSlugDemo.textContent = 'yourname';
+    if (promoCtaText) promoCtaText.textContent = 'CREATE YOUR PROFILE';
+    if (promoMeta) promoMeta.textContent = '30 DAYS FREE · NO CARD';
+    if (promoDesc) {
+      promoDesc.innerHTML = '<code>tektik.la/<span id="promo-slug-demo">yourname</span></code> — gather your social media, content, and projects on one personal page.';
+    }
+    if (stickyCtaText) stickyCtaText.innerHTML = '<span class="icon">⚡</span> SIGN UP <span class="meta-text">· 30 DAYS FREE</span>';
+  }
+})();
 </script>
+
+<!-- STICKY CTA -->
+<a href="/signup" class="sticky-cta" id="sticky-cta">
+  <span class="icon">⚡</span>
+  <span id="sticky-cta-text">ÜYE OL <span class="meta-text">· 30 GÜN ÜCRETSİZ</span></span>
+</a>
+
 </body>
 </html>

@@ -91,13 +91,10 @@
 /blog/create-professional-digital-receipts-for-freelancers     /blog/create-professional-digital-receipts-for-freelancers/index.html   200
 /blog/calculate-percentage-increase-and-decrease-fast          /blog/calculate-percentage-increase-and-decrease-fast/index.html        200
 
-<<<<<<< HEAD
 # ---- /profile/* (uzun versiyon, dashboard'dan açılır) ----
 # Not: /profile yalnız başına kullanılmıyor, sadece /profile/slug formatı var.
 # Bu kural sadece /profile/ahmet gibi URL'ler için.
 /profile/*        /profile.html              200
-=======
->>>>>>> ac212608bd365d349ce78aa03ed21674a2e33862
 
 # NOT: /:slug catch-all kuralı YOK!
 # /semih → profile.html yönlendirmesi functions/[[catchall]].js içinde yapılıyor.
