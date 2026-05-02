@@ -89,8 +89,8 @@
   .hero-sub { font-size: 15px; color: var(--text2); max-width: 420px; line-height: 1.7; margin-bottom: 20px; }
   .hero-badges { display: flex; gap: 16px; flex-wrap: wrap; }
   .hero-badge-item { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); }
-  .main-card { max-width: 720px; margin: 0 auto; padding: 0 40px 60px; animation: fadeUp 0.6s ease 0.1s both; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; }
+  .main-card { max-width: 720px; margin: 0 auto; padding: 0 0 60px; animation: fadeUp 0.6s ease 0.1s both; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin: 0 40px; }
   .card-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
   .input-row { display: flex; gap: 10px; }
   input[type="url"] { flex: 1; background: var(--input-bg); border: 1px solid var(--border); color: var(--text); padding: 15px 18px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 13px; outline: none; transition: border-color 0.2s; }
@@ -482,10 +482,11 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @media (max-width: 600px) {
     header { padding: 16px 20px; }
-    .hero, .main-card { padding-left: 20px; padding-right: 20px; }
+    .hero { padding-left: 20px; padding-right: 20px; }
+    .main-card { padding-left: 0; padding-right: 0; }
+    .card { margin: 0 20px; padding: 20px; }
     .input-row { flex-direction: column; }
     h1 { letter-spacing: -1px; }
-    .card { padding: 24px; }
     .result-box, .qr-box { flex-direction: column; align-items: flex-start; }
     .tools-section { padding: 40px 20px; }
     .tools-grid { grid-template-columns: 1fr 1fr; }
