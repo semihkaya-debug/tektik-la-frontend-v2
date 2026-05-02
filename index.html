@@ -76,7 +76,7 @@
   .header-controls { display: flex; gap: 10px; align-items: center; }
   .ctrl-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px; transition: all 0.2s; }
   .ctrl-btn:hover, .ctrl-btn.active { border-color: var(--accent); color: var(--accent); }
-  .hero { padding: 56px 40px 40px; max-width: 860px; margin: 0 auto; animation: fadeUp 0.6s ease; }
+  .hero { padding: 80px 40px 24px; max-width: 720px; margin: 0 auto; animation: fadeUp 0.6s ease; }
   .hero-stats { display:flex; align-items:center; gap:24px; margin-top:24px; }
   .hero-stat { display:flex; flex-direction:column; gap:2px; }
   .stat-num { font-family:'Space Mono',monospace; font-size:22px; font-weight:700; color:var(--accent); line-height:1; }
@@ -84,12 +84,12 @@
   .hero-stat-divider { width:1px; height:32px; background:var(--border); }
   .hero-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
   .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-  h1 { font-size: clamp(52px, 8vw, 96px); font-weight: 800; line-height: 0.95; letter-spacing: -4px; margin-bottom: 20px; }
+  h1 { font-size: clamp(36px, 5.5vw, 64px); font-weight: 800; line-height: 1; letter-spacing: -2.5px; margin-bottom: 20px; }
   h1 em { font-style: normal; color: var(--accent); }
   .hero-sub { font-size: 15px; color: var(--text2); max-width: 420px; line-height: 1.7; margin-bottom: 20px; }
   .hero-badges { display: flex; gap: 16px; flex-wrap: wrap; }
   .hero-badge-item { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); }
-  .main-card { max-width: 860px; margin: 0 auto; padding: 0 40px 80px; animation: fadeUp 0.6s ease 0.1s both; }
+  .main-card { max-width: 720px; margin: 0 auto; padding: 0 40px 60px; animation: fadeUp 0.6s ease 0.1s both; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; }
   .card-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
   .input-row { display: flex; gap: 10px; }
@@ -132,7 +132,7 @@
   .history-original { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
   .history-short { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; }
   /* TOOLS GRID */
-  .tools-section { border-top: 1px solid var(--border); padding: 60px 40px; }
+  .tools-section { border-top: 1px solid var(--border); padding: 100px 40px; }
   .tools-inner { max-width: 860px; margin: 0 auto; }
 
   /* ============================================
@@ -211,8 +211,8 @@
      PROFILE PROMO SECTION (yeni özellik tanıtımı)
      ============================================ */
   .profile-promo {
-    border-top: 1px solid var(--border);
-    padding: 80px 40px;
+    background: var(--bg2);
+    padding: 100px 40px;
     animation: fadeUp 0.6s ease 0.2s both;
   }
   .profile-promo-inner {
@@ -227,11 +227,11 @@
     margin-bottom: 14px;
   }
   .promo-title {
-    font-size: clamp(22px, 3.5vw, 32px);
+    font-size: clamp(28px, 4.5vw, 40px);
     font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    margin-bottom: 14px;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
   }
   .promo-title em { font-style: italic; color: var(--accent); }
   .promo-desc {
