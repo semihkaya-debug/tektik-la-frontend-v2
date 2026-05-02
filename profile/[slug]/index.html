@@ -251,36 +251,48 @@
 
   /* Socials */
   .socials {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
     margin-bottom: 24px;
     padding-bottom: 24px;
     border-bottom: 1px solid var(--border);
   }
 
   .social-btn {
-    width: 38px;
-    height: 38px;
     border: 1px solid var(--border);
     background: var(--bg2);
     border-radius: 10px;
+    padding: 10px 8px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     color: var(--text2);
     text-decoration: none;
-    font-size: 14px;
     font-family: 'Space Mono', monospace;
-    font-weight: 700;
     transition: all 0.2s;
+    min-height: 56px;
   }
 
   .social-btn:hover {
     border-color: var(--accent);
     color: var(--accent);
     transform: translateY(-2px);
+  }
+
+  .social-btn .social-icon {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .social-btn .social-name {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1;
   }
 
   /* Links */
@@ -365,13 +377,15 @@
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     color: var(--text2);
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
   }
 
   .profile-footer a {
     color: var(--accent);
     text-decoration: none;
     font-weight: 700;
+    white-space: nowrap;
   }
 
   .profile-footer a:hover {
@@ -469,7 +483,7 @@
     <div class="phone-frame">
       <div class="phone-screen-content">
         <div class="phone-statusbar">
-          <span>09:41</span>
+          <span id="statusbar-time">09:41</span>
           <span class="url" id="statusbar-url">tektik.la/...</span>
           <span>📶</span>
         </div>
@@ -519,22 +533,35 @@
   const content = document.getElementById('content');
   const pathIndicator = document.getElementById('pathIndicator');
   const statusbarUrl = document.getElementById('statusbar-url');
+  const statusbarTime = document.getElementById('statusbar-time');
   
   if (slug) {
     pathIndicator.textContent = `/ ${slug.toUpperCase()}`;
     if (statusbarUrl) statusbarUrl.textContent = `tektik.la/${slug}`;
   }
 
-  const socialIcons = {
-    twitter: '𝕏',
-    instagram: 'IG',
-    threads: '@',
-    linkedin: 'in',
-    youtube: '▶',
-    tiktok: '♪',
-    twitch: 'tw',
-    kick: '⚡',
-    github: '</>'
+  // Status bar saat - ziyaretçinin gerçek saati
+  function updateStatusbarTime() {
+    if (!statusbarTime) return;
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    statusbarTime.textContent = `${hh}:${mm}`;
+  }
+  updateStatusbarTime();
+  // Her dakika güncelle
+  setInterval(updateStatusbarTime, 30000);
+
+  const socialPlatforms = {
+    twitter:   { icon: '𝕏',    name: 'Twitter / X' },
+    instagram: { icon: 'IG',   name: 'Instagram' },
+    threads:   { icon: '@',    name: 'Threads' },
+    linkedin:  { icon: 'in',   name: 'LinkedIn' },
+    youtube:   { icon: '▶',    name: 'YouTube' },
+    tiktok:    { icon: '♪',    name: 'TikTok' },
+    twitch:    { icon: 'tw',   name: 'Twitch' },
+    kick:      { icon: '⚡',    name: 'Kick' },
+    github:    { icon: '</>',  name: 'GitHub' }
   };
 
   function escapeHtml(text) {
@@ -560,9 +587,13 @@
         : `<div class="avatar">${profile.slug.charAt(0).toUpperCase()}</div>`;
 
       const socialsHtml = socials && socials.length > 0
-        ? `<div class="socials">${socials.map(s =>
-            `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-btn" title="${s.platform}">${socialIcons[s.platform] || '↗'}</a>`
-          ).join('')}</div>`
+        ? `<div class="socials">${socials.map(s => {
+            const platform = socialPlatforms[s.platform] || { icon: '↗', name: s.platform };
+            return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-btn" aria-label="${escapeHtml(platform.name)}">
+              <span class="social-icon">${platform.icon}</span>
+              <span class="social-name">${escapeHtml(platform.name)}</span>
+            </a>`;
+          }).join('')}</div>`
         : '';
 
       const linksHtml = links && links.length > 0
@@ -585,7 +616,7 @@
         ${socialsHtml}
         ${linksHtml}
         <div class="profile-footer">
-          SEN DE PROFİL OLUŞTUR · <a href="/signup">tektik.la'da kayıt ol</a>
+          <a href="/signup">Sen de profil oluştur →</a>
         </div>
       `;
 
