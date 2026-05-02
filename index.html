@@ -212,34 +212,28 @@
      ============================================ */
   .profile-promo {
     border-top: 1px solid var(--border);
-    padding: 60px 40px;
+    padding: 80px 40px;
     animation: fadeUp 0.6s ease 0.2s both;
   }
   .profile-promo-inner {
     max-width: 860px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 40px;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
     align-items: center;
   }
   .promo-text-block .section-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 2px;
     margin-bottom: 14px;
-    display: inline-block;
   }
-  .promo-text-block .section-tag::before { content: "— "; }
   .promo-title {
-    font-size: clamp(28px, 5vw, 44px);
+    font-size: clamp(22px, 3.5vw, 32px);
     font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -1.5px;
-    margin-bottom: 16px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
   }
-  .promo-title em { font-style: normal; color: var(--accent); }
+  .promo-title em { font-style: italic; color: var(--accent); }
   .promo-desc {
     font-family: 'Space Mono', monospace;
     font-size: 13px;
@@ -261,11 +255,11 @@
     gap: 8px;
     background: var(--accent);
     color: #0a0a0a;
-    padding: 14px 22px;
-    border-radius: 10px;
+    padding: 12px 20px;
+    border-radius: 8px;
     text-decoration: none;
     font-family: 'Space Mono', monospace;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 1px;
     transition: all 0.2s;
@@ -462,10 +456,12 @@
   .featured-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
   .featured-pills { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
   .pill { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text2); background: var(--bg3); border: 1px solid var(--border); padding: 2px 8px; border-radius: 20px; }
-  .section-head { margin-bottom: 28px; }
+  .section-head { margin-bottom: 36px; }
   .section-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
   .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-  .section-title { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+  .section-title { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-sub { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text2); line-height: 1.6; max-width: 560px; }
 
   /* SHARE BAR */
 
@@ -553,8 +549,8 @@
 </header>
 
   <div class="hero">
-    <div class="hero-tag" id="hero-tag">25+ Ücretsiz Araç</div>
-    <h1 id="hero-h1">link kısalt,<br><em>tek tıkla</em><br><span style="color:var(--text);opacity:0.4">tektik.la</span></h1>
+    <div class="hero-tag" id="hero-tag">link kısaltıcı</div>
+    <h1 id="hero-h1">link kısalt,<br><em>tek tıkla</em></h1>
     <p class="hero-sub" id="hero-sub">Uzun linkleri saniyeler içinde kısalt. Reklam yok, kayıt yok, tamamen ücretsiz.</p>
     <div class="hero-badges" id="hero-badges">
       <span class="hero-badge-item">✓ Kayıt yok</span>
@@ -634,16 +630,16 @@
     <div class="profile-promo-inner">
 
       <div class="promo-text-block">
-        <span class="section-tag" id="promo-tag">YENİ · LINKTREE TARZI</span>
+        <span class="section-tag" id="promo-tag">profil sistemi</span>
         <h2 class="promo-title" id="promo-title">tüm linklerin<br><em>tek sayfada</em></h2>
         <p class="promo-desc" id="promo-desc">
           <code>tektik.la/<span id="promo-slug-demo">link</span></code> ile sosyal medyanı, içeriklerini, projelerini tek bir kişisel sayfada topla.
         </p>
         <a href="/signup" class="promo-cta" id="promo-cta">
-          <span id="promo-cta-text">PROFİLİNİ OLUŞTUR</span>
+          <span id="promo-cta-text">profil oluştur</span>
           <span>→</span>
         </a>
-        <span class="promo-cta-meta" id="promo-meta">30 GÜN ÜCRETSİZ · KART YOK</span>
+        <span class="promo-cta-meta" id="promo-meta">30 gün ücretsiz · kart yok</span>
       </div>
 
       <a href="/semih" class="promo-preview" target="_blank">
@@ -678,8 +674,9 @@
     <div class="tools-inner">
 
       <div class="section-head">
-        <div class="section-tag">araçlar</div>
-        <div class="section-title">tüm araçlar</div>
+        <div class="section-tag">25+ ücretsiz araç</div>
+        <div class="section-title">+ <em>bonus</em> araçlar</div>
+        <div class="section-sub">Çekiliş, QR kod, fotoğraf sıkıştırıcı, CV oluşturucu ve daha fazlası. Üyeliksiz, reklamsız.</div>
       </div>
 
       <!-- FİLTRE BUTONLARI -->
@@ -1408,20 +1405,20 @@ function toggleFaq(btn) {
 function setLang(l) {
   lang = l;
   const tr = {
-    'hero-h1': 'link kısalt,<br><em>tek tıkla</em><br><span style="color:var(--text);opacity:0.4">tektik.la</span>',
+    'hero-h1': 'link kısalt,<br><em>tek tıkla</em>',
     'hero-sub': 'Uzun linkleri saniyeler içinde kısalt. Reklam yok, kayıt yok, tamamen ücretsiz.',
     'hero-badges': '✓ Kayıt yok|✓ Reklam yok|✓ 25+ araç|✓ 30 gün link',
     'card-label': 'Linkinizi kısaltın',
     'btn-text': 'Kısalt',
-    'section-title': 'tüm araçlar',
+    'section-title': '+ <em>bonus</em> araçlar',
   };
   const en = {
-    'hero-h1': 'shorten links,<br><em>in one click</em><br><span style="color:var(--text);opacity:0.4">tektik.la</span>',
+    'hero-h1': 'shorten links,<br><em>in one click</em>',
     'hero-sub': 'Shorten any URL instantly. No sign up, no ads, completely free.',
     'hero-badges': '✓ No sign up|✓ No ads|✓ 25+ tools|✓ Links valid 30 days',
     'card-label': 'Shorten your link',
     'btn-text': 'Shorten',
-    'section-title': 'all tools',
+    'section-title': '+ <em>bonus</em> tools',
   };
   const texts = lang === 'en' ? en : tr;
   Object.entries(texts).forEach(([id, val]) => {
@@ -1591,11 +1588,6 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
   }
 })();
 </script>
-
-<!-- STICKY CTA -->
-<a href="/signup" class="sticky-cta" id="sticky-cta">
-  <span id="sticky-cta-text">ÜYE OL <span class="meta-text">· 30 GÜN ÜCRETSİZ</span></span>
-</a>
 
 </body>
 </html>
