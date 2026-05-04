@@ -580,7 +580,7 @@
 </header>
 
   <div class="hero">
-    <div class="hero-tag" id="hero-tag">Türk içerik üreticileri için</div>
+    <div class="hero-tag" id="hero-tag">tüm içerik üreticileri için</div>
     <h1 id="hero-h1">linkini <em>topla</em><br>veya <em>kısalt</em></h1>
     <p class="hero-sub" id="hero-sub">Linktree benzeri kişisel profil, hızlı link kısaltıcı ve 25+ ücretsiz araç. Tek yerde, ücretsiz.</p>
   </div>
@@ -1436,18 +1436,16 @@ function toggleFaq(btn) {
 function setLang(l) {
   lang = l;
   const tr = {
-    'hero-h1': 'link kısalt,<br><em>tek tıkla</em>',
-    'hero-sub': 'Uzun linkleri saniyeler içinde kısalt. Reklam yok, kayıt yok, tamamen ücretsiz.',
-    'hero-badges': '✓ Kayıt yok|✓ Reklam yok|✓ 25+ araç|✓ 30 gün link',
-    'card-label': 'Linkinizi kısaltın',
+    'hero-tag': 'tüm içerik üreticileri için',
+    'hero-h1': 'linkini <em>topla</em><br>veya <em>kısalt</em>',
+    'hero-sub': 'Linktree benzeri kişisel profil, hızlı link kısaltıcı ve 25+ ücretsiz araç. Tek yerde, ücretsiz.',
     'btn-text': 'Kısalt',
     'section-title': '+ <em>bonus</em> araçlar',
   };
   const en = {
-    'hero-h1': 'shorten links,<br><em>in one click</em>',
-    'hero-sub': 'Shorten any URL instantly. No sign up, no ads, completely free.',
-    'hero-badges': '✓ No sign up|✓ No ads|✓ 25+ tools|✓ Links valid 30 days',
-    'card-label': 'Shorten your link',
+    'hero-tag': 'for all content creators',
+    'hero-h1': 'collect <em>your links</em><br>or <em>shorten</em>',
+    'hero-sub': 'Linktree-style personal profile, fast link shortener and 25+ free tools. All in one place, free.',
     'btn-text': 'Shorten',
     'section-title': '+ <em>bonus</em> tools',
   };
@@ -1455,11 +1453,7 @@ function setLang(l) {
   Object.entries(texts).forEach(([id, val]) => {
     const el = document.getElementById(id);
     if (!el) return;
-    if (id === 'hero-badges') {
-      el.innerHTML = val.split('|').map(b => `<span class="hero-badge-item">${b.trim()}</span>`).join('');
-    } else {
-      el.innerHTML = val;
-    }
+    el.innerHTML = val;
   });
   // Placeholder çeviri
   const inp = document.getElementById('url-input');
