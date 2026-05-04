@@ -76,21 +76,20 @@
   .header-controls { display: flex; gap: 10px; align-items: center; }
   .ctrl-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px; transition: all 0.2s; }
   .ctrl-btn:hover, .ctrl-btn.active { border-color: var(--accent); color: var(--accent); }
-  .hero { padding: 80px 40px 24px; max-width: 720px; margin: 0 auto; animation: fadeUp 0.6s ease; }
+  .hero { padding: 60px 40px 24px; max-width: 720px; margin: 0 auto; animation: fadeUp 0.6s ease; text-align: center; }
+  .hero-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: inline-block; }
+  .hero-tag::before { content: "— "; }
+  .hero h1 { text-align: center; }
+  .hero-sub { font-size: 15px; color: var(--text2); max-width: 540px; line-height: 1.7; margin: 0 auto; text-align: center; }
   .hero-stats { display:flex; align-items:center; gap:24px; margin-top:24px; }
   .hero-stat { display:flex; flex-direction:column; gap:2px; }
   .stat-num { font-family:'Space Mono',monospace; font-size:22px; font-weight:700; color:var(--accent); line-height:1; }
   .stat-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; }
   .hero-stat-divider { width:1px; height:32px; background:var(--border); }
-  .hero-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-  .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-  h1 { font-size: clamp(36px, 5.5vw, 64px); font-weight: 800; line-height: 1; letter-spacing: -2.5px; margin-bottom: 20px; }
+  h1 { font-size: clamp(32px, 4.5vw, 52px); font-weight: 800; line-height: 1; letter-spacing: -2px; margin-bottom: 20px; }
   h1 em { font-style: normal; color: var(--accent); }
-  .hero-sub { font-size: 15px; color: var(--text2); max-width: 420px; line-height: 1.7; margin-bottom: 20px; }
-  .hero-badges { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-badges { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
   .hero-badge-item { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); }
-  .main-card { max-width: 720px; margin: 0 auto; padding: 0 0 60px; animation: fadeUp 0.6s ease 0.1s both; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin: 0 40px; }
   .card-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
   .input-row { display: flex; gap: 10px; }
   input[type="url"] { flex: 1; background: var(--input-bg); border: 1px solid var(--border); color: var(--text); padding: 15px 18px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 13px; outline: none; transition: border-color 0.2s; }
@@ -208,48 +207,150 @@
   }
 
   /* ============================================
-     PROFILE PROMO SECTION (yeni özellik tanıtımı)
+     SPLIT SECTION — Sol: Profil · Sağ: Link Kısaltıcı
      ============================================ */
-  .profile-promo {
-    background: var(--bg2);
-    padding: 100px 40px;
-    animation: fadeUp 0.6s ease 0.2s both;
+  .split-section {
+    padding: 40px 40px 80px;
+    animation: fadeUp 0.6s ease 0.1s both;
   }
-  .profile-promo-inner {
-    max-width: 860px;
+  .split-inner {
+    max-width: 1080px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 48px;
-    align-items: center;
+    align-items: start;
   }
-  .promo-text-block .section-tag {
+  .split-col {
+    display: flex;
+    flex-direction: column;
+  }
+  .split-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
     margin-bottom: 14px;
+    display: inline-block;
   }
-  .promo-title {
-    font-size: clamp(28px, 4.5vw, 40px);
+  .split-title {
+    font-size: clamp(28px, 4vw, 38px);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -1.5px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
-  .promo-title em { font-style: italic; color: var(--accent); }
-  .promo-desc {
+  .split-title em { font-style: italic; color: var(--accent); }
+  .split-desc {
     font-family: 'Space Mono', monospace;
     font-size: 13px;
     color: var(--text2);
     line-height: 1.7;
     margin-bottom: 24px;
-    max-width: 380px;
   }
-  .promo-desc code {
+  .split-desc code {
     background: var(--bg3);
     color: var(--accent);
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 12px;
   }
-  .promo-cta {
+  /* Profil kolonu: Telefon mockup */
+  .phone-mockup-link {
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .phone-mockup {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 28px;
+    padding: 8px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    max-width: 240px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .phone-mockup-link:hover .phone-mockup {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent);
+  }
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 22px;
+    overflow: hidden;
+  }
+  .phone-statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--text2);
+  }
+  .phone-statusbar .phone-url {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .phone-content {
+    padding: 14px;
+    text-align: center;
+  }
+  .phone-avatar {
+    width: 48px;
+    height: 48px;
+    background: var(--bg3);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 auto 8px;
+  }
+  .phone-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .phone-slug {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--text2);
+    margin-bottom: 12px;
+  }
+  .phone-slug span { color: var(--accent); }
+  .phone-links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .phone-link {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .phone-link.featured {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  /* Profil CTA */
+  .split-cta-wrap {
+    margin-top: auto;
+  }
+  .split-cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -264,141 +365,35 @@
     letter-spacing: 1px;
     transition: all 0.2s;
   }
-  .promo-cta:hover {
+  .split-cta:hover {
     transform: translateY(-1px);
     background: var(--accent2);
   }
-  .promo-cta-meta {
+  .split-cta-meta {
+    display: block;
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     color: var(--text2);
     letter-spacing: 1px;
-    margin-top: 12px;
-    display: block;
+    margin-top: 10px;
   }
-
-  /* Mini profile preview card */
-  /* ============================================
-     PHONE FRAME — Mini profil önizlemesi
-     Telefon çerçevesi içinde profil görünümü
-     ============================================ */
-  .promo-preview {
-    display: block;
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 28px;
-    padding: 8px;
-    text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    max-width: 260px;
-    margin: 0 auto;
-  }
-  .promo-preview:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent);
-  }
-  .phone-screen {
-    background: #0a0a0a;
-    border-radius: 22px;
-    overflow: hidden;
-  }
-  .phone-statusbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 14px 6px;
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--text2);
-  }
-  .phone-statusbar .url {
-    color: var(--accent);
-    font-weight: 700;
-  }
-  .phone-content {
-    padding: 16px 14px 18px;
-    text-align: center;
-  }
-  .phone-avatar {
-    width: 56px;
-    height: 56px;
-    background: var(--bg3);
-    border: 2px solid var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--accent);
-    margin: 0 auto 10px;
-  }
-  .phone-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-  .phone-slug {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--text2);
-    margin-bottom: 14px;
-  }
-  .phone-slug span { color: var(--accent); }
-  .phone-socials {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-  .phone-social {
-    width: 26px;
-    height: 26px;
-    background: var(--bg3);
+  /* Link form kartı */
+  .link-form-card {
+    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text2);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
+    border-radius: 16px;
+    padding: 24px;
   }
-  .phone-links {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .phone-link {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 8px;
-    border-radius: 7px;
-    font-size: 10px;
-    font-weight: 600;
-    text-align: center;
-  }
-  .phone-link.featured {
-    background: var(--accent);
-    color: #0a0a0a;
-    border-color: var(--accent);
-    font-weight: 700;
-  }
-
   /* Mobile: Stack vertically */
-  @media (max-width: 768px) {
-    .profile-promo { padding: 60px 20px; }
-    .profile-promo-inner {
+  @media (max-width: 900px) {
+    .split-section { padding: 24px 20px 60px; }
+    .split-inner {
       grid-template-columns: 1fr;
-      gap: 28px;
+      gap: 48px;
     }
-    .promo-text-block { order: 1; }
-    .promo-preview { order: 2; max-width: 240px; margin: 0 auto; }
+    .profile-col { order: 2; }
+    .link-col { order: 1; }
+    .phone-mockup { max-width: 220px; margin: 0 auto; }
   }
 
   /* ============================================
@@ -518,9 +513,8 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @media (max-width: 600px) {
     header { padding: 16px 20px; }
-    .hero { padding-left: 20px; padding-right: 20px; }
-    .main-card { padding-left: 0; padding-right: 0; }
-    .card { margin: 0 20px; padding: 20px; }
+    .hero { padding-left: 20px; padding-right: 20px; padding-top: 40px; }
+    .link-form-card { padding: 20px; }
     .input-row { flex-direction: column; }
     h1 { letter-spacing: -1px; }
     .result-box, .qr-box { flex-direction: column; align-items: flex-start; }
@@ -586,35 +580,78 @@
 </header>
 
   <div class="hero">
-    <div class="hero-tag" id="hero-tag">link kısaltıcı</div>
-    <h1 id="hero-h1">link kısalt,<br><em>tek tıkla</em></h1>
-    <p class="hero-sub" id="hero-sub">Uzun linkleri saniyeler içinde kısalt. Reklam yok, kayıt yok, tamamen ücretsiz.</p>
-    <div class="hero-badges" id="hero-badges">
-      <span class="hero-badge-item">✓ Kayıt yok</span>
-      <span class="hero-badge-item">✓ Reklam yok</span>
-      <span class="hero-badge-item">✓ 25+ araç</span>
-      <span class="hero-badge-item">✓ 30 gün link</span>
-    </div>
+    <div class="hero-tag" id="hero-tag">Türk içerik üreticileri için</div>
+    <h1 id="hero-h1">linkini <em>topla</em><br>veya <em>kısalt</em></h1>
+    <p class="hero-sub" id="hero-sub">Linktree benzeri kişisel profil, hızlı link kısaltıcı ve 25+ ücretsiz araç. Tek yerde, ücretsiz.</p>
   </div>
 
-  <div class="main-card">
-    <div class="card">
+  <!-- ============================================
+       SPLIT SECTION — Sol: Profil · Sağ: Link Kısaltıcı
+       ============================================ -->
+  <section class="split-section">
+    <div class="split-inner">
 
-      <div class="input-row">
-        <input type="url" id="url-input" placeholder="Linki buraya yapıştır" />
-        <button class="btn-primary" id="shorten-btn" onclick="shortenLink()">
-          <span id="btn-text">Kısalt</span>
-        </button>
-      </div>
-      <div class="status" id="status-msg"></div>
-      <div class="result-box" id="result-box">
-        <div style="flex:1">
-          <div class="result-url" id="result-url"></div>
-          <div class="result-meta" id="result-meta"></div>
+      <!-- SOL: PROFİL PROMO -->
+      <div class="split-col profile-col">
+        <span class="split-tag">— PROFİL SİSTEMİ</span>
+        <h2 class="split-title">tüm linklerin<br><em>tek sayfada</em></h2>
+        <p class="split-desc">
+          <code>tektik.la/<span>link</span></code> ile sosyal medyanı, içeriklerini, projelerini topla.
+        </p>
+
+        <a href="/semih" class="phone-mockup-link" target="_blank">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <div class="phone-statusbar">
+                <span class="phone-time">14:23</span>
+                <span class="phone-url">tektik.la/semih</span>
+                <span>📶</span>
+              </div>
+              <div class="phone-content">
+                <div class="phone-avatar">S</div>
+                <div class="phone-name">semih</div>
+                <div class="phone-slug">tektik.la<span>/semih</span></div>
+                <div class="phone-links">
+                  <div class="phone-link featured">YouTube Kanalım</div>
+                  <div class="phone-link">Twitch Yayınım</div>
+                  <div class="phone-link">Podcast</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <div class="split-cta-wrap">
+          <a href="/signup" class="split-cta">
+            <span>profil oluştur</span>
+            <span>→</span>
+          </a>
+          <span class="split-cta-meta">30 gün ücretsiz · kart yok</span>
         </div>
-        <button class="btn-primary" id="copy-btn" onclick="copyResult()">Kopyala</button>
       </div>
-      <div class="qr-box" id="qr-box">
+
+      <!-- SAĞ: LINK KISALTICI -->
+      <div class="split-col link-col">
+        <span class="split-tag">— LINK KISALTICI</span>
+        <h2 class="split-title">link kısalt,<br><em>tek tıkla</em></h2>
+        <p class="split-desc">Reklam yok, kayıt yok, tamamen ücretsiz. 30 gün boyunca aktif.</p>
+
+        <div class="link-form-card">
+          <div class="input-row">
+            <input type="url" id="url-input" placeholder="Linki buraya yapıştır" />
+            <button class="btn-primary" id="shorten-btn" onclick="shortenLink()">
+              <span id="btn-text">Kısalt</span>
+            </button>
+          </div>
+          <div class="status" id="status-msg"></div>
+          <div class="result-box" id="result-box">
+            <div style="flex:1">
+              <div class="result-url" id="result-url"></div>
+              <div class="result-meta" id="result-meta"></div>
+            </div>
+            <button class="btn-primary" id="copy-btn" onclick="copyResult()">Kopyala</button>
+          </div>
+          <div class="qr-box" id="qr-box">
         <div id="qrcode-result"></div>
         <div class="qr-info">
           <div class="qr-label" id="qr-label">QR Kod</div>
@@ -657,57 +694,11 @@
         </div>
         <div id="history-list"></div>
       </div>
-    </div>
-  </div>
+        </div><!-- /link-form-card -->
+      </div><!-- /split-col link-col -->
 
-  <!-- ============================================
-       PROFILE PROMO SECTION (Linktree tarzı)
-       ============================================ -->
-  <section class="profile-promo">
-    <div class="profile-promo-inner">
-
-      <div class="promo-text-block">
-        <span class="section-tag" id="promo-tag">profil sistemi</span>
-        <h2 class="promo-title" id="promo-title">tüm linklerin<br><em>tek sayfada</em></h2>
-        <p class="promo-desc" id="promo-desc">
-          <code>tektik.la/<span id="promo-slug-demo">link</span></code> ile sosyal medyanı, içeriklerini, projelerini tek bir kişisel sayfada topla.
-        </p>
-        <a href="/signup" class="promo-cta" id="promo-cta">
-          <span id="promo-cta-text">profil oluştur</span>
-          <span>→</span>
-        </a>
-        <span class="promo-cta-meta" id="promo-meta">30 gün ücretsiz · kart yok</span>
-      </div>
-
-      <a href="/semih" class="promo-preview" target="_blank">
-        <div class="phone-screen">
-          <div class="phone-statusbar">
-            <span>09:41</span>
-            <span class="url">tektik.la/semih</span>
-            <span>📶</span>
-          </div>
-          <div class="phone-content">
-            <div class="phone-avatar">S</div>
-            <div class="phone-name">semih</div>
-            <div class="phone-slug">tektik.la<span>/semih</span></div>
-            <div class="phone-socials">
-              <div class="phone-social">𝕏</div>
-              <div class="phone-social">IG</div>
-              <div class="phone-social">▶</div>
-              <div class="phone-social">tw</div>
-            </div>
-            <div class="phone-links">
-              <div class="phone-link featured">YouTube Kanalım</div>
-              <div class="phone-link">Twitch Yayınım</div>
-              <div class="phone-link">Podcast</div>
-              <div class="phone-link">Online Mağaza</div>
-            </div>
-          </div>
-        </div>
-      </a>
-
-    </div>
-  </section>
+    </div><!-- /split-inner -->
+  </section><!-- /split-section -->
 
   <!-- TOOLS SECTION -->
   <div class="tools-section" id="araclar">
