@@ -54,6 +54,7 @@
 /login            /login/index.html           200
 /dashboard        /dashboard/index.html       200
 /forgot-password  /forgot-password/index.html 200
+/reset-password   /reset-password/index.html  200
 
 # ---- Admin ----
 /admin            /admin/index.html           200

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Şifre Sıfırla — tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/auth.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+  <header>
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="header-actions">
+      <span class="path-indicator">/ RESET</span>
+      <button class="ctrl-btn" onclick="toggleTheme()">◐</button>
+    </div>
+  </header>
+
+  <main class="auth-main">
+    <div class="auth-box">
+      <span class="auth-label">— YENİ ŞİFRE BELİRLE</span>
+      <h1 class="auth-title">yeni <span>şifren</span></h1>
+      <p class="auth-subtitle">Güvenli bir şifre belirle, hesabına yeniden gir.</p>
+
+      <div id="alert" class="alert"></div>
+
+      <form id="resetForm">
+        <div class="form-group">
+          <label class="form-label" for="password">Yeni Şifre</label>
+          <input 
+            type="password" 
+            id="password" 
+            class="form-input"
+            placeholder="En az 6 karakter"
+            required
+            minlength="6"
+            autocomplete="new-password"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password2">Şifreyi Tekrarla</label>
+          <input 
+            type="password" 
+            id="password2" 
+            class="form-input"
+            placeholder="Aynı şifreyi tekrar yaz"
+            required
+            minlength="6"
+            autocomplete="new-password"
+          >
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-primary">ŞİFREYİ GÜNCELLE →</button>
+      </form>
+
+      <div class="auth-footer">
+        Hatırladın mı? <a href="/login">Giriş yap</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 tektik.la</p>
+    <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2);">v1.0</p>
+  </footer>
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('tektik_theme', next);
+  }
+  const savedTheme = localStorage.getItem('tektik_theme');
+  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+  // URL'den token al
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+
+  const form = document.getElementById('resetForm');
+  const alertEl = document.getElementById('alert');
+  const submitBtn = document.getElementById('submitBtn');
+
+  function showAlert(message, type = 'error') {
+    alertEl.textContent = message;
+    alertEl.className = `alert alert-${type}`;
+    alertEl.style.display = 'block';
+  }
+
+  // Token yoksa direkt hata göster
+  if (!token) {
+    showAlert('Geçersiz veya eksik bağlantı. Sıfırlama linki olmadan bu sayfaya gelemezsin.', 'error');
+    form.style.display = 'none';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const password = document.getElementById('password').value;
+    const password2 = document.getElementById('password2').value;
+
+    if (password !== password2) {
+      showAlert('Şifreler eşleşmiyor. Tekrar dene.', 'error');
+      return;
+    }
+
+    if (password.length < 6) {
+      showAlert('Şifre en az 6 karakter olmalı.', 'error');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ Güncelleniyor...';
+    alertEl.style.display = 'none';
+
+    try {
+      const API_URL = window.API_URL || 'https://tektik-laa-production.up.railway.app';
+      const response = await fetch(`${API_URL}/api/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showAlert('✅ Şifren güncellendi! Giriş sayfasına yönlendiriliyorsun...', 'success');
+        form.style.display = 'none';
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 2000);
+      } else {
+        showAlert(data.error || 'Şifre güncellenemedi.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'ŞİFREYİ GÜNCELLE →';
+      }
+    } catch (error) {
+      console.error('Reset password error:', error);
+      showAlert('Bağlantı hatası. Tekrar dene.', 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'ŞİFREYİ GÜNCELLE →';
+    }
+  });
+</script>
+
+</body>
+</html>
