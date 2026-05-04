@@ -570,6 +570,19 @@
     return div.innerHTML;
   }
 
+  // URL'i normalize et — https:// yoksa ekle
+  function normalizeUrl(url) {
+    if (!url || typeof url !== 'string') return '#';
+    url = url.trim();
+    if (!url) return '#';
+    // mailto/tel'e dokunma
+    if (url.startsWith('mailto:') || url.startsWith('tel:')) return url;
+    // http/https varsa olduğu gibi
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    // Yoksa https:// ekle
+    return 'https://' + url;
+  }
+
   async function loadProfile() {
     if (!slug) {
       showError('Hangi profili görmek istediğini anlayamadım.', '?');
@@ -589,7 +602,7 @@
       const socialsHtml = socials && socials.length > 0
         ? `<div class="socials">${socials.map(s => {
             const platform = socialPlatforms[s.platform] || { icon: '↗', name: s.platform };
-            return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" class="social-btn" aria-label="${escapeHtml(platform.name)}">
+            return `<a href="${escapeHtml(normalizeUrl(s.url))}" target="_blank" rel="noopener" class="social-btn" aria-label="${escapeHtml(platform.name)}">
               <span class="social-icon">${platform.icon}</span>
               <span class="social-name">${escapeHtml(platform.name)}</span>
             </a>`;
@@ -598,7 +611,7 @@
 
       const linksHtml = links && links.length > 0
         ? `<div class="links">${links.map((l, i) =>
-            `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener" class="link-btn${i === 0 ? ' featured' : ''}">
+            `<a href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" rel="noopener" class="link-btn${i === 0 ? ' featured' : ''}">
               <span>${escapeHtml(l.title)}</span>
               <span class="arrow">→</span>
             </a>`
