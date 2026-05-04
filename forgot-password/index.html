@@ -82,18 +82,37 @@
     
     const email = document.getElementById('email').value.trim();
     submitBtn.disabled = true;
-    submitBtn.textContent = '⏳ İŞLENİYOR...';
+    submitBtn.textContent = '⏳ Gönderiliyor...';
+    alertEl.style.display = 'none';
     
-    // ŞIMDILIK: Backend hazır olunca bağlanacak
-    // Şu an sadece "isteğin alındı" mesajı gösteriyoruz
-    setTimeout(() => {
-      showAlert(
-        '✅ İsteğin alındı. Şu an mail sistemimiz hazırlık aşamasında. Şifre sıfırlama için iletişime geç: destek@tektik.la',
-        'success'
-      );
-      submitBtn.style.display = 'none';
-      form.querySelector('.form-group').style.display = 'none';
-    }, 600);
+    try {
+      const response = await fetch(`${window.API_URL || 'https://tektik-laa-production.up.railway.app'}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        showAlert(
+          '✅ Eğer bu email kayıtlıysa, sıfırlama linki gönderildi. Mail kutunu (ve spam klasörünü) kontrol et.',
+          'success'
+        );
+        // Formu gizle
+        form.querySelector('.form-group').style.display = 'none';
+        submitBtn.style.display = 'none';
+      } else {
+        showAlert(data.error || 'Bir hata oluştu, tekrar dene.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'SIFIRLAMA LİNKİ GÖNDER →';
+      }
+    } catch (error) {
+      console.error('Forgot password error:', error);
+      showAlert('Bağlantı hatası. Lütfen tekrar dene.', 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'SIFIRLAMA LİNKİ GÖNDER →';
+    }
   });
 </script>
 
