@@ -19,7 +19,7 @@ const Auth = {
   logout() {
     localStorage.removeItem('tektik_token');
     localStorage.removeItem('tektik_user');
-    window.location.href = '/login.html';
+    window.location.href = '/login';
   },
   isLoggedIn() {
     return !!this.getToken();
