@@ -5,32 +5,62 @@
 <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('tektik-theme') || 'dark');</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ücretsiz Online Araçlar — Link Kısalt, QR Kod, Fatura ve Daha Fazlası | tektik.la</title>
-<meta name="description" content="Link kısalt, QR kod oluştur, fatura yap, çekiliş düzenle ve 20+ ücretsiz online araç. Kayıt yok, reklam yok, tek tıkla hallet.">
-<meta name="keywords" content="ücretsiz link kısaltma, reklamsız link kısaltıcı, üye olmadan kısa link, twitter kısa url, güvenilir link kısaltma sitesi">
+<title>tektik.la — Türkçe Linktree Alternatifi + Ücretsiz Link Kısaltıcı + 25 Araç</title>
+<meta name="description" content="Tüm linklerini tek sayfada topla. Reklamsız link kısaltıcı, bio link, QR kod ve 25+ ücretsiz araç. Türkçe, hızlı, kayıt opsiyonel.">
+<meta name="keywords" content="linktree alternatifi, linktree türkçe, ücretsiz link kısaltıcı, reklamsız link kısaltma, bio link oluşturma, biyografi linki, instagram bio link, sosyal medya link toplama, ücretsiz qr kod, türkçe online araçlar">
 <meta name="robots" content="index, follow">
+<meta name="author" content="tektik.la">
+<meta name="language" content="Turkish">
 <link rel="canonical" href="https://tektik.la/">
-<meta property="og:title" content="Ücretsiz Online Araçlar — Link Kısalt, QR Kod ve Daha Fazlası | tektik.la">
-<meta property="og:description" content="Link kısalt, QR kod oluştur, fatura yap, çekiliş düzenle ve 20+ ücretsiz online araç. Kayıt yok, reklam yok.">
+<link rel="alternate" hreflang="tr" href="https://tektik.la/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="tektik.la — Türkçe Linktree Alternatifi · Ücretsiz · Reklamsız">
+<meta property="og:description" content="Tüm linklerini tek sayfada topla. Bio link, link kısaltıcı ve 25+ ücretsiz araç. Türkçe, hızlı, kayıt opsiyonel.">
 <meta property="og:url" content="https://tektik.la/">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="tektik.la">
 <meta property="og:image" content="https://tektik.la/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="20+ Ücretsiz Online Araç | tektik.la">
-<meta name="twitter:description" content="Link kısalt, QR kod, fatura, çekiliş ve daha fazlası. Kayıt yok, reklam yok.">
+<meta name="twitter:title" content="tektik.la — Türkçe Linktree Alternatifi 🚀">
+<meta name="twitter:description" content="Tüm linklerin tek sayfada. Bio link + link kısaltıcı + 25 araç. Reklamsız & ücretsiz.">
 <meta name="twitter:image" content="https://tektik.la/og-image.png">
+<meta name="twitter:site" content="@tektikla">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
   "@type": "WebSite",
   "name": "tektik.la",
+  "alternateName": "Tektik",
   "url": "https://tektik.la/",
-  "description": "Ücretsiz online araçlar. Link kısalt, QR kod oluştur, fatura yap ve daha fazlası.",
+  "description": "Türkçe Linktree alternatifi. Tüm linklerini tek sayfada topla, bio link oluştur, link kısalt. 25+ ücretsiz online araç.",
+  "inLanguage": "tr-TR",
   "potentialAction": {
     "@type": "SearchAction",
     "target": "https://tektik.la/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "SoftwareApplication",
+  "name": "tektik.la",
+  "operatingSystem": "Web",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "Türkçe Linktree alternatifi, link kısaltıcı ve ücretsiz online araçlar.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TRY"
+  },
+  "inLanguage": "tr-TR"
 }
 </script>
 <script type="application/ld+json">
@@ -218,12 +248,20 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: start;
+    gap: 24px;
+    align-items: stretch;
   }
   .split-col {
     display: flex;
     flex-direction: column;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
+  .split-col:hover {
+    border-color: var(--border-strong, #3a3a3a);
   }
   .split-tag {
     font-family: 'Space Mono', monospace;
@@ -235,7 +273,7 @@
     display: inline-block;
   }
   .split-title {
-    font-size: clamp(28px, 4vw, 38px);
+    font-size: clamp(24px, 3vw, 32px);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -1.5px;
@@ -255,6 +293,123 @@
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 12px;
+  }
+
+  /* 4'lü grid için - 2. sıra kartları */
+  .split-row-2 {
+    max-width: 1080px;
+    margin: 0 auto;
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  /* 3. KART: Araçlar Önizleme */
+  .tools-preview {
+    display: flex;
+    flex-direction: column;
+  }
+  .tools-icons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+  .tool-icon-mini {
+    aspect-ratio: 1;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .tool-icon-mini:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .tools-cta {
+    margin-top: auto;
+    text-align: center;
+    padding: 12px 20px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    display: block;
+  }
+  .tools-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* 4. KART: Destek Ol */
+  .support-card {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  .support-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .support-title {
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+  .support-title em { color: var(--accent); font-style: italic; }
+  .support-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 22px;
+    max-width: 280px;
+  }
+  .support-btn {
+    background: #FFDD00;
+    color: #0a0a0a;
+    border: 1px solid #FFDD00;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .support-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 221, 0, 0.3);
+  }
+  .support-note {
+    margin-top: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text3, #555);
+    letter-spacing: 0.5px;
   }
   /* Profil kolonu: Telefon mockup */
   .phone-mockup-link {
@@ -387,13 +542,21 @@
   /* Mobile: Stack vertically */
   @media (max-width: 900px) {
     .split-section { padding: 24px 20px 60px; }
-    .split-inner {
+    .split-inner,
+    .split-row-2 {
       grid-template-columns: 1fr;
-      gap: 48px;
+      gap: 16px;
     }
-    .profile-col { order: 2; }
-    .link-col { order: 1; }
+    .split-row-2 { margin-top: 16px; }
+    .split-col {
+      padding: 24px;
+    }
+    /* Mobil sırası: Profil 1 → Link 2 → Araçlar 3 → Destek 4 */
+    .profile-col { order: 1; }
+    .link-col { order: 2; }
     .phone-mockup { max-width: 220px; margin: 0 auto; }
+    .tools-icons { grid-template-columns: repeat(5, 1fr); }
+    .support-icon { font-size: 40px; }
   }
 
   /* ============================================
@@ -698,6 +861,45 @@
       </div><!-- /split-col link-col -->
 
     </div><!-- /split-inner -->
+
+    <!-- 2. SIRA: ARAÇLAR ÖNIZLEME + DESTEK OL -->
+    <div class="split-row-2">
+
+      <!-- KART 3: ARAÇLAR ÖNIZLEME -->
+      <div class="split-col tools-preview">
+        <span class="split-tag">— TÜM ARAÇLAR</span>
+        <h2 class="split-title">25+ <em>ücretsiz</em> araç</h2>
+        <p class="split-desc">QR kod, çekiliş, şifre üretici, CV oluşturucu ve daha fazlası. Hepsi tek tıkla, kayıt yok.</p>
+
+        <div class="tools-icons">
+          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="QR Kod">📱</a>
+          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="Çekiliş">🎁</a>
+          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="Şifre">🔐</a>
+          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="CV">📄</a>
+          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="Daha Fazlası">⚡</a>
+        </div>
+
+        <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tools-cta">
+          TÜM ARAÇLARI GÖR →
+        </a>
+      </div>
+
+      <!-- KART 4: DESTEK OL -->
+      <div class="split-col support-card">
+        <div class="support-icon">☕</div>
+        <h2 class="support-title">tektik.la<br><em>ücretsiz kalsın</em></h2>
+        <p class="support-desc">
+          Reklamsız ve ücretsiz kalmamız için bağışın çok değerli. Bir kahve ısmarla, projeyi ayakta tut.
+        </p>
+        <a href="https://buymeacoffee.com/tektikla" target="_blank" rel="noopener" class="support-btn">
+          <span>☕</span>
+          <span>Bana Kahve Isımarla</span>
+        </a>
+        <div class="support-note">% 100 gönüllü · destekçi rozeti</div>
+      </div>
+
+    </div><!-- /split-row-2 -->
+
   </section><!-- /split-section -->
 
   <!-- TOOLS SECTION -->

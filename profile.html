@@ -6,6 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yükleniyor... — tektik.la</title>
 <meta name="description" content="tektik.la kullanıcı profili — tüm linkler tek sayfada.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tektik.la/">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="tektik.la">
+<meta property="og:title" content="tektik.la profili">
+<meta property="og:description" content="tektik.la kullanıcı profili — tüm linkler tek sayfada.">
+<meta property="og:url" content="https://tektik.la/">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@tektikla">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -679,6 +689,52 @@
 
     // Title güncelle
     document.title = `${profile.title || profile.slug} — tektik.la`;
+
+    // Meta description güncelle
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && profile.bio) {
+      metaDesc.content = profile.bio.substring(0, 155);
+    }
+
+    // Person Schema (JSON-LD) ekle
+    const existingSchema = document.getElementById('person-schema');
+    if (existingSchema) existingSchema.remove();
+
+    const personSchema = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": profile.title || profile.slug,
+      "alternateName": profile.slug,
+      "url": `https://tektik.la/${profile.slug}`,
+      "description": profile.bio || `${profile.slug} - tektik.la profili`
+    };
+
+    if (profile.avatar_url) {
+      personSchema.image = profile.avatar_url;
+    }
+
+    if (socials && socials.length > 0) {
+      personSchema.sameAs = socials.map(s => normalizeUrl(s.url)).filter(u => u !== '#');
+    }
+
+    const schemaScript = document.createElement('script');
+    schemaScript.id = 'person-schema';
+    schemaScript.type = 'application/ld+json';
+    schemaScript.textContent = JSON.stringify(personSchema);
+    document.head.appendChild(schemaScript);
+
+    // Open Graph dinamik güncelleme
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.content = `${profile.title || profile.slug} — tektik.la`;
+
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc && profile.bio) ogDesc.content = profile.bio.substring(0, 200);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.content = `https://tektik.la/${profile.slug}`;
+
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = `https://tektik.la/${profile.slug}`;
   }
 
   function showError(msg, slugShown) {
