@@ -355,61 +355,81 @@
     color: var(--bg);
   }
 
-  /* 4. KART: Destek Ol */
-  .support-card {
+  /* 4. KART: Topluluk / Sosyal */
+  .community-card {
     display: flex;
     flex-direction: column;
-    text-align: center;
+  }
+  .community-card .split-title {
+    margin-bottom: 14px;
+  }
+  .community-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+    margin-bottom: auto;
+  }
+  .community-btn {
+    display: flex;
     align-items: center;
-    justify-content: center;
-  }
-  .support-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-    line-height: 1;
-  }
-  .support-title {
-    font-size: clamp(22px, 3vw, 28px);
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin-bottom: 12px;
-    line-height: 1.1;
-  }
-  .support-title em { color: var(--accent); font-style: italic; }
-  .support-desc {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--text2);
-    line-height: 1.7;
-    margin-bottom: 22px;
-    max-width: 280px;
-  }
-  .support-btn {
-    background: #FFDD00;
-    color: #0a0a0a;
-    border: 1px solid #FFDD00;
-    padding: 14px 28px;
-    border-radius: 8px;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 10px;
     text-decoration: none;
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .support-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 221, 0, 0.3);
-  }
-  .support-note {
-    margin-top: 14px;
     font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--text3, #555);
+    font-size: 13px;
+    font-weight: 700;
     letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-align: left;
+    width: 100%;
+  }
+  .community-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+  .community-btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0a0a;
+  }
+  .community-btn-primary:hover {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    box-shadow: 0 6px 20px rgba(200, 245, 48, 0.25);
+  }
+  .community-btn-ghost {
+    background: transparent;
+    color: var(--text);
+  }
+  .community-btn-ghost:hover {
+    color: var(--accent);
+  }
+  .community-btn-meta {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.7;
+    letter-spacing: 0;
+  }
+  .community-btn-primary .community-btn-meta {
+    opacity: 0.6;
+  }
+  .community-note {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 0.5px;
+    text-align: center;
   }
   /* Profil kolonu: Telefon mockup */
   .phone-mockup-link {
@@ -521,6 +541,10 @@
   /* Profil CTA */
   .split-cta-wrap {
     margin-top: auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
   }
   .split-cta {
     display: inline-flex;
@@ -541,31 +565,25 @@
     transform: translateY(-1px);
     background: var(--accent2);
   }
-  .split-cta-meta {
-    display: block;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--text2);
-    letter-spacing: 1px;
-    margin-top: 10px;
-  }
-  /* Sol kart altı: "Zaten hesabın var mı?" */
-  .split-cta-login {
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text2);
-  }
-  .split-cta-login a {
-    color: var(--accent);
+  .split-cta-login-btn {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: var(--text);
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
     text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
     font-weight: 700;
-    transition: opacity 0.2s;
+    letter-spacing: 1px;
+    transition: all 0.2s;
   }
-  .split-cta-login a:hover {
-    opacity: 0.8;
+  .split-cta-login-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
   }
   /* Sağ kart altı: Özellikler listesi */
   .features-list {
@@ -658,7 +676,6 @@
     .link-col { order: 2; }
     .phone-mockup { max-width: 220px; margin: 0 auto; }
     .tools-icons { grid-template-columns: repeat(5, 1fr); }
-    .support-icon { font-size: 40px; }
   }
 
   /* ============================================
@@ -897,10 +914,9 @@
             <span>profil oluştur</span>
             <span>→</span>
           </a>
-          <span class="split-cta-meta">30 gün ücretsiz · kart yok</span>
-          <div class="split-cta-login">
-            Zaten hesabın var mı? <a href="/login">Giriş yap →</a>
-          </div>
+          <a href="/login" class="split-cta-login-btn">
+            giriş yap
+          </a>
         </div>
       </div>
 
@@ -1027,18 +1043,26 @@
         </a>
       </div>
 
-      <!-- KART 4: DESTEK OL -->
-      <div class="split-col support-card">
-        <div class="support-icon">☕</div>
-        <h2 class="support-title">tektik.la<br><em>ücretsiz kalsın</em></h2>
-        <p class="support-desc">
-          Reklamsız ve ücretsiz kalmamız için bağışın çok değerli. Bir kahve ısmarla, projeyi ayakta tut.
-        </p>
-        <a href="https://buymeacoffee.com/tektikla" target="_blank" rel="noopener" class="support-btn">
-          <span>☕</span>
-          <span>Bana Kahve Isımarla</span>
-        </a>
-        <div class="support-note">% 100 gönüllü · destekçi rozeti</div>
+      <!-- KART 4: TOPLULUK / SOSYAL -->
+      <div class="split-col community-card">
+        <span class="split-tag">— TOPLULUK</span>
+        <h2 class="split-title">projeyi <em>yay</em>,<br>birlikte büyüyelim</h2>
+        <p class="split-desc">Yenilikleri kaçırma, arkadaşına anlat. Her takip, her paylaşım çok kıymetli.</p>
+
+        <div class="community-buttons">
+          <a href="https://x.com/tektik_la" target="_blank" rel="noopener" class="community-btn community-btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>𝕏'te Takip Et</span>
+            <span class="community-btn-meta">@tektik_la</span>
+          </a>
+          <button class="community-btn community-btn-ghost" onclick="shareTektik()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span>Arkadaşına Paylaş</span>
+            <span class="community-btn-meta">link kopyala</span>
+          </button>
+        </div>
+
+        <div class="community-note">✦ Erken takipçilere özel destekçi rozeti</div>
       </div>
 
     </div><!-- /split-row-2 -->
@@ -1894,6 +1918,49 @@ function updateThemeIcon(theme) {
   if (icon) {
     icon.textContent = theme === 'dark' ? '◐' : '◑';
   }
+}
+
+// ============================================
+// Paylaş: native share API + clipboard fallback
+// ============================================
+function shareTektik() {
+  var url = 'https://tektik.la';
+  var title = 'tektik.la — Türkçe Linktree alternatifi';
+  var text = 'Tüm linklerini tek sayfada topla, link kısalt, 25+ ücretsiz araç. Reklamsız & ücretsiz!';
+
+  if (navigator.share) {
+    navigator.share({ title: title, text: text, url: url }).catch(function(){});
+  } else {
+    // Fallback: linki kopyala
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function() {
+        showShareToast('Link kopyalandı! ✓');
+      }).catch(function() {
+        showShareToast('Kopyalanamadı');
+      });
+    } else {
+      // Eski tarayıcılar için
+      var ta = document.createElement('textarea');
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showShareToast('Link kopyalandı! ✓'); }
+      catch(e) { showShareToast('Kopyalanamadı'); }
+      document.body.removeChild(ta);
+    }
+  }
+}
+
+function showShareToast(msg) {
+  var existing = document.getElementById('share-toast');
+  if (existing) existing.remove();
+  var toast = document.createElement('div');
+  toast.id = 'share-toast';
+  toast.textContent = msg;
+  toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:#0a0a0a;padding:12px 24px;border-radius:8px;font-family:Space Mono,monospace;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 8px 24px rgba(200,245,48,0.4);animation:fadeUp 0.3s ease;';
+  document.body.appendChild(toast);
+  setTimeout(function(){ toast.style.opacity='0'; toast.style.transition='opacity 0.3s'; }, 2000);
+  setTimeout(function(){ if(toast.parentNode) toast.remove(); }, 2400);
 }
 
 var savedTheme = localStorage.getItem('tektik-theme') || 'dark';
