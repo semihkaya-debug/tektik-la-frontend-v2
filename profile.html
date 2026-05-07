@@ -54,6 +54,20 @@
     line-height: 1.4;
   }
 
+  /* Anasayfayla tutarlı grid pattern */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image:
+      linear-gradient(var(--text) 1px, transparent 1px),
+      linear-gradient(90deg, var(--text) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+  .content { position: relative; z-index: 1; }
+
   /* HEADER */
   .header {
     border-bottom: 1px solid var(--border);
@@ -479,6 +493,9 @@
 </head>
 <body>
 
+<div class="grid-bg"></div>
+<div class="content">
+
 <header class="header">
   <a href="/" class="logo">tektik<span>.la</span></a>
   <div class="header-right">
@@ -498,6 +515,9 @@
     </div>
   </div>
 </main>
+
+</div>
+<!-- /.content -->
 
 <script>
   const API_URL = window.API_URL || 'https://tektik-laa-production.up.railway.app';
