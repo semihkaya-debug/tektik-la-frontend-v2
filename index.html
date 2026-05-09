@@ -104,8 +104,34 @@
   .logo { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; }
   .logo span { color: var(--accent); }
   .header-controls { display: flex; gap: 10px; align-items: center; }
-  .ctrl-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px; transition: all 0.2s; }
+  .ctrl-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 18px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
   .ctrl-btn:hover, .ctrl-btn.active { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn-cta {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000 !important;
+    font-weight: 600;
+  }
+  .ctrl-btn-cta:hover {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    color: #000 !important;
+  }
   .hero { padding: 60px 40px 24px; max-width: 720px; margin: 0 auto; animation: fadeUp 0.6s ease; text-align: center; }
   .hero-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; display: inline-block; }
   .hero-tag::before { content: "— "; }
@@ -629,7 +655,7 @@
   /* Theme toggle butonu */
   .theme-toggle {
     width: 32px;
-    height: 28px;
+    height: 32px;
     padding: 0 !important;
     display: inline-flex;
     align-items: center;
@@ -859,7 +885,7 @@
         <span id="theme-icon">◐</span>
       </button>
       <a href="/login" class="ctrl-btn" style="text-decoration:none">Giriş</a>
-      <a href="/signup" class="ctrl-btn" style="text-decoration:none; background:var(--accent); color:#000; padding:6px 12px; font-weight:600;">Üye Ol</a>
+      <a href="/signup" class="ctrl-btn ctrl-btn-cta" style="text-decoration:none">Üye Ol</a>
     </div>
   </div>
 </header>
