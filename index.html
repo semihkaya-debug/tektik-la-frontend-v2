@@ -917,7 +917,8 @@
           <code>tektik.la/<span>link</span></code> ile sosyal medyanı, içeriklerini, projelerini topla.
         </p>
 
-        <a href="/test" class="phone-mockup-link" target="_blank">
+        <div style="display:flex; gap:20px; align-items:flex-start; margin-bottom:20px;">
+          <a href="/test" class="phone-mockup-link" target="_blank" style="margin-bottom:0; flex-shrink:0;">
           <div class="phone-mockup">
             <div class="phone-screen">
               <div class="phone-statusbar">
@@ -941,6 +942,28 @@
             </div>
           </div>
         </a>
+
+          <!-- ADIM AKIŞI -->
+          <div style="display:flex; flex-direction:column; gap:16px; padding-top:8px;">
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px;">① SLUG SEÇ</span>
+              <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--text); font-weight:700;">tektik.la/<em style="color:var(--accent);font-style:normal;">ahmet</em></span>
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); line-height:1.5;">Sana özel kısa adres,<br>kimse alamaz.</span>
+            </div>
+            <div style="width:1px; height:16px; background:var(--border); margin-left:6px;"></div>
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px;">② LİNKLERİNİ EKLE</span>
+              <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--text); font-weight:700;">YouTube · Twitch · IG</span>
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); line-height:1.5;">İstediğin kadar link,<br>sınırsız.</span>
+            </div>
+            <div style="width:1px; height:16px; background:var(--border); margin-left:6px;"></div>
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px;">③ PAYLAŞ</span>
+              <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--text); font-weight:700;">Bio'na tek link koy</span>
+              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); line-height:1.5;">Twitch, Instagram,<br>YouTube — hepsi hazır.</span>
+            </div>
+          </div>
+        </div>
 
         <div class="split-cta-wrap">
           <a href="/signup" class="split-cta">
@@ -1113,7 +1136,7 @@
 
       <div class="section-head">
         <div class="section-tag">25+ ücretsiz araç</div>
-        <div class="section-title">+ <em>bonus</em> araçlar</div>
+        <div class="section-title">25+ <em>ücretsiz</em> araç</div>
         <div class="section-sub">Çekiliş, QR kod, fotoğraf sıkıştırıcı, CV oluşturucu ve daha fazlası. Üyeliksiz, reklamsız.</div>
       </div>
 
@@ -1847,14 +1870,14 @@ function setLang(l) {
     'hero-h1': 'linkini <em>topla</em><br>veya <em>kısalt</em>',
     'hero-sub': 'Linktree benzeri kişisel profil, hızlı link kısaltıcı ve 25+ ücretsiz araç. Tek yerde, ücretsiz.',
     'btn-text': 'Kısalt',
-    'section-title': '+ <em>bonus</em> araçlar',
+    'section-title': '25+ <em>ücretsiz</em> araç',
   };
   const en = {
     'hero-tag': 'for all content creators',
     'hero-h1': 'collect <em>your links</em><br>or <em>shorten</em>',
     'hero-sub': 'Linktree-style personal profile, fast link shortener and 25+ free tools. All in one place, free.',
     'btn-text': 'Shorten',
-    'section-title': '+ <em>bonus</em> tools',
+    'section-title': '25+ <em>free</em> tools',
   };
   const texts = lang === 'en' ? en : tr;
   Object.entries(texts).forEach(([id, val]) => {
