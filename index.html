@@ -179,7 +179,7 @@
   .micro-badge { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); background: rgba(200,245,48,0.08); border: 1px solid rgba(200,245,48,0.2); padding: 5px 10px; border-radius: 6px; }
   .history-section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border); display: none; }
   .history-section.show { display: block; }
-  .history-header{ margin-bottom: 16px; }
+  .history-header{ margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
   .history-title { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; }
   .history-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 12px; }
   .history-item:last-child { border-bottom: none; }
@@ -876,6 +876,13 @@
 </head>
 <body>
 <div class="grid-bg"></div>
+
+<!-- STICKY CTA -->
+<a href="/signup" class="sticky-cta" id="sticky-cta">
+  <span class="icon">⚡</span>
+  <span id="sticky-cta-text">ÜYE OL <span class="meta-text">· 30 GÜN ÜCRETSİZ</span></span>
+</a>
+
 <div class="content">
   <header>
   <div class="header-inner">    <div class="logo">tektik<span>.la</span></div>
