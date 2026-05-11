@@ -2108,6 +2108,19 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
     if (stickyCtaText) stickyCtaText.innerHTML = 'SIGN UP <span class="meta-text">· 30 DAYS FREE</span>';
   }
 })();
+
+  // Expose onclick handlers to global scope (IIFE içinden dışarı çıkar)
+  window.toggleTheme = toggleTheme;
+  window.shareTektik = shareTektik;
+  window.shortenLink = shortenLink;
+  window.clearHistory = clearHistory;
+  window.copyResult = copyResult;
+  window.downloadQR = downloadQR;
+  window.filterTools = filterTools;
+  window.toggleBandUrl = toggleBandUrl;
+  window.toggleBrand = toggleBrand;
+  window.toggleFaq = toggleFaq;
+  window.toggleToolsExpand = toggleToolsExpand;
   } // end init
   if ('requestIdleCallback' in window) {
     requestIdleCallback(init, { timeout: 500 });
