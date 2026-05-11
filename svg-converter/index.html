@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Dönüştürücü — PNG, JPG, WebP'ye Çevir | tektik.la</title>
+<meta name="description" content="SVG dosyalarını PNG, JPG veya WebP formatına çevir. Boyut seç, indir. Kayıt yok, reklam yok, sunucuya gönderim yok.">
+<meta name="keywords" content="svg to png, svg to jpg, svg dönüştürücü, svg çevirici, svg png yap, svg jpg yap, online svg converter">
+<link rel="canonical" href="https://tektik.la/svg-converter">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tektik.la/svg-converter">
+<meta property="og:title" content="SVG Dönüştürücü — Ücretsiz Online | tektik.la">
+<meta property="og:description" content="SVG → PNG / JPG / WebP. Boyut seçimi, anında indir. Reklamsız & ücretsiz.">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SVG Dönüştürücü | tektik.la">
+<meta name="twitter:description" content="SVG → PNG / JPG / WebP. Tek tıkla, ücretsiz, reklamsız.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "SVG Dönüştürücü",
+  "url": "https://tektik.la/svg-converter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "description": "SVG dosyalarını PNG, JPG veya WebP formatına çevir. Tamamen tarayıcıda çalışır, dosyalar yüklenmez.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TRY" }
+}
+</script>
+
+<style>
+  :root[data-theme="dark"] {
+    --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a;
+    --text:#f0f0f0; --text2:#888; --accent:#c8f530; --accent2:#a0d020;
+    --card:#141414; --input-bg:#0f0f0f;
+    --danger:#ff4d4d;
+  }
+  :root[data-theme="light"] {
+    --bg:#f5f5f0; --bg3:#e5e4de; --border:#d0cfc8;
+    --text:#111111; --text2:#666; --accent:#1a6b00; --accent2:#2a8b10;
+    --card:#ffffff; --input-bg:#fafaf8;
+    --danger:#cc0000;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background 0.3s,color 0.3s; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .content { position:relative; z-index:1; max-width:860px; margin:0 auto;}
+
+  header { padding:0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+  .header-inner { max-width:860px; margin:0 auto; width:100%; padding:16px 40px; display:flex; align-items:center; justify-content:space-between; }
+  .logo { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .hc { display:flex; gap:10px; align-items:center; }
+  .ctrl-btn { background:var(--bg3); border:1px solid var(--border); color:var(--text2); padding:6px 14px; border-radius:6px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .ctrl-btn:hover, .ctrl-btn.active { border-color:var(--accent); color:var(--accent); }
+
+  .hero { padding:60px 40px 40px; max-width:860px; margin:0 auto; animation:fadeUp 0.6s ease; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h1 { font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; letter-spacing:-3px; margin-bottom:12px; }
+  h1 em { font-style:normal; color:var(--accent); }
+  .hero-sub { font-size:15px; color:var(--text2); line-height:1.7; }
+
+  .main { max-width:860px; margin:0 auto; padding:0 40px 80px; animation:fadeUp 0.6s ease 0.1s both; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; margin-bottom:16px; }
+  .card-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; }
+
+  /* DROPZONE */
+  .dropzone {
+    border:2px dashed var(--border); border-radius:12px; padding:60px 20px;
+    text-align:center; cursor:pointer; transition:all 0.2s;
+    background:var(--input-bg);
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color:var(--accent); background:rgba(200,245,48,0.03);
+  }
+  .dropzone-icon { font-size:48px; margin-bottom:12px; color:var(--accent); font-family:'Space Mono',monospace; }
+  .dropzone-text { font-size:15px; color:var(--text); margin-bottom:8px; font-weight:600; }
+  .dropzone-sub { font-size:12px; color:var(--text2); font-family:'Space Mono',monospace; }
+  .dropzone input[type="file"] { display:none; }
+
+  /* PREVIEW */
+  .preview-wrap { display:none; }
+  .preview-wrap.active { display:block; }
+  .preview-box {
+    background:var(--input-bg); border:1px solid var(--border); border-radius:12px;
+    padding:24px; margin-bottom:16px;
+    display:flex; align-items:center; justify-content:center;
+    min-height:200px; position:relative;
+  }
+  .preview-box img, .preview-box svg { max-width:100%; max-height:300px; }
+  .preview-meta {
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--text2);
+    display:flex; justify-content:space-between; margin-bottom:8px;
+  }
+  .preview-filename { color:var(--text); font-weight:700; word-break:break-all; }
+  .remove-btn {
+    background:none; border:none; color:var(--text2); cursor:pointer;
+    font-family:'Space Mono',monospace; font-size:11px; padding:4px 8px;
+    transition:color 0.2s;
+  }
+  .remove-btn:hover { color:var(--danger); }
+
+  /* OPTIONS */
+  .options-row {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;
+  }
+  .opt-block {
+    background:var(--input-bg); border:1px solid var(--border); border-radius:10px;
+    padding:16px;
+  }
+  .opt-label {
+    font-family:'Space Mono',monospace; font-size:10px; color:var(--text2);
+    letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; display:block;
+  }
+  .seg-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .seg-btn {
+    flex:1; min-width:60px;
+    background:var(--card); border:1px solid var(--border); color:var(--text2);
+    padding:8px 10px; border-radius:6px; cursor:pointer;
+    font-family:'Space Mono',monospace; font-size:11px; transition:all 0.2s;
+  }
+  .seg-btn:hover { border-color:var(--accent); color:var(--text); }
+  .seg-btn.active { background:var(--accent); border-color:var(--accent); color:#0a0a0a; font-weight:700; }
+
+  .custom-w-row { display:flex; align-items:center; gap:8px; margin-top:10px; }
+  .custom-w-row input {
+    flex:1; background:var(--card); border:1px solid var(--border);
+    color:var(--text); padding:8px 12px; border-radius:6px;
+    font-family:'Space Mono',monospace; font-size:13px;
+  }
+  .custom-w-row input:focus { outline:none; border-color:var(--accent); }
+  .custom-w-row span { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+
+  .bg-color-row { display:flex; align-items:center; gap:10px; margin-top:10px; }
+  .bg-color-row input[type="color"] {
+    width:40px; height:32px; border:1px solid var(--border); border-radius:6px;
+    background:var(--card); cursor:pointer; padding:2px;
+  }
+  .bg-color-row span { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  .bg-disabled { opacity:0.4; pointer-events:none; }
+
+  /* DOWNLOAD BTN */
+  .download-btn {
+    width:100%; background:var(--accent); border:none; color:#0a0a0a;
+    padding:16px 24px; border-radius:10px; cursor:pointer;
+    font-family:'Space Mono',monospace; font-size:14px; font-weight:700;
+    letter-spacing:1px; text-transform:uppercase;
+    transition:all 0.2s; margin-top:8px;
+  }
+  .download-btn:hover { background:var(--accent2); transform:translateY(-1px); }
+  .download-btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+  .error-msg {
+    color:var(--danger); font-family:'Space Mono',monospace; font-size:12px;
+    margin-top:12px; padding:10px; background:rgba(255,77,77,0.08);
+    border:1px solid var(--danger); border-radius:6px;
+    display:none;
+  }
+  .error-msg.active { display:block; }
+
+  /* SEO */
+  .seo-section { padding:0 40px 60px; max-width:860px; margin:0 auto; }
+  .seo-h2 { font-size:28px; font-weight:800; margin-bottom:16px; letter-spacing:-1px; }
+  .seo-desc { font-size:14px; color:var(--text2); line-height:1.8; margin-bottom:32px; }
+  .seo-faq-item { border-top:1px solid var(--border); padding:20px 0; }
+  .seo-faq-q { font-size:15px; font-weight:700; margin-bottom:8px; }
+  .seo-faq-a { font-size:13px; color:var(--text2); line-height:1.7; }
+
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; align-items:center; gap:24px; flex-wrap:wrap; }
+  footer p { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+  @media (max-width:640px) {
+    .header-inner { padding:14px 20px; }
+    .hero { padding:40px 20px 24px; }
+    .main { padding:0 20px 60px; }
+    .card { padding:24px; }
+    .seo-section { padding:0 20px 40px; }
+    h1 { letter-spacing:-2px; }
+    .options-row { grid-template-columns:1fr; }
+    .dropzone { padding:40px 16px; }
+    footer { padding:20px; gap:14px; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="content">
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="hc">
+      <button class="ctrl-btn active" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="ctrl-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" onclick="toggleTheme()" aria-label="Tema">◐</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag" id="hero-tag">svg dönüştürücü</div>
+  <h1 id="hero-h1">svg'yi<br><em>çevir</em></h1>
+  <p class="hero-sub" id="hero-sub">SVG dosyanı PNG, JPG veya WebP'ye çevir. Tarayıcında çalışır, dosyan hiçbir yere gitmez.</p>
+</div>
+
+<div class="main">
+
+  <!-- DROPZONE -->
+  <div class="card" id="upload-card">
+    <div class="card-label" id="lbl-upload">SVG dosyası yükle</div>
+    <label class="dropzone" id="dropzone">
+      <div class="dropzone-icon">⤓</div>
+      <div class="dropzone-text" id="dz-text">Dosyayı sürükle veya tıkla</div>
+      <div class="dropzone-sub" id="dz-sub">.svg · Maks 10 MB</div>
+      <input type="file" id="file-input" accept=".svg,image/svg+xml">
+    </label>
+    <div class="error-msg" id="error-msg"></div>
+  </div>
+
+  <!-- PREVIEW + OPTIONS -->
+  <div class="preview-wrap" id="preview-wrap">
+    <div class="card">
+      <div class="preview-meta">
+        <span class="preview-filename" id="pv-filename">—</span>
+        <button class="remove-btn" id="btn-remove" onclick="removeFile()">× <span id="lbl-remove">Kaldır</span></button>
+      </div>
+      <div class="preview-box" id="preview-box"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label" id="lbl-options">Dönüştürme ayarları</div>
+
+      <div class="options-row">
+        <!-- FORMAT -->
+        <div class="opt-block">
+          <label class="opt-label" id="lbl-format">Format</label>
+          <div class="seg-btns" id="format-btns">
+            <button class="seg-btn active" data-format="png" onclick="setFormat('png')">PNG</button>
+            <button class="seg-btn" data-format="jpeg" onclick="setFormat('jpeg')">JPG</button>
+            <button class="seg-btn" data-format="webp" onclick="setFormat('webp')">WebP</button>
+          </div>
+        </div>
+
+        <!-- SIZE -->
+        <div class="opt-block">
+          <label class="opt-label" id="lbl-size">Boyut</label>
+          <div class="seg-btns" id="size-btns">
+            <button class="seg-btn active" data-scale="1" onclick="setScale(1)">1×</button>
+            <button class="seg-btn" data-scale="2" onclick="setScale(2)">2×</button>
+            <button class="seg-btn" data-scale="4" onclick="setScale(4)">4×</button>
+            <button class="seg-btn" data-scale="custom" onclick="setScale('custom')" id="custom-btn">Özel</button>
+          </div>
+          <div class="custom-w-row" id="custom-w-row" style="display:none;">
+            <input type="number" id="custom-width" min="16" max="8192" placeholder="800" oninput="onCustomWidth()">
+            <span>px (genişlik)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- JPG BG COLOR -->
+      <div class="opt-block" id="bg-opt-block" style="margin-bottom:16px;">
+        <label class="opt-label" id="lbl-bg">Arka plan rengi <span id="lbl-bg-note" style="color:var(--text2);font-size:9px;">(JPG için)</span></label>
+        <div class="bg-color-row">
+          <input type="color" id="bg-color" value="#ffffff" onchange="updateBgColor()">
+          <span id="bg-color-val">#ffffff</span>
+        </div>
+      </div>
+
+      <button class="download-btn" id="download-btn" onclick="convertAndDownload()">
+        <span id="lbl-download">İndir</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SEO -->
+<div class="seo-section">
+  <h2 class="seo-h2" id="seo-h2">SVG'yi PNG, JPG veya WebP'ye Dönüştür</h2>
+  <p class="seo-desc" id="seo-desc">SVG (Scalable Vector Graphics) vektör tabanlı bir görsel formatıdır; büyütüldüğünde kalite kaybetmez. Ancak birçok platform (sosyal medya, Word, e-mail) SVG'yi desteklemez. tektik.la SVG dönüştürücü ile SVG dosyalarını PNG, JPG veya WebP formatına anında çevirebilir, istediğin çözünürlükte indirebilirsin. Tüm işlem tarayıcında yapılır — dosyaların hiçbir sunucuya gönderilmez.</p>
+
+  <div class="seo-faq-item">
+    <div class="seo-faq-q" id="faq-q1">SVG dosyam güvende mi?</div>
+    <div class="seo-faq-a" id="faq-a1">Evet. Dönüştürme işlemi tamamen tarayıcında, Canvas API ile yapılır. Dosyan internete yüklenmez, sunucumuza ulaşmaz.</div>
+  </div>
+  <div class="seo-faq-item">
+    <div class="seo-faq-q" id="faq-q2">Hangi formata çevirmeliyim?</div>
+    <div class="seo-faq-a" id="faq-a2"><strong>PNG</strong> — transparan arka plan korunur, logo ve ikon için en iyisi. <strong>JPG</strong> — fotoğraf benzeri yoğun renkli SVG'ler için, dosya küçük olur ama transparanlık kaybolur. <strong>WebP</strong> — modern web için, hem küçük hem kaliteli, transparanlığı destekler.</div>
+  </div>
+  <div class="seo-faq-item">
+    <div class="seo-faq-q" id="faq-q3">2× ve 4× boyut ne demek?</div>
+    <div class="seo-faq-a" id="faq-a3">SVG'nin orijinal viewBox boyutunun katı kadar büyük çıkar. Retina/HiDPI ekranlar için 2× veya 4× tercih edilir. Özel genişlik girersen, yükseklik en-boy oranı korunarak otomatik hesaplanır.</div>
+  </div>
+  <div class="seo-faq-item">
+    <div class="seo-faq-q" id="faq-q4">JPG'de arka plan neden beyaz?</div>
+    <div class="seo-faq-a" id="faq-a4">JPG formatı transparanlık desteklemez. SVG'nin transparan bölgeleri JPG'de bir renkle dolmak zorundadır. Varsayılan beyazdır ama renk seçeneğinden değiştirebilirsin.</div>
+  </div>
+</div>
+
+<footer>
+  <p>tektik.la</p>
+  <a href="mailto:info@tektik.la" style="display:flex;align-items:center;gap:6px;color:var(--text2)!important;text-decoration:none!important;font-family:'Space Mono',monospace;font-size:11px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    info@tektik.la
+  </a>
+  <p id="footer-text">© 2025 — Tüm araçlar ücretsiz</p>
+</footer>
+
+</div>
+
+<script>
+// ============================================
+// STATE
+// ============================================
+let theme = localStorage.getItem('tektik-theme') || 'dark';
+let lang = localStorage.getItem('tektik-lang') || 'tr';
+document.documentElement.setAttribute('data-theme', theme);
+
+let currentFile = null;
+let svgText = '';
+let svgWidth = 0;
+let svgHeight = 0;
+let outputFormat = 'png';
+let outputScale = 1;
+let customWidth = 800;
+let bgColor = '#ffffff';
+
+// ============================================
+// I18N
+// ============================================
+const tx = {
+  tr: {
+    title:'SVG Dönüştürücü — PNG, JPG, WebP\'ye Çevir | tektik.la',
+    heroTag:'svg dönüştürücü',
+    heroH1:'svg\'yi<br><em>çevir</em>',
+    heroSub:'SVG dosyanı PNG, JPG veya WebP\'ye çevir. Tarayıcında çalışır, dosyan hiçbir yere gitmez.',
+    lblUpload:'SVG dosyası yükle',
+    dzText:'Dosyayı sürükle veya tıkla',
+    dzSub:'.svg · Maks 10 MB',
+    lblOptions:'Dönüştürme ayarları',
+    lblFormat:'Format', lblSize:'Boyut', lblBg:'Arka plan rengi', lblBgNote:'(JPG için)',
+    lblRemove:'Kaldır', lblDownload:'İndir',
+    customPlaceholder:'800',
+    errInvalidType:'Bu bir SVG dosyası değil.',
+    errTooBig:'Dosya 10 MB\'den büyük.',
+    errParse:'SVG dosyası okunamadı.',
+    errCustomWidth:'Geçerli bir genişlik gir (16-8192 px).',
+    seoH2:'SVG\'yi PNG, JPG veya WebP\'ye Dönüştür',
+    seoDesc:'SVG (Scalable Vector Graphics) vektör tabanlı bir görsel formatıdır; büyütüldüğünde kalite kaybetmez. Ancak birçok platform (sosyal medya, Word, e-mail) SVG\'yi desteklemez. tektik.la SVG dönüştürücü ile SVG dosyalarını PNG, JPG veya WebP formatına anında çevirebilir, istediğin çözünürlükte indirebilirsin. Tüm işlem tarayıcında yapılır — dosyaların hiçbir sunucuya gönderilmez.',
+    faqQ1:'SVG dosyam güvende mi?',
+    faqA1:'Evet. Dönüştürme işlemi tamamen tarayıcında, Canvas API ile yapılır. Dosyan internete yüklenmez, sunucumuza ulaşmaz.',
+    faqQ2:'Hangi formata çevirmeliyim?',
+    faqA2:'<strong>PNG</strong> — transparan arka plan korunur, logo ve ikon için en iyisi. <strong>JPG</strong> — fotoğraf benzeri yoğun renkli SVG\'ler için, dosya küçük olur ama transparanlık kaybolur. <strong>WebP</strong> — modern web için, hem küçük hem kaliteli, transparanlığı destekler.',
+    faqQ3:'2× ve 4× boyut ne demek?',
+    faqA3:'SVG\'nin orijinal viewBox boyutunun katı kadar büyük çıkar. Retina/HiDPI ekranlar için 2× veya 4× tercih edilir. Özel genişlik girersen, yükseklik en-boy oranı korunarak otomatik hesaplanır.',
+    faqQ4:'JPG\'de arka plan neden beyaz?',
+    faqA4:'JPG formatı transparanlık desteklemez. SVG\'nin transparan bölgeleri JPG\'de bir renkle dolmak zorundadır. Varsayılan beyazdır ama renk seçeneğinden değiştirebilirsin.',
+    footer:'© 2025 — Tüm araçlar ücretsiz',
+  },
+  en: {
+    title:'SVG Converter — Convert to PNG, JPG, WebP | tektik.la',
+    heroTag:'svg converter',
+    heroH1:'convert<br><em>svg</em>',
+    heroSub:'Convert SVG files to PNG, JPG or WebP. Runs in your browser, files never leave your device.',
+    lblUpload:'Upload SVG file',
+    dzText:'Drag file or click',
+    dzSub:'.svg · Max 10 MB',
+    lblOptions:'Conversion settings',
+    lblFormat:'Format', lblSize:'Size', lblBg:'Background color', lblBgNote:'(for JPG)',
+    lblRemove:'Remove', lblDownload:'Download',
+    customPlaceholder:'800',
+    errInvalidType:'This is not an SVG file.',
+    errTooBig:'File exceeds 10 MB.',
+    errParse:'Could not read SVG file.',
+    errCustomWidth:'Enter a valid width (16-8192 px).',
+    seoH2:'Convert SVG to PNG, JPG or WebP',
+    seoDesc:'SVG (Scalable Vector Graphics) is a vector-based image format that doesn\'t lose quality when scaled. But many platforms (social media, Word, email) don\'t support SVG. With tektik.la SVG converter, instantly convert your SVG files to PNG, JPG or WebP and download at any resolution. Everything happens in your browser — files never reach our servers.',
+    faqQ1:'Is my SVG file safe?',
+    faqA1:'Yes. Conversion happens entirely in your browser via the Canvas API. Your file is never uploaded to any server.',
+    faqQ2:'Which format should I pick?',
+    faqA2:'<strong>PNG</strong> — preserves transparency, best for logos and icons. <strong>JPG</strong> — for photo-like dense SVGs, smaller file but no transparency. <strong>WebP</strong> — modern web format, small and high quality, supports transparency.',
+    faqQ3:'What do 2× and 4× sizes mean?',
+    faqA3:'The output is that many times larger than the SVG\'s original viewBox. 2× or 4× is preferred for Retina/HiDPI screens. If you enter a custom width, height is auto-calculated to preserve aspect ratio.',
+    faqQ4:'Why is JPG background white?',
+    faqA4:'JPG format does not support transparency. Transparent areas of the SVG must be filled with a color in JPG. The default is white but you can change it from the color picker.',
+    footer:'© 2025 — All tools free',
+  }
+};
+
+// ============================================
+// THEME / LANG
+// ============================================
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('tektik-theme', theme);
+}
+
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('tektik-lang', lang);
+  document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang;
+  applyLang();
+}
+
+function applyLang() {
+  const t = tx[lang];
+  document.title = t.title;
+  document.getElementById('hero-tag').textContent = t.heroTag;
+  document.getElementById('hero-h1').innerHTML = t.heroH1;
+  document.getElementById('hero-sub').textContent = t.heroSub;
+  document.getElementById('lbl-upload').textContent = t.lblUpload;
+  document.getElementById('dz-text').textContent = t.dzText;
+  document.getElementById('dz-sub').textContent = t.dzSub;
+  document.getElementById('lbl-options').textContent = t.lblOptions;
+  document.getElementById('lbl-format').textContent = t.lblFormat;
+  document.getElementById('lbl-size').textContent = t.lblSize;
+  document.getElementById('lbl-bg').innerHTML = t.lblBg + ' <span id="lbl-bg-note" style="color:var(--text2);font-size:9px;">' + t.lblBgNote + '</span>';
+  document.getElementById('lbl-remove').textContent = t.lblRemove;
+  document.getElementById('lbl-download').textContent = t.lblDownload;
+  document.getElementById('custom-width').placeholder = t.customPlaceholder;
+  document.getElementById('seo-h2').textContent = t.seoH2;
+  document.getElementById('seo-desc').textContent = t.seoDesc;
+  document.getElementById('faq-q1').textContent = t.faqQ1;
+  document.getElementById('faq-a1').textContent = t.faqA1;
+  document.getElementById('faq-q2').textContent = t.faqQ2;
+  document.getElementById('faq-a2').innerHTML = t.faqA2;
+  document.getElementById('faq-q3').textContent = t.faqQ3;
+  document.getElementById('faq-a3').textContent = t.faqA3;
+  document.getElementById('faq-q4').textContent = t.faqQ4;
+  document.getElementById('faq-a4').textContent = t.faqA4;
+  document.getElementById('footer-text').textContent = t.footer;
+  // Custom seg button label
+  document.getElementById('custom-btn').textContent = lang === 'tr' ? 'Özel' : 'Custom';
+}
+
+// ============================================
+// FILE HANDLING
+// ============================================
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('file-input');
+
+dropzone.addEventListener('dragover', e => {
+  e.preventDefault();
+  dropzone.classList.add('dragover');
+});
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', e => {
+  if (e.target.files.length) handleFile(e.target.files[0]);
+});
+
+function showError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg;
+  el.classList.add('active');
+  setTimeout(() => el.classList.remove('active'), 5000);
+}
+
+function clearError() {
+  document.getElementById('error-msg').classList.remove('active');
+}
+
+function handleFile(file) {
+  clearError();
+  const t = tx[lang];
+
+  // Type check
+  const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
+  if (!isSvg) {
+    showError(t.errInvalidType);
+    return;
+  }
+  // Size check
+  if (file.size > 10 * 1024 * 1024) {
+    showError(t.errTooBig);
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    svgText = e.target.result;
+    // Parse to get dimensions
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(svgText, 'image/svg+xml');
+    const svgEl = doc.querySelector('svg');
+    if (!svgEl) {
+      showError(t.errParse);
+      return;
+    }
+    // Get dimensions: width/height attr OR viewBox
+    let w = parseFloat(svgEl.getAttribute('width')) || 0;
+    let h = parseFloat(svgEl.getAttribute('height')) || 0;
+    if (!w || !h) {
+      const vb = svgEl.getAttribute('viewBox');
+      if (vb) {
+        const parts = vb.split(/\s+|,/).map(parseFloat);
+        if (parts.length === 4) {
+          w = parts[2]; h = parts[3];
+        }
+      }
+    }
+    if (!w || !h) {
+      w = 512; h = 512; // fallback
+    }
+    svgWidth = w;
+    svgHeight = h;
+    currentFile = file;
+
+    // Show preview
+    document.getElementById('preview-wrap').classList.add('active');
+    document.getElementById('upload-card').style.display = 'none';
+    document.getElementById('pv-filename').textContent = file.name;
+    const pv = document.getElementById('preview-box');
+    pv.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgText)));
+    pv.appendChild(img);
+
+    // Default custom width = svg width
+    document.getElementById('custom-width').value = Math.round(w);
+    customWidth = Math.round(w);
+  };
+  reader.onerror = () => showError(t.errParse);
+  reader.readAsText(file);
+}
+
+function removeFile() {
+  currentFile = null;
+  svgText = '';
+  fileInput.value = '';
+  document.getElementById('preview-wrap').classList.remove('active');
+  document.getElementById('upload-card').style.display = 'block';
+  clearError();
+}
+
+// ============================================
+// OPTIONS
+// ============================================
+function setFormat(fmt) {
+  outputFormat = fmt;
+  document.querySelectorAll('#format-btns .seg-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.format === fmt);
+  });
+  // BG color only relevant for JPG
+  document.getElementById('bg-opt-block').classList.toggle('bg-disabled', fmt !== 'jpeg');
+}
+
+function setScale(s) {
+  outputScale = s;
+  document.querySelectorAll('#size-btns .seg-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.scale === String(s));
+  });
+  document.getElementById('custom-w-row').style.display = s === 'custom' ? 'flex' : 'none';
+}
+
+function onCustomWidth() {
+  const v = parseInt(document.getElementById('custom-width').value, 10);
+  if (v >= 16 && v <= 8192) customWidth = v;
+}
+
+function updateBgColor() {
+  bgColor = document.getElementById('bg-color').value;
+  document.getElementById('bg-color-val').textContent = bgColor;
+}
+
+// ============================================
+// CONVERT & DOWNLOAD
+// ============================================
+function convertAndDownload() {
+  if (!svgText) return;
+  const t = tx[lang];
+
+  // Compute output size
+  let outW, outH;
+  if (outputScale === 'custom') {
+    const v = parseInt(document.getElementById('custom-width').value, 10);
+    if (!v || v < 16 || v > 8192) {
+      showError(t.errCustomWidth);
+      return;
+    }
+    outW = v;
+    outH = Math.round(v * (svgHeight / svgWidth));
+  } else {
+    outW = Math.round(svgWidth * outputScale);
+    outH = Math.round(svgHeight * outputScale);
+  }
+
+  // Render to canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = outH;
+  const ctx = canvas.getContext('2d');
+
+  // JPG needs solid bg
+  if (outputFormat === 'jpeg') {
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, outW, outH);
+  }
+
+  const img = new Image();
+  // Inject explicit width/height into SVG for crisp render
+  let renderSvg = svgText;
+  if (!/<svg[^>]+(width|height)=/.test(renderSvg.slice(0, 500))) {
+    renderSvg = renderSvg.replace(/<svg\b/, '<svg width="' + outW + '" height="' + outH + '"');
+  }
+  const svgBlob = new Blob([renderSvg], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(svgBlob);
+
+  img.onload = function() {
+    ctx.drawImage(img, 0, 0, outW, outH);
+    URL.revokeObjectURL(url);
+
+    const mime = outputFormat === 'png' ? 'image/png'
+               : outputFormat === 'jpeg' ? 'image/jpeg'
+               : 'image/webp';
+    const quality = outputFormat === 'png' ? undefined : 0.92;
+
+    canvas.toBlob(blob => {
+      if (!blob) { showError(t.errParse); return; }
+      const ext = outputFormat === 'jpeg' ? 'jpg' : outputFormat;
+      const baseName = (currentFile?.name || 'image').replace(/\.svg$/i, '');
+      const dlName = baseName + '.' + ext;
+      const dlUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = dlUrl;
+      a.download = dlName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(dlUrl), 1000);
+    }, mime, quality);
+  };
+  img.onerror = function() {
+    URL.revokeObjectURL(url);
+    showError(t.errParse);
+  };
+  img.src = url;
+}
+
+// ============================================
+// INIT
+// ============================================
+document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+document.documentElement.lang = lang;
+applyLang();
+setFormat('png');
+setScale(1);
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+
+</body>
+</html>
