@@ -880,7 +880,7 @@
 <!-- STICKY CTA -->
 <a href="/signup" class="sticky-cta" id="sticky-cta">
   <span class="icon">⚡</span>
-  <span id="sticky-cta-text">ÜYE OL <span class="meta-text">· 30 GÜN ÜCRETSİZ</span></span>
+  <span id="sticky-cta-text">ÜYE OL <span class="meta-text">· HEMEN BAŞLA</span></span>
 </a>
 
 <div class="content">
@@ -980,7 +980,7 @@
       <div class="split-col link-col">
         <span class="split-tag">— LINK KISALTICI</span>
         <h2 class="split-title">link kısalt,<br><em>tek tıkla</em></h2>
-        <p class="split-desc">Reklam yok, kayıt yok, tamamen ücretsiz. 30 gün boyunca aktif.</p>
+        <p class="split-desc">Reklam yok, kayıt yok, tamamen ücretsiz.</p>
 
         <div class="link-form-card">
           <div class="input-row">
@@ -1068,7 +1068,7 @@
           <div class="feature-item">
             <span class="feature-check">✓</span>
             <div>
-              <div class="feature-title">30 gün boyunca aktif</div>
+              <div class="feature-title">Otomatik temizlenir</div>
               <div class="feature-desc">Sonra otomatik temizlenir</div>
             </div>
           </div>
@@ -1561,7 +1561,7 @@ async function shortenLink() {
     const shortUrl = `https://tektik.la/r/${slug}`;
     currentShortUrl = shortUrl;
     document.getElementById('result-url').textContent = shortUrl;
-    document.getElementById('result-meta').textContent = '30 gün geçerli · 0 tıklama';
+    document.getElementById('result-meta').textContent = 'Geçici · 0 tıklama';
     document.getElementById('result-box').style.display = 'flex';
     generateQR(shortUrl);
     addToHistory(slug, shortUrl, fullUrl);
