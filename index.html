@@ -1523,8 +1523,8 @@
 </div>
 
 <script>
-
-// ── Link Kısaltma ──────────────────────────────────────────────
+(function() {
+  function init() {
 var lang = localStorage.getItem('tektik-lang') || 'tr';
 let sessionLinks = JSON.parse(sessionStorage.getItem('tektik-links') || '[]');
 let currentShortUrl = '';
@@ -2106,6 +2106,13 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
       promoDesc.innerHTML = '<code>tektik.la/<span id="promo-slug-demo">link</span></code> — gather your social media, content, and projects on one personal page.';
     }
     if (stickyCtaText) stickyCtaText.innerHTML = 'SIGN UP <span class="meta-text">· 30 DAYS FREE</span>';
+  }
+})();
+  } // end init
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(init, { timeout: 500 });
+  } else {
+    setTimeout(init, 0);
   }
 })();
 </script>
