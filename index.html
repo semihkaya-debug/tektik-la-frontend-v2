@@ -82,9 +82,10 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate icon" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet"></noscript>
+
 <style>
   :root[data-theme="dark"] {
     --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a; --border: #2a2a2a;
@@ -97,7 +98,7 @@
     --card: #ffffff; --input-bg: #fafaf8;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Bricolage Grotesque', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; transition: background 0.3s, color 0.3s; }
+  body { font-family: 'Bricolage Grotesque', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; transition: background 0.3s, color 0.3s; }
   .grid-bg { position: fixed; inset: 0; pointer-events: none; opacity: 0.03; background-image: linear-gradient(var(--text) 1px, transparent 1px), linear-gradient(90deg, var(--text) 1px, transparent 1px); background-size: 40px 40px; z-index: 0; }
   .content { position: relative; z-index: 1; }
   header { border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 100; padding: 0; }
@@ -2099,5 +2100,7 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
 })();
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
 </body>
 </html>
