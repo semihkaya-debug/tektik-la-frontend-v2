@@ -16,7 +16,8 @@ const RESERVED = new Set([
   'signup', 'static', 'tarih', 'turkce', 'uuid', 'whitespace',
   'www', 'yuzde', 'barkod', 'gizlilik', 'kvkk', 'iade', 'sozlesme',
   'destek', 'yardim', 'hakkimizda', 'about', 'contact', 'help', 'support',
-  'terms', 'privacy', 'forgot-password', 'reset-password'
+  'terms', 'privacy', 'forgot-password', 'reset-password',
+  'svg-converter'
 ]);
 
 export async function onRequest(context) {
