@@ -44,6 +44,7 @@
 /turkce           /turkce/index.html          200
 /uuid             /uuid/index.html            200
 /yuzde            /yuzde/index.html           200
+/svg-converter    /svg-converter/index.html   200
 
 # ---- Statik sayfalar ----
 /destek           /destek/index.html          200
