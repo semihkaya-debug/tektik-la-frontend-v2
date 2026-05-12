@@ -45,6 +45,9 @@
 /uuid             /uuid/index.html            200
 /yuzde            /yuzde/index.html           200
 
+# ---- Statik sayfalar ----
+/destek           /destek/index.html          200
+
 # ---- Eski URL yönlendirmeleri ----
 /barkod           /qr/?mod=barkod             301
 /barkod/          /qr/?mod=barkod             301

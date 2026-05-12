@@ -444,6 +444,16 @@
   .community-btn-ghost:hover {
     color: var(--accent);
   }
+  .community-btn-support {
+    background: transparent;
+    border: 1px dashed var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .community-btn-support:hover {
+    background: rgba(200, 245, 48, 0.08);
+    border-style: solid;
+  }
   .community-btn-meta {
     margin-left: auto;
     font-family: 'Space Mono', monospace;
@@ -465,6 +475,7 @@
     letter-spacing: 0.5px;
     text-align: center;
   }
+
   /* Profil kolonu: Telefon mockup */
   .phone-mockup-link {
     text-decoration: none;
@@ -1119,12 +1130,18 @@
             <span>Arkadaşına Paylaş</span>
             <span class="community-btn-meta">link kopyala</span>
           </button>
+          <a href="/destek" class="community-btn community-btn-support">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Destek Ol</span>
+            <span class="community-btn-meta">aracısız bağış</span>
+          </a>
         </div>
 
         <div class="community-note">✦ Genelde 24 saat içinde yanıtlıyoruz</div>
       </div>
 
-    </div><!-- /split-row-2 -->
+</div><!-- /split-row-2 -->
+
 
   </section><!-- /split-section -->
 
@@ -1586,6 +1603,7 @@ function copyResult() {
     setTimeout(() => btn.textContent = 'Kopyala', 2000);
   });
 }
+
 
 function roundRect(ctx, x, y, w, h, r) {
   if (typeof r === 'number') r = { tl: r, tr: r, br: r, bl: r };
@@ -2088,11 +2106,11 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
     if (promoTitle) promoTitle.innerHTML = 'all your links<br><em>in one page</em>';
     if (promoSlugDemo) promoSlugDemo.textContent = 'link';
     if (promoCtaText) promoCtaText.textContent = 'CREATE YOUR PROFILE';
-    if (promoMeta) promoMeta.textContent = '30 DAYS FREE · NO CARD';
+    if (promoMeta) promoMeta.textContent = 'FREE FOREVER · NO CARD';
     if (promoDesc) {
       promoDesc.innerHTML = '<code>tektik.la/<span id="promo-slug-demo">link</span></code> — gather your social media, content, and projects on one personal page.';
     }
-    if (stickyCtaText) stickyCtaText.innerHTML = 'SIGN UP <span class="meta-text">· 30 DAYS FREE</span>';
+    if (stickyCtaText) stickyCtaText.innerHTML = 'SIGN UP <span class="meta-text">· FREE FOREVER</span>';
   }
 })();
 
