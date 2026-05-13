@@ -12,9 +12,7 @@
   <url><loc>https://tektik.la/password</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/gerisayim</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/yuzde</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tektik.la/fis</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/fatura</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tektik.la/binary</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/pomodoro</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/turkce</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/kelime</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -29,10 +27,7 @@
   <url><loc>https://tektik.la/markdown</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/json</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/regex</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tektik.la/uuid</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/base64</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tektik.la/whitespace</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://tektik.la/gorsel-kirp</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/svg-converter</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://tektik.la/sifre</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://tektik.la/kosullar</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>

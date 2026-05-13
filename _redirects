@@ -12,18 +12,13 @@
 # ---- Araç sayfaları - klasör isimleri uzantısız erişim ----
 /sifre            /password/index.html        200
 /password         /password/index.html        200
-/whitespace       /whitespace/index.html      200
-/html-encode      /html-encode/index.html     200
 /renk-tonu        /renk-tonu/index.html       200
-/gorsel-kirp      /gorsel-kirp/index.html     200
+/gorsel-kirp      /gorsel                     301
 /hesap            /hesap/index.html           200
 /base64           /base64/index.html          200
-/binary           /binary/index.html          200
-/btk              /btk/index.html             200
 /cekilis          /cekilis/index.html         200
 /cv               /cv/index.html              200
 /fatura           /fatura/index.html          200
-/fis              /fis/index.html             200
 /foto             /foto/index.html            200
 /gerisayim        /gerisayim/index.html       200
 /gorsel           /gorsel/index.html          200
@@ -42,7 +37,6 @@
 /saat             /saat/index.html            200
 /tarih            /tarih/index.html           200
 /turkce           /turkce/index.html          200
-/uuid             /uuid/index.html            200
 /yuzde            /yuzde/index.html           200
 /svg-converter    /svg-converter/index.html   200
 
