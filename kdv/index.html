@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KDV Hesaplama — Dahil/Hariç Hızlı Hesapla | tektik.la</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<meta name="description" content="Ücretsiz KDV hesaplama aracı. %1, %10, %20 oranlarında KDV dahil veya hariç hızlıca hesapla. Tevkifatlı hesaplama dahil. Kayıt yok, reklam yok.">
+<meta name="keywords" content="kdv hesaplama, kdv dahil hesaplama, kdv hariç hesaplama, kdv hesaplayıcı, tevkifat hesaplama, kdv yüzde 20, ücretsiz kdv hesaplama, online kdv">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="KDV Hesaplama — Dahil/Hariç Hızlı Hesapla | tektik.la">
+<meta property="og:description" content="Ücretsiz KDV hesaplama aracı. %1, %10, %20 oranlarında dahil/hariç hesaplama. Tevkifat da var.">
+<meta property="og:url" content="https://tektik.la/kdv">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KDV Hesaplama — tektik.la">
+<meta name="twitter:description" content="KDV dahil/hariç hızlı hesaplama. Ücretsiz, kayıt yok.">
+<link rel="canonical" href="https://tektik.la/kdv">
+<link rel="alternate" hreflang="tr-TR" href="https://tektik.la/kdv">
+<link rel="alternate" hreflang="x-default" href="https://tektik.la/kdv">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "KDV Hesaplama — tektik.la",
+  "url": "https://tektik.la/kdv",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (Web)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TRY" },
+  "description": "Ücretsiz online KDV hesaplama aracı. KDV dahil/hariç, tevkifatlı hesaplama."
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+<style>
+  :root[data-theme="dark"] { --bg:#0a0a0a; --bg3:#1a1a1a; --border:#2a2a2a; --text:#f0f0f0; --text2:#888; --accent:#c8f530; --accent2:#a0d020; --card:#141414; --input-bg:#0f0f0f; --warn:#f5a623; --warn-bg:rgba(245,166,35,0.08); }
+  :root[data-theme="light"] { --bg:#f5f5f0; --bg3:#e5e4de; --border:#d0cfc8; --text:#111; --text2:#666; --accent:#5a9e00; --accent2:#4a8500; --card:#fff; --input-bg:#fafaf8; --warn:#b86e00; --warn-bg:rgba(184,110,0,0.08); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Bricolage Grotesque',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:background 0.2s,color 0.2s; }
+  .grid-bg { position:fixed; inset:0; pointer-events:none; opacity:0.03; background-image:linear-gradient(var(--text) 1px,transparent 1px),linear-gradient(90deg,var(--text) 1px,transparent 1px); background-size:40px 40px; z-index:0; }
+  .wrap { max-width:860px; margin:0 auto; position:relative; z-index:1; }
+
+  header { display:flex; justify-content:space-between; align-items:center; padding:24px 40px; border-bottom:1px solid var(--border); }
+  .logo { font-family:'Space Mono',monospace; font-weight:700; font-size:18px; text-decoration:none; color:var(--text); }
+  .logo span { color:var(--accent); }
+  .header-actions { display:flex; gap:8px; align-items:center; }
+  .lang-btn, .theme-btn { background:transparent; border:1px solid var(--border); color:var(--text); padding:7px 12px; border-radius:8px; cursor:pointer; font-family:'Space Mono',monospace; font-size:12px; transition:all 0.2s; }
+  .lang-btn.active { background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; }
+  .lang-btn:hover, .theme-btn:hover { border-color:var(--accent); }
+
+  .hero { max-width:860px; margin:0 auto; padding:60px 40px 32px; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+  .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  .hero h1 { font-size:clamp(40px,7vw,72px); font-weight:800; line-height:0.95; letter-spacing:-2px; margin-bottom:20px; }
+  .hero h1 em { font-style:italic; color:var(--accent); font-weight:800; }
+  .hero-sub { font-family:'Space Mono',monospace; font-size:14px; color:var(--text2); line-height:1.7; max-width:520px; }
+
+  .main { max-width:860px; margin:0 auto; padding:0 40px 48px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:36px; margin-bottom:20px; }
+  .card-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+
+  /* Mode tabs */
+  .mode-tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:6px; background:var(--input-bg); border:1px solid var(--border); border-radius:12px; margin-bottom:24px; }
+  .mode-tab { background:transparent; color:var(--text2); border:0; padding:12px 14px; border-radius:8px; font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; text-align:center; }
+  .mode-tab.active { background:var(--accent); color:#000; }
+
+  /* Inputs */
+  .input-group { margin-bottom:20px; }
+  .input-label { display:block; font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); margin-bottom:8px; letter-spacing:1px; text-transform:uppercase; }
+  .num-input { width:100%; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:18px 20px; border-radius:10px; font-family:'Space Mono',monospace; font-size:20px; font-weight:700; outline:none; transition:border-color 0.2s; }
+  .num-input:focus { border-color:var(--accent); }
+  .num-input::placeholder { color:var(--text2); opacity:0.5; }
+
+  /* Rate buttons */
+  .rates { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:20px; }
+  .rate-btn { background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:14px 8px; border-radius:10px; font-family:'Space Mono',monospace; font-weight:700; font-size:14px; cursor:pointer; transition:all 0.2s; }
+  .rate-btn:hover { border-color:var(--accent); }
+  .rate-btn.active { background:var(--accent); color:#000; border-color:var(--accent); }
+
+  .custom-rate { display:flex; align-items:center; gap:10px; margin-bottom:24px; }
+  .custom-rate input { flex:1; background:var(--input-bg); border:1px solid var(--border); color:var(--text); padding:12px 14px; border-radius:10px; font-family:'Space Mono',monospace; font-size:14px; outline:none; }
+  .custom-rate input:focus { border-color:var(--accent); }
+  .custom-rate-label { font-family:'Space Mono',monospace; font-size:12px; color:var(--text2); white-space:nowrap; }
+
+  /* Tevkifat */
+  .tevkifat-toggle { display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--input-bg); border:1px solid var(--border); border-radius:10px; margin-bottom:16px; cursor:pointer; user-select:none; transition:border-color 0.2s; }
+  .tevkifat-toggle:hover { border-color:var(--accent); }
+  .tevkifat-toggle input { width:18px; height:18px; cursor:pointer; accent-color:var(--accent); }
+  .tevkifat-toggle-label { font-family:'Bricolage Grotesque',sans-serif; font-size:14px; font-weight:600; }
+  .tevkifat-help { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); margin-left:auto; }
+
+  .tevkifat-options { display:none; padding:16px 18px; background:var(--input-bg); border:1px solid var(--border); border-radius:10px; margin-bottom:24px; }
+  .tevkifat-options.show { display:block; }
+  .tevkifat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .tev-btn { background:var(--card); border:1px solid var(--border); color:var(--text); padding:10px 8px; border-radius:8px; font-family:'Space Mono',monospace; font-size:12px; cursor:pointer; transition:all 0.2s; }
+  .tev-btn:hover { border-color:var(--accent); }
+  .tev-btn.active { background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; }
+
+  /* Results */
+  .results { margin-top:8px; }
+  .result-row { display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid var(--border); }
+  .result-row:last-child { border-bottom:0; padding-bottom:8px; }
+  .result-row.highlight { padding:20px; background:var(--bg3); border-radius:12px; border-bottom:0; margin-top:8px; }
+  .result-label { font-family:'Space Mono',monospace; font-size:13px; color:var(--text2); letter-spacing:1px; }
+  .result-row.highlight .result-label { color:var(--accent); font-weight:700; }
+  .result-value { font-family:'Space Mono',monospace; font-size:22px; font-weight:700; color:var(--text); }
+  .result-row.highlight .result-value { font-size:28px; color:var(--accent); }
+
+  .copy-row-btn { background:transparent; border:1px solid var(--border); color:var(--text2); padding:5px 10px; border-radius:6px; font-family:'Space Mono',monospace; font-size:10px; cursor:pointer; margin-left:10px; transition:all 0.2s; letter-spacing:1px; }
+  .copy-row-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .copy-row-btn.copied { background:var(--accent); color:#000; border-color:var(--accent); }
+
+  /* SEO section */
+  .seo-section { max-width:860px; margin:0 auto; padding:40px; border-top:1px solid var(--border); }
+  .seo-h2 { font-size:clamp(20px,3vw,28px); font-weight:800; letter-spacing:-0.5px; margin-bottom:16px; }
+  .seo-h2 em { font-style:italic; color:var(--accent); }
+  .seo-p { font-family:'Space Mono',monospace; font-size:13px; color:var(--text2); line-height:1.9; margin-bottom:14px; }
+  .seo-p strong { color:var(--text); }
+
+  .faq-list { display:grid; gap:12px; margin-top:24px; }
+  .faq-item { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; }
+  .faq-q { font-size:15px; font-weight:700; margin-bottom:10px; }
+  .faq-a { font-family:'Space Mono',monospace; font-size:13px; color:var(--text2); line-height:1.8; }
+
+  /* Share bar */
+  .share-bar { max-width:860px; margin:0 auto; padding:32px 40px; border-top:1px solid var(--border); display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+  .share-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); letter-spacing:2px; text-transform:uppercase; margin-right:6px; }
+  .share-btn { padding:9px 16px; border-radius:8px; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; text-decoration:none; cursor:pointer; border:1px solid var(--border); background:var(--card); color:var(--text); display:flex; align-items:center; gap:8px; transition:all 0.2s; }
+  .share-btn:hover { border-color:var(--accent); }
+
+  footer { border-top:1px solid var(--border); padding:24px 40px; display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:14px; font-family:'Space Mono',monospace; font-size:11px; color:var(--text2); }
+  footer a { color:var(--text2); text-decoration:none; }
+  footer a:hover { color:var(--accent); }
+
+  @media (max-width:680px) {
+    header, .hero, .main, .seo-section, .share-bar, footer { padding-left:20px; padding-right:20px; }
+    .card { padding:24px; }
+    .rates { grid-template-columns:repeat(2,1fr); }
+    .tevkifat-grid { grid-template-columns:repeat(2,1fr); }
+    .result-value { font-size:18px; }
+    .result-row.highlight .result-value { font-size:22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="wrap">
+  <header>
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="header-actions">
+      <button class="lang-btn active" id="lang-tr" onclick="setLang('tr')">TR</button>
+      <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+      <button class="theme-btn" onclick="toggleTheme()" aria-label="Tema">◐</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-tag" id="hero-tag">— KDV HESAPLAMA</div>
+    <h1 id="hero-title">kdv'yi <em id="hero-title-em">tek tıkla</em><br>hesapla</h1>
+    <p class="hero-sub" id="hero-sub">KDV dahil veya hariç tutarı saniyeler içinde hesapla. %1, %10, %20 oranları hazır. Tevkifatlı hesaplama da var. Kayıt yok, reklam yok.</p>
+  </div>
+
+  <div class="main">
+    <div class="card">
+      <div class="card-label" id="lbl-mode">Hesaplama Modu</div>
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="tab-add" onclick="setMode('add')">KDV Hariç → Dahil</button>
+        <button class="mode-tab" id="tab-sub" onclick="setMode('sub')">KDV Dahil → Hariç</button>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="amount" id="lbl-amount">Tutar (₺)</label>
+        <input type="number" class="num-input" id="amount" placeholder="0,00" step="0.01" min="0" inputmode="decimal">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" id="lbl-rate">KDV Oranı</label>
+        <div class="rates">
+          <button class="rate-btn" data-rate="1" onclick="setRate(1)">%1</button>
+          <button class="rate-btn" data-rate="10" onclick="setRate(10)">%10</button>
+          <button class="rate-btn active" data-rate="20" onclick="setRate(20)">%20</button>
+          <button class="rate-btn" data-rate="custom" onclick="setRate('custom')" id="custom-rate-btn">Özel</button>
+        </div>
+        <div class="custom-rate" id="custom-rate-wrap" style="display:none;">
+          <input type="number" id="custom-rate-input" placeholder="Örn: 8" min="0" max="100" step="0.01" inputmode="decimal">
+          <span class="custom-rate-label" id="custom-rate-label">% (yüzde)</span>
+        </div>
+      </div>
+
+      <label class="tevkifat-toggle">
+        <input type="checkbox" id="tevkifat-check" onchange="toggleTevkifat()">
+        <span class="tevkifat-toggle-label" id="lbl-tevkifat">Tevkifat Uygula</span>
+        <span class="tevkifat-help" id="lbl-tevkifat-help">(SMM, hizmet, vb.)</span>
+      </label>
+
+      <div class="tevkifat-options" id="tevkifat-options">
+        <div class="card-label" id="lbl-tevkifat-rate" style="margin-bottom:12px;">Tevkifat Oranı</div>
+        <div class="tevkifat-grid">
+          <button class="tev-btn" data-tev="2/10" onclick="setTevkifat('2/10')">2/10</button>
+          <button class="tev-btn" data-tev="3/10" onclick="setTevkifat('3/10')">3/10</button>
+          <button class="tev-btn" data-tev="4/10" onclick="setTevkifat('4/10')">4/10</button>
+          <button class="tev-btn" data-tev="5/10" onclick="setTevkifat('5/10')">5/10</button>
+          <button class="tev-btn" data-tev="7/10" onclick="setTevkifat('7/10')">7/10</button>
+          <button class="tev-btn active" data-tev="9/10" onclick="setTevkifat('9/10')">9/10</button>
+        </div>
+      </div>
+
+      <div class="results" id="results">
+        <div class="result-row">
+          <span class="result-label" id="res-label-1">KDV Hariç</span>
+          <div>
+            <span class="result-value" id="res-net">0,00 ₺</span>
+            <button class="copy-row-btn" onclick="copyVal('res-net', this)">KOPYA</button>
+          </div>
+        </div>
+        <div class="result-row">
+          <span class="result-label" id="res-label-2">KDV Tutarı</span>
+          <div>
+            <span class="result-value" id="res-kdv">0,00 ₺</span>
+            <button class="copy-row-btn" onclick="copyVal('res-kdv', this)">KOPYA</button>
+          </div>
+        </div>
+        <div class="result-row tev-row" id="row-tevkifat-payable" style="display:none;">
+          <span class="result-label" id="res-label-3">Tevkif Edilen</span>
+          <div>
+            <span class="result-value" id="res-tev-amount">0,00 ₺</span>
+            <button class="copy-row-btn" onclick="copyVal('res-tev-amount', this)">KOPYA</button>
+          </div>
+        </div>
+        <div class="result-row tev-row" id="row-tevkifat-remain" style="display:none;">
+          <span class="result-label" id="res-label-4">Müşteriden Alınacak KDV</span>
+          <div>
+            <span class="result-value" id="res-tev-remain">0,00 ₺</span>
+            <button class="copy-row-btn" onclick="copyVal('res-tev-remain', this)">KOPYA</button>
+          </div>
+        </div>
+        <div class="result-row highlight">
+          <span class="result-label" id="res-label-5">KDV Dahil Toplam</span>
+          <div>
+            <span class="result-value" id="res-total">0,00 ₺</span>
+            <button class="copy-row-btn" onclick="copyVal('res-total', this)">KOPYA</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="seo-section">
+    <h2 class="seo-h2" id="seo-h2">KDV Hesaplama <em id="seo-h2-em">Nedir?</em></h2>
+    <p class="seo-p" id="seo-p1"><strong>Katma Değer Vergisi (KDV)</strong>, Türkiye'de mal ve hizmet satışlarına eklenen bir tüketim vergisidir. Türkiye'de güncel olarak <strong>%1, %10 ve %20</strong> oranlarında uygulanır. Temel gıda gibi temel ihtiyaçlarda %1, gıda dışı bazı ürünlerde %10, çoğu mal ve hizmette ise <strong>%20</strong> standart oranı geçerlidir.</p>
+    <p class="seo-p" id="seo-p2">tektik.la'nın <strong>ücretsiz KDV hesaplama aracı</strong> ile herhangi bir tutara KDV ekleyebilir, KDV dahil bir tutardan vergisiz fiyatı hesaplayabilir, ya da tevkifatlı satışlarda satıcıya/alıcıya düşen KDV miktarlarını anında görebilirsin.</p>
+    <p class="seo-p" id="seo-p3"><strong>KDV Hariç Tutara KDV Ekleme:</strong> 100 ₺ × 1,20 = 120 ₺ (KDV dahil)<br><strong>KDV Dahil Tutardan KDV Hariç Bulma:</strong> 120 ₺ ÷ 1,20 = 100 ₺ (KDV hariç)</p>
+
+    <h2 class="seo-h2" style="margin-top:36px;" id="seo-h3">Sıkça Sorulan <em>Sorular</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" id="faq-q1">KDV oranları neye göre belirlenir?</div>
+        <div class="faq-a" id="faq-a1">KDV oranları ürün/hizmet kategorisine göre Hazine ve Maliye Bakanlığı tarafından belirlenir. Temel gıda ürünleri %1, bazı kıyafet ve gıda dışı ürünler %10, çoğu mal ve hizmet %20 KDV'ye tabidir.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq-q2">Tevkifat ne demek?</div>
+        <div class="faq-a" id="faq-a2">Tevkifat, alıcının (genelde kurumlar) satıcıya ödemesi gereken KDV'nin bir kısmını ödememekle, doğrudan vergi dairesine yatırması anlamına gelir. Serbest meslek erbabı (SMM), inşaat, danışmanlık gibi alanlarda yaygındır. Örneğin 9/10 tevkifatta KDV'nin 9'da 9'u alıcı tarafından vergi dairesine, 1/10'u satıcıya ödenir.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq-q3">KDV tutarı nasıl hesaplanır?</div>
+        <div class="faq-a" id="faq-a3">KDV hariç tutar × (KDV oranı / 100) = KDV tutarı. Örneğin 1.000 ₺ × (20/100) = 200 ₺ KDV. Bu durumda KDV dahil toplam tutar 1.200 ₺ olur.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq-q4">KDV dahil tutardan KDV nasıl çıkarılır?</div>
+        <div class="faq-a" id="faq-a4">KDV dahil tutarı (1 + KDV oranı/100) sayısına bölersin. Örneğin 1.200 ₺ ÷ 1,20 = 1.000 ₺ (KDV hariç). KDV miktarı: 1.200 - 1.000 = 200 ₺.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq-q5">Bu araç güvenli mi?</div>
+        <div class="faq-a" id="faq-a5">Tüm hesaplama tarayıcında yapılır. Girdiğin tutarlar sunucumuza gönderilmez, kaydedilmez. tektik.la kayıt zorunluluğu olmayan, reklamsız bir araçtır.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="share-bar">
+    <span class="share-label" id="lbl-share">Paylaş</span>
+    <a class="share-btn" href="https://twitter.com/intent/tweet?text=Ücretsiz KDV hesaplama — tektik.la%0A%0Ahttps%3A%2F%2Ftektik.la%2Fkdv&via=tektik_la" target="_blank" rel="noopener">𝕏 Twitter</a>
+    <a class="share-btn" href="https://wa.me/?text=Ücretsiz KDV hesaplama aracı — tektik.la%0Ahttps%3A%2F%2Ftektik.la%2Fkdv" target="_blank" rel="noopener">WhatsApp</a>
+    <button class="share-btn" onclick="copyShare(this)">🔗 Linki Kopyala</button>
+  </div>
+
+  <footer>
+    <a href="/">tektik.la</a>
+    <a href="mailto:info@tektik.la">info@tektik.la</a>
+    <span>© 2026 — Tüm araçlar ücretsiz</span>
+  </footer>
+</div>
+
+<script>
+// ====== STATE ======
+let mode = 'add';      // 'add' = KDV ekle (hariç→dahil), 'sub' = KDV çıkar (dahil→hariç)
+let rate = 20;         // 1, 10, 20 veya 'custom'
+let customRate = null;
+let tevkifatOn = false;
+let tevkifat = '9/10';
+
+// ====== TR/EN ======
+const tx = {
+  tr: {
+    'hero-tag': '— KDV HESAPLAMA',
+    'hero-title': 'kdv\'yi <em>tek tıkla</em><br>hesapla',
+    'hero-sub': 'KDV dahil veya hariç tutarı saniyeler içinde hesapla. %1, %10, %20 oranları hazır. Tevkifatlı hesaplama da var. Kayıt yok, reklam yok.',
+    'lbl-mode': 'Hesaplama Modu',
+    'tab-add': 'KDV Hariç → Dahil',
+    'tab-sub': 'KDV Dahil → Hariç',
+    'lbl-amount': 'Tutar (₺)',
+    'lbl-rate': 'KDV Oranı',
+    'custom-rate-btn': 'Özel',
+    'custom-rate-label': '% (yüzde)',
+    'lbl-tevkifat': 'Tevkifat Uygula',
+    'lbl-tevkifat-help': '(SMM, hizmet, vb.)',
+    'lbl-tevkifat-rate': 'Tevkifat Oranı',
+    'res-label-1-add': 'KDV Hariç',
+    'res-label-1-sub': 'KDV Hariç',
+    'res-label-2': 'KDV Tutarı',
+    'res-label-3': 'Tevkif Edilen',
+    'res-label-4': 'Müşteriden Alınacak KDV',
+    'res-label-5': 'KDV Dahil Toplam',
+    'seo-h2': 'KDV Hesaplama <em>Nedir?</em>',
+    'seo-h3': 'Sıkça Sorulan <em>Sorular</em>',
+    'lbl-share': 'Paylaş',
+    'copy': 'KOPYA',
+    'copied': '✓'
+  },
+  en: {
+    'hero-tag': '— VAT CALCULATOR',
+    'hero-title': 'calculate vat <em>in one</em><br>click',
+    'hero-sub': 'Calculate VAT inclusive or exclusive amounts in seconds. 1%, 10%, 20% rates ready. Withholding calculation included. No signup, no ads.',
+    'lbl-mode': 'Calculation Mode',
+    'tab-add': 'Exclusive → Inclusive',
+    'tab-sub': 'Inclusive → Exclusive',
+    'lbl-amount': 'Amount (₺)',
+    'lbl-rate': 'VAT Rate',
+    'custom-rate-btn': 'Custom',
+    'custom-rate-label': '% (percent)',
+    'lbl-tevkifat': 'Apply Withholding',
+    'lbl-tevkifat-help': '(Freelance, services)',
+    'lbl-tevkifat-rate': 'Withholding Ratio',
+    'res-label-1-add': 'Net (Excl. VAT)',
+    'res-label-1-sub': 'Net (Excl. VAT)',
+    'res-label-2': 'VAT Amount',
+    'res-label-3': 'Withheld',
+    'res-label-4': 'VAT to Collect',
+    'res-label-5': 'Gross (Incl. VAT)',
+    'seo-h2': 'What is <em>VAT?</em>',
+    'seo-h3': 'Frequently Asked <em>Questions</em>',
+    'lbl-share': 'Share',
+    'copy': 'COPY',
+    'copied': '✓'
+  }
+};
+
+function setLang(lang) {
+  document.documentElement.setAttribute('lang', lang);
+  localStorage.setItem('tektik-lang', lang);
+  document.getElementById('lang-tr').classList.toggle('active', lang === 'tr');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  const t = tx[lang];
+  // Update text
+  ['hero-tag','lbl-mode','tab-add','tab-sub','lbl-amount','lbl-rate','custom-rate-label','lbl-tevkifat','lbl-tevkifat-help','lbl-tevkifat-rate','res-label-2','res-label-3','res-label-4','res-label-5','lbl-share'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t[id];
+  });
+  document.getElementById('hero-title').innerHTML = t['hero-title'];
+  document.getElementById('hero-sub').textContent = t['hero-sub'];
+  document.getElementById('custom-rate-btn').textContent = t['custom-rate-btn'];
+  document.getElementById('seo-h2').innerHTML = t['seo-h2'];
+  document.getElementById('seo-h3').innerHTML = t['seo-h3'];
+  document.getElementById('res-label-1').textContent = mode === 'add' ? t['res-label-1-add'] : t['res-label-1-sub'];
+}
+
+// ====== THEME ======
+let theme = localStorage.getItem('tektik-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', theme);
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('tektik-theme', theme);
+}
+
+// ====== MODE ======
+function setMode(m) {
+  mode = m;
+  document.getElementById('tab-add').classList.toggle('active', m === 'add');
+  document.getElementById('tab-sub').classList.toggle('active', m === 'sub');
+  calculate();
+}
+
+// ====== RATE ======
+function setRate(r) {
+  if (r === 'custom') {
+    rate = 'custom';
+    document.getElementById('custom-rate-wrap').style.display = 'flex';
+    document.getElementById('custom-rate-input').focus();
+  } else {
+    rate = r;
+    document.getElementById('custom-rate-wrap').style.display = 'none';
+  }
+  document.querySelectorAll('.rate-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.rate == (r === 'custom' ? 'custom' : r.toString()));
+  });
+  calculate();
+}
+
+// ====== TEVKIFAT ======
+function toggleTevkifat() {
+  tevkifatOn = document.getElementById('tevkifat-check').checked;
+  document.getElementById('tevkifat-options').classList.toggle('show', tevkifatOn);
+  document.getElementById('row-tevkifat-payable').style.display = tevkifatOn ? 'flex' : 'none';
+  document.getElementById('row-tevkifat-remain').style.display = tevkifatOn ? 'flex' : 'none';
+  calculate();
+}
+
+function setTevkifat(t) {
+  tevkifat = t;
+  document.querySelectorAll('.tev-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tev === t);
+  });
+  calculate();
+}
+
+// ====== CALCULATE ======
+function calculate() {
+  const amountStr = document.getElementById('amount').value;
+  const amount = parseFloat(amountStr) || 0;
+  let r = rate;
+  if (r === 'custom') {
+    r = parseFloat(document.getElementById('custom-rate-input').value) || 0;
+  }
+  if (r < 0) r = 0;
+
+  let net, kdv, total;
+  if (mode === 'add') {
+    // KDV Hariç -> Dahil
+    net = amount;
+    kdv = amount * r / 100;
+    total = amount + kdv;
+  } else {
+    // KDV Dahil -> Hariç
+    total = amount;
+    net = amount / (1 + r / 100);
+    kdv = total - net;
+  }
+
+  document.getElementById('res-net').textContent = fmtTL(net);
+  document.getElementById('res-kdv').textContent = fmtTL(kdv);
+  document.getElementById('res-total').textContent = fmtTL(total);
+
+  if (tevkifatOn) {
+    // Tevkifat oranını parse et: "9/10" -> 0.9
+    const parts = tevkifat.split('/');
+    const tevRatio = parts.length === 2 ? parseFloat(parts[0]) / parseFloat(parts[1]) : 0;
+    const withheld = kdv * tevRatio;
+    const remainingKdv = kdv - withheld;
+    document.getElementById('res-tev-amount').textContent = fmtTL(withheld);
+    document.getElementById('res-tev-remain').textContent = fmtTL(remainingKdv);
+  }
+}
+
+function fmtTL(n) {
+  if (!isFinite(n)) n = 0;
+  return n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₺';
+}
+
+function copyVal(id, btn) {
+  const txt = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+function copyShare(btn) {
+  navigator.clipboard.writeText('https://tektik.la/kdv').then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Kopyalandı!';
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  });
+}
+
+// ====== EVENTS ======
+document.getElementById('amount').addEventListener('input', calculate);
+document.getElementById('custom-rate-input').addEventListener('input', calculate);
+
+// Init
+const savedLang = localStorage.getItem('tektik-lang') || 'tr';
+setLang(savedLang);
+calculate();
+</script>
+
+</body>
+</html>
