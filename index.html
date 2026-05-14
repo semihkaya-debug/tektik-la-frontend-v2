@@ -878,6 +878,66 @@
   .seo-faq-q{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
   .seo-faq-a{font-size:13px;color:var(--text2);line-height:1.7}
   .header-inner { max-width: 860px; margin: 0 auto; width: 100%; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; }
+
+  /* ============================================
+     HERO CARDS — 3 BUTON
+     ============================================ */
+  .hero-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 720px; margin: 36px auto 0; padding: 0 24px; }
+  .hero-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px 16px; cursor: pointer; transition: all 0.2s; font-family: inherit; color: var(--text); text-align: center; }
+  .hero-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .hero-card-featured { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .hero-card-featured:hover { transform: translateY(-2px); }
+  .hero-card-emoji { font-size: 32px; line-height: 1; margin-bottom: 4px; }
+  .hero-card-title { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: var(--accent); }
+  .hero-card-desc { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); line-height: 1.4; }
+
+  /* ============================================
+     MODAL — paylaşılan stil
+     ============================================ */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: flex-start; justify-content: center; padding: 60px 20px 40px; overflow-y: auto; }
+  .modal-backdrop.is-open { display: flex; }
+  .modal { position: relative; width: 100%; max-width: 480px; background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; animation: modalIn 0.2s ease-out; }
+  .modal-wide { max-width: 640px; }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .modal-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; color: var(--text2); cursor: pointer; font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+  .modal-tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px; display: block; }
+  .modal-title { font-size: clamp(24px, 4vw, 32px); font-weight: 800; line-height: 1.05; letter-spacing: -1px; margin-bottom: 10px; }
+  .modal-title em { color: var(--accent); font-style: italic; }
+  .modal-desc { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text2); margin-bottom: 22px; line-height: 1.6; }
+  .modal-input { width: 100%; background: var(--bg2); border: 1px solid var(--border); color: var(--accent); padding: 14px 16px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 13px; box-sizing: border-box; }
+  .modal-input:focus { outline: none; border-color: var(--accent); }
+  .modal-btn { width: 100%; background: var(--accent); color: #0a0a0a; border: none; padding: 14px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; letter-spacing: 1px; cursor: pointer; margin-top: 12px; transition: opacity 0.2s; text-decoration: none; display: block; text-align: center; box-sizing: border-box; }
+  .modal-btn:hover { opacity: 0.9; }
+  .modal-foot { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text3); text-align: center; line-height: 1.6; }
+
+  /* Bio modal mini preview */
+  .bio-preview { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .bio-preview-url { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text3); margin-bottom: 10px; }
+  .bio-preview-url span { color: var(--accent); }
+  .bio-preview-row { display: flex; gap: 10px; align-items: center; }
+  .bio-preview-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #0a0a0a; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+  .bio-preview-name { font-size: 14px; font-weight: 700; }
+
+  /* Tools modal grid */
+  .tools-search { width: 100%; background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 11px 14px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 12px; box-sizing: border-box; margin-bottom: 16px; }
+  .tools-search:focus { outline: none; border-color: var(--accent); }
+  .tools-search::placeholder { color: var(--text3); }
+  .tools-modal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .tools-modal-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 8px; text-align: center; text-decoration: none; color: var(--text); transition: all 0.2s; cursor: pointer; }
+  .tools-modal-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .tools-modal-card-emoji { font-size: 22px; line-height: 1; margin-bottom: 6px; display: block; }
+  .tools-modal-card-name { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text2); }
+  .tools-modal-card-new .tools-modal-card-name { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .hero-cards { grid-template-columns: 1fr; gap: 10px; padding: 0 20px; }
+    .hero-card { padding: 22px 14px; flex-direction: row; justify-content: flex-start; text-align: left; gap: 14px; }
+    .hero-card-emoji { font-size: 26px; }
+    .modal { padding: 24px 18px; }
+    .modal-backdrop { padding: 24px 12px; }
+    .tools-modal-grid { grid-template-columns: repeat(3, 1fr); }
+  }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GFPX2NXXR8");</script>
@@ -886,17 +946,11 @@
 <body>
 <div class="grid-bg"></div>
 
-<!-- STICKY CTA -->
-<a href="/signup" class="sticky-cta" id="sticky-cta">
-  <span class="icon">⚡</span>
-  <span id="sticky-cta-text">ÜYE OL <span class="meta-text">· HEMEN BAŞLA</span></span>
-</a>
-
 <div class="content">
   <header>
   <div class="header-inner">    <div class="logo">tektik<span>.la</span></div>
     <div class="header-controls">
-      <a href="#araclar" class="ctrl-btn ctrl-btn-tools" style="text-decoration:none" onclick="event.preventDefault(); scrollToTools();">Araçlar</a>
+      <a href="#" class="ctrl-btn ctrl-btn-tools" style="text-decoration:none" onclick="event.preventDefault(); openModal('tools');">Araçlar</a>
       <button class="ctrl-btn theme-toggle" onclick="toggleTheme()" aria-label="Tema değiştir" title="Tema değiştir">
         <span id="theme-icon">◐</span>
       </button>
@@ -907,478 +961,122 @@
 </header>
 
   <div class="hero">
-    <div class="hero-tag" id="hero-tag">tüm içerik üreticileri için</div>
-    <h1 id="hero-h1">linkini <em>topla</em><br>veya <em>kısalt</em></h1>
-    <p class="hero-sub" id="hero-sub">25+ ücretsiz araç, hızlı link kısaltıcı ve kişisel profil sayfası. Üyeliksiz, reklamsız, hemen.</p>
+    <div class="hero-tag" id="hero-tag">— TEK TIKLA HALLET</div>
+    <h1 id="hero-h1">Türkiye'nin <em>ücretsiz</em><br>online araç kutusu</h1>
+    <p class="hero-sub" id="hero-sub">25+ araç, hızlı link kısaltıcı ve bio profil. Kayıt yok, reklamsız, hemen.</p>
+
+    <div class="hero-cards">
+      <button class="hero-card" onclick="openModal('shorten')">
+        <span class="hero-card-emoji">🔗</span>
+        <span class="hero-card-title">LINK KISALT</span>
+        <span class="hero-card-desc">Uzun linkleri tek tıkla kısalt</span>
+      </button>
+      <button class="hero-card" onclick="openModal('bio')">
+        <span class="hero-card-emoji">👤</span>
+        <span class="hero-card-title">BIO PROFİL</span>
+        <span class="hero-card-desc">Tüm linklerin tek sayfada</span>
+      </button>
+      <button class="hero-card hero-card-featured" onclick="openModal('tools')">
+        <span class="hero-card-emoji">🧰</span>
+        <span class="hero-card-title">ARAÇLAR</span>
+        <span class="hero-card-desc">25+ ücretsiz online araç</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ============================================
+       MODAL 1 — LINK KISALT
+       ============================================ -->
+  <div class="modal-backdrop" id="modal-shorten" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Kapat">×</button>
+      <span class="modal-tag">— LINK KISALT</span>
+      <h2 class="modal-title">link <em>kısalt</em></h2>
+      <p class="modal-desc">Uzun linkleri saniyeler içinde kısalt. Kayıt yok, reklamsız.</p>
+      <div id="shorten-form">
+        <input type="url" id="modal-url-input" class="modal-input" placeholder="https://uzun-link-buraya..." autocomplete="off">
+        <button class="modal-btn" onclick="modalShortenLink()">KISALT →</button>
+      </div>
+      <div id="shorten-result" style="display:none;margin-top:14px">
+        <div style="background:var(--bg2);border:1px solid var(--accent);border-radius:8px;padding:14px;text-align:center;margin-bottom:10px">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:1px;margin-bottom:6px">— KISALTILDI</div>
+          <div id="shorten-result-url" style="font-family:'Space Mono',monospace;font-size:14px;color:var(--accent);word-break:break-all;margin-bottom:10px"></div>
+          <div style="display:flex;gap:8px;justify-content:center">
+            <button class="modal-btn" style="margin-top:0;width:auto;padding:10px 16px" onclick="copyModalShortUrl()">KOPYALA</button>
+            <button class="modal-btn" style="margin-top:0;width:auto;padding:10px 16px;background:var(--bg2);color:var(--text)" onclick="resetModalShorten()">YENİ LİNK</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">Linkler 30 gün boyunca aktif kalır</div>
+    </div>
   </div>
 
   <!-- ============================================
-       SPLIT SECTION — Sol: Profil · Sağ: Link Kısaltıcı
+       MODAL 2 — BIO PROFİL
        ============================================ -->
-  <section class="split-section">
-    <div class="split-inner">
-
-      <!-- SOL: PROFİL PROMO -->
-      <div class="split-col profile-col">
-        <span class="split-tag">— PROFİL SİSTEMİ</span>
-        <h2 class="split-title">tüm linklerin<br><em>tek sayfada</em></h2>
-        <p class="split-desc">
-          <code>tektik.la/<span>link</span></code> ile sosyal medyanı, içeriklerini, projelerini topla.
-        </p>
-
-        <div style="display:flex; gap:20px; align-items:flex-start; margin-bottom:20px;">
-          <a href="/test" class="phone-mockup-link" target="_blank" style="margin-bottom:0; flex-shrink:0;">
-          <div class="phone-mockup">
-            <div class="phone-screen">
-              <div class="phone-statusbar">
-                <span class="phone-time">14:23</span>
-                <span class="phone-url">tektik.la/test</span>
-                <span>📶</span>
-              </div>
-              <div class="phone-content">
-                <div class="phone-tag">— PROFİL</div>
-                <div class="phone-avatar-frame">
-                  <div class="phone-avatar" style="background:var(--accent);color:#0a0a0a;">T</div>
-                </div>
-                <div class="phone-name">test.gg</div>
-                <div class="phone-slug">tektik.la<span>/test</span></div>
-                <div class="phone-links">
-                  <div class="phone-link featured">🎮 Twitch Kanalım</div>
-                  <div class="phone-link">▶ YouTube</div>
-                  <div class="phone-link">💬 Discord</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-          <!-- ADIM AKIŞI -->
-          <div style="display:flex; flex-direction:column; gap:16px; padding-top:8px;">
-            <div style="display:flex; flex-direction:column; gap:4px;">
-              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px;">① SLUG SEÇ</span>
-              <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--text); font-weight:700;">tektik.la/<em style="color:var(--accent);font-style:normal;">test</em></span>
-              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); line-height:1.5;">Sana özel kısa adres,<br>kimse alamaz.</span>
-            </div>
-            <div style="width:1px; height:16px; background:var(--border); margin-left:6px;"></div>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px;">② LİNKLERİNİ EKLE</span>
-              <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--text); font-weight:700;">YouTube · Twitch · IG</span>
-              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); line-height:1.5;">İstediğin kadar link,<br>sınırsız.</span>
-            </div>
-            <div style="width:1px; height:16px; background:var(--border); margin-left:6px;"></div>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px;">③ PAYLAŞ</span>
-              <span style="font-family:'Space Mono',monospace; font-size:12px; color:var(--text); font-weight:700;">Bio'na tek link koy</span>
-              <span style="font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); line-height:1.5;">Twitch, Instagram,<br>YouTube — hepsi hazır.</span>
-            </div>
+  <div class="modal-backdrop" id="modal-bio" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Kapat">×</button>
+      <span class="modal-tag">— BIO PROFİL</span>
+      <h2 class="modal-title">tüm linklerin<br><em>tek sayfada</em></h2>
+      <p class="modal-desc">Sosyal medya, içerik ve projeler — hepsi tek profilde, tek linkte.</p>
+      <div class="bio-preview">
+        <div class="bio-preview-url">tektik.la/<span>test</span></div>
+        <div class="bio-preview-row">
+          <div class="bio-preview-avatar">T</div>
+          <div>
+            <div class="bio-preview-name">test</div>
+            <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px">Twitter · YouTube · Twitch · 7 link</div>
           </div>
         </div>
-
-        <div class="split-cta-wrap">
-          <a href="/signup" class="split-cta">
-            <span>profil oluştur</span>
-            <span>→</span>
-          </a>
-          <a href="/login" class="split-cta-login-btn">
-            giriş yap
-          </a>
-        </div>
       </div>
-
-      <!-- SAĞ: LINK KISALTICI -->
-      <div class="split-col link-col">
-        <span class="split-tag">— LINK KISALTICI</span>
-        <h2 class="split-title">link kısalt,<br><em>tek tıkla</em></h2>
-        <p class="split-desc">Reklam yok, kayıt yok, tamamen ücretsiz.</p>
-
-        <div class="link-form-card">
-          <div class="input-row">
-            <input type="url" id="url-input" placeholder="Linki buraya yapıştır" />
-            <button class="btn-primary" id="shorten-btn" onclick="shortenLink()">
-              <span id="btn-text">Kısalt</span>
-            </button>
-          </div>
-          <div class="status" id="status-msg"></div>
-          <div class="result-box" id="result-box">
-            <div style="flex:1">
-              <div class="result-url" id="result-url"></div>
-              <div class="result-meta" id="result-meta"></div>
-            </div>
-            <button class="btn-primary" id="copy-btn" onclick="copyResult()">Kopyala</button>
-          </div>
-          <div class="qr-box" id="qr-box">
-        <div id="qrcode-result"></div>
-        <div class="qr-info">
-          <div class="qr-label" id="qr-label">QR Kod</div>
-          <div class="qr-sublabel" id="qr-sublabel">Kısa linkinizin QR kodu otomatik oluşturuldu.</div>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
-            <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">
-              tektik.la bandı
-              <div class="qr-toggle" id="toggle-brand" onclick="toggleBrand()" style="background:var(--accent)">
-                <div class="qr-toggle-thumb" style="transform:translateX(16px)"></div>
-              </div>
-            </label>
-            <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">
-              kısa link banta eklensin
-              <div class="qr-toggle" id="toggle-band-url" onclick="toggleBandUrl()" style="background:var(--accent)">
-                <div class="qr-toggle-thumb" id="toggle-band-url-thumb" style="transform:translateX(16px)"></div>
-              </div>
-            </label>
-            <div style="border-top:1px solid var(--border);margin:4px 0"></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">QR rengi</span>
-              <input type="color" id="qr-color-dark" value="#000000" onchange="regenQR()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">arka plan</span>
-              <input type="color" id="qr-color-light" value="#ffffff" onchange="regenQR()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px" id="band-color-row">
-              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">bant rengi</span>
-              <input type="color" id="qr-color-band" value="#c8f530" onchange="updateQRBand()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
-            </div>
-          </div>
-          <button class="btn-primary" onclick="downloadQR()" id="btn-dl">⬇ İndir</button>
-        </div>
-      </div>
-
-      <div class="history-section" id="history-section">
-        <div class="history-header">
-          <div class="history-title" id="history-title">Bu oturumdaki linkler</div>
-          <button class="btn-ghost" onclick="clearHistory()" id="clear-btn">Temizle</button>
-        </div>
-        <div id="history-list"></div>
-      </div>
-        </div><!-- /link-form-card -->
-
-        <!-- ÖZELLİKLER LİSTESİ -->
-        <div class="features-list">
-          <div class="feature-item">
-            <span class="feature-check">✓</span>
-            <div>
-              <div class="feature-title">Kayıt gerekmez</div>
-              <div class="feature-desc">Hemen kısalt, anında kullan</div>
-            </div>
-          </div>
-          <div class="feature-item">
-            <span class="feature-check">✓</span>
-            <div>
-              <div class="feature-title">Reklamsız & ücretsiz</div>
-              <div class="feature-desc">Takip yok, sayaç yok, popup yok</div>
-            </div>
-          </div>
-          <div class="feature-item">
-            <span class="feature-check">✓</span>
-            <div>
-              <div class="feature-title">QR kod otomatik</div>
-              <div class="feature-desc">Her kısa link için indirilebilir QR</div>
-            </div>
-          </div>
-          <div class="feature-item">
-            <span class="feature-check">✓</span>
-            <div>
-              <div class="feature-title">Otomatik temizlenir</div>
-              <div class="feature-desc">Sonra otomatik temizlenir</div>
-            </div>
-          </div>
-        </div>
-      </div><!-- /split-col link-col -->
-
-    </div><!-- /split-inner -->
-
-    <!-- 2. SIRA: ARAÇLAR ÖNIZLEME + DESTEK OL -->
-    <div class="split-row-2">
-
-      <!-- KART 3: ARAÇLAR ÖNIZLEME -->
-      <div class="split-col tools-preview">
-        <span class="split-tag">— TÜM ARAÇLAR</span>
-        <h2 class="split-title">25+ <em>ücretsiz</em> araç</h2>
-        <p class="split-desc">QR kod, çekiliş, şifre üretici, CV oluşturucu ve daha fazlası. Hepsi tek tıkla, kayıt yok.</p>
-
-        <div class="tools-icons">
-          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="QR Kod">📱</a>
-          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="Çekiliş">🎁</a>
-          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="Şifre">🔐</a>
-          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="CV">📄</a>
-          <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tool-icon-mini" title="Daha Fazlası">⚡</a>
-        </div>
-
-        <a href="#araclar" onclick="event.preventDefault(); scrollToTools();" class="tools-cta">
-          TÜM ARAÇLARI GÖR →
-        </a>
-      </div>
-
-      <!-- KART 4: BİZE ULAŞIN -->
-      <div class="split-col community-card">
-        <span class="split-tag">— BİZE ULAŞIN</span>
-        <h2 class="split-title">soru, öneri,<br>geri <em>bildirim</em></h2>
-        <p class="split-desc">Bize yazabilir, sosyal medyadan takip edebilir veya arkadaşlarına anlatabilirsin.</p>
-
-        <div class="community-buttons">
-          <a href="https://x.com/tektik_la" target="_blank" rel="noopener" class="community-btn community-btn-primary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            <span>𝕏'te Takip Et</span>
-            <span class="community-btn-meta">@tektik_la</span>
-          </a>
-          <a href="mailto:info@tektik.la" class="community-btn community-btn-ghost">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            <span>E-posta Gönder</span>
-            <span class="community-btn-meta">info@tektik.la</span>
-          </a>
-          <button class="community-btn community-btn-ghost" onclick="shareTektik()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            <span>Arkadaşına Paylaş</span>
-            <span class="community-btn-meta">link kopyala</span>
-          </button>
-          <a href="/destek" class="community-btn community-btn-support">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <span>Destek Ol</span>
-            <span class="community-btn-meta">aracısız bağış</span>
-          </a>
-        </div>
-
-        <div class="community-note">✦ Genelde 24 saat içinde yanıtlıyoruz</div>
-      </div>
-
-</div><!-- /split-row-2 -->
-
-
-  </section><!-- /split-section -->
-
-  <!-- TOOLS SECTION -->
-  <div class="tools-section" id="araclar">
-    <div class="tools-inner">
-
-      <div class="section-head">
-        <div class="section-tag">25+ ücretsiz araç</div>
-        <div class="section-title">25+ <em>ücretsiz</em> araç</div>
-        <div class="section-sub">Çekiliş, QR kod, fotoğraf sıkıştırıcı, CV oluşturucu ve daha fazlası. Üyeliksiz, reklamsız.</div>
-      </div>
-
-      <!-- FİLTRE BUTONLARI -->
-      <div class="filter-bar">
-        <button class="filter-btn active" data-filter="pick" onclick="filterTools('pick')">✦ Öne Çıkan <span class="filter-count">9</span></button>
-        <button class="filter-btn" data-filter="dev" onclick="filterTools('dev')">👨‍💻 Geliştirici <span class="filter-count">7</span></button>
-        <button class="filter-btn" data-filter="design" onclick="filterTools('design')">🎨 Tasarım <span class="filter-count">3</span></button>
-        <button class="filter-btn" data-filter="all" onclick="filterTools('all')">Tümü <span class="filter-count">28</span></button>
-      </div>
-
-      <div class="tools-grid-wrapper collapsed" id="tools-wrapper">
-      <div class="tools-grid" id="main-tools-grid">
-          <!-- ✦ ÖNE ÇIKAN: 1.Çekiliş 2.QR 3.CV 4.Binary 5.Pomodoro 6.Foto -->
-          <a href="/cekilis" class="tool-card" data-tag="pick">
-            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <rect x="4" y="10" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
-  <path d="M4 14 H24" stroke="currentColor" stroke-width="1.6"/>
-  <path d="M14 10 C14 10 10 4 6 6 C4 7 4 10 8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-  <path d="M14 10 C14 10 18 4 22 6 C24 7 24 10 20 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="14" y1="10" x2="14" y2="24" stroke="currentColor" stroke-width="1.5"/>
-</svg></div>
-            <div class="tool-name">Çekiliş Yap</div>
-            <div class="tool-desc">Adil ve şeffaf çekiliş. Kazananı görsel olarak paylaş.</div>
-            <div class="tool-badge pick">✦ Öne Çıkan</div>
-          </a>
-                    <a href="/qr" class="tool-card" data-tag="pick">
-            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <rect x="0" y="0" width="3" height="3" rx="0.4" fill="currentColor"/>
-  <rect x="4" y="0" width="3" height="3" rx="0.4" fill="currentColor"/>
-  <rect x="0" y="4" width="3" height="3" rx="0.4" fill="currentColor"/>
-  <rect x="1" y="1" width="1" height="1" fill="var(--bg)"/>
-  <rect x="5" y="1" width="1" height="1" fill="var(--bg)"/>
-  <rect x="1" y="5" width="1" height="1" fill="var(--bg)"/>
-  <rect x="4" y="4" width="1" height="1" fill="currentColor"/>
-  <rect x="6" y="4" width="1" height="1" fill="currentColor"/>
-  <rect x="5" y="5" width="1" height="1" fill="currentColor"/>
-  <rect x="4" y="6" width="1" height="1" fill="currentColor"/>
-  <rect x="6" y="6" width="1" height="1" fill="currentColor"/>
-</svg></div>
-            <div class="tool-name">QR Kod & Barkod Oluşturucu</div>
-            <div class="tool-desc">URL, WiFi, vCard için QR kod. EAN-13, Code128, UPC-A barkod.</div>
-            <div class="tool-badge pick">✦ Öne Çıkan</div>
-          </a>
-          <a href="/foto" class="tool-card" data-tag="pick">
-            <div class="tool-icon"><svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <rect x="1" y="4" width="26" height="20" rx="2" stroke="currentColor" stroke-width="1.6"/>
-  <circle cx="10" cy="13" r="3" stroke="currentColor" stroke-width="1.4"/>
-  <path d="M1 19 L7 13 L13 18 L18 12 L27 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M9 4 L9 1 M14 4 L14 1 M19 4 L19 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-</svg></div>
-            <div class="tool-name">Fotoğraf Sıkıştırıcı</div>
-            <div class="tool-desc">JPEG, PNG, WebP sıkıştır. Sınırsız ücretsiz, kayıt yok.</div>
-            <div class="tool-badge dev">Geliştirici</div>
-          </a>
-          <a href="/svg-converter" class="tool-card" data-tag="dev">
-            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <path d="M5 5 L11 5 L11 11 L5 11 Z" stroke="currentColor" stroke-width="1.6" fill="none"/>
-  <path d="M14 14 L22 14 L22 22 L14 22 Z" stroke="currentColor" stroke-width="1.6" fill="currentColor" fill-opacity="0.15"/>
-  <path d="M12 7 L16 7 M12 9 L16 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-  <path d="M13 11 L14 12 L13 13 Z" fill="currentColor"/>
-  <text x="5" y="22" font-family="monospace" font-size="4.5" font-weight="700" fill="currentColor">SVG</text>
-</svg></div>
-            <div class="tool-name">SVG Dönüştürücü</div>
-            <div class="tool-desc">SVG'yi PNG, JPG veya WebP'ye çevir. Boyut seç, indir.</div>
-            <div class="tool-badge dev">Geliştirici</div>
-          </a>
-          <a href="/password" class="tool-card" data-tag="pick">
-            <div class="tool-icon"><svg width="26" height="28" viewBox="0 0 26 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <rect x="3" y="12" width="20" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
-  <path d="M8 12V8a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  <circle cx="13" cy="19" r="2" fill="currentColor"/>
-  <line x1="13" y1="21" x2="13" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-</svg></div>
-            <div class="tool-name">Şifre Oluşturucu</div>
-            <div class="tool-desc">Güçlü ve güvenli şifre oluştur. Özelleştirilebilir.</div>
-            <div class="tool-badge pick">✦ Öne Çıkan</div>
-          </a>
-                    <a href="/cv" class="tool-card" data-tag="pick">
-            <div class="tool-icon"><svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <rect x="2" y="1" width="20" height="26" rx="2" stroke="currentColor" stroke-width="1.6"/>
-  <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.4"/>
-  <line x1="6" y1="16" x2="18" y2="16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-  <line x1="6" y1="20" x2="15" y2="20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-  <line x1="6" y1="24" x2="12" y2="24" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-</svg></div>
-            <div class="tool-name">CV Oluşturucu</div>
-            <div class="tool-desc">Profesyonel CV oluştur, PDF olarak indir. 3 şablon.</div>
-            <div class="tool-badge pick">✦ Öne Çıkan</div>
-          </a>
-          <a href="/hesap" class="tool-card" data-tag="pick">
-            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><polyline points="3,20 8,13 13,16 18,8 23,10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="23" cy="10" r="2" fill="currentColor"/></svg></div>
-            <div class="tool-name">Bileşik Faiz & Emeklilik</div>
-            <div class="tool-desc">Enflasyonlu birikim hesapla. Emeklilik planı yap.</div>
-            <div class="tool-badge pick">✦ Öne Çıkan</div>
-          </a>
-          <a href="/gerisayim" class="tool-card" data-tag="pick">
-            <div class="tool-icon"><svg width="28" height="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <rect x="1" y="1" width="26" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
-  <text x="14" y="16" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="currentColor">3:00</text>
-  <line x1="5" y1="19" x2="8" y2="19" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-  <line x1="10" y1="19" x2="18" y2="19" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-  <line x1="20" y1="19" x2="23" y2="19" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-</svg></div>
-            <div class="tool-name">Geri Sayım</div>
-            <div class="tool-desc">Etkinlik, doğum günü için geri sayım. Link ile paylaş.</div>
-            <div class="tool-badge pick">✦ Öne Çıkan</div>
-          </a>
-          <a href="/pomodoro" class="tool-card" data-tag="pick other">
-            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <circle cx="14" cy="14" r="11" fill="none" stroke="currentColor" stroke-width="1.8"/>
-  <circle cx="14" cy="14" r="1.5" fill="currentColor"/>
-  <line x1="14" y1="14" x2="14" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="14" y1="14" x2="19.5" y2="17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="14" y1="3" x2="14" y2="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <line x1="11" y1="1.5" x2="17" y2="1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-</svg></div>
-            <div class="tool-name">Pomodoro Timer</div>
-            <div class="tool-desc">25 dakika odaklan, 5 dakika mola ver. Üretkenliği artır.</div>
-            <div class="tool-badge pick">✦ Öne Çıkan</div>
-          </a>
-          <a href="/yuzde" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <circle cx="8" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/>
-  <circle cx="20" cy="20" r="4" stroke="currentColor" stroke-width="1.6"/>
-  <line x1="5" y1="23" x2="23" y2="5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-</svg></div>
-            <div class="tool-name">Yüzde Hesaplama</div>
-            <div class="tool-desc">Yüzde al, fark hesapla, oran bul. Hızlı ve kolay.</div>
-          </a>
-          <a href="/kdv" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <rect x="3" y="6" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
-  <text x="14" y="18" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" font-weight="700" fill="currentColor">KDV</text>
-  <circle cx="8" cy="3.5" r="1" fill="currentColor"/>
-  <circle cx="14" cy="3.5" r="1" fill="currentColor"/>
-  <circle cx="20" cy="3.5" r="1" fill="currentColor"/>
-</svg></div>
-            <div class="tool-name">KDV Hesaplama</div>
-            <div class="tool-desc">KDV dahil/hariç hesapla. %1, %10, %20 + tevkifat.</div>
-            <div class="tool-badge pick">✦ Yeni</div>
-          </a>
-
-          <a href="/kelime" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="28" height="24" viewBox="0 0 28 24" fill="none" style="display:block"><line x1="2" y1="7" x2="26" y2="7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="2" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="2" y1="17" x2="14" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="24" cy="17" r="3" stroke="currentColor" stroke-width="1.4"/></svg></div>
-            <div class="tool-name">Kelime Sayacı</div>
-            <div class="tool-desc">Kelime, karakter, cümle ve okuma süresi analizi.</div>
-          </a>
-          <a href="/lorem" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="24" height="28" viewBox="0 0 24 28" fill="none" style="display:block"><rect x="2" y="1" width="20" height="26" rx="2" stroke="currentColor" stroke-width="1.6"/><line x1="6" y1="8" x2="18" y2="8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="6" y1="12" x2="18" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="6" y1="16" x2="18" y2="16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="6" y1="20" x2="13" y2="20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-            <div class="tool-name">Lorem Ipsum</div>
-            <div class="tool-desc">Tasarım için özelleştirilebilir placeholder metin üret.</div>
-          </a>
-          <a href="/metin" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><path d="M18 3 L23 8 L9 22 L3 23 L4 17 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><line x1="15" y1="6" x2="20" y2="11" stroke="currentColor" stroke-width="1.4"/></svg></div>
-            <div class="tool-name">Metin Dönüştür</div>
-            <div class="tool-desc">Büyük/küçük harf, slug, title case ve daha fazlası.</div>
-          </a>
-          <a href="/hashtag" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="24" height="26" viewBox="0 0 24 26" fill="none" style="display:block"><line x1="8" y1="2" x2="6" y2="24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="2" x2="14" y2="24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="2" y1="9" x2="22" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="1" y1="17" x2="21" y2="17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-            <div class="tool-name">Hashtag Oluşturucu</div>
-            <div class="tool-desc">Konuya göre hashtag listesi oluştur, kopyala.</div>
-          </a>
-          <a href="/tarih" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><rect x="1" y="4" width="24" height="21" rx="2" stroke="currentColor" stroke-width="1.6"/><line x1="1" y1="10" x2="25" y2="10" stroke="currentColor" stroke-width="1.6"/><line x1="8" y1="1" x2="8" y2="7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="18" y1="1" x2="18" y2="7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="6" y="14" width="4" height="4" rx="1" fill="currentColor"/><rect x="11" y="14" width="4" height="4" rx="1" fill="currentColor"/><rect x="16" y="14" width="4" height="4" rx="1" fill="currentColor"/></svg></div>
-            <div class="tool-name">Tarih Hesaplama</div>
-            <div class="tool-desc">İki tarih arası gün, ay, yıl farkı hesapla.</div>
-          </a>
-          <a href="/saat" class="tool-card" data-tag="other">
-            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><circle cx="13" cy="13" r="11" stroke="currentColor" stroke-width="1.6"/><path d="M2 13 H24" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/><path d="M13 2 C10 6 10 20 13 24" stroke="currentColor" stroke-width="1.2"/><path d="M13 2 C16 6 16 20 13 24" stroke="currentColor" stroke-width="1.2"/><line x1="13" y1="13" x2="13" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="13" y1="13" x2="18" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-            <div class="tool-name">Dünya Saati</div>
-            <div class="tool-desc">Farklı saat dilimlerini aynı anda görüntüle.</div>
-          </a>
-          <a href="/renk" class="tool-card" data-tag="design">
-            <div class="tool-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="display:block"><circle cx="13" cy="13" r="10" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="9" r="2.5" fill="currentColor" opacity="0.9"/><circle cx="17" cy="9" r="2.5" fill="currentColor" opacity="0.6"/><circle cx="9" cy="17" r="2.5" fill="currentColor" opacity="0.4"/><circle cx="17" cy="17" r="2.5" fill="currentColor" opacity="0.7"/><circle cx="13" cy="13" r="2" fill="currentColor"/></svg></div>
-            <div class="tool-name">Renk Dönüştürücü</div>
-            <div class="tool-desc">HEX, RGB, HSL arası dönüştür. Palet oluştur.</div>
-            <div class="tool-badge design">Tasarım</div>
-          </a>
-          <a href="/gradient" class="tool-card" data-tag="design">
-            <div class="tool-icon"><svg width="26" height="20" viewBox="0 0 26 20" fill="none" style="display:block"><rect x="1" y="1" width="24" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="4" width="5" height="12" rx="1" fill="currentColor" opacity="0.25"/><rect x="10" y="4" width="5" height="12" rx="1" fill="currentColor" opacity="0.55"/><rect x="17" y="4" width="5" height="12" rx="1" fill="currentColor" opacity="1"/></svg></div>
-            <div class="tool-name">Gradient Oluşturucu</div>
-            <div class="tool-desc">CSS gradient kodu oluştur, önizle, kopyala.</div>
-            <div class="tool-badge design">Tasarım</div>
-          </a>
-          <a href="/markdown" class="tool-card" data-tag="dev">
-            <div class="tool-icon"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" style="display:block"><rect x="1" y="1" width="26" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><text x="5" y="14" font-family="monospace" font-size="11" font-weight="700" fill="currentColor">M↓</text></svg></div>
-            <div class="tool-name">Markdown Editör</div>
-            <div class="tool-desc">Yazdıkça önizle. HTML kopyala veya .md olarak indir.</div>
-            <div class="tool-badge dev">Geliştirici</div>
-          </a>
-          <a href="/json" class="tool-card" data-tag="dev">
-            <div class="tool-icon">{ }</div>
-            <div class="tool-name">JSON Formatter</div>
-            <div class="tool-desc">JSON'u güzelleştir, doğrula, düzenle.</div>
-            <div class="tool-badge dev">Geliştirici</div>
-          </a>
-          <a href="/regex" class="tool-card" data-tag="dev">
-            <div class="tool-icon">.*</div>
-            <div class="tool-name">Regex Test</div>
-            <div class="tool-desc">Düzenli ifadeleri test et. Eşleşmeleri vurgula.</div>
-            <div class="tool-badge dev">Geliştirici</div>
-          </a>
-          <a href="/base64" class="tool-card" data-tag="dev">
-            <div class="tool-icon"><svg width="28" height="22" viewBox="0 0 28 22" fill="none" style="display:block"><rect x="1" y="1" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="15" y="1" width="12" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><text x="3" y="14" font-family="monospace" font-size="8" font-weight="700" fill="currentColor">ab</text><text x="17" y="14" font-family="monospace" font-size="7" fill="currentColor">64</text></svg></div>
-            <div class="tool-name">Base64 Encode/Decode</div>
-            <div class="tool-desc">Metin ve dosyaları Base64 formatına çevir.</div>
-            <div class="tool-badge dev">Geliştirici</div>
-          </a>
-          <a href="/renk-tonu" class="tool-card" data-tag="design">
-            <div class="tool-icon"><svg width="28" height="22" viewBox="0 0 28 22" fill="none" style="display:block"><rect x="1" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.2"/><rect x="6" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.35"/><rect x="11" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.55"/><rect x="16" y="3" width="4" height="16" rx="1" fill="currentColor" opacity="0.75"/><rect x="21" y="3" width="6" height="16" rx="1" fill="currentColor" opacity="1"/></svg></div>
-            <div class="tool-name">Renk Tonu Paleti</div>
-            <div class="tool-desc">Bir renkten 10 ton üret. CSS değişkenleri kopyala.</div>
-            <div class="tool-badge design">Tasarım</div>
-          </a>
-      </div>
-      </div><!-- /tools-grid-wrapper -->
-
-      <div class="tools-toggle-wrapper" id="tools-toggle-wrapper">
-        <button class="tools-toggle-btn" id="tools-toggle-btn" onclick="toggleToolsExpand()">
-          <span id="tools-toggle-text">TÜM ARAÇLARI GÖSTER</span>
-          <span class="arrow">↓</span>
-        </button>
-      </div>
-
+      <a href="/signup" class="modal-btn">PROFİLİMİ OLUŞTUR →</a>
+      <div class="modal-foot">tamamen ücretsiz · kayıt 30 saniye · reklamsız<br>hesabın var mı? <a href="/login" style="color:var(--accent);text-decoration:none">giriş yap</a></div>
     </div>
   </div>
+
+  <!-- ============================================
+       MODAL 3 — ARAÇLAR
+       ============================================ -->
+  <div class="modal-backdrop" id="modal-tools" onclick="if(event.target===this)closeModal()">
+    <div class="modal modal-wide">
+      <button class="modal-close" onclick="closeModal()" aria-label="Kapat">×</button>
+      <span class="modal-tag">— 25+ ARAÇ</span>
+      <h2 class="modal-title">araç <em>kutusu</em></h2>
+      <p class="modal-desc">Hepsi ücretsiz, hepsi kayıtsız, hepsi tek tıkla.</p>
+      <input type="text" id="tools-search-input" class="tools-search" placeholder="🔍 araç ara..." oninput="filterToolsModal(this.value)">
+      <div class="tools-modal-grid" id="tools-modal-grid">
+        <a href="/kdv" class="tools-modal-card tools-modal-card-new" data-name="kdv hesaplama vergi"><span class="tools-modal-card-emoji">💰</span><span class="tools-modal-card-name">KDV</span></a>
+        <a href="/qr" class="tools-modal-card" data-name="qr kod oluşturucu"><span class="tools-modal-card-emoji">📱</span><span class="tools-modal-card-name">QR Kod</span></a>
+        <a href="/cekilis" class="tools-modal-card" data-name="çekiliş yap kazanan"><span class="tools-modal-card-emoji">🎁</span><span class="tools-modal-card-name">Çekiliş</span></a>
+        <a href="/sifre" class="tools-modal-card" data-name="şifre üretici güvenli"><span class="tools-modal-card-emoji">🔐</span><span class="tools-modal-card-name">Şifre</span></a>
+        <a href="/cv" class="tools-modal-card" data-name="cv oluşturucu özgeçmiş"><span class="tools-modal-card-emoji">📄</span><span class="tools-modal-card-name">CV</span></a>
+        <a href="/pomodoro" class="tools-modal-card" data-name="pomodoro zamanlayıcı"><span class="tools-modal-card-emoji">⏰</span><span class="tools-modal-card-name">Pomodoro</span></a>
+        <a href="/yuzde" class="tools-modal-card" data-name="yüzde hesaplama"><span class="tools-modal-card-emoji">%</span><span class="tools-modal-card-name">Yüzde</span></a>
+        <a href="/gorsel" class="tools-modal-card" data-name="görsel sıkıştırma kırpma"><span class="tools-modal-card-emoji">🖼️</span><span class="tools-modal-card-name">Görsel</span></a>
+        <a href="/svg-converter" class="tools-modal-card tools-modal-card-new" data-name="svg dönüştürücü png"><span class="tools-modal-card-emoji">🎨</span><span class="tools-modal-card-name">SVG</span></a>
+        <a href="/fatura" class="tools-modal-card" data-name="fatura oluşturucu"><span class="tools-modal-card-emoji">🧾</span><span class="tools-modal-card-name">Fatura</span></a>
+        <a href="/anket" class="tools-modal-card" data-name="anket oluşturma"><span class="tools-modal-card-emoji">📊</span><span class="tools-modal-card-name">Anket</span></a>
+        <a href="/rastgele" class="tools-modal-card" data-name="rastgele sayı seçici"><span class="tools-modal-card-emoji">🎲</span><span class="tools-modal-card-name">Rastgele</span></a>
+        <a href="/yas" class="tools-modal-card" data-name="yaş hesaplama"><span class="tools-modal-card-emoji">🎂</span><span class="tools-modal-card-name">Yaş</span></a>
+        <a href="/bmi" class="tools-modal-card" data-name="bmi vücut kitle"><span class="tools-modal-card-emoji">⚖️</span><span class="tools-modal-card-name">BMI</span></a>
+        <a href="/renk" class="tools-modal-card" data-name="renk kod hex rgb"><span class="tools-modal-card-emoji">🎨</span><span class="tools-modal-card-name">Renk</span></a>
+        <a href="/json" class="tools-modal-card" data-name="json formatter düzenleyici"><span class="tools-modal-card-emoji">{ }</span><span class="tools-modal-card-name">JSON</span></a>
+        <a href="/base64" class="tools-modal-card" data-name="base64 encode decode"><span class="tools-modal-card-emoji">🔢</span><span class="tools-modal-card-name">Base64</span></a>
+        <a href="/markdown" class="tools-modal-card" data-name="markdown editör önizleme"><span class="tools-modal-card-emoji">📝</span><span class="tools-modal-card-name">Markdown</span></a>
+        <a href="/tarayici" class="tools-modal-card" data-name="kelime karakter sayacı"><span class="tools-modal-card-emoji">🔢</span><span class="tools-modal-card-name">Sayaç</span></a>
+        <a href="/krediler" class="tools-modal-card" data-name="kredi taksit hesaplama"><span class="tools-modal-card-emoji">🏦</span><span class="tools-modal-card-name">Kredi</span></a>
+        <a href="/maas" class="tools-modal-card" data-name="maaş hesaplama net brüt"><span class="tools-modal-card-emoji">💵</span><span class="tools-modal-card-name">Maaş</span></a>
+        <a href="/timer" class="tools-modal-card" data-name="kronometre stopwatch"><span class="tools-modal-card-emoji">⏱️</span><span class="tools-modal-card-name">Timer</span></a>
+        <a href="/quote" class="tools-modal-card" data-name="alıntı söz jeneratör"><span class="tools-modal-card-emoji">💬</span><span class="tools-modal-card-name">Söz</span></a>
+        <a href="/ad-cekme" class="tools-modal-card" data-name="ad çekme isim seçme"><span class="tools-modal-card-emoji">🎯</span><span class="tools-modal-card-name">Ad Çekme</span></a>
+      </div>
+      <div id="tools-no-results" style="display:none;padding:20px;text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">Bu adla bir araç bulunamadı.</div>
+      <div class="modal-foot">Tıkla → araç sayfası açılır</div>
+    </div>
+  </div>
+
 
   <!-- FAQ SECTION -->
   <div class="faq-section">
@@ -1973,6 +1671,119 @@ function scrollToTools() {
   }
 }
 
+// ============================================
+// MODAL SİSTEMİ — Link Kısalt / Bio Profil / Araçlar
+// ============================================
+function openModal(type) {
+  closeAllModals();
+  const modal = document.getElementById('modal-' + type);
+  if (!modal) return;
+  modal.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  // Focus first input if exists
+  setTimeout(function() {
+    const input = modal.querySelector('input');
+    if (input) try { input.focus(); } catch(e) {}
+  }, 50);
+  if (typeof gtag === 'function') {
+    try { gtag('event', 'modal_open', { modal_type: type }); } catch(e) {}
+  }
+}
+
+function closeModal() {
+  closeAllModals();
+}
+
+function closeAllModals() {
+  document.querySelectorAll('.modal-backdrop.is-open').forEach(function(m) {
+    m.classList.remove('is-open');
+  });
+  document.body.style.overflow = '';
+}
+
+// ESC ile modal kapat
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeAllModals();
+});
+
+// Modal içi link kısaltıcı
+async function modalShortenLink() {
+  const input = document.getElementById('modal-url-input');
+  let url = input.value.trim();
+  if (!url) { alert('Lütfen bir link girin.'); return; }
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  try { new URL(url); } catch { alert('Geçersiz link formatı.'); return; }
+
+  const btn = input.nextElementSibling;
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = 'KISALTIYOR...';
+
+  const slug = genSlug();
+  const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/links`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({ slug: slug, original_url: url, expires_at: expiresAt, click_count: 0 })
+    });
+    if (!res.ok) throw new Error('Sunucu hatası');
+    const shortUrl = 'https://tektik.la/r/' + slug;
+    currentShortUrl = shortUrl;
+    document.getElementById('shorten-result-url').textContent = shortUrl;
+    document.getElementById('shorten-form').style.display = 'none';
+    document.getElementById('shorten-result').style.display = 'block';
+    if (typeof gtag === 'function') {
+      try { gtag('event', 'link_shortened', { source: 'modal' }); } catch(e) {}
+    }
+  } catch (e) {
+    alert('Hata: Link kısaltılamadı. Lütfen tekrar dene.');
+  }
+  btn.disabled = false;
+  btn.textContent = originalText;
+}
+
+function copyModalShortUrl() {
+  const url = document.getElementById('shorten-result-url').textContent;
+  if (!url) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function() {
+      const btn = event.target;
+      const original = btn.textContent;
+      btn.textContent = '✓ KOPYALANDI';
+      setTimeout(function() { btn.textContent = original; }, 1500);
+    });
+  }
+}
+
+function resetModalShorten() {
+  document.getElementById('modal-url-input').value = '';
+  document.getElementById('shorten-form').style.display = 'block';
+  document.getElementById('shorten-result').style.display = 'none';
+  try { document.getElementById('modal-url-input').focus(); } catch(e) {}
+}
+
+// Araç modal — canlı arama
+function filterToolsModal(query) {
+  query = (query || '').toLowerCase().trim();
+  const cards = document.querySelectorAll('#tools-modal-grid .tools-modal-card');
+  const noResults = document.getElementById('tools-no-results');
+  let visibleCount = 0;
+  cards.forEach(function(card) {
+    const name = (card.getAttribute('data-name') || '').toLowerCase();
+    const match = !query || name.indexOf(query) !== -1;
+    card.style.display = match ? '' : 'none';
+    if (match) visibleCount++;
+  });
+  noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
 function toggleTheme() {
   var theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', theme);
@@ -2108,6 +1919,12 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
   window.toggleTheme = toggleTheme;
   window.shareTektik = shareTektik;
   window.scrollToTools = scrollToTools;
+  window.openModal = openModal;
+  window.closeModal = closeModal;
+  window.modalShortenLink = modalShortenLink;
+  window.copyModalShortUrl = copyModalShortUrl;
+  window.resetModalShorten = resetModalShorten;
+  window.filterToolsModal = filterToolsModal;
   window.shortenLink = shortenLink;
   window.clearHistory = clearHistory;
   window.copyResult = copyResult;
