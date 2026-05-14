@@ -1230,6 +1230,7 @@ function genSlug() {
 
 async function shortenLink() {
   const input = document.getElementById('url-input');
+  if (!input) return; // Eski hero formu kaldırıldı, modal kullanılıyor
   const url = input.value.trim();
   if (!url) { showStatus('Lütfen bir link girin.', 'error'); return; }
   let fullUrl = url;
@@ -1539,6 +1540,7 @@ function addToHistory(slug, shortUrl, original) {
 function renderHistory() {
   const list = document.getElementById('history-list');
   const section = document.getElementById('history-section');
+  if (!list || !section) return; // Eski hero formu silinmiş, history UI yok
   if (!sessionLinks.length) { section.style.display = 'none'; return; }
   section.style.display = 'block';
   list.innerHTML = sessionLinks.map(l => `
