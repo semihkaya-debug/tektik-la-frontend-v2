@@ -6,18 +6,16 @@
 // - Slug mı? → profile.html serve et
 
 const RESERVED = new Set([
-  'admin', 'api', 'app', 'auth', 'base64', 'binary', 'blog', 'btk',
-  'cekilis', 'cv', 'dashboard', 'fatura', 'fis', 'foto',
-  'functions', 'gerisayim', 'gorsel', 'gorsel-kirp', 'gradient',
-  'hashtag', 'hesap', 'home', 'html-encode', 'iletisim', 'index',
+  'admin', 'api', 'app', 'auth', 'base64', 'blog', 'cekilis', 'cv', 'dashboard', 'fatura', 'foto',
+  'functions', 'gerisayim', 'gorsel', 'gradient',
+  'hashtag', 'hesap', 'home', 'iletisim', 'index',
   'json', 'kelime', 'kosullar', 'login', 'logout', 'lorem', 'markdown',
   'metin', 'password', 'pomodoro', 'profile', 'qr', 'r', 'register',
   'regex', 'renk', 'renk-tonu', 'saat', 'settings', 'sifre',
-  'signup', 'static', 'tarih', 'turkce', 'uuid', 'whitespace',
-  'www', 'yuzde', 'barkod', 'gizlilik', 'kvkk', 'iade', 'sozlesme',
+  'signup', 'static', 'tarih', 'turkce', 'www', 'yuzde', 'barkod', 'gizlilik', 'kvkk', 'iade', 'sozlesme',
   'destek', 'yardim', 'hakkimizda', 'about', 'contact', 'help', 'support',
   'terms', 'privacy', 'forgot-password', 'reset-password',
-  'svg-converter'
+  'svg-converter', 'kdv'
 ]);
 
 export async function onRequest(context) {
