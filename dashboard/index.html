@@ -543,10 +543,8 @@
   document.getElementById('profileSlug').textContent = `/${user.slug}`;
   document.getElementById('profileLink').href = `/${user.slug}`;
 
-  const trialEnd = new Date(user.trial_ends_at);
-  const daysLeft = Math.ceil((trialEnd - new Date()) / (1000 * 60 * 60 * 24));
-  document.getElementById('trialBadge').textContent =
-    user.is_paid ? '✅ PREMIUM' : `🎁 ${daysLeft} GÜN ÜCRETSİZ`;
+  // Bağış modeli: countdown ve premium ayrımı yok, herkes ücretsiz
+  document.getElementById('trialBadge').textContent = '🎁 TAMAMEN ÜCRETSİZ';
 
   function showAlert(message, type = 'success') {
     alertEl.textContent = message;
