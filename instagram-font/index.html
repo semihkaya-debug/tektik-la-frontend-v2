@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Font & Şekilli Yazı Oluşturucu — Ücretsiz | tektik.la</title>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('tektik-theme') || 'dark');</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Instagram, TikTok ve Twitter biyografin için şekilli yazı ve farklı font stilleri oluştur. Kalın, italik, el yazısı, daireli ve daha fazlası. Ücretsiz, kayıtsız.">
+<meta name="keywords" content="instagram font, şekilli yazı, instagram biyografi font, unicode font, özel yazı stili, tiktok font, twitter font, el yazısı font">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tektik.la/instagram-font">
+<meta property="og:title" content="Instagram Font & Şekilli Yazı Oluşturucu | tektik.la">
+<meta property="og:description" content="Instagram, TikTok ve Twitter biyografin için şekilli yazı oluştur. Ücretsiz, kayıtsız.">
+<meta property="og:url" content="https://tektik.la/instagram-font">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+
+<link rel="stylesheet" href="/tools.css">
+
+<style>
+  .input-wrap {
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .char-count {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    pointer-events: none;
+  }
+  #main-input { padding-right: 60px; }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .font-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .font-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+  .font-row:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 3px 3px 0px 0px var(--accent);
+  }
+  .font-row-left { flex: 1; min-width: 0; }
+  .font-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .font-preview {
+    font-size: 20px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .copy-btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200, 245, 48, 0.08);
+  }
+
+  .info-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 32px;
+  }
+  .info-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .info-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .info-list li {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    display: flex;
+    gap: 8px;
+  }
+  .info-list li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 500px) {
+    .font-preview { font-size: 17px; }
+    .font-row { padding: 12px 14px; }
+  }
+</style>
+
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GFPX2NXXR8');</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Instagram Font & Şekilli Yazı Oluşturucu","description":"Instagram, TikTok ve Twitter biyografin için şekilli yazı ve farklı font stilleri oluştur.","url":"https://tektik.la/instagram-font","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"publisher":{"@type":"Organization","name":"tektik.la","url":"https://tektik.la"}}
+</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="header-actions">
+      <a href="/" class="ctrl-btn">← Araçlar</a>
+      <button class="ctrl-btn" onclick="toggleTheme()" title="Tema değiştir">◐</button>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page fade-up">
+
+  <div class="tool-tag">— INSTAGRAM FONT</div>
+  <h1 class="tool-title">şekilli <em>yazı</em> oluşturucu</h1>
+  <p class="tool-desc">Instagram, TikTok ve Twitter bio'n için farklı font stilleri. Tıkla, kopyala, yapıştır.</p>
+
+  <!-- INPUT -->
+  <div class="tool-card">
+    <div class="input-wrap">
+      <input
+        type="text"
+        id="main-input"
+        class="tool-input"
+        placeholder="Metni buraya yaz..."
+        maxlength="80"
+        oninput="onInput()"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <span class="char-count" id="char-count">0/80</span>
+    </div>
+    <p class="status" id="status-msg">Yazmaya başla, fontlar anında güncellenir.</p>
+  </div>
+
+  <!-- FİLTRE -->
+  <div class="filter-row" id="filter-row">
+    <button class="filter-btn active" onclick="setFilter('tümü', this)">Tümü</button>
+    <button class="filter-btn" onclick="setFilter('klasik', this)">Klasik</button>
+    <button class="filter-btn" onclick="setFilter('el yazısı', this)">El Yazısı</button>
+    <button class="filter-btn" onclick="setFilter('dekoratif', this)">Dekoratif</button>
+    <button class="filter-btn" onclick="setFilter('eğlenceli', this)">Eğlenceli</button>
+  </div>
+
+  <!-- FONT LİSTESİ -->
+  <div class="font-grid" id="font-grid"></div>
+
+  <!-- BİLGİ KUTUSU -->
+  <div class="info-box">
+    <div class="info-title">— Nasıl Kullanılır?</div>
+    <ul class="info-list">
+      <li>Metni yaz, istediğin stili seç ve "Kopyala"ya tıkla.</li>
+      <li>Instagram, TikTok, Twitter bio'na veya herhangi bir metin alanına yapıştır.</li>
+      <li>Bu fontlar Unicode karakterler kullanır — tüm cihazlarda görünür.</li>
+      <li>Bazı platformlar belirli karakterleri desteklemeyebilir.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="tool-footer">
+  <p>tektik.la</p>
+  <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">𝕏 @tektik_la</a>
+  <a href="mailto:info@tektik.la">info@tektik.la</a>
+  <p>© 2026 — Tüm araçlar ücretsiz</p>
+</footer>
+
+<script>
+(function() {
+
+  const FONTS = [
+    { name: 'Kalın',           cat: 'klasik',    fn: s => map(s, {A:65,a:97,n:119743,m:119737,d:true}) },
+    { name: 'İtalik',          cat: 'klasik',    fn: s => map(s, {A:65,a:97,n:119795,m:119789}) },
+    { name: 'Kalın İtalik',    cat: 'klasik',    fn: s => map(s, {A:65,a:97,n:119847,m:119841}) },
+    { name: 'Daktilo',         cat: 'klasik',    fn: s => map(s, {A:65,a:97,n:120367,m:120361,D:48,nd:120774}) },
+    { name: 'El Yazısı',       cat: 'el yazısı', fn: s => map(s, {A:65,a:97,n:119899,m:119893}) },
+    { name: 'El Yazısı Kalın', cat: 'el yazısı', fn: s => map(s, {A:65,a:97,n:119951,m:119945}) },
+    { name: 'Çift Çizgili',    cat: 'klasik',    fn: s => map(s, {A:65,a:97,n:120055,m:120049,D:48,nd:120744}) },
+    { name: 'Sans Kalın',      cat: 'klasik',    fn: s => map(s, {A:65,a:97,n:120211,m:120205,D:48,nd:120782}) },
+    { name: 'Sans İtalik',     cat: 'klasik',    fn: s => map(s, {A:65,a:97,n:120263,m:120257}) },
+    { name: 'Daireli',         cat: 'dekoratif', fn: circled },
+    { name: 'Kutucuklu',       cat: 'dekoratif', fn: squared },
+    { name: 'Küçük Büyük',     cat: 'dekoratif', fn: smallCaps },
+    { name: 'Ters Çevrili',    cat: 'eğlenceli', fn: flipped },
+    { name: 'Ayna',            cat: 'eğlenceli', fn: s => [...s].reverse().join('') },
+    { name: 'Noktalı Harf',    cat: 'eğlenceli', fn: dotted },
+    { name: 'Çizgili',         cat: 'eğlenceli', fn: s => [...s].join('\u0336') + '\u0336' },
+    { name: 'Altı Çizgili',    cat: 'dekoratif', fn: s => [...s].join('\u0332') + '\u0332' },
+    { name: 'Üstü Çizgili',    cat: 'eğlenceli', fn: s => [...s].join('\u0305') + '\u0305' },
+  ];
+
+  function map(s, opts) {
+    return [...s].map(c => {
+      const cc = c.codePointAt(0);
+      if (cc >= 65 && cc <= 90) return String.fromCodePoint(cc - opts.A + opts.n);
+      if (cc >= 97 && cc <= 122) return String.fromCodePoint(cc - opts.a + opts.m);
+      if (opts.D && cc >= 48 && cc <= 57) return String.fromCodePoint(cc - opts.D + opts.nd);
+      if (opts.d && cc >= 48 && cc <= 57) return String.fromCodePoint(cc - 48 + 120764);
+      return c;
+    }).join('');
+  }
+
+  function circled(s) {
+    return [...s].map(c => {
+      const cc = c.codePointAt(0);
+      if (cc >= 65 && cc <= 90) return String.fromCodePoint(cc - 65 + 9398);
+      if (cc >= 97 && cc <= 122) return String.fromCodePoint(cc - 97 + 9424);
+      if (cc === 48) return '\u24EA';
+      if (cc >= 49 && cc <= 57) return String.fromCodePoint(cc - 49 + 9312);
+      return c;
+    }).join('');
+  }
+
+  function squared(s) {
+    return [...s].map(c => {
+      const cc = c.codePointAt(0);
+      if (cc >= 65 && cc <= 90) return String.fromCodePoint(cc - 65 + 127280);
+      if (cc >= 97 && cc <= 122) return String.fromCodePoint(cc - 97 + 127280);
+      return c;
+    }).join('');
+  }
+
+  function smallCaps(s) {
+    const m = {a:'ᴀ',b:'ʙ',c:'ᴄ',d:'ᴅ',e:'ᴇ',f:'ꜰ',g:'ɢ',h:'ʜ',i:'ɪ',j:'ᴊ',k:'ᴋ',l:'ʟ',m:'ᴍ',n:'ɴ',o:'ᴏ',p:'ᴘ',r:'ʀ',s:'s',t:'ᴛ',u:'ᴜ',v:'ᴠ',w:'ᴡ',y:'ʏ',z:'ᴢ'};
+    return [...s].map(c => m[c.toLowerCase()] || c).join('');
+  }
+
+  function flipped(s) {
+    const m = {a:'ɐ',b:'q',c:'ɔ',d:'p',e:'ǝ',f:'ɟ',g:'ƃ',h:'ɥ',i:'ᴉ',j:'ɾ',k:'ʞ',l:'l',m:'ɯ',n:'u',o:'o',p:'d',q:'b',r:'ɹ',s:'s',t:'ʇ',u:'n',v:'ʌ',w:'ʍ',x:'x',y:'ʎ',z:'z'};
+    return [...s].reverse().map(c => m[c.toLowerCase()] || c).join('');
+  }
+
+  function dotted(s) {
+    const m = {a:'ȧ',b:'ḃ',c:'ċ',d:'ḋ',e:'ė',f:'ḟ',g:'ġ',h:'ḣ',i:'ī',j:'j',k:'k',l:'l',m:'ṁ',n:'ṅ',o:'ȯ',p:'ṗ',q:'q',r:'r',s:'ṡ',t:'ṫ',u:'u',v:'v',w:'ẇ',x:'ẋ',y:'ẏ',z:'ż'};
+    return [...s].map(c => m[c.toLowerCase()] || c).join('');
+  }
+
+  let activeFilter = 'tümü';
+  let copiedIdx = null;
+  let copiedTimer = null;
+
+  function getInput() {
+    const v = document.getElementById('main-input').value;
+    return v || 'tektik.la';
+  }
+
+  function setFilter(f, btn) {
+    activeFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+  window.setFilter = setFilter;
+
+  function render() {
+    const txt = getInput();
+    const grid = document.getElementById('font-grid');
+    const filtered = activeFilter === 'tümü' ? FONTS : FONTS.filter(f => f.cat === activeFilter);
+
+    grid.innerHTML = '';
+    filtered.forEach((font, i) => {
+      const out = font.fn(txt);
+      const row = document.createElement('div');
+      row.className = 'font-row';
+      row.dataset.idx = i;
+      row.innerHTML = `
+        <div class="font-row-left">
+          <div class="font-name">${font.name} <span style="opacity:0.5">— ${font.cat}</span></div>
+          <div class="font-preview" title="${out}">${out}</div>
+        </div>
+        <button class="copy-btn" id="cbtn-${i}" onclick="copyFont(event, ${i}, '${out.replace(/'/g,"\\'")}')" aria-label="${font.name} stilini kopyala">Kopyala</button>
+      `;
+      row.onclick = e => { if (!e.target.closest('.copy-btn')) document.getElementById('cbtn-'+i).click(); };
+      grid.appendChild(row);
+    });
+  }
+
+  function copyFont(e, idx, txt) {
+    e.stopPropagation();
+    navigator.clipboard.writeText(txt).then(() => {
+      if (copiedTimer) clearTimeout(copiedTimer);
+      if (copiedIdx !== null) {
+        const old = document.getElementById('cbtn-'+copiedIdx);
+        if (old) { old.textContent = 'Kopyala'; old.classList.remove('copied'); }
+      }
+      const btn = document.getElementById('cbtn-'+idx);
+      if (btn) { btn.textContent = '✓ Kopyalandı'; btn.classList.add('copied'); }
+      copiedIdx = idx;
+      copiedTimer = setTimeout(() => {
+        const b = document.getElementById('cbtn-'+idx);
+        if (b) { b.textContent = 'Kopyala'; b.classList.remove('copied'); }
+        copiedIdx = null;
+      }, 2000);
+    }).catch(() => {
+      const btn = document.getElementById('cbtn-'+idx);
+      if (btn) btn.textContent = 'Hata!';
+    });
+  }
+  window.copyFont = copyFont;
+
+  function onInput() {
+    const inp = document.getElementById('main-input');
+    const cnt = document.getElementById('char-count');
+    const status = document.getElementById('status-msg');
+    cnt.textContent = inp.value.length + '/80';
+    if (inp.value.length > 0) {
+      status.textContent = FONTS.length + ' stil hazır — tıkla ve kopyala.';
+      status.className = 'status success';
+    } else {
+      status.textContent = 'Yazmaya başla, fontlar anında güncellenir.';
+      status.className = 'status';
+    }
+    render();
+  }
+  window.onInput = onInput;
+
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('tektik-theme', t);
+  }
+  window.toggleTheme = toggleTheme;
+
+  render();
+
+})();
+</script>
+</body>
+</html>
