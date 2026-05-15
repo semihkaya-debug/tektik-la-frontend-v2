@@ -90,7 +90,6 @@
 /blog/compress-images-online-without-quality-loss              /blog/compress-images-online-without-quality-loss/index.html            200
 /blog/create-professional-digital-receipts-for-freelancers     /blog/create-professional-digital-receipts-for-freelancers/index.html   200
 /blog/calculate-percentage-increase-and-decrease-fast          /blog/calculate-percentage-increase-and-decrease-fast/index.html        200
-/blog/linktree-alternatifi-2026                                /blog/linktree-alternatifi-2026/index.html                              200
 
 # ---- /profile/* (uzun versiyon, dashboard'dan açılır) ----
 # Not: /profile yalnız başına kullanılmıyor, sadece /profile/slug formatı var.
@@ -99,3 +98,20 @@
 
 # NOT: /:slug catch-all kuralı YOK!
 # /semih → profile.html yönlendirmesi functions/[[catchall]].js içinde yapılıyor.
+
+/blog/generate-strong-passwords-online-securely   /blog/generate-strong-passwords-online-securely/index.html   200
+/blog/how-to-create-qr-code-for-wifi-free   /blog/how-to-create-qr-code-for-wifi-free/index.html   200
+/blog/html-karakter-donusturme-ve-entity-rehberi   /blog/html-karakter-donusturme-ve-entity-rehberi/index.html   200
+/blog/kelime-sayisi-ve-metin-analizi   /blog/kelime-sayisi-ve-metin-analizi/index.html   200
+/blog/metin-formatlandirma-ve-donusturme   /blog/metin-formatlandirma-ve-donusturme/index.html   200
+/blog/metinlerde-gereksiz-bosluklari-temizleme   /blog/metinlerde-gereksiz-bosluklari-temizleme/index.html   200
+/blog/modern-css-gradient-tasarimi   /blog/modern-css-gradient-tasarimi/index.html   200
+/blog/online-geri-sayim-sayaci-kullanimi   /blog/online-geri-sayim-sayaci-kullanimi/index.html   200
+/blog/online-gorsel-kirpma-araci   /blog/online-gorsel-kirpma-araci/index.html   200
+/blog/pomodoro-teknigi-ile-odaklanma-ve-verimlilik   /blog/pomodoro-teknigi-ile-odaklanma-ve-verimlilik/index.html   200
+/blog/renk-kodlari-donusturme-rehberi   /blog/renk-kodlari-donusturme-rehberi/index.html   200
+/blog/sosyal-medya-hashtag-stratejileri   /blog/sosyal-medya-hashtag-stratejileri/index.html   200
+/blog/tasarimda-lorem-ipsum-kullanimi   /blog/tasarimda-lorem-ipsum-kullanimi/index.html   200
+/blog/turkce-karakter-sorunu-ve-cozumu   /blog/turkce-karakter-sorunu-ve-cozumu/index.html   200
+/blog/ucretsiz-online-fatura-olusturma-rehberi   /blog/ucretsiz-online-fatura-olusturma-rehberi/index.html   200
+/blog/uyumlu-renk-paleti-olusturma   /blog/uyumlu-renk-paleti-olusturma/index.html   200
