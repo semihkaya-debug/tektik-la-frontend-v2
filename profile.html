@@ -285,6 +285,7 @@
   .social-cell:hover {
     border-color: var(--accent);
     transform: translateY(-2px);
+    box-shadow: 3px 3px 0px 0px var(--accent);
   }
   .social-icon {
     font-family: 'Bricolage Grotesque', sans-serif;
@@ -346,6 +347,11 @@
     flex-shrink: 0;
   }
   .featured-link:hover .featured-title { color: var(--accent); }
+  .featured-link:hover {
+    padding-left: 6px;
+    box-shadow: 6px 6px 0px 0px var(--accent);
+    background: var(--bg2);
+  }
 
   /* DIGER LINKLER - Liste */
   .links-list {
@@ -355,8 +361,8 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
+    padding: 14px 6px;
+    border-bottom: 1px dashed var(--border);
     text-decoration: none;
     transition: all 200ms ease;
     gap: 12px;
@@ -376,6 +382,7 @@
     font-size: 10px;
     color: var(--text3);
     flex-shrink: 0;
+    opacity: 0.5;
   }
   .link-title {
     font-family: 'Bricolage Grotesque', sans-serif;
@@ -393,6 +400,7 @@
   }
   .link-item:hover .link-title { color: var(--accent); }
   .link-item:hover .link-arrow { color: var(--accent); }
+  .link-item:hover { background: var(--bg2); padding-left: 12px; }
 
   /* EMPTY STATES */
   .empty-state {
@@ -408,20 +416,27 @@
   /* FOOTER CALL-TO-ACTION */
   .cta-band {
     border-top: 2px solid var(--accent);
-    padding-top: 16px;
+    padding-top: 20px;
     text-align: center;
   }
   .cta-link {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
-    color: var(--accent);
+    color: #0a0a0a;
     letter-spacing: 2px;
     text-decoration: none;
     font-weight: 700;
     text-transform: uppercase;
-    transition: opacity 200ms;
+    background: var(--accent);
+    padding: 14px 28px;
+    display: inline-block;
+    transition: all 200ms;
   }
-  .cta-link:hover { opacity: 0.7; }
+  .cta-link:hover {
+    background: var(--text);
+    box-shadow: 4px 4px 0px 0px var(--accent);
+  }
+  .cta-link:active { transform: translate(2px, 2px); box-shadow: none; }
 
   /* LOADING / ERROR */
   .loading, .error {
