@@ -932,22 +932,25 @@
 
   /* Drawer: araç chip'leri */
   .drawer-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
     margin-bottom: 4px;
   }
   .drawer-chip {
     background: var(--bg3);
     border: 1px solid var(--border);
     color: var(--text2);
-    padding: 7px 14px;
+    padding: 9px 12px;
     border-radius: 8px;
     font-family: 'Space Mono', monospace;
     font-size: 11px;
     text-decoration: none;
     transition: all 0.2s;
-    display: inline-block;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .drawer-chip:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -2708,7 +2711,22 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
           '<a href="/pomodoro" class="drawer-chip">Pomodoro Zamanlayıcı</a>' +
           '<a href="/fatura" class="drawer-chip">Fatura Oluşturucu</a>' +
           '<a href="/json" class="drawer-chip">JSON Formatlayıcı</a>' +
-          '<a href="/instagram-font" class="drawer-chip">✨ Instagram Font</a>' +
+          '<a href="/instagram-font" class="drawer-chip">Instagram Font</a>' +
+          '<a href="/base64" class="drawer-chip">Base64 Dönüştürücü</a>' +
+          '<a href="/markdown" class="drawer-chip">Markdown Editörü</a>' +
+          '<a href="/regex" class="drawer-chip">Regex Test</a>' +
+          '<a href="/kelime" class="drawer-chip">Kelime Sayacı</a>' +
+          '<a href="/metin" class="drawer-chip">Metin Araçları</a>' +
+          '<a href="/lorem" class="drawer-chip">Lorem Ipsum</a>' +
+          '<a href="/renk" class="drawer-chip">Renk Dönüştürücü</a>' +
+          '<a href="/renk-tonu" class="drawer-chip">Renk Paleti</a>' +
+          '<a href="/gradient" class="drawer-chip">Gradient Oluşturucu</a>' +
+          '<a href="/hashtag" class="drawer-chip">Hashtag Üreteci</a>' +
+          '<a href="/turkce" class="drawer-chip">Türkçe Karakter</a>' +
+          '<a href="/gerisayim" class="drawer-chip">Geri Sayım</a>' +
+          '<a href="/saat" class="drawer-chip">Saat & Zaman</a>' +
+          '<a href="/tarih" class="drawer-chip">Tarih Hesaplama</a>' +
+          '<a href="/hesap" class="drawer-chip">Faiz Hesaplama</a>' +
         '</div>' +
         '<a href="#araclar" class="drawer-cta" onclick="closeDrawer(); setTimeout(scrollToTools, 300);">TÜM ARAÇLARI GÖR →</a>'
     },
