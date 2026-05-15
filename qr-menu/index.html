@@ -663,6 +663,9 @@ window.addItem = function(catId, name, price) {
 };
 
 init();
+  if (window.location.hash && window.location.hash.length > 1) {
+    switchTab('preview');
+  }
 
 })();
 </script>
