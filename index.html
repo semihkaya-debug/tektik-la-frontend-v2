@@ -161,6 +161,7 @@
   input::placeholder { color: var(--text2); }
   .btn-primary { background: var(--accent); color: #0a0a0a; border: none; padding: 15px 28px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.2s; min-width: 110px; }
   .btn-primary:hover:not(:disabled) { background: var(--accent2); transform: translateY(-1px); }
+  .btn-primary:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: none; }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
   .btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); padding: 10px 18px; border-radius: 8px; font-family: 'Space Mono', monospace; font-size: 12px; cursor: pointer; transition: all 0.2s; }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
@@ -387,7 +388,9 @@
   .tools-cta:hover {
     background: var(--accent);
     color: var(--bg);
+    box-shadow: 4px 4px 0px 0px rgba(200,245,48,0.3);
   }
+  .tools-cta:active { transform: translate(2px, 2px); box-shadow: none; }
 
   /* 4. KART: Topluluk / Sosyal */
   .community-card {
@@ -732,6 +735,7 @@
   .tk-card:hover {
     border-color: var(--accent);
     transform: translateY(-2px);
+    box-shadow: 4px 4px 0px 0px var(--accent);
   }
   .tk-card-tag {
     font-family: 'Space Mono', monospace;
@@ -870,6 +874,7 @@
     box-sizing: border-box;
   }
   .drawer-cta:hover { background: var(--accent2); }
+  .drawer-cta:active { transform: translate(2px, 2px); box-shadow: none; }
   .drawer-cta-ghost {
     display: block;
     background: transparent;
