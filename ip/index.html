@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP Adresim Nedir? — Ücretsiz IP Sorgulama | tektik.la</title>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('tektik-theme') || 'dark');</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="IP adresinizi anında öğrenin. Ülke, şehir ve internet sağlayıcı bilgilerinizi ücretsiz sorgulayın. Kayıt gerekmez, reklam yok.">
+<meta name="keywords" content="ip adresim nedir, ip sorgulama, ip adresi öğren, my ip address, ip nedir, internet ip adresi">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tektik.la/ip">
+<meta property="og:title" content="IP Adresim Nedir? — Ücretsiz IP Sorgulama | tektik.la">
+<meta property="og:description" content="IP adresinizi anında öğrenin. Ülke, şehir ve internet sağlayıcı bilgilerinizi ücretsiz sorgulayın.">
+<meta property="og:url" content="https://tektik.la/ip">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+
+<link rel="stylesheet" href="/tools.css">
+
+<style>
+  .ip-display {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .ip-display.loaded { border-color: var(--accent); box-shadow: 4px 4px 0px 0px var(--accent); }
+  .ip-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .ip-address {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    word-break: break-all;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ip-location {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 24px;
+    min-height: 22px;
+  }
+  .ip-flag {
+    font-size: 28px;
+    margin-bottom: 8px;
+    min-height: 36px;
+    display: block;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .detail-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+  .detail-item:hover { border-color: var(--accent); }
+  .detail-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .detail-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    word-break: break-all;
+  }
+  .detail-value.loading {
+    background: var(--border);
+    border-radius: 4px;
+    color: transparent;
+    animation: pulse 1.2s ease infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .copy-row {
+    display: flex;
+    gap: 10px;
+  }
+  .copy-row .btn-primary { flex: 1; justify-content: center; }
+  .copy-row .btn-ghost { flex: 1; justify-content: center; }
+
+  .info-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 32px;
+  }
+  .info-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .info-list li {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+    display: flex;
+    gap: 8px;
+  }
+  .info-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+
+  @media (max-width: 500px) {
+    .detail-grid { grid-template-columns: 1fr; }
+    .copy-row { flex-direction: column; }
+    .ip-address { font-size: 24px; }
+  }
+</style>
+
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GFPX2NXXR8');</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"IP Adresim Nedir?","description":"IP adresinizi anında öğrenin. Ülke, şehir ve internet sağlayıcı bilgilerinizi ücretsiz sorgulayın.","url":"https://tektik.la/ip","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"publisher":{"@type":"Organization","name":"tektik.la","url":"https://tektik.la"}}
+</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="header-actions">
+      <a href="/" class="ctrl-btn">← Araçlar</a>
+      <button class="ctrl-btn" onclick="toggleTheme()" title="Tema değiştir">◐</button>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page fade-up">
+
+  <div class="tool-tag">— IP SORGULAMA</div>
+  <h1 class="tool-title">IP adresin <em>nedir?</em></h1>
+  <p class="tool-desc">İnternet bağlantınıza ait IP adresi ve konum bilgileri. Anında, ücretsiz.</p>
+
+  <!-- ANA IP KUTUSU -->
+  <div class="ip-display" id="ip-display">
+    <div class="ip-flag" id="ip-flag">🌍</div>
+    <div class="ip-label">Senin IP Adresin</div>
+    <div class="ip-address" id="ip-address">
+      <span class="detail-value loading" style="width:200px; height:40px; display:block;">...</span>
+    </div>
+    <div class="ip-location" id="ip-location">Konum bilgisi yükleniyor...</div>
+    <div class="copy-row">
+      <button class="btn-primary" onclick="copyIP()" id="copy-btn">IP'yi Kopyala</button>
+      <button class="btn-ghost" onclick="refresh()">↻ Yenile</button>
+    </div>
+  </div>
+
+  <!-- DETAY GRİD -->
+  <div class="detail-grid">
+    <div class="detail-item">
+      <div class="detail-label">Ülke</div>
+      <div class="detail-value loading" id="d-country" style="height:18px;">...</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Şehir</div>
+      <div class="detail-value loading" id="d-city" style="height:18px;">...</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Bölge</div>
+      <div class="detail-value loading" id="d-region" style="height:18px;">...</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Zaman Dilimi</div>
+      <div class="detail-value loading" id="d-timezone" style="height:18px;">...</div>
+    </div>
+  </div>
+
+  <!-- BİLGİ KUTUSU -->
+  <div class="info-box">
+    <div class="info-title">— IP Adresi Nedir?</div>
+    <ul class="info-list">
+      <li>IP (Internet Protocol) adresi, internete bağlı her cihaza atanan benzersiz bir numaradır.</li>
+      <li>Burada görünen IP, router'ınızın dışa dönük (public) adresidir — ev içi ağınızdaki adres değil.</li>
+      <li>VPN veya proxy kullanıyorsanız, gerçek konumunuz yerine sunucunun konumu görünür.</li>
+      <li>IP adresleri dinamik olabilir — internet sağlayıcınız her bağlantıda farklı bir IP atayabilir.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="tool-footer">
+  <p>tektik.la</p>
+  <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">𝕏 @tektik_la</a>
+  <a href="mailto:info@tektik.la">info@tektik.la</a>
+  <p>© 2026 — Tüm araçlar ücretsiz</p>
+</footer>
+
+<script>
+(function() {
+  let currentIP = '';
+
+  function setLoading(loading) {
+    document.querySelectorAll('.detail-value').forEach(el => {
+      if (loading) el.classList.add('loading');
+      else el.classList.remove('loading');
+    });
+  }
+
+  async function fetchIP() {
+    setLoading(true);
+    document.getElementById('ip-display').classList.remove('loaded');
+    try {
+      const res = await fetch('/api/ip');
+      const data = await res.json();
+
+      currentIP = data.ip;
+
+      // Ana kutu
+      document.getElementById('ip-address').textContent = data.ip;
+      document.getElementById('ip-flag').textContent = data.country_flag || '🌍';
+
+      const loc = [data.city, data.country_name].filter(Boolean).join(', ');
+      document.getElementById('ip-location').textContent = loc || 'Konum bilgisi alınamadı';
+
+      // Detaylar
+      document.getElementById('d-country').textContent = [data.country_flag, data.country_name].filter(Boolean).join(' ') || '—';
+      document.getElementById('d-city').textContent = data.city || '—';
+      document.getElementById('d-region').textContent = data.region || '—';
+      document.getElementById('d-timezone').textContent = data.timezone || '—';
+
+      document.getElementById('ip-display').classList.add('loaded');
+
+    } catch (e) {
+      document.getElementById('ip-address').textContent = 'Hata';
+      document.getElementById('ip-location').textContent = 'IP bilgisi alınamadı, lütfen sayfayı yenileyin.';
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function copyIP() {
+    if (!currentIP) return;
+    navigator.clipboard.writeText(currentIP).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = '✓ Kopyalandı!';
+      btn.style.background = 'var(--accent2)';
+      setTimeout(() => {
+        btn.textContent = 'IP\'yi Kopyala';
+        btn.style.background = '';
+      }, 2000);
+    });
+  }
+
+  function refresh() { fetchIP(); }
+
+  function toggleTheme() {
+    const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('tektik-theme', t);
+  }
+
+  window.copyIP = copyIP;
+  window.refresh = refresh;
+  window.toggleTheme = toggleTheme;
+
+  fetchIP();
+})();
+</script>
+</body>
+</html>
