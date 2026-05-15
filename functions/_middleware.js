@@ -15,7 +15,7 @@ const RESERVED = new Set([
   'signup', 'static', 'tarih', 'turkce', 'www', 'yuzde', 'barkod', 'gizlilik', 'kvkk', 'iade', 'sozlesme',
   'destek', 'yardim', 'hakkimizda', 'about', 'contact', 'help', 'support',
   'terms', 'privacy', 'forgot-password', 'reset-password',
-  'svg-converter', 'kdv', 'instagram-font', 'ip'
+  'svg-converter', 'kdv', 'instagram-font', 'ip', 'qr-menu'
 ]);
 
 export async function onRequest(context) {

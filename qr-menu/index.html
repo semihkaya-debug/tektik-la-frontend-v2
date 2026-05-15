@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ücretsiz QR Menü Oluşturucu — Kafe & Restoran | tektik.la</title>
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('tektik-theme') || 'dark');</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Kafe ve restoranınız için ücretsiz QR menü oluşturun. Üye olmak yok, veritabanı yok, reklam yok. Menünüz tamamen linkin içinde saklanır.">
+<meta name="keywords" content="qr menü oluşturucu, dijital menü, kafe menü qr kod, restoran dijital menü, ücretsiz qr menü, online menü oluştur">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://tektik.la/qr-menu">
+<meta property="og:title" content="Ücretsiz QR Menü Oluşturucu | tektik.la">
+<meta property="og:description" content="Kafe ve restoranınız için ücretsiz QR menü oluşturun. Üye olmak yok, veritabanı yok, reklam yok.">
+<meta property="og:url" content="https://tektik.la/qr-menu">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tektik.la/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+
+<link rel="stylesheet" href="/tools.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+.tabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: var(--bg3);
+  color: var(--text2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+.tab-btn:first-child { border-right: 1px solid var(--border); }
+.tab-btn.active { background: var(--accent); color: #0a0a0a; }
+
+.notice-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.notice-box strong { color: var(--accent); }
+
+.field-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.category-block {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.cat-name-input {
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.cat-name-input:focus { border-color: var(--accent); }
+
+.item-row {
+  display: grid;
+  grid-template-columns: 1fr 100px 36px;
+  gap: 6px;
+  margin-bottom: 6px;
+  align-items: center;
+}
+.item-input {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.item-input:focus { border-color: var(--accent); }
+
+.del-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text2);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.del-btn:hover { border-color: #e55; color: #e55; }
+
+.add-item-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  color: var(--text2);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: 4px;
+}
+.add-item-btn:hover { border-color: var(--accent); color: var(--accent); border-style: solid; }
+
+.add-cat-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text2);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+.add-cat-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* PREVIEW */
+.preview-phone {
+  max-width: 360px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.preview-header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 20px;
+  text-align: center;
+}
+.preview-biz-name {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.preview-biz-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+}
+.preview-body { padding: 16px; }
+.preview-cat-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+}
+.preview-cat-title:first-child { margin-top: 0; }
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--border);
+  gap: 8px;
+}
+.preview-item:last-child { border-bottom: none; }
+.preview-item-name { font-size: 14px; color: var(--text); }
+.preview-item-price {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.preview-footer {
+  border-top: 1px solid var(--border);
+  padding: 12px;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--text2);
+}
+.preview-footer a { color: var(--accent); text-decoration: none; }
+
+/* QR KUTUSU */
+.qr-result {
+  margin-top: 24px;
+  background: var(--bg3);
+  border: 1px solid var(--accent);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 4px 4px 0px 0px var(--accent);
+}
+.qr-result-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  text-align: center;
+}
+#qrcode-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+#qrcode-container canvas,
+#qrcode-container img {
+  border-radius: 8px;
+  border: 4px solid #fff;
+}
+.url-display {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+  word-break: break-all;
+  margin-bottom: 12px;
+  max-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.qr-btns { display: flex; gap: 8px; }
+.qr-btns .btn-primary { flex: 1; justify-content: center; font-size: 12px; }
+.qr-btns .btn-ghost { flex: 1; justify-content: center; font-size: 12px; }
+
+.url-too-long {
+  background: var(--bg3);
+  border: 1px solid #e55;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #e55;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 500px) {
+  .item-row { grid-template-columns: 1fr 80px 36px; }
+  .qr-btns { flex-direction: column; }
+}
+</style>
+
+<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wb02k6uw73");</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GFPX2NXXR8"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GFPX2NXXR8');</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Ücretsiz QR Menü Oluşturucu","description":"Kafe ve restoranınız için ücretsiz QR menü oluşturun. Üye olmak yok, veritabanı yok, reklam yok.","url":"https://tektik.la/qr-menu","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"publisher":{"@type":"Organization","name":"tektik.la","url":"https://tektik.la"}}
+</script>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">tektik<span>.la</span></a>
+    <div class="header-actions">
+      <a href="/" class="ctrl-btn">← Araçlar</a>
+      <button class="ctrl-btn" onclick="toggleTheme()" title="Tema değiştir">◐</button>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page fade-up">
+
+  <div class="tool-tag">— QR MENÜ</div>
+  <h1 class="tool-title">dijital menün<br><em>hazır saniyede</em></h1>
+  <p class="tool-desc">Kafe, restoran veya işletmen için QR menü oluştur. Üye olmak yok, sunucu yok, reklam yok.</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-edit-btn" onclick="switchTab('edit')">① Menüyü Düzenle</button>
+    <button class="tab-btn" id="tab-preview-btn" onclick="switchTab('preview')">② Önizle & QR Al</button>
+  </div>
+
+  <!-- DÜZENLEME EKRANI -->
+  <div id="screen-edit">
+    <div class="notice-box">
+      <strong>Verileriniz sunucularımıza gitmez.</strong> Menünüz tamamen oluşturulan linkin içinde saklanır. Link değişmediği sürece menünüz kalıcıdır.
+    </div>
+
+    <div class="tool-card" style="margin-bottom:16px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div>
+          <label class="field-label">İşletme adı</label>
+          <input type="text" class="tool-input" id="biz-name" placeholder="Berber Kafe, Pizza House vb." maxlength="60" oninput="onDataChange()" />
+        </div>
+        <div>
+          <label class="field-label">Kısa açıklama <span style="opacity:0.5">(opsiyonel)</span></label>
+          <input type="text" class="tool-input" id="biz-desc" placeholder="Adres, slogan, telefon vb." maxlength="100" oninput="onDataChange()" />
+        </div>
+      </div>
+    </div>
+
+    <div id="categories-container"></div>
+
+    <button class="add-cat-btn" onclick="addCategory()">+ Yeni Kategori Ekle</button>
+
+    <div style="margin-top:20px; display:flex; gap:10px;">
+      <button class="btn-primary" onclick="switchTab('preview')" style="flex:1; justify-content:center;">Önizle & QR Al →</button>
+      <button class="btn-ghost" onclick="resetAll()" title="Sıfırla">↺</button>
+    </div>
+  </div>
+
+  <!-- ÖNİZLEME EKRANI -->
+  <div id="screen-preview" style="display:none;">
+    <div class="preview-phone" id="menu-preview"></div>
+    <div id="qr-section"></div>
+
+    <div style="margin-top:16px;">
+      <button class="btn-ghost" onclick="switchTab('edit')" style="width:100%; justify-content:center;">← Geri Dön & Düzenle</button>
+    </div>
+  </div>
+
+</main>
+
+<footer class="tool-footer">
+  <p>tektik.la</p>
+  <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">𝕏 @tektik_la</a>
+  <a href="mailto:info@tektik.la">info@tektik.la</a>
+  <p>© 2026 — Tüm araçlar ücretsiz</p>
+</footer>
+
+<script>
+(function() {
+
+var state = {
+  bizName: '',
+  bizDesc: '',
+  categories: []
+};
+
+var catIdCounter = 0;
+var itemIdCounter = 0;
+
+function init() {
+  // URL hash'ten yükle
+  if (window.location.hash && window.location.hash.length > 1) {
+    try {
+      var decoded = decodeURIComponent(window.location.hash.slice(1));
+      var parsed = JSON.parse(atob(decoded));
+      if (parsed && parsed.n !== undefined) {
+        state.bizName = parsed.n || '';
+        state.bizDesc = parsed.d || '';
+        state.categories = (parsed.c || []).map(function(cat) {
+          return {
+            id: ++catIdCounter,
+            name: cat.n || '',
+            items: (cat.i || []).map(function(item) {
+              return { id: ++itemIdCounter, name: item.n || '', price: item.p || '' };
+            })
+          };
+        });
+        document.getElementById('biz-name').value = state.bizName;
+        document.getElementById('biz-desc').value = state.bizDesc;
+        renderCategories();
+        return;
+      }
+    } catch(e) {}
+  }
+  // Varsayılan başlangıç
+  addCategory('Sıcak İçecekler');
+  addItem(state.categories[0].id, 'Türk Kahvesi', '40 ₺');
+  addItem(state.categories[0].id, 'Latte', '65 ₺');
+  addCategory('Yiyecekler');
+  addItem(state.categories[1].id, 'Tost', '80 ₺');
+}
+
+function addCategory(name) {
+  var cat = { id: ++catIdCounter, name: name || '', items: [] };
+  state.categories.push(cat);
+  renderCategories();
+}
+window.addCategory = addCategory;
+
+function addItem(catId, name, price) {
+  var cat = state.categories.find(function(c) { return c.id === catId; });
+  if (!cat) return;
+  cat.items.push({ id: ++itemIdCounter, name: name || '', price: price || '' });
+  renderCategories();
+}
+
+function delCategory(catId) {
+  state.categories = state.categories.filter(function(c) { return c.id !== catId; });
+  renderCategories();
+}
+window.delCategory = delCategory;
+
+function delItem(catId, itemId) {
+  var cat = state.categories.find(function(c) { return c.id === catId; });
+  if (!cat) return;
+  cat.items = cat.items.filter(function(i) { return i.id !== itemId; });
+  renderCategories();
+}
+window.delItem = delItem;
+
+function renderCategories() {
+  var container = document.getElementById('categories-container');
+  if (!container) return;
+  container.innerHTML = '';
+  state.categories.forEach(function(cat) {
+    var block = document.createElement('div');
+    block.className = 'category-block';
+    var itemsHtml = cat.items.map(function(item) {
+      return '<div class="item-row">' +
+        '<input class="item-input" type="text" placeholder="Ürün adı" value="' + esc(item.name) + '" ' +
+          'oninput="updateItem(' + cat.id + ',' + item.id + ',\'name\',this.value)" />' +
+        '<input class="item-input" type="text" placeholder="Fiyat" value="' + esc(item.price) + '" ' +
+          'oninput="updateItem(' + cat.id + ',' + item.id + ',\'price\',this.value)" />' +
+        '<button class="del-btn" onclick="delItem(' + cat.id + ',' + item.id + ')" aria-label="Sil">×</button>' +
+        '</div>';
+    }).join('');
+
+    block.innerHTML =
+      '<div class="cat-header">' +
+        '<input class="cat-name-input" type="text" placeholder="Kategori adı" value="' + esc(cat.name) + '" ' +
+          'oninput="updateCat(' + cat.id + ',this.value)" />' +
+        '<button class="del-btn" onclick="delCategory(' + cat.id + ')" aria-label="Kategoriyi sil">×</button>' +
+      '</div>' +
+      itemsHtml +
+      '<button class="add-item-btn" onclick="addItem(' + cat.id + ')">+ Ürün ekle</button>';
+    container.appendChild(block);
+  });
+}
+
+function updateCat(catId, val) {
+  var cat = state.categories.find(function(c) { return c.id === catId; });
+  if (cat) cat.name = val;
+}
+window.updateCat = updateCat;
+
+function updateItem(catId, itemId, field, val) {
+  var cat = state.categories.find(function(c) { return c.id === catId; });
+  if (!cat) return;
+  var item = cat.items.find(function(i) { return i.id === itemId; });
+  if (item) item[field] = val;
+}
+window.updateItem = updateItem;
+
+function onDataChange() {
+  state.bizName = document.getElementById('biz-name').value;
+  state.bizDesc = document.getElementById('biz-desc').value;
+}
+window.onDataChange = onDataChange;
+
+function buildHash() {
+  var data = {
+    n: state.bizName,
+    d: state.bizDesc,
+    c: state.categories.map(function(cat) {
+      return {
+        n: cat.name,
+        i: cat.items.map(function(item) {
+          return { n: item.name, p: item.price };
+        })
+      };
+    })
+  };
+  return btoa(encodeURIComponent(JSON.stringify(data)));
+}
+
+function buildMenuUrl() {
+  return window.location.origin + '/qr-menu#' + buildHash();
+}
+
+function renderPreview() {
+  state.bizName = document.getElementById('biz-name').value;
+  state.bizDesc = document.getElementById('biz-desc').value;
+
+  var preview = document.getElementById('menu-preview');
+  var catsHtml = state.categories.filter(function(c) { return c.name || c.items.length; }).map(function(cat) {
+    var itemsHtml = cat.items.filter(function(i) { return i.name; }).map(function(item) {
+      return '<div class="preview-item">' +
+        '<span class="preview-item-name">' + esc(item.name) + '</span>' +
+        '<span class="preview-item-price">' + esc(item.price) + '</span>' +
+        '</div>';
+    }).join('');
+    if (!itemsHtml) return '';
+    return '<div class="preview-cat-title">' + esc(cat.name) + '</div>' + itemsHtml;
+  }).join('');
+
+  preview.innerHTML =
+    '<div class="preview-header">' +
+      '<div class="preview-biz-name">' + esc(state.bizName || 'İşletme Adı') + '</div>' +
+      (state.bizDesc ? '<div class="preview-biz-desc">' + esc(state.bizDesc) + '</div>' : '') +
+    '</div>' +
+    '<div class="preview-body">' + (catsHtml || '<p style="font-family:\'Space Mono\',monospace;font-size:12px;color:var(--text2);text-align:center;padding:20px 0;">Henüz ürün eklenmedi.</p>') + '</div>' +
+    '<div class="preview-footer">tektik.la ile ücretsiz oluşturuldu</div>';
+
+  renderQR();
+}
+
+function renderQR() {
+  var url = buildMenuUrl();
+  var section = document.getElementById('qr-section');
+
+  if (url.length > 2953) {
+    section.innerHTML =
+      '<div class="qr-result">' +
+        '<div class="qr-result-title">— QR KOD</div>' +
+        '<div class="url-too-long">Menünüz çok uzun, QR kod oluşturulamıyor. Ürün sayısını veya isim uzunluklarını azaltmayı deneyin.</div>' +
+      '</div>';
+    return;
+  }
+
+  section.innerHTML =
+    '<div class="qr-result">' +
+      '<div class="qr-result-title">— QR KOD & LİNK</div>' +
+      '<div id="qrcode-container"></div>' +
+      '<div class="url-display" id="url-display">' + url + '</div>' +
+      '<div class="qr-btns">' +
+        '<button class="btn-primary" onclick="copyMenuUrl()">Linki Kopyala</button>' +
+        '<button class="btn-ghost" onclick="downloadQR()">QR İndir</button>' +
+      '</div>' +
+      '<p style="font-family:\'Space Mono\',monospace;font-size:11px;color:var(--text2);text-align:center;margin-top:12px;line-height:1.6;">Bu link değişmediği sürece menünüz kalıcıdır.<br>QR kodu bastırın, masaya koyun, bitti.</p>' +
+    '</div>';
+
+  var container = document.getElementById('qrcode-container');
+  new QRCode(container, {
+    text: url,
+    width: 200,
+    height: 200,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  // URL'i hash'e yaz
+  history.replaceState(null, '', '#' + buildHash());
+}
+
+function copyMenuUrl() {
+  var url = buildMenuUrl();
+  navigator.clipboard.writeText(url).then(function() {
+    var btns = document.querySelectorAll('.qr-btns .btn-primary');
+    btns.forEach(function(b) {
+      b.textContent = '✓ Kopyalandı!';
+      setTimeout(function() { b.textContent = 'Linki Kopyala'; }, 2000);
+    });
+  });
+}
+window.copyMenuUrl = copyMenuUrl;
+
+function downloadQR() {
+  var canvas = document.querySelector('#qrcode-container canvas');
+  if (!canvas) return;
+  var link = document.createElement('a');
+  link.download = (state.bizName || 'menu') + '-qr.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+window.downloadQR = downloadQR;
+
+function switchTab(tab) {
+  var editBtn = document.getElementById('tab-edit-btn');
+  var previewBtn = document.getElementById('tab-preview-btn');
+  var editScreen = document.getElementById('screen-edit');
+  var previewScreen = document.getElementById('screen-preview');
+
+  if (tab === 'edit') {
+    editBtn.classList.add('active');
+    previewBtn.classList.remove('active');
+    editScreen.style.display = 'block';
+    previewScreen.style.display = 'none';
+  } else {
+    editBtn.classList.remove('active');
+    previewBtn.classList.add('active');
+    editScreen.style.display = 'none';
+    previewScreen.style.display = 'block';
+    renderPreview();
+  }
+}
+window.switchTab = switchTab;
+
+function resetAll() {
+  if (!confirm('Menüyü sıfırlamak istediğinizden emin misiniz?')) return;
+  state = { bizName: '', bizDesc: '', categories: [] };
+  catIdCounter = 0;
+  itemIdCounter = 0;
+  document.getElementById('biz-name').value = '';
+  document.getElementById('biz-desc').value = '';
+  addCategory('Yeni Kategori');
+  history.replaceState(null, '', window.location.pathname);
+}
+window.resetAll = resetAll;
+
+function esc(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+function toggleTheme() {
+  var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('tektik-theme', t);
+}
+window.toggleTheme = toggleTheme;
+
+window.addItem = function(catId, name, price) {
+  var cat = state.categories.find(function(c) { return c.id === catId; });
+  if (!cat) return;
+  cat.items.push({ id: ++itemIdCounter, name: name || '', price: price || '' });
+  renderCategories();
+};
+
+init();
+
+})();
+</script>
+</body>
+</html>
