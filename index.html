@@ -1002,6 +1002,121 @@
     .drawer.open { right: 0; }
   }
 
+  /* Kart alt feature listesi */
+  .tk-card-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+    margin-bottom: 36px;
+  }
+  .tk-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+  .tk-feat strong { color: var(--text); font-weight: 700; }
+  .tk-feat-check {
+    flex-shrink: 0;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 11px;
+    min-width: 16px;
+  }
+
+  /* Drawer: telefon mockup */
+  .drawer-mockup-link { text-decoration: none; display: block; }
+  .drawer-phone-mockup {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.15s;
+    cursor: pointer;
+  }
+  .drawer-mockup-link:hover .drawer-phone-mockup {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .drawer-phone-bar {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .drawer-phone-body {
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .drawer-phone-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .drawer-phone-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .drawer-phone-slug {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    margin-bottom: 12px;
+  }
+  .drawer-phone-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+  .drawer-phone-link {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    text-align: center;
+  }
+  .drawer-phone-link.featured {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .drawer-phone-cta {
+    padding: 10px 14px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
   /* Inline link kısaltıcı kart */
   .tk-card-link { cursor: default !important; }
   .tk-card-link:hover { transform: none !important; border-color: var(--border) !important; }
@@ -1214,11 +1329,7 @@
 <body>
 <div class="grid-bg"></div>
 
-<!-- STICKY CTA -->
-<a href="/signup" class="sticky-cta" id="sticky-cta">
-  <span class="icon">⚡</span>
-  <span id="sticky-cta-text">ÜYE OL <span class="meta-text">· HEMEN BAŞLA</span></span>
-</a>
+<!-- STICKY CTA KALDIRILDI -->
 
 <div class="content">
   <header>
@@ -1262,7 +1373,11 @@
       <div class="tk-card" onclick="openDrawer('profil')" role="button" aria-label="Profil sistemi hakkında daha fazla bilgi">
         <span class="tk-card-tag">— PROFİL SİSTEMİ</span>
         <h2 class="tk-card-title">tüm linklerin<br><em>tek sayfada</em></h2>
-        <p class="tk-card-desc">Bio link, sosyal medya, projeler — hepsi bir URL'de.</p>
+        <div class="tk-card-features">
+          <div class="tk-feat"><span class="tk-feat-check">①</span><span><strong>Slug seç</strong> — tektik.la/senin-adın</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">②</span><span><strong>Linkleri ekle</strong> — YouTube, Twitch, Instagram...</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">③</span><span><strong>Bio'na yapıştır</strong> — tek link, hepsi hazır</span></div>
+        </div>
         <span class="tk-card-arrow">→</span>
       </div>
 
@@ -1277,14 +1392,22 @@
           </div>
           <div class="status" id="status-msg"></div>
         </div>
-        <p class="tk-card-desc" style="margin-top:12px;">Reklam yok, kayıt yok, tamamen ücretsiz.</p>
+        <div class="tk-card-features">
+          <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Kayıt gerekmez</strong> — hemen kısalt, anında kullan</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Reklamsız & ücretsiz</strong> — takip yok, popup yok</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>QR kod otomatik</strong> — her link için indirilebilir QR</span></div>
+        </div>
       </div>
 
       <!-- KART 3: ARAÇLAR -->
       <div class="tk-card" onclick="openDrawer('arac')" role="button" aria-label="Araçları keşfet">
         <span class="tk-card-tag">— 25+ ARAÇ</span>
         <h2 class="tk-card-title">hepsini<br><em>ücretsiz</em> kullan</h2>
-        <p class="tk-card-desc">QR, CV, Çekiliş, Pomodoro ve daha fazlası.</p>
+        <div class="tk-card-features">
+          <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Kayıt yok</strong> — hepsini ücretsiz kullan</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>QR, CV, Çekiliş</strong> ve 22 araç daha</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Reklamsız</strong> — popup yok, engel yok</span></div>
+        </div>
         <span class="tk-card-arrow">→</span>
       </div>
 
@@ -1292,7 +1415,11 @@
       <div class="tk-card" onclick="openDrawer('destek')" role="button" aria-label="Topluluk ve destek">
         <span class="tk-card-tag">— TOPLULUK</span>
         <h2 class="tk-card-title">projeye<br><em>destek</em> ver</h2>
-        <p class="tk-card-desc">Bağımsız, reklamsız. Seninle büyüyoruz.</p>
+        <div class="tk-card-features">
+          <div class="tk-feat"><span class="tk-feat-check">𝕏</span><span><strong>Twitter'da takip et</strong> — @tektik_la</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">✉</span><span><strong>E-posta at</strong> — info@tektik.la</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">♥</span><span><strong>Bağış yap</strong> — aracısız, doğrudan</span></div>
+        </div>
         <span class="tk-card-arrow">→</span>
       </div>
 
@@ -2494,7 +2621,27 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
     profil: {
       tag: '— PROFİL SİSTEMİ',
       html: '<div class="drawer-title">tüm linklerin<br><em>tek sayfada</em></div>' +
-        '<div class="drawer-steps">' +
+        '<a href="/test" target="_blank" rel="noopener" class="drawer-mockup-link">' +
+          '<div class="drawer-phone-mockup">' +
+            '<div class="drawer-phone-bar">' +
+              '<span style="font-size:10px;color:var(--text2)">14:23</span>' +
+              '<span style="font-family:\'Space Mono\',monospace;font-size:10px;color:var(--accent)">tektik.la/test</span>' +
+              '<span style="font-size:10px;color:var(--text2)">📶</span>' +
+            '</div>' +
+            '<div class="drawer-phone-body">' +
+              '<div class="drawer-phone-avatar">T</div>' +
+              '<div class="drawer-phone-name">test.gg</div>' +
+              '<div class="drawer-phone-slug">tektik.la<span style=\"color:var(--accent)\">/test</span></div>' +
+              '<div class="drawer-phone-links">' +
+                '<div class="drawer-phone-link featured">🎮 Twitch Kanalım</div>' +
+                '<div class="drawer-phone-link">▶ YouTube</div>' +
+                '<div class="drawer-phone-link">💬 Discord</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="drawer-phone-cta">Örnek profili gör →</div>' +
+          '</div>' +
+        '</a>' +
+        '<div class="drawer-steps" style="margin-top:20px">' +
           '<div class="drawer-step"><span class="drawer-step-num">① SLUG SEÇ</span><div class="drawer-step-body"><div class="drawer-step-title">tektik.la/<em style="color:var(--accent);font-style:normal;">senin-adın</em></div><div class="drawer-step-desc">Sana özel kısa adres, kimse alamaz.</div></div></div>' +
           '<div class="drawer-step-divider"></div>' +
           '<div class="drawer-step"><span class="drawer-step-num">② EKLE</span><div class="drawer-step-body"><div class="drawer-step-title">YouTube · Twitch · Instagram</div><div class="drawer-step-desc">İstediğin kadar link, sınırsız.</div></div></div>' +
@@ -2562,7 +2709,7 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
         '</a>' +
         '<a href="mailto:info@tektik.la" class="drawer-social-btn">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>' +
-          '<span>E-posta At</span><span class="drawer-social-meta">info@tektik.la</span>' +
+          '<span>E-posta Gönder</span><span class="drawer-social-meta">info@tektik.la</span>' +
         '</a>' +
         '<a href="/destek" class="drawer-social-btn support">' +
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
