@@ -1155,6 +1155,31 @@
     padding: 10px 16px;
   }
   .tk-card-link .status { margin-top: 8px; font-size: 11px; }
+  .inline-history-btn {
+    margin-top: 12px;
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .inline-history-btn:hover {
+    border-color: var(--accent);
+    border-style: solid;
+    color: var(--accent);
+  }
+  .inline-history-arrow { transition: transform 0.2s; }
+  .inline-history-btn:hover .inline-history-arrow { transform: translateX(4px); }
   /* Mobile: Stack vertically */
   @media (max-width: 900px) {
     .split-section { padding: 24px 20px 60px; }
@@ -1399,6 +1424,10 @@
             <button class="btn-primary" id="shorten-btn" onclick="handleInlineShorten()"><span id="btn-text">Kısalt</span></button>
           </div>
           <div class="status" id="status-msg"></div>
+          <button type="button" class="inline-history-btn" id="inline-history-btn" onclick="openDrawer('link')" style="display:none;">
+            <span>📋 Bu oturumdaki linkler</span>
+            <span class="inline-history-arrow">→</span>
+          </button>
         </div>
         <div class="tk-card-features">
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Kayıt gerekmez</strong> — hemen kısalt, anında kullan</span></div>
@@ -2367,6 +2396,13 @@ function addToHistory(slug, shortUrl, original) {
   sessionLinks.unshift({ slug, shortUrl, original, date: new Date().toLocaleTimeString('tr-TR') });
   sessionStorage.setItem('tektik-links', JSON.stringify(sessionLinks));
   renderHistory();
+  updateInlineHistoryBtn();
+}
+
+function updateInlineHistoryBtn() {
+  var btn = document.getElementById('inline-history-btn');
+  if (!btn) return;
+  btn.style.display = (sessionLinks && sessionLinks.length > 0) ? 'flex' : 'none';
 }
 
 function renderHistory() {
@@ -2389,9 +2425,11 @@ function clearHistory() {
   sessionLinks = [];
   sessionStorage.removeItem('tektik-links');
   renderHistory();
+  updateInlineHistoryBtn();
 }
 
 renderHistory();
+updateInlineHistoryBtn();
 // ─────────────────────────────────────────────────────────────
 
 function toggleFaq(btn) {
