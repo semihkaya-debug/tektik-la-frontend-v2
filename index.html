@@ -1125,32 +1125,6 @@
     letter-spacing: 0.5px;
   }
 
-  /* Geçmişi aç trigger */
-  .link-history-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid var(--border);
-    padding-top: 12px;
-    margin-top: 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .link-history-trigger span:first-child {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text2);
-  }
-  .history-trigger-arrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    transition: transform 0.15s;
-  }
-  .link-history-trigger:hover .history-trigger-arrow {
-    transform: translateX(3px);
-  }
-
   /* Inline link kısaltıcı kart */
   .tk-card-link { cursor: default !important; }
   .tk-card-link:hover { transform: none !important; border-color: var(--border) !important; }
@@ -1430,10 +1404,6 @@
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Kayıt gerekmez</strong> — hemen kısalt, anında kullan</span></div>
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Reklamsız & ücretsiz</strong> — takip yok, popup yok</span></div>
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>QR kod otomatik</strong> — her link için indirilebilir QR</span></div>
-        </div>
-        <div class="link-history-trigger" onclick="openDrawer('link')" role="button" aria-label="Geçmiş linkleri görüntüle">
-          <span>Kısaltmalarınızı görün</span>
-          <span class="history-trigger-arrow">Geçmişi aç →</span>
         </div>
       </div>
 
@@ -1975,7 +1945,7 @@
         Link kısaltma nasıl çalışır? Kısaltılan linkler ne kadar süre geçerli?
         <i class="faq-icon">+</i>
       </button>
-      <div class="faq-a"><p>Ana sayfadaki kutuya uzun linkinizi yapıştırıp "Kısalt" butonuna tıklayın. tektik.la/r/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler <strong>30 gün</strong> boyunca aktif kalır, ardından otomatik olarak silinir.</p></div>
+      <div class="faq-a"><p>Ana sayfadaki kutuya uzun linkinizi yapıştırıp "Kısalt" butonuna tıklayın. t1.ist/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler <strong>30 gün</strong> boyunca aktif kalır, ardından otomatik olarak silinir.</p></div>
     </div>
 
     <div class="faq-item">
@@ -2037,7 +2007,7 @@
       {"@type":"Question","name":"tektik.la nedir ve ne işe yarar?","acceptedAnswer":{"@type":"Answer","text":"tektik.la, günlük işlerinizi hızlandırmak için tasarlanmış ücretsiz online araçlar platformudur. Link kısaltma, QR kod oluşturma, çekiliş yapma, fiş ve fatura oluşturma, şifre üretme ve daha fazlasını kayıt olmadan, reklam görmeden kullanabilirsiniz."}},
       {"@type":"Question","name":"tektik.la ücretsiz mi?","acceptedAnswer":{"@type":"Answer","text":"Evet. tektik.la üzerindeki tüm araçlar ücretsiz ve kayıt gerektirmez."}},
       {"@type":"Question","name":"Link kısaltma nedir?","acceptedAnswer":{"@type":"Answer","text":"Link kısaltma uzun URL'leri daha kısa ve paylaşılabilir hale getiren bir işlemdir."}},
-      {"@type":"Question","name":"Link kısaltma nasıl çalışır? Kısaltılan linkler ne kadar süre geçerli?","acceptedAnswer":{"@type":"Answer","text":"Ana sayfadaki kutuya uzun linkinizi yapıştırıp Kısalt butonuna tıklayın. tektik.la/r/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler 30 gün boyunca aktif kalır."}},
+      {"@type":"Question","name":"Link kısaltma nasıl çalışır? Kısaltılan linkler ne kadar süre geçerli?","acceptedAnswer":{"@type":"Answer","text":"Ana sayfadaki kutuya uzun linkinizi yapıştırıp Kısalt butonuna tıklayın. t1.ist/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler 30 gün boyunca aktif kalır."}},
       {"@type":"Question","name":"QR kod nasıl oluşturulur?","acceptedAnswer":{"@type":"Answer","text":"QR kod oluşturmak için URL veya metni girip QR kod oluştur butonuna basmanız yeterlidir."}},
       {"@type":"Question","name":"QR kod oluşturucu hangi içerik türlerini destekliyor?","acceptedAnswer":{"@type":"Answer","text":"URL, düz metin, WiFi ağ bilgisi, vCard, telefon numarası ve e-posta için QR kod üretebilirsiniz. PNG ve SVG formatlarında indirme desteği mevcuttur."}},
       {"@type":"Question","name":"Verilerim güvende mi?","acceptedAnswer":{"@type":"Answer","text":"Araçların büyük çoğunluğu tamamen tarayıcınızda çalışır; veriler sunucumuza gönderilmez. Kısaltılan linkler 30 gün sonra otomatik silinir."}},
@@ -2132,7 +2102,7 @@ async function shortenLink() {
       const errBody = await res.text();
       throw new Error(`${res.status}: ${errBody}`);
     }
-    const shortUrl = `https://tektik.la/r/${slug}`;
+    const shortUrl = `https://t1.ist/${slug}`;
     currentShortUrl = shortUrl;
     document.getElementById('result-url').textContent = shortUrl;
     document.getElementById('result-meta').textContent = 'Geçici · 0 tıklama';
