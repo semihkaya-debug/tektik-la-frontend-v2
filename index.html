@@ -1156,7 +1156,7 @@
   }
   .tk-card-link .status { margin-top: 8px; font-size: 11px; }
   .inline-history-btn {
-    margin-top: 12px;
+    margin-top: 20px;
     width: 100%;
     background: transparent;
     border: 1px dashed var(--border);
@@ -1424,16 +1424,16 @@
             <button class="btn-primary" id="shorten-btn" onclick="handleInlineShorten()"><span id="btn-text">Kısalt</span></button>
           </div>
           <div class="status" id="status-msg"></div>
-          <button type="button" class="inline-history-btn" id="inline-history-btn" onclick="openDrawer('link')" style="display:none;">
-            <span>📋 Bu oturumdaki linkler</span>
-            <span class="inline-history-arrow">→</span>
-          </button>
         </div>
         <div class="tk-card-features">
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Kayıt gerekmez</strong> — hemen kısalt, anında kullan</span></div>
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Reklamsız & ücretsiz</strong> — takip yok, popup yok</span></div>
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>QR kod otomatik</strong> — her link için indirilebilir QR</span></div>
         </div>
+        <button type="button" class="inline-history-btn" id="inline-history-btn" onclick="openDrawer('link')" style="display:none;">
+          <span>📋 Bu oturumdaki linkler</span>
+          <span class="inline-history-arrow">→</span>
+        </button>
       </div>
 
       <!-- KART 3: ARAÇLAR -->
