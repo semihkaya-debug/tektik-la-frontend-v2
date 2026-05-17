@@ -2372,6 +2372,7 @@ function addToHistory(slug, shortUrl, original) {
 function renderHistory() {
   const list = document.getElementById('history-list');
   const section = document.getElementById('history-section');
+  if (!section || !list) return;
   if (!sessionLinks.length) { section.style.display = 'none'; return; }
   section.style.display = 'block';
   list.innerHTML = sessionLinks.map(l => `
