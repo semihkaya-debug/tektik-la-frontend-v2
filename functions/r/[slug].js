@@ -1,9 +1,13 @@
 export async function onRequest(context) {
-  const { params } = context;
+  const { params, env } = context;
   const slug = params.slug;
 
-  const SUPABASE_URL = 'https://yxeuthrfqdquqgzwuxvm.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4ZXV0aHJmcWRxdXFnend1eHZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxODE4NzcsImV4cCI6MjA4Nzc1Nzg3N30.h3hNyF_VOuCgnahMfzdGPXzohqDe4pOVVcjHhYyq06s';
+  const SUPABASE_URL = env.SUPABASE_URL || 'https://yxeuthrfqdquqgzwuxvm.supabase.co';
+  const SUPABASE_KEY = env.SUPABASE_KEY;
+
+  if (!SUPABASE_KEY) {
+    return Response.redirect('https://tektik.la/?error=config', 302);
+  }
 
   try {
     const res = await fetch(
