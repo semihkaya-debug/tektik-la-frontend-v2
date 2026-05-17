@@ -1511,24 +1511,24 @@
 
         <div class="link-form-card">
           <div class="input-row">
-            <input type="url" id="url-input" placeholder="Linki buraya yapıştır" />
-            <button class="btn-primary" id="shorten-btn" onclick="shortenLink()">
-              <span id="btn-text">Kısalt</span>
+            <input type="url" id="split-url-input" placeholder="Linki buraya yapıştır" />
+            <button class="btn-primary" id="split-shorten-btn" onclick="shortenLink()">
+              <span id="split-btn-text">Kısalt</span>
             </button>
           </div>
-          <div class="status" id="status-msg"></div>
-          <div class="result-box" id="result-box">
+          <div class="status" id="split-status-msg"></div>
+          <div class="result-box" id="split-result-box">
             <div style="flex:1">
-              <div class="result-url" id="result-url"></div>
-              <div class="result-meta" id="result-meta"></div>
+              <div class="result-url" id="split-result-url"></div>
+              <div class="result-meta" id="split-result-meta"></div>
             </div>
-            <button class="btn-primary" id="copy-btn" onclick="copyResult()">Kopyala</button>
+            <button class="btn-primary" id="split-copy-btn" onclick="copyResult()">Kopyala</button>
           </div>
-          <div class="qr-box" id="qr-box">
-        <div id="qrcode-result"></div>
+          <div class="qr-box" id="split-qr-box">
+        <div id="split-qrcode-result"></div>
         <div class="qr-info">
-          <div class="qr-label" id="qr-label">QR Kod</div>
-          <div class="qr-sublabel" id="qr-sublabel">Kısa linkinizin QR kodu otomatik oluşturuldu.</div>
+          <div class="qr-label" id="split-qr-label">QR Kod</div>
+          <div class="qr-sublabel" id="split-qr-sublabel">Kısa linkinizin QR kodu otomatik oluşturuldu.</div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
             <label style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">
               tektik.la bandı
@@ -2372,7 +2372,6 @@ function addToHistory(slug, shortUrl, original) {
 function renderHistory() {
   const list = document.getElementById('history-list');
   const section = document.getElementById('history-section');
-  if (!section || !list) return;
   if (!sessionLinks.length) { section.style.display = 'none'; return; }
   section.style.display = 'block';
   list.innerHTML = sessionLinks.map(l => `
