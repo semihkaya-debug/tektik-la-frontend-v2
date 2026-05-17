@@ -1129,6 +1129,16 @@
   .tk-card-link { cursor: default !important; }
   .tk-card-link:hover { transform: none !important; border-color: var(--border) !important; }
   .inline-shorten-wrap { width: 100%; }
+  /* Drawer masaüstünde sağda (420px) açıldığında, sol kartın input'u
+     overlay altında kalıp tıklanamaz hale geliyordu. Z-index ile çözüldü.
+     Mobile'da drawer tam genişlik olduğu için bu kuralı uygulamıyoruz. */
+  @media (min-width: 901px) {
+    .tk-card-link .inline-shorten-row,
+    .tk-card-link .inline-history-btn {
+      position: relative;
+      z-index: 210;
+    }
+  }
   .inline-shorten-row {
     display: flex;
     gap: 8px;
@@ -2813,6 +2823,17 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
       if (sm) { sm.textContent = 'Lütfen bir link girin.'; sm.style.color = '#e55'; }
       return;
     }
+    // Drawer zaten link modunda açıksa tekrar render etme, doğrudan kısalt
+    var drawer = document.getElementById('main-drawer');
+    var tagLabel = document.getElementById('drawer-tag-label');
+    var alreadyOpenInLinkMode = drawer && drawer.classList.contains('open')
+      && tagLabel && tagLabel.textContent === drawerContents.link.tag;
+
+    if (alreadyOpenInLinkMode) {
+      shortenLink();
+      return;
+    }
+
     // Drawer'ı link modunda aç, sonra shortenLink çağır
     openDrawer('link');
     // Drawer render olduktan sonra input'a değeri yaz ve kısalt
