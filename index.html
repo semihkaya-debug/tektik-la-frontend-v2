@@ -1125,6 +1125,32 @@
     letter-spacing: 0.5px;
   }
 
+  /* Geçmişi aç trigger */
+  .link-history-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .link-history-trigger span:first-child {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .history-trigger-arrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    transition: transform 0.15s;
+  }
+  .link-history-trigger:hover .history-trigger-arrow {
+    transform: translateX(3px);
+  }
+
   /* Inline link kısaltıcı kart */
   .tk-card-link { cursor: default !important; }
   .tk-card-link:hover { transform: none !important; border-color: var(--border) !important; }
@@ -1404,6 +1430,10 @@
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Kayıt gerekmez</strong> — hemen kısalt, anında kullan</span></div>
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>Reklamsız & ücretsiz</strong> — takip yok, popup yok</span></div>
           <div class="tk-feat"><span class="tk-feat-check">✓</span><span><strong>QR kod otomatik</strong> — her link için indirilebilir QR</span></div>
+        </div>
+        <div class="link-history-trigger" onclick="openDrawer('link')" role="button" aria-label="Geçmiş linkleri görüntüle">
+          <span>Kısaltmalarınızı görün</span>
+          <span class="history-trigger-arrow">Geçmişi aç →</span>
         </div>
       </div>
 
