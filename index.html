@@ -2039,12 +2039,11 @@
 
   <!-- FAQ SECTION -->
   <div class="faq-section">
-    <div class="faq-tag">sss</div>
     <div class="faq-title">Sıkça Sorulan Sorular</div>
 
     <div class="tk-card tk-card-faq" onclick="openDrawer('faq')">
-      <div class="tk-card-tag">— sıkça sorulan sorular</div>
-      <h3 class="tk-card-h">cevap<br><span class="tk-accent">arıyorsan tıkla</span></h3>
+      <div class="tk-card-tag">— 12 soru, 12 cevap</div>
+      <div class="tk-card-title">cevap<br><em>arıyorsan tıkla</em></div>
       <div class="faq-pill-grid">
         <button class="faq-pill" data-faq="1" onclick="event.stopPropagation(); openFaq(1)"><span class="faq-pill-q">?</span>tektik.la ücretsiz mi</button>
         <button class="faq-pill" data-faq="2" onclick="event.stopPropagation(); openFaq(2)"><span class="faq-pill-q">?</span>verilerim kaydediliyor mu</button>
@@ -2850,7 +2849,7 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
         '<div class="drawer-note">✦ Solo geliştirici projesi · Tamamen ücretsiz</div>'
     },
     faq: {
-      tag: '— SIKÇA SORULAN SORULAR',
+      tag: '— SSS',
       html: ''  // dinamik olarak renderFaqDrawer() ile doldurulacak
     }
   };
@@ -2967,7 +2966,7 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
   }
 
   function openFaq(id) {
-    document.getElementById('drawer-tag-label').textContent = '— SIKÇA SORULAN SORULAR';
+    document.getElementById('drawer-tag-label').textContent = '— SSS';
     document.getElementById('drawer-content').innerHTML = renderFaqDrawerAnswer(id);
     document.getElementById('drawer-overlay').classList.add('open');
     document.getElementById('main-drawer').classList.add('open');
