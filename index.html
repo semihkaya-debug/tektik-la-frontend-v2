@@ -190,11 +190,38 @@
   .history-section.show { display: block; }
   .history-header{ margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
   .history-title { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; }
-  .history-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 12px; }
+  .history-item { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); gap: 10px; }
   .history-item:last-child { border-bottom: none; }
-  .history-left { flex: 1; overflow: hidden; }
-  .history-original { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
-  .history-short { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; }
+  .history-info { flex: 1; min-width: 0; overflow: hidden; }
+  .history-short { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .history-orig { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .history-time { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text2); flex-shrink: 0; opacity: 0.7; }
+  .history-copy {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .history-copy:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .history-copy.copied {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
   /* TOOLS GRID */
   .tools-section { border-top: 1px solid var(--border); padding: 100px 40px; }
   .tools-inner { max-width: 860px; margin: 0 auto; }
@@ -2456,14 +2483,32 @@ function renderHistory() {
   if (!section || !list) return;
   if (!sessionLinks.length) { section.style.display = 'none'; return; }
   section.style.display = 'block';
-  list.innerHTML = sessionLinks.map(l => `
+  list.innerHTML = sessionLinks.map((l, i) => `
     <div class="history-item">
-      <div>
-        <div class="history-short" onclick="navigator.clipboard.writeText('${l.shortUrl}').then(()=>{})">${l.shortUrl}</div>
+      <div class="history-info">
+        <div class="history-short">${l.shortUrl}</div>
         <div class="history-orig">${l.original.length > 50 ? l.original.slice(0,50)+'…' : l.original}</div>
       </div>
-      <div class="history-time">${l.date}</div>
+      <span class="history-time">${l.date}</span>
+      <button class="history-copy" data-url="${l.shortUrl}" onclick="copyHistoryLink(this)">Kopyala</button>
     </div>`).join('');
+}
+
+function copyHistoryLink(btn) {
+  const url = btn.getAttribute('data-url');
+  if (!url) return;
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Kopyalandı';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 1500);
+  }).catch(() => {
+    btn.textContent = 'Hata';
+    setTimeout(() => { btn.textContent = 'Kopyala'; }, 1500);
+  });
 }
 
 function clearHistory() {
@@ -3050,6 +3095,7 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
   window.toggleFaq = toggleFaq;
   window.toggleToolsExpand = toggleToolsExpand;
   window.handleInlineShorten = handleInlineShorten;
+  window.copyHistoryLink = copyHistoryLink;
 
   function toggleHistory() {
     var section = document.getElementById('history-section');
