@@ -29,7 +29,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="tektik.la — Türkçe Ücretsiz Online Araçlar 🛠️">
-<meta name="twitter:description" content="Tüm linklerin tek sayfada. Bio link + link kısaltıcı + 25 araç. Reklamsız & ücretsiz.">
+<meta name="twitter:description" content="Tüm linklerin tek sayfada. Bio link + link kısaltıcı + 25+ araç. Reklamsız & ücretsiz.">
 <meta name="twitter:image" content="https://tektik.la/og-image.png">
 <meta name="twitter:site" content="@tektikla">
 <script type="application/ld+json">
@@ -1342,19 +1342,106 @@
   }
 
   /* FAQ */
-  .faq-section { max-width: 760px; margin: 0 auto; padding: 80px 24px 60px; }
+  .faq-section { max-width: 1140px; margin: 0 auto; padding: 80px 24px 60px; }
   .faq-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); margin-bottom: 12px; }
-  .faq-title { font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -1px; margin-bottom: 40px; }
-  .faq-item { border-bottom: 1px solid var(--border); }
-  .faq-q { width: 100%; background: none; border: none; color: var(--text); text-align: left; font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 600; padding: 20px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; transition: color 0.2s; }
-  .faq-q:hover { color: var(--accent); }
-  .faq-icon { font-size: 18px; color: var(--accent); flex-shrink: 0; transition: transform 0.25s; font-style: normal; }
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
-  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; }
-  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
-  .faq-a p { font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.85; color: var(--text2); }
-  .faq-a a { color: var(--accent); text-decoration: none; }
-  .faq-a a:hover { text-decoration: underline; }
+  .faq-title { font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -1px; margin-bottom: 32px; }
+
+  .tk-card-faq { cursor: pointer; }
+  .faq-pill-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .faq-pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.3;
+  }
+  .faq-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .faq-pill:active { transform: translateY(0); }
+  .faq-pill-q {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 600px) {
+    .faq-pill-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Drawer içi FAQ cevap styling */
+  .drawer-faq-answer {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text2);
+  }
+  .drawer-faq-answer strong { color: var(--text); font-weight: 700; }
+  .drawer-faq-answer a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+  .drawer-faq-answer a:hover { border-bottom-style: solid; }
+  .drawer-faq-cat {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .drawer-faq-back {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .drawer-faq-back-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 10px;
+  }
+  .drawer-faq-other-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .drawer-faq-other {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-align: left;
+    padding: 6px 0;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+    transition: all 0.15s;
+  }
+  .drawer-faq-other:hover {
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
 
   .seo-section{max-width:860px;margin:0 auto;padding:40px 40px 60px;border-top:1px solid var(--border);text-align:left}
   .seo-h2{font-size:clamp(18px,2.5vw,24px);font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text)}
@@ -1955,76 +2042,23 @@
     <div class="faq-tag">sss</div>
     <div class="faq-title">Sıkça Sorulan Sorular</div>
 
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        tektik.la nedir ve ne işe yarar?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p>tektik.la, günlük işlerinizi hızlandırmak için tasarlanmış ücretsiz online araçlar platformudur. Link kısaltma, QR kod oluşturma, çekiliş yapma, fiş ve fatura oluşturma, şifre üretme ve daha fazlasını kayıt olmadan, reklam görmeden kullanabilirsiniz.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Araçları kullanmak tamamen ücretsiz mi?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p>Evet, tüm araçlar %100 ücretsizdir. Hesap açmanıza, e-posta girmenize veya kredi kartı bilgisi vermenize gerek yoktur. Siteye girin, aracı kullanın, işinize devam edin.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Link kısaltma nasıl çalışır? Kısaltılan linkler ne kadar süre geçerli?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p>Ana sayfadaki kutuya uzun linkinizi yapıştırıp "Kısalt" butonuna tıklayın. t1.ist/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler <strong>30 gün</strong> boyunca aktif kalır, ardından otomatik olarak silinir.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        QR kod oluşturucu hangi içerik türlerini destekliyor?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p><a href="/qr">QR Kod Oluşturucu</a> ile URL, düz metin, WiFi ağ bilgisi, vCard (kişi kartı), telefon numarası ve e-posta için QR kod üretebilirsiniz. Renk özelleştirme, logo ekleme ve PNG/SVG formatlarında indirme desteği mevcuttur.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Verilerim güvende mi? Bilgilerimi saklıyor musunuz?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p>Güvenliğinizi önemsiyoruz. Kısaltılan linkler Supabase altyapısında şifreli olarak saklanır ve 30 gün sonra silinir. Araçların büyük çoğunluğu (şifre üreteci, metin araçları vb.) tamamen tarayıcınızda çalışır; veriler sunucumuza hiç gönderilmez. Gizlilik politikamız için <a href="/kosullar">Kullanım Koşulları</a> sayfasını inceleyebilirsiniz.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Çekiliş aracı gerçekten adil mi?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p><a href="/cekilis">Çekiliş aracı</a>, tarayıcının kriptografik rastgele sayı üretecini (crypto.getRandomValues) kullanır. Bu yöntem, standart Math.random()'a göre çok daha güvenilir ve öngörülemezdir. Katılımcı listesini siz girersiniz, sistem tamamen tarafsız çalışır.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Fatura ve fiş oluşturucu yasal belge üretiyor mu?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p><a href="/fatura">Fatura oluşturucumuz</a> demo, sunum veya kişisel kullanım amaçlıdır. Resmi muhasebe veya vergi belgesi olarak kullanılamaz. Yasal fatura için bir muhasebe yazılımı ya da mali müşavir kullanmanızı öneririz.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Mobil cihazlardan da kullanabilir miyim?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p>Evet, tektik.la tüm araçları mobil uyumlu (responsive) tasarıma sahiptir. iPhone, Android veya tablet üzerinden sorunsuz kullanabilirsiniz.</p></div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        Yeni araç önerisi veya hata bildirimi için ne yapmalıyım?
-        <i class="faq-icon">+</i>
-      </button>
-      <div class="faq-a"><p>Görüş ve önerileriniz için <a href="mailto:info@tektik.la">info@tektik.la</a> adresine e-posta gönderebilir veya <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">𝕏 @tektik_la</a> hesabından bize ulaşabilirsiniz. Her öneriyi değerlendiriyoruz!</p></div>
+    <div class="tk-card tk-card-faq" onclick="openDrawer('faq')">
+      <div class="tk-card-tag">— sıkça sorulan sorular</div>
+      <h3 class="tk-card-h">cevap<br><span class="tk-accent">arıyorsan tıkla</span></h3>
+      <div class="faq-pill-grid">
+        <button class="faq-pill" data-faq="1" onclick="event.stopPropagation(); openFaq(1)"><span class="faq-pill-q">?</span>tektik.la ücretsiz mi</button>
+        <button class="faq-pill" data-faq="2" onclick="event.stopPropagation(); openFaq(2)"><span class="faq-pill-q">?</span>verilerim kaydediliyor mu</button>
+        <button class="faq-pill" data-faq="3" onclick="event.stopPropagation(); openFaq(3)"><span class="faq-pill-q">?</span>neden reklam yok</button>
+        <button class="faq-pill" data-faq="4" onclick="event.stopPropagation(); openFaq(4)"><span class="faq-pill-q">?</span>kdv hesaplama nasıl</button>
+        <button class="faq-pill" data-faq="5" onclick="event.stopPropagation(); openFaq(5)"><span class="faq-pill-q">?</span>ip sorgulama nedir</button>
+        <button class="faq-pill" data-faq="6" onclick="event.stopPropagation(); openFaq(6)"><span class="faq-pill-q">?</span>instagram font nasıl</button>
+        <button class="faq-pill" data-faq="7" onclick="event.stopPropagation(); openFaq(7)"><span class="faq-pill-q">?</span>qr menü oluşturma</button>
+        <button class="faq-pill" data-faq="8" onclick="event.stopPropagation(); openFaq(8)"><span class="faq-pill-q">?</span>link kısaltma ve bio link</button>
+        <button class="faq-pill" data-faq="9" onclick="event.stopPropagation(); openFaq(9)"><span class="faq-pill-q">?</span>cv ve çekiliş sınırı var mı</button>
+        <button class="faq-pill" data-faq="10" onclick="event.stopPropagation(); openFaq(10)"><span class="faq-pill-q">?</span>kayıt olmadan çalışır mı</button>
+        <button class="faq-pill" data-faq="11" onclick="event.stopPropagation(); openFaq(11)"><span class="faq-pill-q">?</span>usdt bağışı nasıl</button>
+        <button class="faq-pill" data-faq="12" onclick="event.stopPropagation(); openFaq(12)"><span class="faq-pill-q">?</span>öneri / hata bildirimi</button>
+      </div>
     </div>
 
   </div>
@@ -2035,16 +2069,18 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      {"@type":"Question","name":"tektik.la nedir ve ne işe yarar?","acceptedAnswer":{"@type":"Answer","text":"tektik.la, günlük işlerinizi hızlandırmak için tasarlanmış ücretsiz online araçlar platformudur. Link kısaltma, QR kod oluşturma, çekiliş yapma, fiş ve fatura oluşturma, şifre üretme ve daha fazlasını kayıt olmadan, reklam görmeden kullanabilirsiniz."}},
-      {"@type":"Question","name":"tektik.la ücretsiz mi?","acceptedAnswer":{"@type":"Answer","text":"Evet. tektik.la üzerindeki tüm araçlar ücretsiz ve kayıt gerektirmez."}},
-      {"@type":"Question","name":"Link kısaltma nedir?","acceptedAnswer":{"@type":"Answer","text":"Link kısaltma uzun URL'leri daha kısa ve paylaşılabilir hale getiren bir işlemdir."}},
-      {"@type":"Question","name":"Link kısaltma nasıl çalışır? Kısaltılan linkler ne kadar süre geçerli?","acceptedAnswer":{"@type":"Answer","text":"Ana sayfadaki kutuya uzun linkinizi yapıştırıp Kısalt butonuna tıklayın. t1.ist/xxxxx formatında kısa bir link oluşturulur. Kısaltılan linkler 30 gün boyunca aktif kalır."}},
-      {"@type":"Question","name":"QR kod nasıl oluşturulur?","acceptedAnswer":{"@type":"Answer","text":"QR kod oluşturmak için URL veya metni girip QR kod oluştur butonuna basmanız yeterlidir."}},
-      {"@type":"Question","name":"QR kod oluşturucu hangi içerik türlerini destekliyor?","acceptedAnswer":{"@type":"Answer","text":"URL, düz metin, WiFi ağ bilgisi, vCard, telefon numarası ve e-posta için QR kod üretebilirsiniz. PNG ve SVG formatlarında indirme desteği mevcuttur."}},
-      {"@type":"Question","name":"Verilerim güvende mi?","acceptedAnswer":{"@type":"Answer","text":"Araçların büyük çoğunluğu tamamen tarayıcınızda çalışır; veriler sunucumuza gönderilmez. Kısaltılan linkler 30 gün sonra otomatik silinir."}},
-      {"@type":"Question","name":"Çekiliş aracı gerçekten adil mi?","acceptedAnswer":{"@type":"Answer","text":"Çekiliş aracı, tarayıcının kriptografik rastgele sayı üretecini (crypto.getRandomValues) kullanır. Sistem tamamen tarafsız çalışır."}},
-      {"@type":"Question","name":"Mobil cihazlardan da kullanabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet, tektik.la tüm araçları mobil uyumlu tasarıma sahiptir. iPhone, Android veya tablet üzerinden sorunsuz kullanabilirsiniz."}},
-      {"@type":"Question","name":"Yeni araç önerisi veya hata bildirimi için ne yapmalıyım?","acceptedAnswer":{"@type":"Answer","text":"info@tektik.la adresine e-posta gönderebilir veya Twitter/X @tektik_la hesabından ulaşabilirsiniz."}}
+      {"@type":"Question","name":"tektik.la gerçekten tamamen ücretsiz mi? Gizli bir ücret var mı?","acceptedAnswer":{"@type":"Answer","text":"Evet, tektik.la üzerindeki tüm ücretsiz online araçlar tamamen bedavadır ve hep böyle kalacaktır. Platformda herhangi bir gizli ücret, premium üyelik veya deneme süresi kesinlikle bulunmaz. Sizden asla kredi kartı bilgisi istenmez, her aracı dilediğiniz gibi kullanabilirsiniz."}},
+      {"@type":"Question","name":"Araçları kullanırken verilerim veya yazdıklarım kaydediliyor mu?","acceptedAnswer":{"@type":"Answer","text":"Platformdaki araçların büyük çoğunluğu tamamen tarayıcınızda çalışır ve veri güvenliği gereği hiçbir veriniz sunucularımıza gönderilmez. Link kısaltma gibi sunucu gerektiren işlemlerde ise kişisel veri toplanmaz, sadece kısa ve uzun URL eşleşmesi tutulur."}},
+      {"@type":"Question","name":"Sitede neden hiç reklam veya popup yok? Gelir modeliniz nedir?","acceptedAnswer":{"@type":"Answer","text":"Sitemizde kullanıcı deneyimini bozacak hiçbir reklam veya popup bulunmuyor. Geleneksel SaaS dayatmalarına karşı duran bu platform, tamamen kullanıcıların gönüllü kripto bağışlarıyla ayakta kalıyor. Bize destek olmak ve sunucu masraflarına katkıda bulunmak isterseniz destek sayfamızı ziyaret edebilirsiniz."}},
+      {"@type":"Question","name":"KDV hesaplama aracını nasıl kullanırım? Tevkifat dahil mi?","acceptedAnswer":{"@type":"Answer","text":"Güncel oranlarla kdv hesaplama yapmak için tutarı girip %1, %10 veya %20 oranlarından birini seçmeniz yeterlidir. KDV dahil veya KDV hariç hesaplama işlemlerini anında yapabilirsiniz. Tevkifat oranı tablosu yakında eklenecek olup, şu an manuel oran girerek işlem yapabilirsiniz."}},
+      {"@type":"Question","name":"IP sorgulama ile hangi bilgilere ulaşabilirim?","acceptedAnswer":{"@type":"Answer","text":"Gelişmiş ip sorgulama aracımız sayesinde hem IPv4 hem de IPv6 adresinizi anında öğrenebilirsiniz. Cloudflare altyapısıyla doğrudan çalışan araç; bulunduğunuz şehri, internet servis sağlayıcınızı (ISP), tarayıcı ve cihaz bilgilerinizi ek bir API kullanmadan gösterir."}},
+      {"@type":"Question","name":"Şekilli Instagram font ve yazı stillerini nasıl oluştururum?","acceptedAnswer":{"@type":"Answer","text":"Havalı bir profil için instagram font aracımızın metin kutusuna dilediğiniz kelimeyi yazmanız yeterlidir. Unicode tabanlı sistemimiz, yazdığınız metni anında 30'dan fazla farklı şekilli yazı stiline dönüştürür. Beğendiğiniz stili kopyalayıp Instagram bio, Twitter veya TikTok üzerinde doğrudan kullanabilirsiniz."}},
+      {"@type":"Question","name":"Kafem/restoranım için ücretsiz QR menü nasıl oluşturabilirim?","acceptedAnswer":{"@type":"Answer","text":"İşletmeniz için qr menü oluştur aracına girerek menü kalemlerinizi ve fiyatlarınızı yazıp anında çıktı alabilirsiniz. Sistemimizde veritabanı yoktur; menü bilgileriniz oluşturulan URL'in içinde saklanır ve sunucuya asla yüklenmez."}},
+      {"@type":"Question","name":"Ücretsiz link kısaltma ve bio link sayfamı nasıl kurarım?","acceptedAnswer":{"@type":"Answer","text":"Uzun adreslerinizi kırpmak için ücretsiz link kısalt aracımıza linkinizi yapıştırmanız yeterlidir, işlem anında üye olmadan gerçekleşir. Sosyal medya hesaplarınızı tek bir yerde toplamak için ise kendinize özel bir bio link sayfası açabilirsiniz."}},
+      {"@type":"Question","name":"CV oluşturucu veya çekiliş gibi araçlarda sınır var mı?","acceptedAnswer":{"@type":"Answer","text":"Platformdaki cv oluşturucu ve online çekiliş gibi 25+ aracın hiçbirinde kullanım sınırı yoktur. Hazırladığınız profesyonel özgeçmişi hazır şablonlarla doğrudan PDF olarak indirebilirsiniz. Çekiliş aracımız crypto.getRandomValues kullanarak tamamen tarafsız sonuçlar üretir."}},
+      {"@type":"Question","name":"Sitedeki araçlar üye olmadan veya kayıt olmadan çalışır mı?","acceptedAnswer":{"@type":"Answer","text":"Evet, tektik.la üzerindeki araç kutusu kayıt gerekmez mantığıyla kurgulanmıştır ve üyelik duvarı barındırmaz. Sadece kendinize özel bir bio link sayfası oluşturmak ve URL'inizi sabitlemek isterseniz isteğe bağlı olarak e-posta adresinizi girmeniz gerekir."}},
+      {"@type":"Question","name":"Platforma nasıl destek olabilirim? Kripto (USDT) bağışı nasıl yapılır?","acceptedAnswer":{"@type":"Answer","text":"Tamamen reklamsız olan bu projeye destek olmak için USDT bağış seçeneğini kullanabilirsiniz. Geleneksel SaaS modellerine karşı duruşumuz gereği banka IBAN adresi kullanmıyor, sadece TRC-20 ağı üzerinden transfer kabul ediyoruz. Güncel cüzdan adresimize ulaşmak için destek sayfasını ziyaret edin."}},
+      {"@type":"Question","name":"Yeni bir araç önerisinde bulunabilir miyim veya hata bildirebilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Geliştirmemizi istediğiniz yeni bir araç önerisi varsa veya sitede bir hataya denk geldiyseniz bizimle doğrudan iletişime geçebilirsiniz. Twitter @tektik_la üzerinden veya info@tektik.la e-posta adresinden bize yazmanız yeterlidir."}}
     ]
   }
   </script>
@@ -2812,8 +2848,134 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
           '<span>Arkadaşına Anlat</span><span class="drawer-social-meta">link kopyala</span>' +
         '</button>' +
         '<div class="drawer-note">✦ Solo geliştirici projesi · Tamamen ücretsiz</div>'
+    },
+    faq: {
+      tag: '— SIKÇA SORULAN SORULAR',
+      html: ''  // dinamik olarak renderFaqDrawer() ile doldurulacak
     }
   };
+
+  // FAQ verisi — 12 soru
+  var faqData = [
+    {
+      id: 1,
+      cat: 'GENEL',
+      q: 'tektik.la gerçekten tamamen ücretsiz mi? Gizli bir ücret var mı?',
+      a: 'Evet, tektik.la üzerindeki tüm <strong>ücretsiz online araçlar</strong> tamamen bedavadır ve hep böyle kalacaktır. Platformda herhangi bir gizli ücret, premium üyelik veya deneme süresi kesinlikle bulunmaz. Sizden asla kredi kartı bilgisi istenmez, her aracı dilediğiniz gibi kullanabilirsiniz. Şifrelerinizi güvenle üretmek için <a href="/password">şifre üreteci</a> aracımıza göz atabilirsiniz.'
+    },
+    {
+      id: 2,
+      cat: 'GİZLİLİK',
+      q: 'Araçları kullanırken verilerim veya yazdıklarım kaydediliyor mu?',
+      a: 'Platformdaki araçların büyük çoğunluğu tamamen tarayıcınızda çalışır ve <strong>veri güvenliği</strong> gereği hiçbir veriniz sunucularımıza gönderilmez. Link kısaltma gibi sunucu gerektiren işlemlerde ise kişisel veri toplanmaz, sadece kısa ve uzun URL eşleşmesi tutulur. İnternette nasıl göründüğünüzü merak ediyorsanız <a href="/ip">IP sorgulama</a> aracımızdan kendi IP\'nizi öğrenebilirsiniz.'
+    },
+    {
+      id: 3,
+      cat: 'GENEL',
+      q: 'Sitede neden hiç reklam veya popup yok? Gelir modeliniz nedir?',
+      a: 'Sitemizde kullanıcı deneyimini bozacak hiçbir reklam veya popup bulunmuyor; <strong>reklamsız</strong> bir platformda çalışıyorsunuz. Geleneksel SaaS dayatmalarına karşı duran bu platform, tamamen kullanıcıların gönüllü kripto bağışlarıyla ayakta kalıyor. Bize destek olmak ve sunucu masraflarına katkıda bulunmak isterseniz <a href="/destek">destek sayfamızı</a> ziyaret edebilirsiniz.'
+    },
+    {
+      id: 4,
+      cat: 'ARAÇLAR',
+      q: 'KDV hesaplama aracını nasıl kullanırım? Tevkifat dahil mi?',
+      a: 'Güncel oranlarla <strong>KDV hesaplama</strong> yapmak için tutarı girip %1, %10 veya %20 oranlarından birini seçmeniz yeterlidir. <a href="/kdv">KDV aracı</a> üzerinden KDV dahil veya KDV hariç hesaplama işlemlerini anında yapabilirsiniz. Tevkifat oranı tablosu yakında eklenecek olup, şu an manuel oran girerek işlem yapabilirsiniz. Fatura işleriniz için <a href="/fatura">fatura ve fiş oluşturucu</a> aracımızı da deneyebilirsiniz.'
+    },
+    {
+      id: 5,
+      cat: 'ARAÇLAR',
+      q: 'IP sorgulama ile hangi bilgilere ulaşabilirim?',
+      a: 'Gelişmiş <strong>IP sorgulama</strong> aracımız sayesinde hem IPv4 hem de IPv6 adresinizi anında öğrenebilirsiniz. Cloudflare altyapısıyla doğrudan çalışan araç; bulunduğunuz şehri, internet servis sağlayıcınızı (ISP), tarayıcı ve cihaz bilgilerinizi ek bir API kullanmadan gösterir. Detaylar için <a href="/ip">IP adresim ne</a> sayfasına gidebilirsiniz.'
+    },
+    {
+      id: 6,
+      cat: 'ARAÇLAR',
+      q: 'Şekilli Instagram font ve yazı stillerini nasıl oluştururum?',
+      a: 'Havalı bir profil için <strong>Instagram font</strong> aracımızın metin kutusuna dilediğiniz kelimeyi yazmanız yeterlidir. Unicode tabanlı sistemimiz, yazdığınız metni anında 30\'dan fazla farklı şekilli yazı stiline dönüştürür. Beğendiğiniz stili kopyalayıp Instagram bio, Twitter veya TikTok üzerinde doğrudan kullanabilirsiniz. <a href="/instagram-font">Şekilli yazı aracını</a> hemen deneyin.'
+    },
+    {
+      id: 7,
+      cat: 'ARAÇLAR',
+      q: 'Kafem/restoranım için ücretsiz QR menü nasıl oluşturabilirim?',
+      a: 'İşletmeniz için <a href="/qr-menu"><strong>QR menü oluşturucu</strong></a> aracına girerek menü kalemlerinizi ve fiyatlarınızı yazıp anında çıktı alabilirsiniz. Sistemimizde veritabanı yoktur; menü bilgileriniz oluşturulan URL\'in içinde saklanır ve sunucuya asla yüklenmez. Tamamen güvenli ve ücretsiz QR menü oluşturduktan sonra, müşterileriniz için <a href="/qr">QR kod oluşturma</a> aracımızı da kullanabilirsiniz.'
+    },
+    {
+      id: 8,
+      cat: 'ARAÇLAR',
+      q: 'Ücretsiz link kısaltma ve bio link sayfamı nasıl kurarım?',
+      a: 'Uzun adreslerinizi kısaltmak için anasayfadaki <strong>ücretsiz link kısalt</strong> kutusuna linkinizi yapıştırmanız yeterlidir; işlem üye olmadan anında gerçekleşir. Sosyal medya hesaplarınızı tek bir yerde toplamak için ise kendinize özel bir bio link sayfası açabilirsiniz. Karekod olarak paylaşmak isterseniz <a href="/qr">QR kod oluşturucu</a> aracımıza göz atabilirsiniz.'
+    },
+    {
+      id: 9,
+      cat: 'ARAÇLAR',
+      q: 'CV oluşturucu veya çekiliş gibi araçlarda sınır var mı?',
+      a: 'Platformdaki <a href="/cv"><strong>CV oluşturucu</strong></a> ve online çekiliş gibi 25+ aracın hiçbirinde kullanım sınırı yoktur. Hazırladığınız profesyonel özgeçmişi hazır şablonlarla doğrudan PDF olarak indirebilirsiniz. Adil bir online çekiliş yapmak isterseniz, sistemimiz crypto.getRandomValues kullanarak tamamen tarafsız sonuçlar üretir. Şanslı isimleri seçmek için <a href="/cekilis">çekiliş aracımızı</a> kullanın.'
+    },
+    {
+      id: 10,
+      cat: 'GENEL',
+      q: 'Sitedeki araçlar üye olmadan veya kayıt olmadan çalışır mı?',
+      a: 'Evet, tektik.la üzerindeki araç kutusu <strong>kayıt gerekmez</strong> mantığıyla kurgulanmıştır ve üyelik duvarı barındırmaz. Sadece kendinize özel bir bio link sayfası oluşturmak ve URL\'inizi sabitlemek isterseniz isteğe bağlı olarak e-posta adresinizi girmeniz gerekir. Onun dışındaki tüm araçları hemen kullanmaya başlayabilirsiniz.'
+    },
+    {
+      id: 11,
+      cat: 'DESTEK',
+      q: 'Platforma nasıl destek olabilirim? Kripto (USDT) bağışı nasıl yapılır?',
+      a: 'Tamamen reklamsız olan bu projeye destek olmak için <strong>USDT bağış</strong> seçeneğini kullanabilirsiniz. Geleneksel SaaS modellerine karşı duruşumuz gereği banka IBAN adresi kullanmıyor, sadece TRC-20 ağı üzerinden transfer kabul ediyoruz. Güncel cüzdan adresimize ulaşmak ve platformun ayakta kalmasını sağlamak için lütfen <a href="/destek">destek sayfamızı</a> ziyaret edin.'
+    },
+    {
+      id: 12,
+      cat: 'DESTEK',
+      q: 'Yeni bir araç önerisinde bulunabilir miyim veya hata bildirebilir miyim?',
+      a: 'Geliştirmemizi istediğiniz yeni bir <strong>araç önerisi</strong> varsa veya sitede bir hataya denk geldiyseniz bizimle doğrudan iletişime geçebilirsiniz. Resmi Twitter hesabımız <a href="https://twitter.com/tektik_la" target="_blank" rel="noopener">@tektik_la</a> üzerinden veya <a href="mailto:info@tektik.la">info@tektik.la</a> e-posta adresinden bize yazmanız yeterlidir. Geri bildirimlerinizle platformu büyütmeye devam ediyoruz.'
+    }
+  ];
+
+  function renderFaqDrawerList() {
+    var html = '<div class="drawer-title">cevap<br><em>arıyorsan tıkla</em></div>';
+    html += '<p class="drawer-desc">Sıkça sorulan 12 soru. Cevabını görmek istediğin soruya tıkla.</p>';
+    html += '<div class="drawer-faq-other-list" style="margin-top:18px">';
+    for (var i = 0; i < faqData.length; i++) {
+      var f = faqData[i];
+      html += '<button class="drawer-faq-other" onclick="openFaq(' + f.id + ')">' + f.q + '</button>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function renderFaqDrawerAnswer(id) {
+    var f = null;
+    for (var i = 0; i < faqData.length; i++) {
+      if (faqData[i].id === id) { f = faqData[i]; break; }
+    }
+    if (!f) return renderFaqDrawerList();
+
+    var html = '<span class="drawer-faq-cat">' + f.cat + '</span>';
+    html += '<div class="drawer-title" style="font-size:22px;line-height:1.25;margin-bottom:18px">' + f.q + '</div>';
+    html += '<div class="drawer-faq-answer">' + f.a + '</div>';
+
+    // Diğer sorular
+    html += '<div class="drawer-faq-back">';
+    html += '<div class="drawer-faq-back-label">Diğer sorular</div>';
+    html += '<div class="drawer-faq-other-list">';
+    for (var j = 0; j < faqData.length; j++) {
+      if (faqData[j].id === id) continue;
+      html += '<button class="drawer-faq-other" onclick="openFaq(' + faqData[j].id + ')">' + faqData[j].q + '</button>';
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  function openFaq(id) {
+    document.getElementById('drawer-tag-label').textContent = '— SIKÇA SORULAN SORULAR';
+    document.getElementById('drawer-content').innerHTML = renderFaqDrawerAnswer(id);
+    document.getElementById('drawer-overlay').classList.add('open');
+    document.getElementById('main-drawer').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Drawer başa scroll olsun
+    var drawerBody = document.getElementById('drawer-content');
+    if (drawerBody && drawerBody.parentElement) drawerBody.parentElement.scrollTop = 0;
+  }
 
   function handleInlineShorten() {
     var input = document.getElementById('url-input');
@@ -2850,7 +3012,12 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
     var c = drawerContents[key];
     if (!c) return;
     document.getElementById('drawer-tag-label').textContent = c.tag;
-    document.getElementById('drawer-content').innerHTML = c.html;
+    // FAQ özel: dinamik render
+    if (key === 'faq') {
+      document.getElementById('drawer-content').innerHTML = renderFaqDrawerList();
+    } else {
+      document.getElementById('drawer-content').innerHTML = c.html;
+    }
     document.getElementById('drawer-overlay').classList.add('open');
     document.getElementById('main-drawer').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -2902,6 +3069,7 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
   window.toggleHistory = toggleHistory;
   window.openDrawer = openDrawer;
   window.closeDrawer = closeDrawer;
+  window.openFaq = openFaq;
   } // end init
   if ('requestIdleCallback' in window) {
     requestIdleCallback(init, { timeout: 500 });
