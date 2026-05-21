@@ -2211,6 +2211,13 @@ async function shortenLink() {
     generateQR(shortUrl);
     addToHistory(slug, shortUrl, fullUrl);
     showStatus('', '');
+    // GA: başarılı link kısaltma
+    if (typeof gtag === 'function') {
+      gtag('event', 'link_shortened', {
+        event_category: 'engagement',
+        event_label: 'homepage_shortener'
+      });
+    }
   } catch (e) {
     showStatus('Hata: ' + e.message, 'error');
   }
@@ -2231,6 +2238,9 @@ function copyResult() {
     const btn = document.getElementById('copy-btn');
     btn.textContent = '✓ Kopyalandı';
     setTimeout(() => btn.textContent = 'Kopyala', 2000);
+    if (typeof gtag === 'function') {
+      gtag('event', 'link_copied', { event_category: 'engagement', event_label: 'result_box' });
+    }
   });
 }
 
@@ -2470,6 +2480,9 @@ function downloadQR() {
   a.download = 'tektik-qr.png';
   a.href = out.toDataURL('image/png');
   a.click();
+  if (typeof gtag === 'function') {
+    gtag('event', 'qr_downloaded', { event_category: 'engagement', event_label: 'shortener_qr' });
+  }
 }
 
 function addToHistory(slug, shortUrl, original) {
@@ -2513,6 +2526,9 @@ function copyHistoryLink(btn) {
       btn.textContent = orig;
       btn.classList.remove('copied');
     }, 1500);
+    if (typeof gtag === 'function') {
+      gtag('event', 'link_copied', { event_category: 'engagement', event_label: 'history_drawer' });
+    }
   }).catch(() => {
     btn.textContent = 'Hata';
     setTimeout(() => { btn.textContent = 'Kopyala'; }, 1500);
