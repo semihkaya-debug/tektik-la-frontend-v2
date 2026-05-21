@@ -124,6 +124,9 @@
     white-space: nowrap;
   }
   .ctrl-btn:hover, .ctrl-btn.active { border-color: var(--accent); color: var(--accent); }
+  /* Araçlar butonu: masaüstünde yazı, mobilde ikon */
+  .tools-btn-icon { display: none; }
+  .tools-btn-text { display: inline; }
   .ctrl-btn-cta {
     background: var(--accent);
     border-color: var(--accent);
@@ -1362,7 +1365,9 @@
     .tools-section { padding: 40px 20px; }
     .tools-grid { grid-template-columns: 1fr 1fr; }
     .featured-grid { grid-template-columns: 1fr; }
-    .ctrl-btn-tools { display: none; }
+    .ctrl-btn-tools { display: inline-flex; padding: 5px 8px; }
+    .tools-btn-text { display: none; }
+    .tools-btn-icon { display: inline-block; }
     .header-controls { gap: 6px; }
     .ctrl-btn { font-size: 10px; padding: 5px 8px; white-space: nowrap; }
     .ctrl-btn-cta { font-size: 10px; padding: 5px 10px; white-space: nowrap; }
@@ -1492,7 +1497,10 @@
   <header>
   <div class="header-inner">    <div class="logo">tektik<span>.la</span></div>
     <div class="header-controls">
-      <a href="#araclar" class="ctrl-btn ctrl-btn-tools" style="text-decoration:none" onclick="event.preventDefault(); scrollToTools();">Araçlar</a>
+      <a href="#araclar" class="ctrl-btn ctrl-btn-tools" style="text-decoration:none" onclick="event.preventDefault(); scrollToTools();" aria-label="Araçlar" title="Araçlar">
+        <span class="tools-btn-text">Araçlar</span>
+        <svg class="tools-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </a>
       <button class="ctrl-btn theme-toggle" onclick="toggleTheme()" aria-label="Tema değiştir" title="Tema değiştir">
         <span id="theme-icon">◐</span>
       </button>
@@ -1578,7 +1586,7 @@
         <h2 class="tk-card-title">projeye<br><em>destek</em> ver</h2>
         <div class="tk-card-features">
           <div class="tk-feat"><span class="tk-feat-check">𝕏</span><span><strong>Twitter'da takip et</strong> — @tektik_la</span></div>
-          <div class="tk-feat"><span class="tk-feat-check">✉</span><span><strong>E-posta at</strong> — info@tektik.la</span></div>
+          <div class="tk-feat"><span class="tk-feat-check">✉</span><span><strong>E-posta gönder</strong> — info@tektik.la</span></div>
           <div class="tk-feat"><span class="tk-feat-check">♥</span><span><strong>Bağış yap</strong> — aracısız, doğrudan</span></div>
         </div>
         <span class="tk-card-arrow">→</span>
