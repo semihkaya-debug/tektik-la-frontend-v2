@@ -624,6 +624,52 @@
     align-items: center;
     flex-wrap: wrap;
   }
+  .split-cta-soon {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 18px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    background: rgba(200, 245, 48, 0.03);
+    width: 100%;
+  }
+  .split-cta-soon-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .split-cta-soon-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+  .drawer-soon-badge {
+    margin-top: 20px;
+    padding: 16px 18px;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    background: rgba(200, 245, 48, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .drawer-soon-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .drawer-soon-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
   .split-cta {
     display: inline-flex;
     align-items: center;
@@ -1504,8 +1550,10 @@
       <button class="ctrl-btn theme-toggle" onclick="toggleTheme()" aria-label="Tema değiştir" title="Tema değiştir">
         <span id="theme-icon">◐</span>
       </button>
+      <!-- Bio link sistemi geçici kapalı, Giriş/Üye Ol gizli
       <a href="/login" class="ctrl-btn" style="text-decoration:none; white-space:nowrap; color:var(--accent);">Giriş</a>
       <a href="/signup" class="ctrl-btn ctrl-btn-cta" style="text-decoration:none; white-space:nowrap;">Üye Ol</a>
+      -->
     </div>
   </div>
 </header>
@@ -1606,21 +1654,21 @@
         </p>
 
         <div style="display:flex; gap:20px; align-items:flex-start; margin-bottom:20px;">
-          <a href="/test" class="phone-mockup-link" target="_blank" style="margin-bottom:0; flex-shrink:0;">
+          <div class="phone-mockup-link" style="margin-bottom:0; flex-shrink:0; cursor:default;">
           <div class="phone-mockup">
             <div class="phone-screen">
               <div class="phone-statusbar">
                 <span class="phone-time">14:23</span>
-                <span class="phone-url">tektik.la/test</span>
+                <span class="phone-url">tektik.la/profil</span>
                 <span>📶</span>
               </div>
               <div class="phone-content">
-                <div class="phone-tag">— PROFİL</div>
+                <div class="phone-tag">— ÖRNEK PROFİL</div>
                 <div class="phone-avatar-frame">
                   <div class="phone-avatar" style="background:var(--accent);color:#0a0a0a;">T</div>
                 </div>
-                <div class="phone-name">test.gg</div>
-                <div class="phone-slug">tektik.la<span>/test</span></div>
+                <div class="phone-name">örnek.profil</div>
+                <div class="phone-slug">tektik.la<span>/profil</span></div>
                 <div class="phone-links">
                   <div class="phone-link featured">🎮 Twitch Kanalım</div>
                   <div class="phone-link">▶ YouTube</div>
@@ -1629,7 +1677,7 @@
               </div>
             </div>
           </div>
-        </a>
+        </div>
 
           <!-- ADIM AKIŞI -->
           <div style="display:flex; flex-direction:column; gap:16px; padding-top:8px;">
@@ -1654,13 +1702,10 @@
         </div>
 
         <div class="split-cta-wrap">
-          <a href="/signup" class="split-cta">
-            <span>profil oluştur</span>
-            <span>→</span>
-          </a>
-          <a href="/login" class="split-cta-login-btn">
-            giriş yap
-          </a>
+          <div class="split-cta-soon">
+            <span class="split-cta-soon-badge">— yakında</span>
+            <span class="split-cta-soon-text">Profil sistemi güncellenmek üzere geçici olarak kapalı.</span>
+          </div>
         </div>
       </div>
 
@@ -2795,7 +2840,7 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
     profil: {
       tag: '— PROFİL SİSTEMİ',
       html: '<div class="drawer-title">tüm linklerin<br><em>tek sayfada</em></div>' +
-        '<a href="/test" target="_blank" rel="noopener" class="drawer-mockup-link">' +
+        '<div class="drawer-mockup-link" style="cursor:default;">' +
           '<div class="drawer-phone-mockup">' +
             '<div class="drawer-phone-bar">' +
               '<span style="font-size:10px;color:var(--text2)">22:00</span>' +
@@ -2815,9 +2860,8 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
                 '<div class="drawer-phone-link">💬 Discord · Kuzgunlar</div>' +
               '</div>' +
             '</div>' +
-            '<div class="drawer-phone-cta">Örnek profili gör →</div>' +
           '</div>' +
-        '</a>' +
+        '</div>' +
         '<style>@keyframes pulse-red{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.3)}}</style>' +
         '<div class="drawer-steps" style="margin-top:20px">' +
           '<div class="drawer-step"><span class="drawer-step-num">① SLUG SEÇ</span><div class="drawer-step-body"><div class="drawer-step-title">tektik.la/<em style="color:var(--accent);font-style:normal;">senin-adın</em></div><div class="drawer-step-desc">Sana özel kısa adres, kimse alamaz.</div></div></div>' +
@@ -2826,8 +2870,10 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
           '<div class="drawer-step-divider"></div>' +
           '<div class="drawer-step"><span class="drawer-step-num">③ PAYLAŞ</span><div class="drawer-step-body"><div class="drawer-step-title">Bio\'na tek link koy</div><div class="drawer-step-desc">Twitch, Instagram, YouTube — hepsi hazır.</div></div></div>' +
         '</div>' +
-        '<a href="/signup" class="drawer-cta">PROFİL OLUŞTUR →</a>' +
-        '<a href="/login" class="drawer-cta-ghost">Giriş yap</a>'
+        '<div class="drawer-soon-badge">' +
+          '<span class="drawer-soon-tag">— yakında</span>' +
+          '<span class="drawer-soon-text">Profil sistemi güncellenmek üzere geçici olarak kapalı. Çok yakında geri dönecek.</span>' +
+        '</div>'
     },
     link: {
       tag: '— LINK KISALTICI',
