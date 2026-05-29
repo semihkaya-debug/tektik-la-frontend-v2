@@ -670,6 +670,37 @@
     color: var(--text2);
     line-height: 1.6;
   }
+  .drawer-soon-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .drawer-soon-btn {
+    flex: 1;
+    min-width: 130px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg3);
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.18s;
+  }
+  .drawer-soon-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .drawer-soon-btn svg { flex-shrink: 0; }
   .split-cta {
     display: inline-flex;
     align-items: center;
@@ -1704,7 +1735,6 @@
         <div class="split-cta-wrap">
           <div class="split-cta-soon">
             <span class="split-cta-soon-badge">— yakında</span>
-            <span class="split-cta-soon-text">Profil sistemi güncellenmek üzere geçici olarak kapalı.</span>
           </div>
         </div>
       </div>
@@ -2872,7 +2902,17 @@ document.querySelectorAll('#main-tools-grid .tool-card').forEach(function(card) 
         '</div>' +
         '<div class="drawer-soon-badge">' +
           '<span class="drawer-soon-tag">— yakında</span>' +
-          '<span class="drawer-soon-text">Profil sistemi güncellenmek üzere geçici olarak kapalı. Çok yakında geri dönecek.</span>' +
+          '<span class="drawer-soon-text">Profilini şimdiden ayırtmak istersen, istediğin slug\'ı bize yaz. Hazır olunca ilk sana haber verelim.</span>' +
+          '<div class="drawer-soon-actions">' +
+            '<a href="mailto:info@tektik.la?subject=Profil%20Link%20Talebi&body=Merhaba%2C%20tektik.la/___%20slug%C4%B1n%C4%B1%20ay%C4%B1rtmak%20istiyorum.%20Profil%20sistemi%20a%C3%A7%C4%B1l%C4%B1nca%20haber%20verir%20misiniz%3F" class="drawer-soon-btn">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>' +
+              '<span>E-posta ile talep et</span>' +
+            '</a>' +
+            '<a href="https://x.com/tektik_la" target="_blank" rel="noopener" class="drawer-soon-btn">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' +
+              '<span>X\'ten yaz</span>' +
+            '</a>' +
+          '</div>' +
         '</div>'
     },
     link: {
