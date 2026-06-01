@@ -1819,15 +1819,15 @@
             <div style="border-top:1px solid var(--border);margin:4px 0"></div>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
               <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">QR rengi</span>
-              <input type="color" id="qr-color-dark" value="#000000" onchange="regenQR()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
+              <input type="color" id="qr-color-dark-hidden" value="#000000" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
               <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">arka plan</span>
-              <input type="color" id="qr-color-light" value="#ffffff" onchange="regenQR()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
+              <input type="color" id="qr-color-light-hidden" value="#ffffff" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
             </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px" id="band-color-row">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px" id="band-color-row-hidden">
               <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text2)">bant rengi</span>
-              <input type="color" id="qr-color-band" value="#c8f530" onchange="updateQRBand()" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
+              <input type="color" id="qr-color-band-hidden" value="#c8f530" style="width:28px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;padding:1px">
             </div>
           </div>
           <button class="btn-primary" onclick="downloadQR()" id="btn-dl">⬇ İndir</button>
