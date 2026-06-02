@@ -6,7 +6,7 @@
 // - Slug mı? → profile.html serve et
 
 const RESERVED = new Set([
-  'admin', 'api', 'app', 'auth', 'base64', 'blog', 'cekilis', 'cv', 'dashboard', 'fatura', 'foto',
+  'admin', 'api', 'app', 'auth', 'base64', 'blog', 'cekilis', 'cv', 'dashboard', 'foto',
   'functions', 'gerisayim', 'gorsel', 'gradient',
   'hashtag', 'hesap', 'home', 'iletisim', 'index',
   'json', 'kelime', 'kosullar', 'login', 'logout', 'lorem', 'markdown',
