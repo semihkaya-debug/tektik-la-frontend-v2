@@ -31,6 +31,13 @@ html,body{background:var(--bg);color:var(--text);font-family:-apple-system,Blink
 a{color:var(--neon);text-decoration:none}
 a:hover{text-decoration:underline}
 .wrap{max-width:760px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.topbar{border-bottom:1px solid var(--border);}
+.topbar-inner{max-width:760px;margin:0 auto;padding:16px 1rem;display:flex;align-items:center;justify-content:space-between}
+.topbar-logo{font-family:'Space Mono',ui-monospace,monospace;font-weight:700;font-size:18px;color:var(--text);text-decoration:none;letter-spacing:-.01em}
+.topbar-logo:hover{text-decoration:none}
+.topbar-logo span{color:var(--neon)}
+.topbar-back{font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;border:1px solid var(--border);border-radius:6px;padding:6px 12px;transition:all .15s}
+.topbar-back:hover{border-color:var(--neon);color:var(--neon);text-decoration:none}
 header{border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:1.5rem}
 .crumb{font-size:11px;letter-spacing:.15em;color:var(--text-faint);text-transform:uppercase;margin-bottom:.5rem}
 .crumb a{color:var(--text-dim)}
@@ -82,10 +89,16 @@ footer a{color:var(--text-dim)}
 </style>
 </head>
 <body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="topbar-logo">tektik<span>.la</span></a>
+    <a href="/" class="topbar-back">← Araçlar</a>
+  </div>
+</div>
 <div class="wrap">
 
 <header>
-  <div class="crumb"><a href="/">tektik.la</a> / dk 2026</div>
+  <div class="crumb">dk 2026</div>
   <h1>2026 Dünya Kupası <span class="neon">Maç Takvimi</span></h1>
   <p class="lede">Tüm 104 maç, Türkiye saatiyle (TSİ). 11 Haziran – 19 Temmuz 2026. <span class="pill tr">Türkiye</span> maçları kırmızı şeritle işaretli. Üyeliksiz, reklamsız, hızlı.</p>
 </header>
