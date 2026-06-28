@@ -113,10 +113,10 @@ footer a{color:var(--text-dim)}
 </div>
 
 <div class="filters" role="tablist">
-  <button class="active" data-filter="all">Tümü</button>
   <button class="tr-btn" data-filter="turkey">Türkiye</button>
   <button data-filter="today">Bugün</button>
-  <button data-filter="upcoming">Yaklaşan</button>
+  <button class="active" data-filter="upcoming">Yaklaşan</button>
+  <button data-filter="all">Tümü</button>
   <button data-filter="group">Grup</button>
   <button data-filter="ko">Eleme</button>
 </div>
@@ -1020,7 +1020,7 @@ function gunKey(iso){
   return iso.slice(0,10);
 }
 
-let currentFilter = "all";
+let currentFilter = "upcoming";
 const now = () => new Date();
 
 function macTr(m){ return m.ev === "Türkiye" || m.dep === "Türkiye"; }
