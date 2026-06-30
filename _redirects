@@ -2,8 +2,8 @@
 # tektik.la - Routing Kuralları
 # ============================================
 # Bu dosya sadece spesifik yönlendirmeler için.
-# Catch-all (/* → /profile.html) artık 
-# functions/[[catchall]].js içinde.
+# Bio link kaldırıldı; bilinmeyen slug'lar 404'e gider
+# (functions/_middleware.js içinde).
 
 # ---- Statik dosyalar (zaten Cloudflare otomatik serve eder) ----
 /sitemap.xml      /sitemap.xml      200
@@ -48,13 +48,6 @@
 /barkod           /qr/?mod=barkod             301
 /barkod/          /qr/?mod=barkod             301
 
-# ---- Auth sayfaları ----
-/signup           /signup/index.html          200
-/login            /login/index.html           200
-/dashboard        /dashboard/index.html       200
-/forgot-password  /forgot-password/index.html 200
-/reset-password   /reset-password/index.html  200
-
 # ---- Admin ----
 /admin            /admin/index.html           200
 
@@ -91,13 +84,7 @@
 /blog/create-professional-digital-receipts-for-freelancers     /blog/create-professional-digital-receipts-for-freelancers/index.html   200
 /blog/calculate-percentage-increase-and-decrease-fast          /blog/calculate-percentage-increase-and-decrease-fast/index.html        200
 
-# ---- /profile/* (uzun versiyon, dashboard'dan açılır) ----
-# Not: /profile yalnız başına kullanılmıyor, sadece /profile/slug formatı var.
-# Bu kural sadece /profile/ahmet gibi URL'ler için.
-/profile/*        /profile.html              200
-
-# NOT: /:slug catch-all kuralı YOK!
-# /semih → profile.html yönlendirmesi functions/[[catchall]].js içinde yapılıyor.
+# NOT: /:slug catch-all kuralı YOK! Bilinmeyen slug doğrudan 404.
 
 /blog/generate-strong-passwords-online-securely   /blog/generate-strong-passwords-online-securely/index.html   200
 /blog/how-to-create-qr-code-for-wifi-free   /blog/how-to-create-qr-code-for-wifi-free/index.html   200

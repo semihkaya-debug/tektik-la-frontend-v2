@@ -123,18 +123,6 @@ export async function onRequest(context) {
     return next();
   }
   
-  // BU NOKTAYA KADAR GELDİYSEK: bu bir kullanıcı slug'ı
-  // profile.html dosyasını serve et (URL değişmesin)
-  try {
-    const profileUrl = new URL('/profile.html', request.url);
-    const response = await env.ASSETS.fetch(profileUrl);
-    
-    // Response'u clone'la ki status 200 dönsün (404 değil)
-    return new Response(response.body, {
-      status: 200,
-      headers: response.headers
-    });
-  } catch (e) {
-    return next();
-  }
+  // Bio link kaldırıldı — bilinmeyen slug artık normal 404'e gider
+  return next();
 }
